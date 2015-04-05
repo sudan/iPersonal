@@ -7,15 +7,25 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
  */
 public class User {
 
+    private String userId;
     private String username;
     private String email;
     private String profilePicURL;
     private final boolean isAdmin = false;
 
-    public User(String username, String email, String profilePicURL){
+    public User(String userId, String username, String email, String profilePicURL){
+        this.userId = userId;
         this.username = username;
         this.email = email;
         this.profilePicURL = profilePicURL;
+    }
+
+    public String getUserId(){
+        return userId;
+    }
+
+    public void setUserId(String userId){
+        this.userId = userId;
     }
 
     public String getUsername(){
@@ -49,6 +59,7 @@ public class User {
     @Override
     public String toString() {
         return new ToStringBuilder(this)
+                .append("userId",userId)
                 .append("username",username)
                 .append("email", email)
                 .append("profilePicURL", profilePicURL)
