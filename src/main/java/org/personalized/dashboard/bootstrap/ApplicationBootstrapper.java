@@ -26,7 +26,7 @@ public class ApplicationBootstrapper extends GuiceServletContextListener{
                 for (Class<?> resource : resourceConfig.getClasses()) {
                     bind(resource);
                 }
-                serve("/ipersonal/*").with(GuiceContainer.class);
+                serve("/*").with(GuiceContainer.class);
             }
         }, new DIModule());
     }
