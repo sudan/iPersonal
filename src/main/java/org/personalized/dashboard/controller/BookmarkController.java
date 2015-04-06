@@ -1,5 +1,6 @@
 package org.personalized.dashboard.controller;
 
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import javax.ws.rs.Path;
@@ -9,6 +10,7 @@ import javax.ws.rs.Path;
  */
 
 @Controller
+@Scope("request")
 @Path("/bookmark")
 public class BookmarkController {
 }
