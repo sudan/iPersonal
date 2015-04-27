@@ -11,6 +11,7 @@ public class Task {
     private Priority priority;
     private String name;
     private String task;
+    private int percentCompletion = 0;
 
     public Task(){
 
@@ -22,6 +23,14 @@ public class Task {
         this.name = name;
         this.task = task;
 
+    }
+
+    public Task(String taskId, Priority priority, String name, String task, int percentCompletion){
+        this.taskId = taskId;
+        this.priority = priority;
+        this.name = name;
+        this.task = task;
+        this.percentCompletion = percentCompletion;
     }
 
     public String getTaskId() {
@@ -56,6 +65,14 @@ public class Task {
         this.task = task;
     }
 
+    public int getPercentCompletion(){
+        return percentCompletion;
+    }
+
+    public void setPercentCompletion(int percentCompletion){
+        this.percentCompletion = percentCompletion;
+    }
+
     @Override
     public String toString(){
         return new ToStringBuilder(this)
@@ -63,6 +80,7 @@ public class Task {
                 .append("priority", priority)
                 .append("name", name)
                 .append("task", task)
+                .append("percentCompletion", percentCompletion)
                 .toString();
     }
 
