@@ -14,6 +14,7 @@ public class Diary {
     private String diaryId;
     private List<Page> pages = Lists.newArrayList();
     private String userId;
+    private int year;
     private Long createdOn;
     private Long modifiedAt;
 
@@ -21,10 +22,11 @@ public class Diary {
 
     }
 
-    public Diary(String diaryId, List<Page> pages, String userId){
+    public Diary(String diaryId, List<Page> pages, String userId, int year){
         this.diaryId = diaryId;
         this.pages = pages;
         this.userId = userId;
+        this.year = year;
     }
 
     public String getDiaryId() {
@@ -49,6 +51,14 @@ public class Diary {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year){
+        this.year = year;
     }
 
     public Long getCreatedOn() {
@@ -77,6 +87,7 @@ public class Diary {
                 .append("diaryId", diaryId)
                 .append("pages", pages)
                 .append("userId", userId)
+                .append("year", year)
                 .append("createdOn", createdOn)
                 .append("modifiedAt", modifiedAt)
                 .toString();
