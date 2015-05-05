@@ -3,7 +3,6 @@ package org.personalized.dashboard.model;
 import com.google.common.collect.Maps;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import java.util.Calendar;
 import java.util.Map;
 
 /**
@@ -15,7 +14,8 @@ public class Page {
     private String title;
     private String template;
     private Map<String, String> placeholders = Maps.newHashMap();
-    private Calendar date;
+    private int month;
+    private int date;
     private Long createdOn;
     private Long modifiedAt;
 
@@ -23,11 +23,12 @@ public class Page {
 
     }
 
-    public Page(String pageId, String title, String template, Map<String,String> placeholders, Calendar date){
+    public Page(String pageId, String title, String template, Map<String,String> placeholders, int month, int date){
         this.pageId = pageId;
         this.title = title;
         this.template = template;
         this.placeholders = placeholders;
+        this.month = month;
         this.date = date;
     }
 
@@ -63,11 +64,19 @@ public class Page {
         this.placeholders = placeholders;
     }
 
-    public Calendar getDate() {
+    public int getMonth() {
+        return month;
+    }
+
+    public void setMonth(int month){
+        this.month = month;
+    }
+
+    public int getDate() {
         return date;
     }
 
-    public void setDate(Calendar date) {
+    public void setDate(int date) {
         this.date = date;
     }
 
