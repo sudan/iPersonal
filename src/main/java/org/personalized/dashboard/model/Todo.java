@@ -3,7 +3,6 @@ package org.personalized.dashboard.model;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -57,19 +56,6 @@ public class Todo {
 
     public Long getModifiedAt() {
         return modifiedAt;
-    }
-
-    public void addTask(Task task){
-        this.tasks.add(task);
-    }
-
-    public void deleteTask(Task task){
-        Iterator iterator = tasks.iterator();
-        while (iterator.hasNext()){
-            Task t = (Task)iterator.next();
-            if(t.getTaskId().equals(task.getTaskId()))
-                iterator.remove();
-        }
     }
 
     @Override

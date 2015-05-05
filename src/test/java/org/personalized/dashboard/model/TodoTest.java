@@ -58,26 +58,6 @@ public class TodoTest {
         Assert.assertEquals("Task3 percent completion is 0", 0, todo.getTasks().get(2).getPercentCompletion());
         Assert.assertEquals("Task4 percent completion is 50", 50, todo.getTasks().get(3).getPercentCompletion());
 
-        Task task5 = new Task("TASE23456789", Priority.HIGH, "name5","task5");
-        todo.addTask(task5);
-
-        Assert.assertTrue("Number of tasks in TODO123456789 is 5", todo.getTasks().size() == 5);
-
-        Assert.assertEquals("Task5 ID is TASE23456789","TASE23456789", todo.getTasks().get(4).getTaskId());
-        Assert.assertEquals("Task5 priority is HIGH", Priority.HIGH, todo.getTasks().get(4).getPriority());
-        Assert.assertEquals("Task5 name is name5", "name5", todo.getTasks().get(4).getName());
-        Assert.assertEquals("Task5 task is task5", "task5", todo.getTasks().get(4).getTask());
-        Assert.assertEquals("Task5 percent completion is 0", 0, todo.getTasks().get(4).getPercentCompletion());
-
-        todo.deleteTask(task1);
-
-        Assert.assertTrue("Number of tasks in TODO123456789 is 4", todo.getTasks().size() == 4);
-
-        Assert.assertEquals("Task1 ID is TASB23456789", "TASB23456789", todo.getTasks().get(0).getTaskId());
-        Assert.assertEquals("Task1 priority is LOW", Priority.LOW, todo.getTasks().get(0).getPriority());
-        Assert.assertEquals("Task1 name is name2", "name2", todo.getTasks().get(0).getName());
-        Assert.assertEquals("Task1 task is task2", "task2", todo.getTasks().get(0).getTask());
-
         todo.getTasks().get(0).setTaskId("TASD23456789");
         todo.getTasks().get(0).setName("name4");
         todo.getTasks().get(0).setPriority(Priority.MEDIUM);

@@ -78,32 +78,5 @@ public class DiaryTest {
         Assert.assertEquals("Diary page1 title is titlechanged", "titlechanged", diary.getPages().get(0).getTitle());
         Assert.assertEquals("Diary page1 template is templatechanged", "templatechanged", diary.getPages().get(0).getTemplate());
         Assert.assertEquals("Diary page1 placeholder for PLA123456789 is placeholderchanged", "placeholderchanged", diary.getPages().get(0).getPlaceholders().get("PLA123456789"));
-
-        Page page3 = new Page("PAG523456789", "page3", "template3", placeholder1, 10, 15);
-        diary.addPage(page3);
-
-        Assert.assertEquals("Diary page3 ID is PAG523456789", "PAG523456789",diary.getPages().get(2).getPageId());
-        Assert.assertEquals("Diary page3 title is page3", "page3",diary.getPages().get(2).getTitle());
-        Assert.assertEquals("Diary page3 template is template3", "template3",diary.getPages().get(2).getTemplate());
-
-        Assert.assertEquals("Diary page3 placeholder1 is placeholderchanged", "placeholderchanged", diary.getPages().get(2).getPlaceholders().get("PLA123456789"));
-        Assert.assertEquals("Diary page3 placeholder2 is diary1-placeholder2", "diary1-placeholder2", diary.getPages().get(2).getPlaceholders().get("PLA223456789"));
-        Assert.assertEquals("Diary page3 placeholder3 is diary1-placeholder3", "diary1-placeholder3", diary.getPages().get(2).getPlaceholders().get("PLA323456789"));
-
-        Assert.assertEquals("Diary page3 month is 10", 10, diary.getPages().get(2).getMonth());
-        Assert.assertEquals("Diary page3 date is 15", 15, diary.getPages().get(2).getDate());
-
-        diary.deletePage(page1);
-
-        Assert.assertEquals("Diary page1 ID is PAG123456709", "PAG123456709",diary.getPages().get(0).getPageId());
-        Assert.assertEquals("Diary page1 title is page2", "page2",diary.getPages().get(0).getTitle());
-        Assert.assertEquals("Diary page1 template is template2", "template2",diary.getPages().get(0).getTemplate());
-
-        Assert.assertEquals("Diary page1 placeholder1 is diary2-placeholder1", "diary2-placeholder1", diary.getPages().get(0).getPlaceholders().get("PLB123456789"));
-        Assert.assertEquals("Diary page1 placeholder2 is diary2-placeholder2", "diary2-placeholder2", diary.getPages().get(0).getPlaceholders().get("PLB223456789"));
-
-        Assert.assertEquals("Diary page1 month is 10", 10, diary.getPages().get(0).getMonth());
-        Assert.assertEquals("Diary page1 date is 14", 14, diary.getPages().get(0).getDate());
-
     }
 }
