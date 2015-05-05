@@ -3,7 +3,6 @@ package org.personalized.dashboard.model;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -69,18 +68,6 @@ public class Diary {
         return modifiedAt;
     }
 
-    public void addPage(Page page){
-        this.pages.add(page);
-    }
-
-    public void deletePage(Page page){
-        Iterator iterator = pages.iterator();
-        while (iterator.hasNext()){
-            Page p  = (Page)iterator.next();
-            if(p.getPageId().equals(page.getPageId()))
-                iterator.remove();
-        }
-    }
     @Override
     public String toString(){
         return new ToStringBuilder(this)
