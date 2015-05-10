@@ -8,5 +8,6 @@ public enum EntityType {
     DIARY,
     NOTE,
     PIN,
-    TODO
+    TODO,
+    EXPENSE
 }
