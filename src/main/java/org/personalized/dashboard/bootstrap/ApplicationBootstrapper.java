@@ -16,6 +16,13 @@ public class ApplicationBootstrapper extends GuiceServletContextListener{
     @Override
     protected Injector getInjector() {
 
+        try {
+            ConfigManager.init();
+            MongoBootstrap.init();
+        }
+        catch (Exception e){
+            System.exit(1);
+        }
         return Guice.createInjector(new ServletModule(){
 
             @Override
