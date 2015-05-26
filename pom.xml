@@ -76,6 +76,11 @@
       <version>${jersey-bundle.version}</version>
     </dependency>
 
+    <dependency>
+      <groupId>com.sun.jersey</groupId>
+      <artifactId>jersey-server</artifactId>
+      <version>${jersey.version}</version>
+    </dependency>
 
     <!-- guava -->
     <dependency>
