@@ -3,6 +3,7 @@ package org.personalized.dashboard.controller;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
 import org.apache.commons.lang3.StringUtils;
+import org.personalized.dashboard.model.BatchSize;
 import org.personalized.dashboard.model.Bookmark;
 import org.personalized.dashboard.service.api.BookmarkService;
 import org.personalized.dashboard.utils.validator.ErrorEntity;
@@ -28,11 +29,15 @@ public class BookmarkController {
 
     private final BookmarkService bookmarkService;
     private final ValidationService bookmarkValidationService;
+    private final ValidationService batchSizeValidationService;
 
     @Inject
-    public BookmarkController(BookmarkService bookmarkService, @Named("bookmark") ValidationService bookmarkValidationService){
+    public BookmarkController(BookmarkService bookmarkService,
+                              @Named("bookmark") ValidationService bookmarkValidationService,
+                              @Named("batchSize") ValidationService batchSizeValidationService){
         this.bookmarkService = bookmarkService;
         this.bookmarkValidationService = bookmarkValidationService;
+        this.batchSizeValidationService = batchSizeValidationService;
     }
 
 
@@ -102,5 +107,21 @@ public class BookmarkController {
     public Response countBookmarks() {
         Long count = bookmarkService.countBookmarks();
         return Response.status(Response.Status.OK).entity(String.valueOf(count)).build();
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response fetchBookmarks(@QueryParam("limit") int limit, @QueryParam("offset") int offset) {
+        BatchSize batchSize = new BatchSize(limit, offset);
+        List<ErrorEntity> errorEntities = batchSizeValidationService.validate(batchSize);
+        if(CollectionUtils.isEmpty(errorEntities)) {
+            List<Bookmark> bookmarks = bookmarkService.fetchBookmarks(batchSize.getLimit(), batchSize.getOffset());
+            GenericEntity<List<Bookmark>> bookmarkListObj = new GenericEntity<List<Bookmark>>(bookmarks){};
+            return Response.status(Response.Status.OK).entity(bookmarkListObj).build();
+        }
+        else {
+            GenericEntity<List<ErrorEntity>> errorObj = new GenericEntity<List<ErrorEntity>>(errorEntities){};
+            return Response.status(Response.Status.BAD_REQUEST).entity(errorObj).build();
+        }
     }
 }

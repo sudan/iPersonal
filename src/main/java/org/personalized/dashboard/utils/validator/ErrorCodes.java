@@ -6,7 +6,9 @@ package org.personalized.dashboard.utils.validator;
 public enum ErrorCodes {
 
     INVALID_URL("Invalid URL format"),
-    UNAUTHORIZED("Unauthorized access to resource");
+    UNAUTHORIZED("Unauthorized access to resource"),
+    INVALID_LIMIT("Invalid batch size"),
+    INVALID_OFFSET("Invalid offset");
 
     private String description;
 
