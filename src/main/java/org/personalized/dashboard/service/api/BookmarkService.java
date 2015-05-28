@@ -20,4 +20,11 @@ public interface BookmarkService {
      * @return
      */
     Bookmark getBookmark(String bookmarkId);
+
+    /**
+     * Update the bookmark and return the updated object
+     * @param bookmark
+     * @return
+     */
+    Bookmark updateBookmark(Bookmark bookmark);
 }

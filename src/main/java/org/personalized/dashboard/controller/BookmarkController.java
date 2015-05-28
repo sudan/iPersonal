@@ -68,4 +68,19 @@ public class BookmarkController {
             }
         }
     }
+
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response updateBookmark(Bookmark bookmark) {
+        List<ErrorEntity> errorEntities = bookmarkValidationService.validate(bookmark) ;
+        if(CollectionUtils.isEmpty(errorEntities)) {
+            Bookmark updatedBookmark = bookmarkService.updateBookmark(bookmark);
+            return Response.status(Response.Status.OK).entity(updatedBookmark).build();
+        }
+        else {
+            GenericEntity<List<ErrorEntity>> errorObj = new GenericEntity<List<ErrorEntity>>(errorEntities){};
+            return Response.status(Response.Status.BAD_REQUEST).entity(errorObj).build();
+        }
+    }
 }

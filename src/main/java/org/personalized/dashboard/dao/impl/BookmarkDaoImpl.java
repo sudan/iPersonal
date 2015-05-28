@@ -63,4 +63,22 @@ public class BookmarkDaoImpl implements BookmarkDao {
         }
         return null;
     }
+
+    @Override
+    public Bookmark update(Bookmark bookmark, String userId) {
+        MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection(Constants.BOOKMARKS);
+        Document document = new Document()
+                .append(Constants.BOOKMARK_NAME, bookmark.getName())
+                .append(Constants.BOOKMARK_DESCRIPTION, bookmark.getDescription())
+                .append(Constants.BOOKMARK_URL, bookmark.getUrl())
+                .append(Constants.BOOKMARK_MODIFIED_AT, System.currentTimeMillis());
+
+        collection.updateOne(
+                    and(
+                            eq(Constants.PRIMARY_KEY, bookmark.getBookmarkId()),
+                            eq(Constants.BOOKMARK_USER_ID, userId )),
+                    new Document(Constants.SET_OPERATION, document)
+                );
+        return bookmark;
+    }
 }

@@ -20,4 +20,11 @@ public interface BookmarkDao {
      * @return
      */
     Bookmark get(String bookmarkId, String userId);
+
+    /**
+     * Update the bookmark and return the updated one
+     * @param bookmark
+     * @return
+     */
+    Bookmark update(Bookmark bookmark, String userId);
 }

@@ -32,4 +32,9 @@ public class BookmarkServiceImpl implements BookmarkService {
     public Bookmark getBookmark(String bookmarkId) {
         return bookmarkDao.get(bookmarkId, sessionManager.getUserIdFromSession());
     }
+
+    @Override
+    public Bookmark updateBookmark(Bookmark bookmark) {
+        return bookmarkDao.update(bookmark, sessionManager.getUserIdFromSession());
+    }
 }
