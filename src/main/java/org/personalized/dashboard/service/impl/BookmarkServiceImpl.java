@@ -27,4 +27,19 @@ public class BookmarkServiceImpl implements BookmarkService {
             bookmark.setUserId(sessionManager.getUserIdFromSession());
             return bookmarkDao.create(bookmark);
     }
+
+    @Override
+    public Bookmark getBookmark(String bookmarkId) {
+        return bookmarkDao.get(bookmarkId, sessionManager.getUserIdFromSession());
+    }
+
+    @Override
+    public Bookmark updateBookmark(Bookmark bookmark) {
+        return bookmarkDao.update(bookmark, sessionManager.getUserIdFromSession());
+    }
+
+    @Override
+    public void deleteBookmark(String bookmarkId) {
+        bookmarkDao.delete(bookmarkId, sessionManager.getUserIdFromSession());
+    }
 }

@@ -2,6 +2,7 @@ package org.personalized.dashboard.controller;
 
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
+import org.apache.commons.lang3.StringUtils;
 import org.personalized.dashboard.model.Bookmark;
 import org.personalized.dashboard.service.api.BookmarkService;
 import org.personalized.dashboard.utils.validator.ErrorEntity;
@@ -10,10 +11,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -50,6 +48,51 @@ public class BookmarkController {
         else{
             GenericEntity<List<ErrorEntity>> errorObj = new GenericEntity<List<ErrorEntity>>(errorEntities){};
             return Response.status(Response.Status.BAD_REQUEST).entity(errorObj).build();
+        }
+    }
+
+    @GET
+    @Path("{bookmarkId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getBookmark(@PathParam("bookmarkId") String bookmarkId) {
+        if(StringUtils.isEmpty(bookmarkId)){
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+        else {
+            Bookmark bookmark = bookmarkService.getBookmark(bookmarkId);
+            if(bookmark == null) {
+                return Response.status(Response.Status.NOT_FOUND).build();
+            }
+            else {
+                return Response.status(Response.Status.OK).entity(bookmark).build();
+            }
+        }
+    }
+
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response updateBookmark(Bookmark bookmark) {
+        List<ErrorEntity> errorEntities = bookmarkValidationService.validate(bookmark) ;
+        if(CollectionUtils.isEmpty(errorEntities)) {
+            Bookmark updatedBookmark = bookmarkService.updateBookmark(bookmark);
+            return Response.status(Response.Status.OK).entity(updatedBookmark).build();
+        }
+        else {
+            GenericEntity<List<ErrorEntity>> errorObj = new GenericEntity<List<ErrorEntity>>(errorEntities){};
+            return Response.status(Response.Status.BAD_REQUEST).entity(errorObj).build();
+        }
+    }
+
+    @DELETE
+    @Path("{bookmarkId}")
+    public Response deleteBookmark(@PathParam("bookmarkId") String bookmarkId) {
+        if(StringUtils.isEmpty(bookmarkId)){
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+        else {
+            bookmarkService.deleteBookmark(bookmarkId);
+            return Response.status(Response.Status.OK).build();
         }
     }
 }

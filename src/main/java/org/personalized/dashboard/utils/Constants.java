@@ -15,6 +15,9 @@ public class Constants {
     public static final String BOOKMARK_CREATED_ON = "created_on";
     public static final String BOOKMARK_MODIFIED_AT = "modified_at";
     public static final String BOOKMARK_USER_ID = "user_id";
+    public static final String IS_DELETED = "is_deleted";
 
     public static final int ID_LENGTH = 16;
+
+    public static final String SET_OPERATION = "$set";
 }

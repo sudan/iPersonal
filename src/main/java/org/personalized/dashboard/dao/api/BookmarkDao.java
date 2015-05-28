@@ -13,4 +13,25 @@ public interface BookmarkDao {
      */
     String create(Bookmark bookmark);
 
+    /**
+     * Get bookmark for the given bookmarkId and userId
+     * @param bookmarkId
+     * @param userId
+     * @return
+     */
+    Bookmark get(String bookmarkId, String userId);
+
+    /**
+     * Update the bookmark and return the updated one
+     * @param bookmark
+     * @return
+     */
+    Bookmark update(Bookmark bookmark, String userId);
+
+    /**
+     * Delete the bookmark for the given bookmarkId and userId
+     * @param bookmarkId
+     * @param userId
+     */
+    void delete(String bookmarkId, String userId);
 }
