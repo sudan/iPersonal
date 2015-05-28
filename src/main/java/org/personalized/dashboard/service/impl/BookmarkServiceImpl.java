@@ -42,4 +42,9 @@ public class BookmarkServiceImpl implements BookmarkService {
     public void deleteBookmark(String bookmarkId) {
         bookmarkDao.delete(bookmarkId, sessionManager.getUserIdFromSession());
     }
+
+    @Override
+    public Long countBookmarks() {
+        return bookmarkDao.count(sessionManager.getUserIdFromSession());
+    }
 }

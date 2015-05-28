@@ -101,4 +101,16 @@ public class BookmarkDaoImpl implements BookmarkDao {
                 new Document(Constants.SET_OPERATION, document)
         );
     }
+
+    @Override
+    public Long count(String userId) {
+        MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection(Constants.BOOKMARKS);
+
+        return collection.count(
+                and(
+                        eq(Constants.BOOKMARK_USER_ID, userId),
+                        ne(Constants.IS_DELETED, true)
+                )
+        );
+    }
 }

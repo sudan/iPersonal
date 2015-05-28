@@ -95,4 +95,12 @@ public class BookmarkController {
             return Response.status(Response.Status.OK).build();
         }
     }
+
+    @GET
+    @Path("count")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response countBookmarks() {
+        Long count = bookmarkService.countBookmarks();
+        return Response.status(Response.Status.OK).entity(String.valueOf(count)).build();
+    }
 }
