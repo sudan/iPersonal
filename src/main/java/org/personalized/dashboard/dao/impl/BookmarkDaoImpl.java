@@ -22,11 +22,12 @@ public class BookmarkDaoImpl implements BookmarkDao {
     }
 
     @Override
-    public void create(Bookmark bookmark) {
+    public String create(Bookmark bookmark) {
         MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection(Constants.BOOKMARKS);
 
+        String bookmarkId = idGenerator.generateId(Constants.BOOKMARK_PREFIX, Constants.ID_LENGTH);
         Document document = new Document()
-                .append(Constants.PRIMARY_KEY, idGenerator.generateId(Constants.BOOKMARK_PREFIX,Constants.ID_LENGTH))
+                .append(Constants.PRIMARY_KEY, bookmarkId)
                 .append(Constants.BOOKMARK_NAME, bookmark.getName())
                 .append(Constants.BOOKMARK_DESCRIPTION, bookmark.getDescription())
                 .append(Constants.BOOKMARK_URL, bookmark.getUrl())
@@ -34,5 +35,7 @@ public class BookmarkDaoImpl implements BookmarkDao {
                 .append(Constants.BOOKMARK_CREATED_ON, System.currentTimeMillis())
                 .append(Constants.BOOKMARK_MODIFIED_AT, System.currentTimeMillis());
         collection.insertOne(document);
+
+        return bookmarkId;
     }
 }

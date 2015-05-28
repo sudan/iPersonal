@@ -1,9 +1,11 @@
 package org.personalized.dashboard.controller;
 
 import com.google.inject.Inject;
+import com.google.inject.name.Named;
 import org.personalized.dashboard.model.Bookmark;
 import org.personalized.dashboard.service.api.BookmarkService;
 import org.personalized.dashboard.utils.validator.ErrorEntity;
+import org.personalized.dashboard.utils.validator.ValidationService;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
@@ -27,10 +29,12 @@ import java.util.List;
 public class BookmarkController {
 
     private final BookmarkService bookmarkService;
+    private final ValidationService bookmarkValidationService;
 
     @Inject
-    public BookmarkController(BookmarkService bookmarkService){
+    public BookmarkController(BookmarkService bookmarkService, @Named("bookmark") ValidationService bookmarkValidationService){
         this.bookmarkService = bookmarkService;
+        this.bookmarkValidationService = bookmarkValidationService;
     }
 
 
@@ -38,9 +42,10 @@ public class BookmarkController {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response createBookmark(Bookmark bookmark) {
-        List<ErrorEntity> errorEntities = bookmarkService.createBookmark(bookmark);
+        List<ErrorEntity> errorEntities = bookmarkValidationService.validate(bookmark) ;
         if(CollectionUtils.isEmpty(errorEntities)) {
-            return Response.status(Response.Status.CREATED).build();
+            String bookmarkId = bookmarkService.createBookmark(bookmark);
+            return Response.status(Response.Status.CREATED).entity(bookmarkId).build();
         }
         else{
             GenericEntity<List<ErrorEntity>> errorObj = new GenericEntity<List<ErrorEntity>>(errorEntities){};
