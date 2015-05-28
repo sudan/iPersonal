@@ -13,4 +13,11 @@ public interface BookmarkDao {
      */
     String create(Bookmark bookmark);
 
+    /**
+     * Get bookmark for the given bookmarkId and userId
+     * @param bookmarkId
+     * @param userId
+     * @return
+     */
+    Bookmark get(String bookmarkId, String userId);
 }

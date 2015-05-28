@@ -13,4 +13,11 @@ public interface BookmarkService {
      * @return
      */
     String createBookmark(Bookmark bookmark);
+
+    /**
+     * Get the bookmark for the id
+     * @param bookmarkId
+     * @return
+     */
+    Bookmark getBookmark(String bookmarkId);
 }

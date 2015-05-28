@@ -9,6 +9,9 @@ import org.personalized.dashboard.model.Bookmark;
 import org.personalized.dashboard.utils.Constants;
 import org.personalized.dashboard.utils.generator.IdGenerator;
 
+import static com.mongodb.client.model.Filters.and;
+import static com.mongodb.client.model.Filters.eq;
+
 /**
  * Created by sudan on 3/4/15.
  */
@@ -37,5 +40,27 @@ public class BookmarkDaoImpl implements BookmarkDao {
         collection.insertOne(document);
 
         return bookmarkId;
+    }
+
+    @Override
+    public Bookmark get(String bookmarkId, String userId) {
+        MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection(Constants.BOOKMARKS);
+        Document document = collection.find(and
+                        (
+                                eq(Constants.PRIMARY_KEY, bookmarkId),
+                                eq(Constants.BOOKMARK_USER_ID, userId)
+                        )
+        ).first();
+        if(document != null) {
+            Bookmark bookmark = new Bookmark();
+            bookmark.setBookmarkId(document.getString(Constants.PRIMARY_KEY));
+            bookmark.setName(document.getString(Constants.BOOKMARK_NAME));
+            bookmark.setDescription(document.getString(Constants.BOOKMARK_DESCRIPTION));
+            bookmark.setUrl(document.getString(Constants.BOOKMARK_URL));
+            bookmark.setCreatedOn(document.getLong(Constants.BOOKMARK_CREATED_ON));
+            bookmark.setModifiedAt(document.getLong(Constants.BOOKMARK_MODIFIED_AT));
+            return bookmark;
+        }
+        return null;
     }
 }

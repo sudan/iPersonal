@@ -4,6 +4,9 @@ import com.google.common.collect.Lists;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.validator.routines.UrlValidator;
 import org.personalized.dashboard.model.Bookmark;
+import org.personalized.dashboard.utils.validator.ErrorCodes;
+import org.personalized.dashboard.utils.validator.ErrorEntity;
+import org.personalized.dashboard.utils.validator.ValidationService;
 
 import java.util.List;
 
