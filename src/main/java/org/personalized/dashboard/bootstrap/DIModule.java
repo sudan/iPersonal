@@ -6,6 +6,7 @@ import org.personalized.dashboard.dao.api.*;
 import org.personalized.dashboard.dao.impl.*;
 import org.personalized.dashboard.service.api.*;
 import org.personalized.dashboard.service.impl.*;
+import org.personalized.dashboard.utils.auth.SessionManager;
 import org.personalized.dashboard.utils.generator.IdGenerator;
 import org.personalized.dashboard.utils.validator.BookmarkValidationService;
 import org.personalized.dashboard.utils.validator.ValidationService;
@@ -35,5 +36,7 @@ public class DIModule extends AbstractModule {
         bind(ValidationService.class).annotatedWith(Names.named("bookmark")).to(BookmarkValidationService.class);
 
         bind(IdGenerator.class).asEagerSingleton();
+
+        bind(SessionManager.class);
     }
 }
