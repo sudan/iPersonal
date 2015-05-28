@@ -2,6 +2,8 @@ package org.personalized.dashboard.dao.api;
 
 import org.personalized.dashboard.model.Bookmark;
 
+import java.util.List;
+
 /**
  * Created by sudan on 3/4/15.
  */
@@ -39,4 +41,12 @@ public interface BookmarkDao {
      * Count of bookmarks for the userId
      */
     Long count(String userId);
+
+    /**
+     * Fetch all bookmarks for the userId with limit and offset
+     * @param limit
+     * @param offset
+     * @param userId
+     */
+    List<Bookmark> get(int limit , int offset, String userId);
 }

@@ -2,6 +2,8 @@ package org.personalized.dashboard.service.api;
 
 import org.personalized.dashboard.model.Bookmark;
 
+import java.util.List;
+
 /**
  * Created by sudan on 3/4/15.
  */
@@ -39,4 +41,12 @@ public interface BookmarkService {
      * @return
      */
     Long countBookmarks();
+
+    /**
+     * Fetch the bookmarks with given limit and offset
+     * @param limit
+     * @param offset
+     * @return
+     */
+    List<Bookmark> fetchBookmarks(int limit , int offset);
 }

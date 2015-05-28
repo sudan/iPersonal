@@ -18,6 +18,7 @@ public class Constants {
     public static final String IS_DELETED = "is_deleted";
 
     public static final int ID_LENGTH = 16;
+    public static final int MAX_BATCH_SIZE = 20;
 
     public static final String SET_OPERATION = "$set";
 }

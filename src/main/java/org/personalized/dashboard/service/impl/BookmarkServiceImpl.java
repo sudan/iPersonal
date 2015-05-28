@@ -7,6 +7,8 @@ import org.personalized.dashboard.service.api.BookmarkService;
 import org.personalized.dashboard.utils.auth.SessionManager;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * Created by sudan on 3/4/15.
  */
@@ -46,5 +48,9 @@ public class BookmarkServiceImpl implements BookmarkService {
     @Override
     public Long countBookmarks() {
         return bookmarkDao.count(sessionManager.getUserIdFromSession());
+    }
+
+    public List<Bookmark> fetchBookmarks(int limit, int offset) {
+        return bookmarkDao.get(limit, offset, sessionManager.getUserIdFromSession());
     }
 }
