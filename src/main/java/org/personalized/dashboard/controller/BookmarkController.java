@@ -83,4 +83,16 @@ public class BookmarkController {
             return Response.status(Response.Status.BAD_REQUEST).entity(errorObj).build();
         }
     }
+
+    @DELETE
+    @Path("{bookmarkId}")
+    public Response deleteBookmark(@PathParam("bookmarkId") String bookmarkId) {
+        if(StringUtils.isEmpty(bookmarkId)){
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+        else {
+            bookmarkService.deleteBookmark(bookmarkId);
+            return Response.status(Response.Status.OK).build();
+        }
+    }
 }

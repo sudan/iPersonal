@@ -27,4 +27,10 @@ public interface BookmarkService {
      * @return
      */
     Bookmark updateBookmark(Bookmark bookmark);
+
+    /**
+     * Delete the  bookmark for the bookmarkId
+     * @param bookmarkId
+     */
+    void deleteBookmark(String bookmarkId);
 }

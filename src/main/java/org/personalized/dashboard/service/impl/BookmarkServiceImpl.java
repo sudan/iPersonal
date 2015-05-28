@@ -37,4 +37,9 @@ public class BookmarkServiceImpl implements BookmarkService {
     public Bookmark updateBookmark(Bookmark bookmark) {
         return bookmarkDao.update(bookmark, sessionManager.getUserIdFromSession());
     }
+
+    @Override
+    public void deleteBookmark(String bookmarkId) {
+        bookmarkDao.delete(bookmarkId, sessionManager.getUserIdFromSession());
+    }
 }

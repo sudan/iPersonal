@@ -11,6 +11,7 @@ import org.personalized.dashboard.utils.generator.IdGenerator;
 
 import static com.mongodb.client.model.Filters.and;
 import static com.mongodb.client.model.Filters.eq;
+import static com.mongodb.client.model.Filters.ne;
 
 /**
  * Created by sudan on 3/4/15.
@@ -48,7 +49,8 @@ public class BookmarkDaoImpl implements BookmarkDao {
         Document document = collection.find(and
                         (
                                 eq(Constants.PRIMARY_KEY, bookmarkId),
-                                eq(Constants.BOOKMARK_USER_ID, userId)
+                                eq(Constants.BOOKMARK_USER_ID, userId),
+                                ne(Constants.IS_DELETED, true)
                         )
         ).first();
         if(document != null) {
@@ -76,9 +78,27 @@ public class BookmarkDaoImpl implements BookmarkDao {
         collection.updateOne(
                     and(
                             eq(Constants.PRIMARY_KEY, bookmark.getBookmarkId()),
-                            eq(Constants.BOOKMARK_USER_ID, userId )),
+                            eq(Constants.BOOKMARK_USER_ID, userId),
+                            ne(Constants.IS_DELETED, true)
+                    ),
                     new Document(Constants.SET_OPERATION, document)
                 );
         return bookmark;
+    }
+
+    @Override
+    public void delete(String bookmarkId, String userId) {
+        MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection(Constants.BOOKMARKS);
+
+        Document document = new Document()
+                .append(Constants.IS_DELETED, true);
+
+        collection.updateOne(
+                and(
+                        eq(Constants.PRIMARY_KEY, bookmarkId),
+                        eq(Constants.BOOKMARK_USER_ID, userId)
+                ),
+                new Document(Constants.SET_OPERATION, document)
+        );
     }
 }

@@ -27,4 +27,11 @@ public interface BookmarkDao {
      * @return
      */
     Bookmark update(Bookmark bookmark, String userId);
+
+    /**
+     * Delete the bookmark for the given bookmarkId and userId
+     * @param bookmarkId
+     * @param userId
+     */
+    void delete(String bookmarkId, String userId);
 }
