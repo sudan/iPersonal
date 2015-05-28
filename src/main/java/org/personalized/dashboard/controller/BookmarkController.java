@@ -61,7 +61,7 @@ public class BookmarkController {
         else {
             Bookmark bookmark = bookmarkService.getBookmark(bookmarkId);
             if(bookmark == null) {
-                return Response.status(Response.Status.BAD_REQUEST).build();
+                return Response.status(Response.Status.NOT_FOUND).build();
             }
             else {
                 return Response.status(Response.Status.OK).entity(bookmark).build();
