@@ -33,4 +33,10 @@ public interface BookmarkService {
      * @param bookmarkId
      */
     void deleteBookmark(String bookmarkId);
+
+    /**
+     * Count the bookmarks for the user
+     * @return
+     */
+    Long countBookmarks();
 }
