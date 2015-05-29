@@ -12,6 +12,7 @@ public interface BookmarkDao {
     /**
      * Create a new bookmark for the user
      * @param bookmark
+     * @param userId
      */
     String create(Bookmark bookmark, String userId);
 
