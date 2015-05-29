@@ -5,6 +5,7 @@ import com.google.inject.Inject;
 import com.mongodb.Block;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.result.UpdateResult;
 import org.bson.Document;
 import org.personalized.dashboard.bootstrap.MongoBootstrap;
 import org.personalized.dashboard.dao.api.BookmarkDao;
@@ -70,7 +71,7 @@ public class BookmarkDaoImpl implements BookmarkDao {
     }
 
     @Override
-    public Bookmark update(Bookmark bookmark, String userId) {
+    public Long update(Bookmark bookmark, String userId) {
         MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection(Constants.BOOKMARKS);
         Document document = new Document()
                 .append(Constants.BOOKMARK_NAME, bookmark.getName())
@@ -78,15 +79,15 @@ public class BookmarkDaoImpl implements BookmarkDao {
                 .append(Constants.BOOKMARK_URL, bookmark.getUrl())
                 .append(Constants.BOOKMARK_MODIFIED_AT, System.currentTimeMillis());
 
-        collection.updateOne(
-                    and(
-                            eq(Constants.PRIMARY_KEY, bookmark.getBookmarkId()),
-                            eq(Constants.BOOKMARK_USER_ID, userId),
-                            ne(Constants.IS_DELETED, true)
-                    ),
-                    new Document(Constants.SET_OPERATION, document)
-                );
-        return bookmark;
+        UpdateResult updateResult = collection.updateOne(
+                and(
+                        eq(Constants.PRIMARY_KEY, bookmark.getBookmarkId()),
+                        eq(Constants.BOOKMARK_USER_ID, userId),
+                        ne(Constants.IS_DELETED, true)
+                ),
+                new Document(Constants.SET_OPERATION, document)
+        );
+        return updateResult.getModifiedCount();
     }
 
     @Override

@@ -80,8 +80,13 @@ public class BookmarkController {
     public Response updateBookmark(Bookmark bookmark) {
         List<ErrorEntity> errorEntities = bookmarkValidationService.validate(bookmark) ;
         if(CollectionUtils.isEmpty(errorEntities)) {
-            Bookmark updatedBookmark = bookmarkService.updateBookmark(bookmark);
-            return Response.status(Response.Status.OK).entity(updatedBookmark).build();
+            Long modifiedCount = bookmarkService.updateBookmark(bookmark);
+            if(modifiedCount > 0) {
+                return Response.status(Response.Status.OK).entity(bookmark).build();
+            }
+            else {
+                return Response.status(Response.Status.BAD_REQUEST).build();
+            }
         }
         else {
             GenericEntity<List<ErrorEntity>> errorObj = new GenericEntity<List<ErrorEntity>>(errorEntities){};
