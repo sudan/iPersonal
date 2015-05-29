@@ -27,11 +27,10 @@ public class ExpenseTest {
         bills.add(bill1);
         bills.add(bill2);
 
-        Expense expense = new Expense("EXP123456789", "expense", "USR123456789", bills);
+        Expense expense = new Expense("EXP123456789", "expense", bills);
 
         Assert.assertEquals("Expense ID is EXP123456789", "EXP123456789", expense.getExpenseId());
         Assert.assertEquals("Expense name is expense", "expense", expense.getName());
-        Assert.assertEquals("Expense userId is USR123456789","USR123456789", expense.getUserId());
         Assert.assertEquals("Total number of bills is 2", 2, expense.getBills().size());
         Assert.assertNull("CreatedOn is null on creation.Hence only Data Layer can set it",expense.getCreatedOn());
         Assert.assertNull("modifiedAt is null.Hence only data layer can set it", expense.getModifiedAt());
@@ -62,7 +61,6 @@ public class ExpenseTest {
 
         expense.setExpenseId("EXP123456988");
         expense.setName("newexpense");
-        expense.setUserId("USR123456788");
 
         bills = Lists.newArrayList();
         bill1.setBillId("BIL123456788");
@@ -76,7 +74,6 @@ public class ExpenseTest {
 
         Assert.assertEquals("Expense ID is EXP123456988", "EXP123456988", expense.getExpenseId());
         Assert.assertEquals("Expense name is newexpense", "newexpense", expense.getName());
-        Assert.assertEquals("Expense userId is USR123456788","USR123456788", expense.getUserId());
         Assert.assertEquals("Total number of bills is 2", 1, expense.getBills().size());
 
 

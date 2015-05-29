@@ -13,18 +13,16 @@ public class Pin {
     private String imageUrl;
     private Long createdOn;
     private Long modifiedAt;
-    private String userId;
 
     public Pin(){
 
     }
 
-    public Pin(String pinId, String name, String description, String imageUrl, String userId){
+    public Pin(String pinId, String name, String description, String imageUrl){
         this.pinId = pinId;
         this.name = name;
         this.description = description;
         this.imageUrl = imageUrl;
-        this.userId = userId;
     }
 
     public String getPinId() {
@@ -67,14 +65,6 @@ public class Pin {
         return modifiedAt;
     }
 
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
     @Override
     public String toString(){
         return new ToStringBuilder(this)
@@ -84,7 +74,6 @@ public class Pin {
                 .append("imageUrl", imageUrl)
                 .append("createdOn", createdOn)
                 .append("modifiedAt", modifiedAt)
-                .append("userId", userId)
                 .toString();
     }
 }

@@ -34,10 +34,9 @@ public class DiaryTest {
         pageList1.add(page1);
         pageList1.add(page2);
 
-        Diary diary = new Diary("DIA123456789", pageList1, "USR123456789", 2015);
+        Diary diary = new Diary("DIA123456789", pageList1, 2015);
 
         Assert.assertEquals("Diary ID is DIA123456789", "DIA123456789", diary.getDiaryId());
-        Assert.assertEquals("Diary UserID is USR123456789", "USR123456789", diary.getUserId());
         Assert.assertNull("CreatedOn is null on creation.Hence only Data Layer can set it",diary.getCreatedOn());
         Assert.assertNull("modifiedAt is null.Hence only data layer can set it", diary.getModifiedAt());
         Assert.assertEquals("Year is 2015", 2015, diary.getYear());
@@ -66,14 +65,12 @@ public class DiaryTest {
         Assert.assertEquals("Diary page2 date is 14", 14, diary.getPages().get(1).getDate());
 
         diary.setDiaryId("DIA123456790");
-        diary.setUserId("USR123456790");
         diary.getPages().get(0).setPageId("PAG123412345");
         diary.getPages().get(0).setTitle("titlechanged");
         diary.getPages().get(0).setTemplate("templatechanged");
         diary.getPages().get(0).getPlaceholders().put("PLA123456789","placeholderchanged");
 
         Assert.assertEquals("Diary ID is DIA123456790", "DIA123456790", diary.getDiaryId());
-        Assert.assertEquals("Diary UserID is USR123456790", "USR123456790", diary.getUserId());
         Assert.assertEquals("Diary Page1 pageID is PAG123412345","PAG123412345", diary.getPages().get(0).getPageId());
         Assert.assertEquals("Diary page1 title is titlechanged", "titlechanged", diary.getPages().get(0).getTitle());
         Assert.assertEquals("Diary page1 template is templatechanged", "templatechanged", diary.getPages().get(0).getTemplate());

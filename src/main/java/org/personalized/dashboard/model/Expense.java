@@ -12,7 +12,6 @@ public class Expense {
 
     private String expenseId;
     private String name;
-    private String userId;
     private List<Bill> bills = Lists.newArrayList();
     private Long createdOn;
     private Long modifiedAt;
@@ -21,10 +20,9 @@ public class Expense {
 
     }
 
-    public Expense(String expenseId, String name, String userId, List<Bill> bills){
+    public Expense(String expenseId, String name, List<Bill> bills){
         this.expenseId = expenseId;
         this.name = name;
-        this.userId = userId;
         this.bills = bills;
     }
 
@@ -42,14 +40,6 @@ public class Expense {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
     }
 
     public List<Bill> getBills() {
@@ -73,7 +63,6 @@ public class Expense {
         return new ToStringBuilder(this)
                 .append("expenseId", expenseId)
                 .append("name", name)
-                .append("userId", userId)
                 .append("bills", bills)
                 .append("createdOn", createdOn)
                 .append("modifiedAt", modifiedAt)
