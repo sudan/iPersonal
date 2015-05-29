@@ -35,7 +35,7 @@ public class BookmarkServiceImpl implements BookmarkService {
     }
 
     @Override
-    public Bookmark updateBookmark(Bookmark bookmark) {
+    public Long updateBookmark(Bookmark bookmark) {
         return bookmarkDao.update(bookmark, sessionManager.getUserIdFromSession());
     }
 

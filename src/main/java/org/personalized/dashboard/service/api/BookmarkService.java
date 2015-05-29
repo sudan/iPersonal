@@ -28,7 +28,7 @@ public interface BookmarkService {
      * @param bookmark
      * @return
      */
-    Bookmark updateBookmark(Bookmark bookmark);
+    Long updateBookmark(Bookmark bookmark);
 
     /**
      * Delete the  bookmark for the bookmarkId
