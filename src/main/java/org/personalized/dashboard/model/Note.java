@@ -12,17 +12,15 @@ public class Note {
     private String note;
     private Long createdOn;
     private Long modifiedAt;
-    private String userId;
 
     public Note(){
 
     }
 
-    public Note(String noteId, String title, String note, String userId){
+    public Note(String noteId, String title, String note){
         this.noteId = noteId;
         this.title = title;
         this.note = note;
-        this.userId = userId;
     }
 
     public String getNoteId() {
@@ -57,21 +55,12 @@ public class Note {
         return modifiedAt;
     }
 
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
     @Override
     public String toString(){
         return new ToStringBuilder(this)
                 .append("noteId", noteId)
                 .append("title", title)
                 .append("note", note)
-                .append("userId", userId)
                 .append("createdOn", createdOn)
                 .append("modifiedAt", modifiedAt)
                 .toString();
