@@ -16,18 +16,16 @@ public class Bookmark {
     private String url;
     private Long createdOn;
     private Long modifiedAt;
-    private String userId;
 
     public Bookmark(){
 
     }
 
-    public Bookmark(String bookmarkId, String name, String description, String url, String userId){
+    public Bookmark(String bookmarkId, String name, String description, String url){
         this.bookmarkId = bookmarkId;
         this.name = name;
         this.description = description;
         this.url = url;
-        this.userId = userId;
     }
 
     public String getBookmarkId(){
@@ -78,14 +76,6 @@ public class Bookmark {
         this.modifiedAt = modifiedAt;
     }
 
-    public String getUserId(){
-        return userId;
-    }
-
-    public void setUserId(String userId){
-        this.userId = userId;
-    }
-
     @Override
     public String toString(){
         return new ToStringBuilder(this)
@@ -95,7 +85,6 @@ public class Bookmark {
                 .append("url", url)
                 .append("createdOn", createdOn)
                 .append("modifiedAt", modifiedAt)
-                .append("userId", userId)
                 .toString();
     }
 }

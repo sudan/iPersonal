@@ -13,7 +13,7 @@ public interface BookmarkDao {
      * Create a new bookmark for the user
      * @param bookmark
      */
-    String create(Bookmark bookmark);
+    String create(Bookmark bookmark, String userId);
 
     /**
      * Get bookmark for the given bookmarkId and userId
