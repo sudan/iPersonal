@@ -36,7 +36,7 @@ public interface BookmarkDao {
      * @param bookmarkId
      * @param userId
      */
-    void delete(String bookmarkId, String userId);
+    Long delete(String bookmarkId, String userId);
 
     /**
      * Count of bookmarks for the userId
