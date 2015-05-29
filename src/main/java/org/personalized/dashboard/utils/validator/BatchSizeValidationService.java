@@ -1,0 +1,28 @@
+package org.personalized.dashboard.utils.validator;
+
+import com.google.common.collect.Lists;
+import org.personalized.dashboard.model.BatchSize;
+import org.personalized.dashboard.utils.Constants;
+
+import java.util.List;
+
+/**
+ * Created by sudan on 29/5/15.
+ */
+public class BatchSizeValidationService implements ValidationService<BatchSize>{
+
+    @Override
+    public List<ErrorEntity> validate(BatchSize batchSize) {
+        List<ErrorEntity> errorEntities = Lists.newArrayList();
+
+        if(batchSize.getLimit() > Constants.MAX_BATCH_SIZE){
+            ErrorEntity errorEntity = new ErrorEntity(ErrorCodes.INVALID_LIMIT.name(), ErrorCodes.INVALID_LIMIT.getDescription());
+            errorEntities.add(errorEntity);
+        }
+        if(batchSize.getLimit() < 0) {
+            ErrorEntity errorEntity = new ErrorEntity(ErrorCodes.INVALID_OFFSET.name(), ErrorCodes.INVALID_OFFSET.getDescription());
+            errorEntities.add(errorEntity);
+        }
+        return errorEntities;
+    }
+}
