@@ -10,6 +10,7 @@ import org.personalized.dashboard.utils.auth.SessionManager;
 import org.personalized.dashboard.utils.generator.IdGenerator;
 import org.personalized.dashboard.utils.validator.BatchSizeValidationService;
 import org.personalized.dashboard.utils.validator.BookmarkValidationService;
+import org.personalized.dashboard.utils.validator.NoteValidationService;
 import org.personalized.dashboard.utils.validator.ValidationService;
 
 /**
@@ -36,6 +37,7 @@ public class DIModule extends AbstractModule {
 
         bind(ValidationService.class).annotatedWith(Names.named("bookmark")).to(BookmarkValidationService.class);
         bind(ValidationService.class).annotatedWith(Names.named("batchSize")).to(BatchSizeValidationService.class);
+        bind(ValidationService.class).annotatedWith(Names.named("note")).to(NoteValidationService.class);
 
         bind(IdGenerator.class).asEagerSingleton();
 
