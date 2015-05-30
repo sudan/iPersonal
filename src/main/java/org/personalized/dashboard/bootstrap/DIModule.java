@@ -6,6 +6,7 @@ import org.personalized.dashboard.dao.api.*;
 import org.personalized.dashboard.dao.impl.*;
 import org.personalized.dashboard.service.api.*;
 import org.personalized.dashboard.service.impl.*;
+import org.personalized.dashboard.utils.ActivityGenerator;
 import org.personalized.dashboard.utils.auth.SessionManager;
 import org.personalized.dashboard.utils.generator.IdGenerator;
 import org.personalized.dashboard.utils.validator.*;
@@ -31,6 +32,7 @@ public class DIModule extends AbstractModule {
         bind(PinDao.class).to(PinDaoImpl.class);
         bind(TodoDao.class).to(TodoDaoImpl.class);
         bind(ExpenseDao.class).to(ExpenseDaoImpl.class);
+        bind(ActivityDao.class).to(ActivityDaoImpl.class);
 
         bind(ValidationService.class).annotatedWith(Names.named("bookmark")).to(BookmarkValidationService.class);
         bind(ValidationService.class).annotatedWith(Names.named("batchSize")).to(BatchSizeValidationService.class);
@@ -38,6 +40,7 @@ public class DIModule extends AbstractModule {
         bind(ValidationService.class).annotatedWith(Names.named("pin")).to(PinValidationService.class);
 
         bind(IdGenerator.class).asEagerSingleton();
+        bind(ActivityGenerator.class).asEagerSingleton();
 
         bind(SessionManager.class);
     }
