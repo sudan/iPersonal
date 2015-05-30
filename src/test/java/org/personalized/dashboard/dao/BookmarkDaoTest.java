@@ -121,7 +121,7 @@ public class BookmarkDaoTest {
             Assert.assertEquals("Count now is 1", 1 , count);
 
             bookmarks = bookmarkDao.get(10,0,"1");
-            Assert.assertEquals("Count is 2", 1, bookmarks.size());
+            Assert.assertEquals("Count is 1", 1, bookmarks.size());
 
             Assert.assertEquals("BookmarkIds match", bookmarkid1, bookmarks.get(0).getBookmarkId());
             Assert.assertEquals("name match", "bookmark1", bookmarks.get(0).getName());

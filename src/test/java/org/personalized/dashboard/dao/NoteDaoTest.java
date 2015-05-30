@@ -116,7 +116,7 @@ public class NoteDaoTest {
             Assert.assertEquals("Count now is 1", 1 , count);
 
             notes = noteDao.get(10,0,"1");
-            Assert.assertEquals("Count is 2", 1, notes.size());
+            Assert.assertEquals("Count is 1", 1, notes.size());
 
             Assert.assertEquals("NoteIds match", noteid1, notes.get(0).getNoteId());
             Assert.assertEquals("title match", "title1", notes.get(0).getTitle());
