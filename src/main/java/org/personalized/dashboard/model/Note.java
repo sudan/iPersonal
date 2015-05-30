@@ -2,9 +2,12 @@ package org.personalized.dashboard.model;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  * Created by sudan on 3/4/15.
  */
+@XmlRootElement
 public class Note {
 
     private String noteId;
@@ -51,8 +54,16 @@ public class Note {
         return createdOn;
     }
 
+    public void setCreatedOn(Long createdOn) {
+        this.createdOn = createdOn;
+    }
+
     public Long getModifiedAt() {
         return modifiedAt;
+    }
+
+    public void setModifiedAt(Long modifiedAt){
+        this.modifiedAt = modifiedAt;
     }
 
     @Override
