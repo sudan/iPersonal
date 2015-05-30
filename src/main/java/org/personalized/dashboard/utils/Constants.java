@@ -16,7 +16,9 @@ public class Constants {
     public static final String BOOKMARK_NAME = "name";
     public static final String BOOKMARK_DESCRIPTION = "description";
     public static final String BOOKMARK_URL = "url";
-
+    public static final int BOOKMARK_NAME_MAX_LENGTH = 50;
+    public static final int BOOKMARK_CONTENT_MAX_LENGTH = 1000;
+    public static final int BOOKMARK_URL_MAX_LENGTH = 300;
 
     public static final String NOTES = "notes";
     public static final String NOTE_PREFIX = "NOT";

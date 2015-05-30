@@ -39,17 +39,17 @@ public class NoteValidationTest {
         note = new Note("NOTE7W3687R4UFB3", invalidTitle.toString(), "content");
         errorEntities = noteValidationService.validate(note);
         Assert.assertEquals("Error count is 1", 1, errorEntities.size());
-        Assert.assertEquals("Error is MAX_TITLE_LENGTH_EXCEEDED", ErrorCodes.MAX_TITLE_LENGTH_EXCEEDED.name(), errorEntities.get(0).getName());
+        Assert.assertEquals("Error is MAX_TITLE_LENGTH_EXCEEDED", ErrorCodes.MAX_NOTE_TITLE_LENGTH_EXCEEDED.name(), errorEntities.get(0).getName());
 
         note = new Note("NOTE7W3687R4UFB3", "note", invalidContent.toString());
         errorEntities = noteValidationService.validate(note);
         Assert.assertEquals("Error count is 1", 1, errorEntities.size());
-        Assert.assertEquals("Error is MAX_CONTENT_LENGTH_EXCEEDED", ErrorCodes.MAX_CONTENT_LENGTH_EXCEEDED.name(), errorEntities.get(0).getName());
+        Assert.assertEquals("Error is MAX_CONTENT_LENGTH_EXCEEDED", ErrorCodes.MAX_NOTE_CONTENT_LENGTH_EXCEEDED.name(), errorEntities.get(0).getName());
 
         note = new Note("NOTE7W3687R4UFB3", invalidTitle.toString(), invalidContent.toString());
         errorEntities = noteValidationService.validate(note);
         Assert.assertEquals("Error count is 2", 2  , errorEntities.size());
-        Assert.assertEquals("Error is MAX_TITLE_LENGTH_EXCEEEDED", ErrorCodes.MAX_TITLE_LENGTH_EXCEEDED.name(), errorEntities.get(0).getName());
-        Assert.assertEquals("Error is MAX_CONTENT_LENGTH_EXCEEDED", ErrorCodes.MAX_CONTENT_LENGTH_EXCEEDED.name(), errorEntities.get(1).getName());
+        Assert.assertEquals("Error is MAX_TITLE_LENGTH_EXCEEEDED", ErrorCodes.MAX_NOTE_TITLE_LENGTH_EXCEEDED.name(), errorEntities.get(0).getName());
+        Assert.assertEquals("Error is MAX_CONTENT_LENGTH_EXCEEDED", ErrorCodes.MAX_NOTE_CONTENT_LENGTH_EXCEEDED.name(), errorEntities.get(1).getName());
     }
 }

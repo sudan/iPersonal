@@ -8,8 +8,11 @@ public enum ErrorCodes {
     INVALID_URL("Invalid URL format"),
     INVALID_LIMIT("Invalid batch size"),
     INVALID_OFFSET("Invalid offset"),
-    MAX_TITLE_LENGTH_EXCEEDED("Title length cannot exceed {0} characters"),
-    MAX_CONTENT_LENGTH_EXCEEDED("Content length cannot exceed {0} characters");
+    MAX_BOOKMARK_NAME_LENGTH_EXCEEDED("name length cannot exceed {0} characters"),
+    MAX_BOOKMARK_CONTENT_LENGTH_EXCEEDED("description length cannot exceed {0} characters"),
+    MAX_BOOKMARK_URL_LENGTH_EXCEEDED("url length cannot exceed {0} characters"),
+    MAX_NOTE_TITLE_LENGTH_EXCEEDED("Title length cannot exceed {0} characters"),
+    MAX_NOTE_CONTENT_LENGTH_EXCEEDED("Content length cannot exceed {0} characters");
 
     private String description;
 
