@@ -25,6 +25,7 @@ public class DIModule extends AbstractModule {
         bind(PinService.class).to(PinServiceImpl.class);
         bind(TodoService.class).to(TodoServiceImpl.class);
         bind(ExpenseService.class).to(ExpenseServiceImpl.class);
+        bind(ActivityService.class).to(ActivityServiceImpl.class);
 
         bind(BookmarkDao.class).to(BookmarkDaoImpl.class);
         bind(DiaryDao.class).to(DiaryDaoImpl.class);

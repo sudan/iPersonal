@@ -2,9 +2,12 @@ package org.personalized.dashboard.model;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  * Created by sudan on 6/4/15.
  */
+@XmlRootElement
 public class Entity {
 
     private EntityType entityType;
@@ -17,6 +20,7 @@ public class Entity {
     public Entity(EntityType entityType, String entityId) {
         this.entityType = entityType;
         this.entityId = entityId;
+
     }
 
     public EntityType getEntityType() {
