@@ -27,6 +27,14 @@ public class Constants {
     public static final int NOTE_TITLE_MAX_LENGTH = 50;
     public static final int NOTE_CONTENT_MAX_LENGTH = 1000;
 
+    public static final String PINS = "pins";
+    public static final String PIN_PREFIX = "PIN";
+    public static final String PIN_NAME = "name";
+    public static final String PIN_DESCRIPTION = "description";
+    public static final String PIN_IMAGE_URL = "image_url";
+    public static final int PIN_NAME_MAX_LENGTH = 50;
+    public static final int PIN_DESCRIPTION_MAX_LENGTH = 2000;
+    public static final int PIN_URL_MAX_LENGTH = 300;
 
     public static final int ID_LENGTH = 16;
     public static final int MAX_BATCH_SIZE = 20;

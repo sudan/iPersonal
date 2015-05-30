@@ -120,8 +120,8 @@ public class NoteController {
         List<ErrorEntity> errorEntities = batchSizeValidationService.validate(batchSize);
         if(CollectionUtils.isEmpty(errorEntities)) {
             List<Note> notes = noteService.fetchNotes(batchSize.getLimit(), batchSize.getOffset());
-            GenericEntity<List<Note>> bookmarkListObj = new GenericEntity<List<Note>>(notes){};
-            return Response.status(Response.Status.OK).entity(bookmarkListObj).build();
+            GenericEntity<List<Note>> noteListObj = new GenericEntity<List<Note>>(notes){};
+            return Response.status(Response.Status.OK).entity(noteListObj).build();
         }
         else {
             GenericEntity<List<ErrorEntity>> errorObj = new GenericEntity<List<ErrorEntity>>(errorEntities){};
