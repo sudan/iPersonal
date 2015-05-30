@@ -45,6 +45,9 @@ public class Constants {
     public static final String ACTIVITY_DESC = "description";
     public static final String ENTITY_TYPE = "entity_type";
     public static final String ENTITY_ID = "entity_id";
+    public static final int ACTIVITIES_LIMIT = 30;
 
     public static final String SET_OPERATION = "$set";
+
+
 }

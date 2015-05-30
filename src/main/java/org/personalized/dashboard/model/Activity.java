@@ -64,6 +64,10 @@ public class Activity {
         return createdOn;
     }
 
+    public void setCreatedOn(Long createdOn) {
+        this.createdOn = createdOn;
+    }
+
     @Override
     public String toString(){
         return new ToStringBuilder(this)
