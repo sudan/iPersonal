@@ -33,7 +33,7 @@ public class ActivityDaoImpl implements ActivityDao {
                 .append(Constants.ENTITY_TYPE, activity.getEntity().getEntityType().name())
                 .append(Constants.ACTIVITY_DESC, activity.getDescription())
                 .append(Constants.USER_ID, userId)
-                .append(Constants.MODIFIED_AT, System.currentTimeMillis());
+                .append(Constants.CREATED_ON, System.currentTimeMillis());
         collection.insertOne(document);
 
     }
