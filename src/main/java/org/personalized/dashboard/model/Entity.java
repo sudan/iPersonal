@@ -10,6 +10,15 @@ public class Entity {
     private EntityType entityType;
     private String entityId;
 
+    public Entity() {
+
+    }
+
+    public Entity(EntityType entityType, String entityId) {
+        this.entityType = entityType;
+        this.entityId = entityId;
+    }
+
     public EntityType getEntityType() {
         return entityType;
     }

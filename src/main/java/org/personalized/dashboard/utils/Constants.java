@@ -39,5 +39,12 @@ public class Constants {
     public static final int ID_LENGTH = 16;
     public static final int MAX_BATCH_SIZE = 20;
 
+    public static final String ACTIVITIES = "activities";
+    public static final String ACTIVITIES_PREFIX = "ACT";
+    public static final String ACTIVITY_TYPE = "type";
+    public static final String ACTIVITY_DESC = "description";
+    public static final String ENTITY_TYPE = "entity_type";
+    public static final String ENTITY_ID = "entity_id";
+
     public static final String SET_OPERATION = "$set";
 }
