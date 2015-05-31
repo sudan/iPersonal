@@ -29,24 +29,24 @@ public class BookmarkValidationService implements ValidationService<Bookmark> {
             errorEntities.add(errorEntity);
         }
         if(bookmark.getUrl().length() > Constants.BOOKMARK_URL_MAX_LENGTH) {
-            ErrorEntity errorEntity = new ErrorEntity(ErrorCodes.MAX_BOOKMARK_URL_LENGTH_EXCEEDED.name(),
-                    MessageFormat.format(ErrorCodes.MAX_BOOKMARK_URL_LENGTH_EXCEEDED.getDescription(), Constants.BOOKMARK_URL_MAX_LENGTH));
+            ErrorEntity errorEntity = new ErrorEntity(ErrorCodes.BOOKMARK_URL_LENGTH_EXCEEDED.name(),
+                    MessageFormat.format(ErrorCodes.BOOKMARK_URL_LENGTH_EXCEEDED.getDescription(), Constants.BOOKMARK_URL_MAX_LENGTH));
             errorEntities.add(errorEntity);
         }
     }
 
     private void validateName(Bookmark bookmark, List<ErrorEntity> errorEntities) {
         if(bookmark.getName().length() > Constants.BOOKMARK_NAME_MAX_LENGTH) {
-            ErrorEntity errorEntity = new ErrorEntity(ErrorCodes.MAX_BOOKMARK_NAME_LENGTH_EXCEEDED.name(),
-                    MessageFormat.format(ErrorCodes.MAX_BOOKMARK_NAME_LENGTH_EXCEEDED.getDescription(), Constants.BOOKMARK_NAME_MAX_LENGTH));
+            ErrorEntity errorEntity = new ErrorEntity(ErrorCodes.BOOKMARK_NAME_LENGTH_EXCEEDED.name(),
+                    MessageFormat.format(ErrorCodes.BOOKMARK_NAME_LENGTH_EXCEEDED.getDescription(), Constants.BOOKMARK_NAME_MAX_LENGTH));
             errorEntities.add(errorEntity);
         }
     }
 
     private void validateDescription(Bookmark bookmark, List<ErrorEntity> errorEntities) {
         if(bookmark.getDescription().length() > Constants.BOOKMARK_CONTENT_MAX_LENGTH) {
-            ErrorEntity errorEntity = new ErrorEntity(ErrorCodes.MAX_BOOKMARK_CONTENT_LENGTH_EXCEEDED.name(),
-                    MessageFormat.format(ErrorCodes.MAX_BOOKMARK_CONTENT_LENGTH_EXCEEDED.getDescription(), Constants.BOOKMARK_CONTENT_MAX_LENGTH));
+            ErrorEntity errorEntity = new ErrorEntity(ErrorCodes.BOOKMARK_CONTENT_LENGTH_EXCEEDED.name(),
+                    MessageFormat.format(ErrorCodes.BOOKMARK_CONTENT_LENGTH_EXCEEDED.getDescription(), Constants.BOOKMARK_CONTENT_MAX_LENGTH));
             errorEntities.add(errorEntity);
         }
     }

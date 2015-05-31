@@ -29,24 +29,24 @@ public class PinValidationService implements ValidationService<Pin> {
             errorEntities.add(errorEntity);
         }
         if(pin.getImageUrl().length() > Constants.PIN_URL_MAX_LENGTH) {
-            ErrorEntity errorEntity = new ErrorEntity(ErrorCodes.MAX_PIN_URL_LENGTH_EXCEEDED.name(),
-                    MessageFormat.format(ErrorCodes.MAX_PIN_URL_LENGTH_EXCEEDED.getDescription(), Constants.PIN_URL_MAX_LENGTH));
+            ErrorEntity errorEntity = new ErrorEntity(ErrorCodes.PIN_URL_LENGTH_EXCEEDED.name(),
+                    MessageFormat.format(ErrorCodes.PIN_URL_LENGTH_EXCEEDED.getDescription(), Constants.PIN_URL_MAX_LENGTH));
             errorEntities.add(errorEntity);
         }
     }
 
     private void validateName(Pin pin, List<ErrorEntity> errorEntities) {
         if(pin.getName().length() > Constants.PIN_NAME_MAX_LENGTH) {
-            ErrorEntity errorEntity = new ErrorEntity(ErrorCodes.MAX_PIN_NAME_LENGTH_EXCEEDED.name(),
-                    MessageFormat.format(ErrorCodes.MAX_PIN_NAME_LENGTH_EXCEEDED.getDescription(), Constants.PIN_NAME_MAX_LENGTH));
+            ErrorEntity errorEntity = new ErrorEntity(ErrorCodes.PIN_NAME_LENGTH_EXCEEDED.name(),
+                    MessageFormat.format(ErrorCodes.PIN_NAME_LENGTH_EXCEEDED.getDescription(), Constants.PIN_NAME_MAX_LENGTH));
             errorEntities.add(errorEntity);
         }
     }
 
     private void validateDescription(Pin pin, List<ErrorEntity> errorEntities) {
         if(pin.getDescription().length() > Constants.PIN_DESCRIPTION_MAX_LENGTH) {
-            ErrorEntity errorEntity = new ErrorEntity(ErrorCodes.MAX_PIN_DESC_LENGTH_EXCEEDED.name(),
-                    MessageFormat.format(ErrorCodes.MAX_PIN_DESC_LENGTH_EXCEEDED.getDescription(), Constants.PIN_DESCRIPTION_MAX_LENGTH));
+            ErrorEntity errorEntity = new ErrorEntity(ErrorCodes.PIN_DESC_LENGTH_EXCEEDED.name(),
+                    MessageFormat.format(ErrorCodes.PIN_DESC_LENGTH_EXCEEDED.getDescription(), Constants.PIN_DESCRIPTION_MAX_LENGTH));
             errorEntities.add(errorEntity);
         }
     }

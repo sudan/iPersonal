@@ -29,8 +29,8 @@ public class TodoValidationService implements ValidationService<Todo> {
             errorEntities.add(errorEntity);
         }
         else if(todo.getTasks().size() > Constants.MAX_TASK_SIZE) {
-            ErrorEntity errorEntity = new ErrorEntity(ErrorCodes.MAX_TASK_LIST_LENGTH_EXCEEDED.name(),
-                    MessageFormat.format(ErrorCodes.MAX_TASK_LIST_LENGTH_EXCEEDED.getDescription(), Constants.MAX_TASK_SIZE));
+            ErrorEntity errorEntity = new ErrorEntity(ErrorCodes.TASKS_LENGTH_EXCEEDED.name(),
+                    MessageFormat.format(ErrorCodes.TASKS_LENGTH_EXCEEDED.getDescription(), Constants.MAX_TASK_SIZE));
             errorEntities.add(errorEntity);
         }
     }

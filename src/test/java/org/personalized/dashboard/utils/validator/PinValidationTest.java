@@ -41,7 +41,7 @@ public class PinValidationTest {
         Assert.assertEquals("Error 1 is INVALID_URL", ErrorCodes.INVALID_URL.name(), errorEntities.get(0).getName());
         Assert.assertEquals("Error description matches", ErrorCodes.INVALID_URL.getDescription(), errorEntities.get(0).getDescription());
 
-        Assert.assertEquals("Error 2 is MAX_PIN_URL_LENGTH_EXCEEDED", ErrorCodes.MAX_PIN_URL_LENGTH_EXCEEDED.name(), errorEntities.get(1).getName());
+        Assert.assertEquals("Error 2 is MAX_PIN_URL_LENGTH_EXCEEDED", ErrorCodes.PIN_URL_LENGTH_EXCEEDED.name(), errorEntities.get(1).getName());
         Assert.assertEquals("Error description matches", "url length cannot exceed 300 characters", errorEntities.get(1).getDescription());
 
         StringBuilder invalidName  = new StringBuilder();
@@ -62,14 +62,14 @@ public class PinValidationTest {
         Assert.assertEquals("Error 1 is INVALID_URL", ErrorCodes.INVALID_URL.name(), errorEntities.get(0).getName());
         Assert.assertEquals("Error description matches", ErrorCodes.INVALID_URL.getDescription(), errorEntities.get(0).getDescription());
 
-        Assert.assertEquals("Error 2 is MAX_PIN_URL_LENGTH_EXCEEDED", ErrorCodes.MAX_PIN_URL_LENGTH_EXCEEDED.name(), errorEntities.get(1).getName());
+        Assert.assertEquals("Error 2 is MAX_PIN_URL_LENGTH_EXCEEDED", ErrorCodes.PIN_URL_LENGTH_EXCEEDED.name(), errorEntities.get(1).getName());
         Assert.assertEquals("Error description matches", "url length cannot exceed 300 characters", errorEntities.get(1).getDescription());
 
 
-        Assert.assertEquals("Error 3 is MAX_PIN_NAME_LENGTH_EXCEEDED", ErrorCodes.MAX_PIN_NAME_LENGTH_EXCEEDED.name(), errorEntities.get(2).getName());
+        Assert.assertEquals("Error 3 is MAX_PIN_NAME_LENGTH_EXCEEDED", ErrorCodes.PIN_NAME_LENGTH_EXCEEDED.name(), errorEntities.get(2).getName());
         Assert.assertEquals("Error description matches", "name length cannot exceed 50 characters", errorEntities.get(2).getDescription());
 
-        Assert.assertEquals("Error 2 is MAX_PIN_DESC_LENGTH_EXCEEDED", ErrorCodes.MAX_PIN_DESC_LENGTH_EXCEEDED.name(), errorEntities.get(3).getName());
+        Assert.assertEquals("Error 2 is MAX_PIN_DESC_LENGTH_EXCEEDED", ErrorCodes.PIN_DESC_LENGTH_EXCEEDED.name(), errorEntities.get(3).getName());
         Assert.assertEquals("Error description matches", "description length cannot exceed 2,000 characters", errorEntities.get(3).getDescription());
 
     }
