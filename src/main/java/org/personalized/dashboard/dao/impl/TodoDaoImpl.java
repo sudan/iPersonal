@@ -143,7 +143,15 @@ public class TodoDaoImpl implements TodoDao {
 
     @Override
     public Long count(String userId) {
-        return null;
+        MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection(Constants.TODOS);
+
+        return collection.count(
+                and(
+                        eq(Constants.USER_ID, userId),
+                        ne(Constants.IS_DELETED, true)
+                )
+        );
+
     }
 
     @Override

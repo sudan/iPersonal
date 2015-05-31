@@ -104,5 +104,14 @@ public class TodoController {
         }
     }
 
+    @GET
+    @Path("count")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response countTodos() {
+        Long count = todoService.countTodos();
+        return Response.status(Response.Status.OK).entity(String.valueOf(count)).build();
+    }
+
+
 
 }

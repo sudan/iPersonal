@@ -65,4 +65,9 @@ public class TodoServiceImpl implements TodoService {
             activityDao.add(activity, sessionManager.getUserIdFromSession());
         }
     }
+
+    @Override
+    public Long countTodos() {
+        return todoDao.count(sessionManager.getUserIdFromSession());
+    }
 }

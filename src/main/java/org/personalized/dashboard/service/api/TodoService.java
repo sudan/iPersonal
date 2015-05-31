@@ -34,4 +34,11 @@ public interface TodoService {
      * @return
      */
     void deleteTodo(String todoId);
+
+
+    /**
+     * Count the todos for the user
+     * @return
+     */
+    Long countTodos();
 }
