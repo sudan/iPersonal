@@ -3,6 +3,7 @@ package org.personalized.dashboard.dao.impl;
 import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.result.UpdateResult;
 import org.bson.Document;
 import org.personalized.dashboard.bootstrap.MongoBootstrap;
 import org.personalized.dashboard.dao.api.TodoDao;
@@ -93,8 +94,34 @@ public class TodoDaoImpl implements TodoDao {
     }
 
     @Override
-    public Todo update(Todo todo, String userId) {
-        return null;
+    public Long update(Todo todo, String userId) {
+        MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection(Constants.TODOS);
+
+        List<Document> tasks = Lists.newArrayList();
+        for(Task task : todo.getTasks()) {
+            String taskId = idGenerator.generateId(Constants.TASK_PREFIX, Constants.ID_LENGTH);
+            Document document = new Document()
+                    .append(Constants.PRIMARY_KEY, taskId)
+                    .append(Constants.TASK_NAME, task.getName())
+                    .append(Constants.TASK_DESC, task.getTask())
+                    .append(Constants.TASK_PERCENT_COMPLETION, task.getPercentCompletion())
+                    .append(Constants.TASK_PRIORITY, task.getPriority().name());
+            tasks.add(document);
+        }
+        Document document = new Document()
+                .append(Constants.TODO_NAME, todo.getName())
+                .append(Constants.TASKS, tasks)
+                .append(Constants.MODIFIED_AT, System.currentTimeMillis());
+
+        UpdateResult updateResult = collection.updateOne(
+                and(
+                        eq(Constants.PRIMARY_KEY, todo.getTodoId()),
+                        eq(Constants.USER_ID, userId),
+                        ne(Constants.IS_DELETED, true)
+                ),
+                new Document(Constants.SET_OPERATION, document)
+        );
+        return updateResult.getModifiedCount();
     }
 
     @Override

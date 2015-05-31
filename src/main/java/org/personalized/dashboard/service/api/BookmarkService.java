@@ -24,7 +24,7 @@ public interface BookmarkService {
     Bookmark getBookmark(String bookmarkId);
 
     /**
-     * Update the bookmark and return the updated object
+     * Update the bookmark
      * @param bookmark
      * @return
      */

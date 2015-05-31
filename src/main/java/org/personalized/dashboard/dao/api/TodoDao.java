@@ -31,7 +31,7 @@ public interface TodoDao {
      * @param userId
      * @return
      */
-    Todo update(Todo todo, String userId);
+    Long update(Todo todo, String userId);
 
     /**
      * Delete the todo for the todoId and userId

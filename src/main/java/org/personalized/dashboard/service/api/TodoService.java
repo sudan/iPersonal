@@ -20,4 +20,11 @@ public interface TodoService {
      * @return
      */
     Todo getTodo(String todoId);
+
+    /**
+     * Updates the todo
+     * @param todo
+     * @return
+     */
+    Long updateTodo(Todo todo);
 }

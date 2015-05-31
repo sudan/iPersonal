@@ -45,4 +45,14 @@ public class TodoServiceImpl implements TodoService {
     public Todo getTodo(String todoId) {
         return todoDao.get(todoId, sessionManager.getUserIdFromSession());
     }
+
+    @Override
+    public Long updateTodo(Todo todo) {
+        Long modifiedCount = todoDao.update(todo, sessionManager.getUserIdFromSession());
+        if(modifiedCount > 0) {
+            Activity activity = activityGenerator.generate(ActivityType.UPDATED, EntityType.TODO, todo.getTodoId(), todo.getName());
+            activityDao.add(activity, sessionManager.getUserIdFromSession());
+        }
+        return modifiedCount;
+    }
 }

@@ -71,4 +71,25 @@ public class TodoController {
             }
         }
     }
+
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response updateTodo(Todo todo) {
+        List<ErrorEntity> errorEntities = todoValidationService.validate(todo) ;
+        if(CollectionUtils.isEmpty(errorEntities)) {
+            Long modifiedCount = todoService.updateTodo(todo);
+            if(modifiedCount > 0) {
+                return Response.status(Response.Status.OK).entity(todo).build();
+            }
+            else {
+                return Response.status(Response.Status.BAD_REQUEST).build();
+            }
+        }
+        else {
+            GenericEntity<List<ErrorEntity>> errorObj = new GenericEntity<List<ErrorEntity>>(errorEntities){};
+            return Response.status(Response.Status.BAD_REQUEST).entity(errorObj).build();
+        }
+    }
+
 }
