@@ -27,4 +27,11 @@ public interface TodoService {
      * @return
      */
     Long updateTodo(Todo todo);
+
+    /**
+     * Delete the todo
+     * @param todoId
+     * @return
+     */
+    void deleteTodo(String todoId);
 }

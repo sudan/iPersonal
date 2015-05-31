@@ -1,6 +1,7 @@
 package org.personalized.dashboard.service.impl;
 
 import com.google.inject.Inject;
+import org.apache.commons.lang3.StringUtils;
 import org.personalized.dashboard.dao.api.ActivityDao;
 import org.personalized.dashboard.dao.api.TodoDao;
 import org.personalized.dashboard.model.Activity;
@@ -54,5 +55,14 @@ public class TodoServiceImpl implements TodoService {
             activityDao.add(activity, sessionManager.getUserIdFromSession());
         }
         return modifiedCount;
+    }
+
+    @Override
+    public void deleteTodo(String todoId) {
+        Long deletedCount =todoDao.delete(todoId, sessionManager.getUserIdFromSession());
+        if(deletedCount > 0) {
+            Activity activity = activityGenerator.generate(ActivityType.DELETED, EntityType.TODO, todoId, StringUtils.EMPTY);
+            activityDao.add(activity, sessionManager.getUserIdFromSession());
+        }
     }
 }

@@ -92,4 +92,17 @@ public class TodoController {
         }
     }
 
+    @DELETE
+    @Path("{todoId}")
+    public Response deletePin(@PathParam("todoId") String todoId) {
+        if(StringUtils.isEmpty(todoId)){
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+        else {
+            todoService.deleteTodo(todoId);
+            return Response.status(Response.Status.OK).build();
+        }
+    }
+
+
 }

@@ -125,8 +125,20 @@ public class TodoDaoImpl implements TodoDao {
     }
 
     @Override
-    public void delete(String todoId, String userId) {
+    public Long delete(String todoId, String userId) {
+        MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection(Constants.TODOS);
 
+        Document document = new Document()
+                .append(Constants.IS_DELETED, true);
+
+        UpdateResult updateResult = collection.updateOne(
+                and(
+                        eq(Constants.PRIMARY_KEY, todoId),
+                        eq(Constants.USER_ID, userId)
+                ),
+                new Document(Constants.SET_OPERATION, document)
+        );
+        return updateResult.getModifiedCount();
     }
 
     @Override

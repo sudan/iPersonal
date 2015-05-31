@@ -38,7 +38,7 @@ public interface TodoDao {
      * @param todoId
      * @param userId
      */
-    void delete(String todoId, String userId);
+    Long delete(String todoId, String userId);
 
     /**
      * Count the number of todos for the userId
