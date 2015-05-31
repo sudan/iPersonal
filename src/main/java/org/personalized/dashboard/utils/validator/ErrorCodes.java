@@ -22,7 +22,7 @@ public enum ErrorCodes {
     PIN_DESC_LENGTH_EXCEEDED("description length cannot exceed {0} characters"),
     EMPTY_PIN_DESC("description cannot be empty"),
     PIN_URL_LENGTH_EXCEEDED("url length cannot exceed {0} characters"),
-    TOTO_NAME_LENGTH_EXCEEDED("name cannot be exceed {0} characters"),
+    TODO_NAME_LENGTH_EXCEEDED("name cannot be exceed {0} characters"),
     EMPTY_TODO_NAME("name cannot be empty"),
     TASKS_LENGTH_EXCEEDED("Task list exceeded the limit {0}"),
     EMPTY_TASK_LIST("Task list cannot be empty"),

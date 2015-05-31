@@ -46,6 +46,9 @@ public class Constants {
     public static final String TASK_PERCENT_COMPLETION = "percent_done";
     public static final String TASK_PREFIX = "TAS";
     public static final int MAX_TASK_SIZE = 10;
+    public static final int TODO_NAME_MAX_LENGTH = 50;
+    public static final int TASK_NAME_MAX_LENGTH = 50;
+    public static final int TASK_DESC_MAX_LENGTH = 300;
 
     public static final int ID_LENGTH = 16;
     public static final int MAX_BATCH_SIZE = 20;
