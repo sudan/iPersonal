@@ -15,7 +15,10 @@ public enum ErrorCodes {
     MAX_NOTE_CONTENT_LENGTH_EXCEEDED("content length cannot exceed {0} characters"),
     MAX_PIN_NAME_LENGTH_EXCEEDED("name length cannot exceed {0} characters"),
     MAX_PIN_DESC_LENGTH_EXCEEDED("description length cannot exceed {0} characters"),
-    MAX_PIN_URL_LENGTH_EXCEEDED("url length cannot exceed {0} characters");
+    MAX_PIN_URL_LENGTH_EXCEEDED("url length cannot exceed {0} characters"),
+    EMPTY_TASK_LIST("Task list cannot be empty"),
+    MAX_TASK_LIST_LENGTH_EXCEEDED("Task list exceeded the limit {0}"),
+    EMPTY_TASK_NAME("Task name cannot be empty");
 
     private String description;
 

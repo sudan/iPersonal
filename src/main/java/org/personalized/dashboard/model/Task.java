@@ -2,9 +2,12 @@ package org.personalized.dashboard.model;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  * Created by sudan on 9/4/15.
  */
+@XmlRootElement
 public class Task {
 
     private String taskId;
