@@ -13,4 +13,11 @@ public interface TodoService {
      * @return
      */
     String createTodo(Todo todo);
+
+    /**
+     * Get the todo for the todoId
+     * @param todoId
+     * @return
+     */
+    Todo getTodo(String todoId);
 }

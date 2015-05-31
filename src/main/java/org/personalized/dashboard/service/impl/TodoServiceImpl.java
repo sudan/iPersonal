@@ -40,4 +40,9 @@ public class TodoServiceImpl implements TodoService {
         activityDao.add(activity, sessionManager.getUserIdFromSession());
         return todoId;
     }
+
+    @Override
+    public Todo getTodo(String todoId) {
+        return todoDao.get(todoId, sessionManager.getUserIdFromSession());
+    }
 }

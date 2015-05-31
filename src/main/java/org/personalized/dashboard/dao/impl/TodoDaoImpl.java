@@ -6,12 +6,15 @@ import com.mongodb.client.MongoCollection;
 import org.bson.Document;
 import org.personalized.dashboard.bootstrap.MongoBootstrap;
 import org.personalized.dashboard.dao.api.TodoDao;
+import org.personalized.dashboard.model.Priority;
 import org.personalized.dashboard.model.Task;
 import org.personalized.dashboard.model.Todo;
 import org.personalized.dashboard.utils.Constants;
 import org.personalized.dashboard.utils.generator.IdGenerator;
 
 import java.util.List;
+
+import static com.mongodb.client.model.Filters.*;
 
 /**
  * Created by sudan on 3/4/15.
@@ -45,6 +48,7 @@ public class TodoDaoImpl implements TodoDao {
                 .append(Constants.PRIMARY_KEY, todoId)
                 .append(Constants.TODO_NAME, todo.getName())
                 .append(Constants.TASKS, tasks)
+                .append(Constants.USER_ID, userId)
                 .append(Constants.CREATED_ON, System.currentTimeMillis())
                 .append(Constants.MODIFIED_AT, System.currentTimeMillis());
         collection.insertOne(document);
@@ -53,7 +57,39 @@ public class TodoDaoImpl implements TodoDao {
 
     @Override
     public Todo get(String todoId, String userId) {
+        MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection(Constants.TODOS);
+        Document document = collection.find(and
+                        (
+                                eq(Constants.PRIMARY_KEY, todoId),
+                                eq(Constants.USER_ID, userId),
+                                ne(Constants.IS_DELETED, true)
+                        )
+        ).first();
+
+        if(document != null) {
+            Todo todo = new Todo();
+            todo.setTodoId(document.getString(Constants.PRIMARY_KEY));
+            todo.setName(document.getString(Constants.TODO_NAME));
+            todo.setCreatedOn(document.getLong(Constants.CREATED_ON));
+            todo.setModifiedAt(document.getLong(Constants.MODIFIED_AT));
+            List<Document> tasksDocuments = (List<Document>) document.get(Constants.TASKS);
+            List<Task> tasks = Lists.newArrayList();
+            for(Document taskDocument : tasksDocuments) {
+                Task task = new Task();
+                task.setTaskId(taskDocument.getString(Constants.PRIMARY_KEY));
+                task.setName(taskDocument.getString(Constants.TODO_NAME));
+                task.setTask(taskDocument.getString(Constants.TASK_DESC));
+                task.setPriority(Priority.valueOf(taskDocument.getString(Constants.TASK_PRIORITY)));
+                task.setPercentCompletion(taskDocument.getInteger(Constants.TASK_PERCENT_COMPLETION));
+                tasks.add(task);
+            }
+            todo.setTasks(tasks);
+            return todo;
+
+        }
         return null;
+
+
     }
 
     @Override

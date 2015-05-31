@@ -56,8 +56,16 @@ public class Todo {
         return createdOn;
     }
 
+    public void setCreatedOn(Long createdOn) {
+        this.createdOn = createdOn;
+    }
+
     public Long getModifiedAt() {
         return modifiedAt;
+    }
+
+    public void setModifiedAt(Long modifiedAt) {
+        this.modifiedAt = modifiedAt;
     }
 
     @Override
