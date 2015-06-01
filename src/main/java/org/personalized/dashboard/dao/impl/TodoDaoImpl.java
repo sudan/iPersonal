@@ -2,6 +2,8 @@ package org.personalized.dashboard.dao.impl;
 
 import com.google.common.collect.Lists;
 import com.google.inject.Inject;
+import com.mongodb.Block;
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.result.UpdateResult;
 import org.bson.Document;
@@ -156,6 +158,42 @@ public class TodoDaoImpl implements TodoDao {
 
     @Override
     public List<Todo> get(int limit, int offset, String userId) {
-        return null;
+        MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection(Constants.TODOS);
+
+        FindIterable<Document> iterator = collection.find(and
+                        (
+                                eq(Constants.USER_ID, userId),
+                                ne(Constants.IS_DELETED, true)
+                        )
+        ).skip(offset).limit(limit).sort(
+                new Document(Constants.MODIFIED_AT, -1)
+        );
+
+        final List<Todo> todos = Lists.newArrayList();
+        iterator.forEach(new Block<Document>() {
+            @Override
+            public void apply(Document document) {
+                Todo todo = new Todo();
+                todo.setTodoId(document.getString(Constants.PRIMARY_KEY));
+                todo.setName(document.getString(Constants.TODO_NAME));
+                todo.setCreatedOn(document.getLong(Constants.CREATED_ON));
+                todo.setModifiedAt(document.getLong(Constants.MODIFIED_AT));
+                List<Document> tasksDocuments = (List<Document>) document.get(Constants.TASKS);
+                List<Task> tasks = Lists.newArrayList();
+                for(Document taskDocument : tasksDocuments) {
+                    Task task = new Task();
+                    task.setTaskId(taskDocument.getString(Constants.PRIMARY_KEY));
+                    task.setName(taskDocument.getString(Constants.TODO_NAME));
+                    task.setTask(taskDocument.getString(Constants.TASK_DESC));
+                    task.setPriority(Priority.valueOf(taskDocument.getString(Constants.TASK_PRIORITY)));
+                    task.setPercentCompletion(taskDocument.getInteger(Constants.TASK_PERCENT_COMPLETION));
+                    tasks.add(task);
+                }
+                todo.setTasks(tasks);
+                todos.add(todo);
+            }
+        });
+        return todos;
+
     }
 }
