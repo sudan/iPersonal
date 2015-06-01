@@ -9,7 +9,7 @@ import org.personalized.dashboard.model.ActivityType;
 import org.personalized.dashboard.model.Bookmark;
 import org.personalized.dashboard.model.EntityType;
 import org.personalized.dashboard.service.api.BookmarkService;
-import org.personalized.dashboard.utils.ActivityGenerator;
+import org.personalized.dashboard.utils.generator.ActivityGenerator;
 import org.personalized.dashboard.utils.auth.SessionManager;
 import org.springframework.stereotype.Repository;
 

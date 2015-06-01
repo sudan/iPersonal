@@ -6,7 +6,7 @@ import org.personalized.dashboard.dao.api.*;
 import org.personalized.dashboard.dao.impl.*;
 import org.personalized.dashboard.service.api.*;
 import org.personalized.dashboard.service.impl.*;
-import org.personalized.dashboard.utils.ActivityGenerator;
+import org.personalized.dashboard.utils.generator.ActivityGenerator;
 import org.personalized.dashboard.utils.auth.SessionManager;
 import org.personalized.dashboard.utils.generator.IdGenerator;
 import org.personalized.dashboard.utils.validator.*;
