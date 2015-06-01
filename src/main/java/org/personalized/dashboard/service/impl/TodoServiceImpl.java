@@ -13,6 +13,8 @@ import org.personalized.dashboard.utils.ActivityGenerator;
 import org.personalized.dashboard.utils.auth.SessionManager;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * Created by sudan on 3/4/15.
  */
@@ -69,5 +71,10 @@ public class TodoServiceImpl implements TodoService {
     @Override
     public Long countTodos() {
         return todoDao.count(sessionManager.getUserIdFromSession());
+    }
+
+    @Override
+    public List<Todo> fetchTodos(int limit, int offset) {
+        return todoDao.get(limit, offset, sessionManager.getUserIdFromSession());
     }
 }

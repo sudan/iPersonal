@@ -3,6 +3,7 @@ package org.personalized.dashboard.controller;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
 import org.apache.commons.lang3.StringUtils;
+import org.personalized.dashboard.model.BatchSize;
 import org.personalized.dashboard.model.Todo;
 import org.personalized.dashboard.service.api.TodoService;
 import org.personalized.dashboard.utils.validator.ErrorEntity;
@@ -112,6 +113,20 @@ public class TodoController {
         return Response.status(Response.Status.OK).entity(String.valueOf(count)).build();
     }
 
-
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response fetchTodos(@QueryParam("limit") int limit, @QueryParam("offset") int offset) {
+        BatchSize batchSize = new BatchSize(limit, offset);
+        List<ErrorEntity> errorEntities = batchSizeValidationService.validate(batchSize);
+        if(CollectionUtils.isEmpty(errorEntities)) {
+            List<Todo> todos = todoService.fetchTodos(batchSize.getLimit(), batchSize.getOffset());
+            GenericEntity<List<Todo>> todoListObj = new GenericEntity<List<Todo>>(todos){};
+            return Response.status(Response.Status.OK).entity(todoListObj).build();
+        }
+        else {
+            GenericEntity<List<ErrorEntity>> errorObj = new GenericEntity<List<ErrorEntity>>(errorEntities){};
+            return Response.status(Response.Status.BAD_REQUEST).entity(errorObj).build();
+        }
+    }
 
 }

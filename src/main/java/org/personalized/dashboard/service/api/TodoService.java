@@ -2,6 +2,8 @@ package org.personalized.dashboard.service.api;
 
 import org.personalized.dashboard.model.Todo;
 
+import java.util.List;
+
 /**
  * Created by sudan on 3/4/15.
  */
@@ -41,4 +43,14 @@ public interface TodoService {
      * @return
      */
     Long countTodos();
+
+
+    /**
+     * Fetch the todos with given limit and offset
+     * @param limit
+     * @param offset
+     * @return
+     */
+    List<Todo> fetchTodos(int limit , int offset);
+
 }
