@@ -1,4 +1,4 @@
-package org.personalized.dashboard.utils;
+package org.personalized.dashboard.utils.generator;
 
 import com.google.inject.Inject;
 import org.personalized.dashboard.model.*;
