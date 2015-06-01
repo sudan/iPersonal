@@ -24,7 +24,7 @@ public interface NoteService {
     Note getNote(String noteId);
 
     /**
-     * Update the note and return the updated object
+     * Update the note
      * @param note
      * @return
      */

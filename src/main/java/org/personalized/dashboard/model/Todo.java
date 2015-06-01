@@ -3,11 +3,13 @@ package org.personalized.dashboard.model;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 
 /**
  * Created by sudan on 3/4/15.
  */
+@XmlRootElement
 public class Todo {
 
     private String todoId;
@@ -54,8 +56,16 @@ public class Todo {
         return createdOn;
     }
 
+    public void setCreatedOn(Long createdOn) {
+        this.createdOn = createdOn;
+    }
+
     public Long getModifiedAt() {
         return modifiedAt;
+    }
+
+    public void setModifiedAt(Long modifiedAt) {
+        this.modifiedAt = modifiedAt;
     }
 
     @Override

@@ -25,7 +25,7 @@ public interface PinService {
     Pin getPin(String pinId);
 
     /**
-     * Update the pin and return the updated object
+     * Update the pin
      * @param pin
      * @return
      */

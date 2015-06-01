@@ -1,6 +1,7 @@
 package org.personalized.dashboard.utils.validator;
 
 import com.google.common.collect.Lists;
+import org.apache.commons.lang3.StringUtils;
 import org.personalized.dashboard.model.Note;
 import org.personalized.dashboard.utils.Constants;
 
@@ -21,17 +22,27 @@ public class NoteValidationService implements ValidationService<Note> {
     }
 
     private void validateTitleLength(Note note, List<ErrorEntity> errorEntities) {
-        if(note.getTitle().length() > Constants.NOTE_TITLE_MAX_LENGTH){
-            ErrorEntity errorEntity = new ErrorEntity(ErrorCodes.MAX_NOTE_TITLE_LENGTH_EXCEEDED.name(),
-                    MessageFormat.format(ErrorCodes.MAX_NOTE_TITLE_LENGTH_EXCEEDED.getDescription(), Constants.NOTE_TITLE_MAX_LENGTH));
+
+        if(StringUtils.isEmpty(note.getTitle())) {
+            ErrorEntity errorEntity = new ErrorEntity(ErrorCodes.EMPTY_NOTE_TITLE.name(), ErrorCodes.EMPTY_NOTE_TITLE.getDescription());
+            errorEntities.add(errorEntity);
+        }
+        else if(note.getTitle().length() > Constants.NOTE_TITLE_MAX_LENGTH){
+            ErrorEntity errorEntity = new ErrorEntity(ErrorCodes.NOTE_TITLE_LENGTH_EXCEEDED.name(),
+                    MessageFormat.format(ErrorCodes.NOTE_TITLE_LENGTH_EXCEEDED.getDescription(), Constants.NOTE_TITLE_MAX_LENGTH));
             errorEntities.add(errorEntity);
         }
     }
 
     private void validateContentLength(Note note, List<ErrorEntity> errorEntities) {
-        if(note.getNote().length() > Constants.NOTE_CONTENT_MAX_LENGTH) {
-            ErrorEntity errorEntity = new ErrorEntity(ErrorCodes.MAX_NOTE_CONTENT_LENGTH_EXCEEDED.name(),
-                    MessageFormat.format(ErrorCodes.MAX_NOTE_CONTENT_LENGTH_EXCEEDED.getDescription(), Constants.NOTE_CONTENT_MAX_LENGTH));
+
+        if(StringUtils.isEmpty(note.getNote())) {
+            ErrorEntity errorEntity = new ErrorEntity(ErrorCodes.EMPTY_NOTE_CONTENT.name(), ErrorCodes.EMPTY_NOTE_CONTENT.getDescription());
+            errorEntities.add(errorEntity);
+        }
+        else if(note.getNote().length() > Constants.NOTE_CONTENT_MAX_LENGTH) {
+            ErrorEntity errorEntity = new ErrorEntity(ErrorCodes.NOTE_CONTENT_LENGTH_EXCEEDED.name(),
+                    MessageFormat.format(ErrorCodes.NOTE_CONTENT_LENGTH_EXCEEDED.getDescription(), Constants.NOTE_CONTENT_MAX_LENGTH));
             errorEntities.add(errorEntity);
         }
     }
