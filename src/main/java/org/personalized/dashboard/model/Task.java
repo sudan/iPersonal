@@ -1,7 +1,10 @@
 package org.personalized.dashboard.model;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.hibernate.validator.constraints.NotEmpty;
+import org.personalized.dashboard.utils.Constants;
 
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -11,9 +14,16 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Task {
 
     private String taskId;
-    private Priority priority;
+    private Priority priority = Priority.MEDIUM;
+
+    @NotEmpty
+    @Size(max=Constants.TITLE_MAX_LENGTH)
     private String name;
+
+    @NotEmpty
+    @Size(max=Constants.CONTENT_MAX_LENGTH)
     private String task;
+
     private int percentCompletion = 0;
 
     public Task(){

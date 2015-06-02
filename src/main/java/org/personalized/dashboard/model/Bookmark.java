@@ -1,7 +1,10 @@
 package org.personalized.dashboard.model;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.hibernate.validator.constraints.NotEmpty;
+import org.personalized.dashboard.utils.Constants;
 
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -11,9 +14,19 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Bookmark {
 
     private String bookmarkId;
+
+    @NotEmpty
+    @Size(max= Constants.TITLE_MAX_LENGTH)
     private String name;
+
+    @NotEmpty
+    @Size(max=Constants.CONTENT_MAX_LENGTH)
     private String description;
+
+    @NotEmpty
+    @Size(max=Constants.URL_MAX_LENGTH)
     private String url;
+
     private Long createdOn;
     private Long modifiedAt;
 

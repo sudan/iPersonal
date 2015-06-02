@@ -2,7 +2,11 @@ package org.personalized.dashboard.model;
 
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.hibernate.validator.constraints.NotEmpty;
+import org.personalized.dashboard.utils.Constants;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 
@@ -13,7 +17,12 @@ import java.util.List;
 public class Todo {
 
     private String todoId;
+
+    @NotEmpty
+    @Size(max= Constants.TITLE_MAX_LENGTH)
     private String name;
+
+    @Valid
     private List<Task> tasks = Lists.newArrayList();
     private Long createdOn;
     private Long modifiedAt;
