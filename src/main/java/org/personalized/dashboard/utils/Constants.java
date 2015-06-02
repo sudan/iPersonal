@@ -34,7 +34,7 @@ public class Constants {
 
     public static final String TODOS = "todos";
     public static final String TODO_PREFIX = "TOD";
-    public static final String TODO_NAME = "name";
+    public static final String TODO_NAME = "title";
     public static final String TASKS = "tasks";
     public static final String TASK_NAME = "name";
     public static final String TASK_DESC = "task";

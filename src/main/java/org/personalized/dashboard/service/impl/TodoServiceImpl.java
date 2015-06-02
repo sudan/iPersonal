@@ -39,7 +39,7 @@ public class TodoServiceImpl implements TodoService {
     @Override
     public String createTodo(Todo todo) {
         String todoId = todoDao.create(todo, sessionManager.getUserIdFromSession());
-        Activity activity = activityGenerator.generate(ActivityType.CREATED, EntityType.TODO, todoId, todo.getName());
+        Activity activity = activityGenerator.generate(ActivityType.CREATED, EntityType.TODO, todoId, todo.getTitle());
         activityDao.add(activity, sessionManager.getUserIdFromSession());
         return todoId;
     }
@@ -53,7 +53,7 @@ public class TodoServiceImpl implements TodoService {
     public Long updateTodo(Todo todo) {
         Long modifiedCount = todoDao.update(todo, sessionManager.getUserIdFromSession());
         if(modifiedCount > 0) {
-            Activity activity = activityGenerator.generate(ActivityType.UPDATED, EntityType.TODO, todo.getTodoId(), todo.getName());
+            Activity activity = activityGenerator.generate(ActivityType.UPDATED, EntityType.TODO, todo.getTodoId(), todo.getTitle());
             activityDao.add(activity, sessionManager.getUserIdFromSession());
         }
         return modifiedCount;

@@ -20,7 +20,7 @@ public class Todo {
 
     @NotEmpty
     @Size(max= Constants.TITLE_MAX_LENGTH)
-    private String name;
+    private String title;
 
     @Valid
     private List<Task> tasks = Lists.newArrayList();
@@ -31,9 +31,9 @@ public class Todo {
 
     }
 
-    public Todo(String todoId, String name, List<Task> tasks){
+    public Todo(String todoId, String title, List<Task> tasks){
         this.todoId = todoId;
-        this.name = name;
+        this.title = title;
         this.tasks = tasks;
     }
 
@@ -45,12 +45,12 @@ public class Todo {
         this.todoId = todoId;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public List<Task> getTasks() {
@@ -81,7 +81,7 @@ public class Todo {
     public String toString(){
         return new ToStringBuilder(this)
                 .append("todoId",todoId)
-                .append("name", name)
+                .append("title", title)
                 .append("tasks",tasks)
                 .append("createdOn", createdOn)
                 .append("modifiedAt", modifiedAt)
