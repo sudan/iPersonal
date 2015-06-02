@@ -29,9 +29,9 @@ public class BookmarkValidationService implements ValidationService<Bookmark> {
             ErrorEntity errorEntity = new ErrorEntity(ErrorCodes.INVALID_URL.name(), ErrorCodes.INVALID_URL.getDescription());
             errorEntities.add(errorEntity);
         }
-        if(bookmark.getUrl().length() > Constants.BOOKMARK_URL_MAX_LENGTH) {
+        if(bookmark.getUrl().length() > Constants.URL_MAX_LENGTH) {
             ErrorEntity errorEntity = new ErrorEntity(ErrorCodes.BOOKMARK_URL_LENGTH_EXCEEDED.name(),
-                    MessageFormat.format(ErrorCodes.BOOKMARK_URL_LENGTH_EXCEEDED.getDescription(), Constants.BOOKMARK_URL_MAX_LENGTH));
+                    MessageFormat.format(ErrorCodes.BOOKMARK_URL_LENGTH_EXCEEDED.getDescription(), Constants.URL_MAX_LENGTH));
             errorEntities.add(errorEntity);
         }
     }
@@ -42,9 +42,9 @@ public class BookmarkValidationService implements ValidationService<Bookmark> {
             ErrorEntity errorEntity = new ErrorEntity(ErrorCodes.EMPTY_BOOKMARK_NAME.name(), ErrorCodes.EMPTY_BOOKMARK_NAME.getDescription());
             errorEntities.add(errorEntity);
         }
-        else if(bookmark.getName().length() > Constants.BOOKMARK_NAME_MAX_LENGTH) {
+        else if(bookmark.getName().length() > Constants.TITLE_MAX_LENGTH) {
             ErrorEntity errorEntity = new ErrorEntity(ErrorCodes.BOOKMARK_NAME_LENGTH_EXCEEDED.name(),
-                    MessageFormat.format(ErrorCodes.BOOKMARK_NAME_LENGTH_EXCEEDED.getDescription(), Constants.BOOKMARK_NAME_MAX_LENGTH));
+                    MessageFormat.format(ErrorCodes.BOOKMARK_NAME_LENGTH_EXCEEDED.getDescription(), Constants.TITLE_MAX_LENGTH));
             errorEntities.add(errorEntity);
         }
     }
@@ -55,9 +55,9 @@ public class BookmarkValidationService implements ValidationService<Bookmark> {
             ErrorEntity errorEntity = new ErrorEntity(ErrorCodes.EMPTY_BOOKMARK_CONTENT.name(), ErrorCodes.EMPTY_BOOKMARK_CONTENT.getDescription());
             errorEntities.add(errorEntity);
         }
-        else if(bookmark.getDescription().length() > Constants.BOOKMARK_CONTENT_MAX_LENGTH) {
+        else if(bookmark.getDescription().length() > Constants.CONTENT_MAX_LENGTH) {
             ErrorEntity errorEntity = new ErrorEntity(ErrorCodes.BOOKMARK_CONTENT_LENGTH_EXCEEDED.name(),
-                    MessageFormat.format(ErrorCodes.BOOKMARK_CONTENT_LENGTH_EXCEEDED.getDescription(), Constants.BOOKMARK_CONTENT_MAX_LENGTH));
+                    MessageFormat.format(ErrorCodes.BOOKMARK_CONTENT_LENGTH_EXCEEDED.getDescription(), Constants.CONTENT_MAX_LENGTH));
             errorEntities.add(errorEntity);
         }
     }

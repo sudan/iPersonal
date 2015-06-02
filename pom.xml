@@ -27,6 +27,8 @@
     <guice-jersey.version>1.17.1</guice-jersey.version>
     <jersey-bundle.version>1.9</jersey-bundle.version>
     <apache-validator.version>1.4.0</apache-validator.version>
+    <javax-validator.version>1.0.0.GA</javax-validator.version>
+    <hibernate-validator.version>4.0.2.GA</hibernate-validator.version>
   </properties>
 
   <dependencies>
@@ -221,6 +223,18 @@
       <groupId>com.yammer.metrics</groupId>
       <artifactId>metrics-core</artifactId>
       <version>${yammer.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>javax.validation</groupId>
+      <artifactId>validation-api</artifactId>
+      <version>${javax-validator.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-validator</artifactId>
+      <version>${hibernate-validator.version}</version>
     </dependency>
 
 

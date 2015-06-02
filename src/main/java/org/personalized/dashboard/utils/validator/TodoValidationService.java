@@ -42,9 +42,9 @@ public class TodoValidationService implements ValidationService<Todo> {
                     errorEntities.add(errorEntity);
                     hasError = true;
                 }
-                else if(task.getName().length() > Constants.TASK_NAME_MAX_LENGTH) {
+                else if(task.getName().length() > Constants.TITLE_MAX_LENGTH) {
                     ErrorEntity errorEntity = new ErrorEntity(ErrorCodes.TASK_NAME_LENGTH_EXCEEDED.name(),
-                            MessageFormat.format(ErrorCodes.TASK_NAME_LENGTH_EXCEEDED.getDescription(), Constants.TASK_NAME_MAX_LENGTH));
+                            MessageFormat.format(ErrorCodes.TASK_NAME_LENGTH_EXCEEDED.getDescription(), Constants.TITLE_MAX_LENGTH));
                     errorEntities.add(errorEntity);
                     hasError = true;
                 }
@@ -54,9 +54,9 @@ public class TodoValidationService implements ValidationService<Todo> {
                     errorEntities.add(errorEntity);
                     hasError = true;
                 }
-                else if(task.getTask().length() > Constants.TASK_DESC_MAX_LENGTH) {
+                else if(task.getTask().length() > Constants.CONTENT_MAX_LENGTH) {
                     ErrorEntity errorEntity = new ErrorEntity(ErrorCodes.TASK_CONTENT_LENGTH_EXCEEDED.name(),
-                            MessageFormat.format(ErrorCodes.TASK_CONTENT_LENGTH_EXCEEDED.getDescription(), Constants.TASK_DESC_MAX_LENGTH));
+                            MessageFormat.format(ErrorCodes.TASK_CONTENT_LENGTH_EXCEEDED.getDescription(), Constants.CONTENT_MAX_LENGTH));
                     errorEntities.add(errorEntity);
                     hasError = true;
                 }
@@ -71,9 +71,9 @@ public class TodoValidationService implements ValidationService<Todo> {
             ErrorEntity errorEntity = new ErrorEntity(ErrorCodes.EMPTY_TODO_NAME.name(), ErrorCodes.EMPTY_TODO_NAME.getDescription());
             errorEntities.add(errorEntity);
         }
-        else if(todo.getName().length() > Constants.TODO_NAME_MAX_LENGTH) {
+        else if(todo.getName().length() > Constants.TITLE_MAX_LENGTH) {
             ErrorEntity errorEntity = new ErrorEntity(ErrorCodes.TODO_NAME_LENGTH_EXCEEDED.name(),
-                    MessageFormat.format(ErrorCodes.TODO_NAME_LENGTH_EXCEEDED.getDescription(), Constants.TODO_NAME_MAX_LENGTH));
+                    MessageFormat.format(ErrorCodes.TODO_NAME_LENGTH_EXCEEDED.getDescription(), Constants.TITLE_MAX_LENGTH));
             errorEntities.add(errorEntity);
         }
     }

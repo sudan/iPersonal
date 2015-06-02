@@ -25,11 +25,11 @@ public class NoteValidationTest {
     @Test
     public void testNoteValidation() {
         StringBuilder invalidTitle = new StringBuilder();
-        for(int i = 0; i < Constants.NOTE_TITLE_MAX_LENGTH+1; i++)
+        for(int i = 0; i < Constants.TITLE_MAX_LENGTH+1; i++)
             invalidTitle.append("a");
 
         StringBuilder invalidContent = new StringBuilder();
-        for( int i = 0; i < Constants.NOTE_CONTENT_MAX_LENGTH + 1; i++)
+        for( int i = 0; i < Constants.CONTENT_MAX_LENGTH + 1; i++)
             invalidContent.append("b");
 
         Note note = new Note("NOTE7W3687R4UFB3", "title", "content");

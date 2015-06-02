@@ -29,9 +29,9 @@ public class PinValidationService implements ValidationService<Pin> {
             ErrorEntity errorEntity = new ErrorEntity(ErrorCodes.INVALID_URL.name(), ErrorCodes.INVALID_URL.getDescription());
             errorEntities.add(errorEntity);
         }
-        if(pin.getImageUrl().length() > Constants.PIN_URL_MAX_LENGTH) {
+        if(pin.getImageUrl().length() > Constants.URL_MAX_LENGTH) {
             ErrorEntity errorEntity = new ErrorEntity(ErrorCodes.PIN_URL_LENGTH_EXCEEDED.name(),
-                    MessageFormat.format(ErrorCodes.PIN_URL_LENGTH_EXCEEDED.getDescription(), Constants.PIN_URL_MAX_LENGTH));
+                    MessageFormat.format(ErrorCodes.PIN_URL_LENGTH_EXCEEDED.getDescription(), Constants.URL_MAX_LENGTH));
             errorEntities.add(errorEntity);
         }
     }
@@ -42,9 +42,9 @@ public class PinValidationService implements ValidationService<Pin> {
             ErrorEntity errorEntity = new ErrorEntity(ErrorCodes.EMPTY_PIN_NAME.name(), ErrorCodes.EMPTY_PIN_NAME.getDescription());
             errorEntities.add(errorEntity);
         }
-        else if(pin.getName().length() > Constants.PIN_NAME_MAX_LENGTH) {
+        else if(pin.getName().length() > Constants.TITLE_MAX_LENGTH) {
             ErrorEntity errorEntity = new ErrorEntity(ErrorCodes.PIN_NAME_LENGTH_EXCEEDED.name(),
-                    MessageFormat.format(ErrorCodes.PIN_NAME_LENGTH_EXCEEDED.getDescription(), Constants.PIN_NAME_MAX_LENGTH));
+                    MessageFormat.format(ErrorCodes.PIN_NAME_LENGTH_EXCEEDED.getDescription(), Constants.TITLE_MAX_LENGTH));
             errorEntities.add(errorEntity);
         }
     }
@@ -55,9 +55,9 @@ public class PinValidationService implements ValidationService<Pin> {
             ErrorEntity errorEntity = new ErrorEntity(ErrorCodes.EMPTY_PIN_DESC.name(), ErrorCodes.EMPTY_PIN_DESC.getDescription());
             errorEntities.add(errorEntity);
         }
-        else if(pin.getDescription().length() > Constants.PIN_DESCRIPTION_MAX_LENGTH) {
+        else if(pin.getDescription().length() > Constants.CONTENT_MAX_LENGTH) {
             ErrorEntity errorEntity = new ErrorEntity(ErrorCodes.PIN_DESC_LENGTH_EXCEEDED.name(),
-                    MessageFormat.format(ErrorCodes.PIN_DESC_LENGTH_EXCEEDED.getDescription(), Constants.PIN_DESCRIPTION_MAX_LENGTH));
+                    MessageFormat.format(ErrorCodes.PIN_DESC_LENGTH_EXCEEDED.getDescription(), Constants.CONTENT_MAX_LENGTH));
             errorEntities.add(errorEntity);
         }
     }

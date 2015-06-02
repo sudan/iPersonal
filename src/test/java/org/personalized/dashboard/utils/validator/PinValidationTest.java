@@ -30,7 +30,7 @@ public class PinValidationTest {
         Assert.assertEquals("Error count is 0", 0, errorEntities.size());
 
         StringBuilder invalidUrl = new StringBuilder();
-        for(int i = 0; i < Constants.PIN_URL_MAX_LENGTH + 1; i++) {
+        for(int i = 0; i < Constants.URL_MAX_LENGTH + 1; i++) {
             invalidUrl.append("a");
         }
 
@@ -45,12 +45,12 @@ public class PinValidationTest {
         Assert.assertEquals("Error description matches", "url length cannot exceed 300 characters", errorEntities.get(1).getDescription());
 
         StringBuilder invalidName  = new StringBuilder();
-        for(int i = 0; i < Constants.PIN_NAME_MAX_LENGTH + 1; i++){
+        for(int i = 0; i < Constants.TITLE_MAX_LENGTH + 1; i++){
             invalidName.append("a");
         }
 
         StringBuilder invalidDescription = new StringBuilder();
-        for(int i = 0; i < Constants.PIN_DESCRIPTION_MAX_LENGTH + 1; i++) {
+        for(int i = 0; i < Constants.CONTENT_MAX_LENGTH + 1; i++) {
             invalidDescription.append("b");
         }
 
@@ -70,7 +70,7 @@ public class PinValidationTest {
         Assert.assertEquals("Error description matches", "name length cannot exceed 50 characters", errorEntities.get(2).getDescription());
 
         Assert.assertEquals("Error 2 is MAX_PIN_DESC_LENGTH_EXCEEDED", ErrorCodes.PIN_DESC_LENGTH_EXCEEDED.name(), errorEntities.get(3).getName());
-        Assert.assertEquals("Error description matches", "description length cannot exceed 2,000 characters", errorEntities.get(3).getDescription());
+        Assert.assertEquals("Error description matches", "description length cannot exceed 1,000 characters", errorEntities.get(3).getDescription());
 
     }
 }

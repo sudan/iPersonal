@@ -27,9 +27,9 @@ public class NoteValidationService implements ValidationService<Note> {
             ErrorEntity errorEntity = new ErrorEntity(ErrorCodes.EMPTY_NOTE_TITLE.name(), ErrorCodes.EMPTY_NOTE_TITLE.getDescription());
             errorEntities.add(errorEntity);
         }
-        else if(note.getTitle().length() > Constants.NOTE_TITLE_MAX_LENGTH){
+        else if(note.getTitle().length() > Constants.TITLE_MAX_LENGTH){
             ErrorEntity errorEntity = new ErrorEntity(ErrorCodes.NOTE_TITLE_LENGTH_EXCEEDED.name(),
-                    MessageFormat.format(ErrorCodes.NOTE_TITLE_LENGTH_EXCEEDED.getDescription(), Constants.NOTE_TITLE_MAX_LENGTH));
+                    MessageFormat.format(ErrorCodes.NOTE_TITLE_LENGTH_EXCEEDED.getDescription(), Constants.TITLE_MAX_LENGTH));
             errorEntities.add(errorEntity);
         }
     }
@@ -40,9 +40,9 @@ public class NoteValidationService implements ValidationService<Note> {
             ErrorEntity errorEntity = new ErrorEntity(ErrorCodes.EMPTY_NOTE_CONTENT.name(), ErrorCodes.EMPTY_NOTE_CONTENT.getDescription());
             errorEntities.add(errorEntity);
         }
-        else if(note.getNote().length() > Constants.NOTE_CONTENT_MAX_LENGTH) {
+        else if(note.getNote().length() > Constants.CONTENT_MAX_LENGTH) {
             ErrorEntity errorEntity = new ErrorEntity(ErrorCodes.NOTE_CONTENT_LENGTH_EXCEEDED.name(),
-                    MessageFormat.format(ErrorCodes.NOTE_CONTENT_LENGTH_EXCEEDED.getDescription(), Constants.NOTE_CONTENT_MAX_LENGTH));
+                    MessageFormat.format(ErrorCodes.NOTE_CONTENT_LENGTH_EXCEEDED.getDescription(), Constants.CONTENT_MAX_LENGTH));
             errorEntities.add(errorEntity);
         }
     }

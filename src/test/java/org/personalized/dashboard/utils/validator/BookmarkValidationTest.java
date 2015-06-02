@@ -26,17 +26,17 @@ public class BookmarkValidationTest {
     public void testBookmarkValidation(){
 
         StringBuilder invalidUrl = new StringBuilder();
-        for(int i = 0; i < Constants.BOOKMARK_URL_MAX_LENGTH + 1; i++) {
+        for(int i = 0; i < Constants.URL_MAX_LENGTH + 1; i++) {
             invalidUrl.append("a");
         }
 
         StringBuilder invalidName = new StringBuilder();
-        for(int i = 0; i < Constants.BOOKMARK_NAME_MAX_LENGTH + 1; i++) {
+        for(int i = 0; i < Constants.TITLE_MAX_LENGTH + 1; i++) {
             invalidName.append("n");
         }
 
         StringBuilder invalidDescription = new StringBuilder();
-        for(int i = 0; i < Constants.BOOKMARK_CONTENT_MAX_LENGTH + 1; i++) {
+        for(int i = 0; i < Constants.CONTENT_MAX_LENGTH + 1; i++) {
             invalidDescription.append("c");
         }
 
