@@ -53,12 +53,12 @@ public class PinValidationService implements ValidationService<Pin> {
                 if(constraintViolation.getConstraintDescriptor().getAnnotation().annotationType() == NotEmpty.class ||
                         constraintViolation.getConstraintDescriptor().getAnnotation().annotationType() == NotNull.class) {
                     ErrorEntity errorEntity = new ErrorEntity(ErrorCodes.EMPTY_FIELD.name(),
-                            MessageFormat.format(ErrorCodes.EMPTY_FIELD.getDescription(), constraintViolation.getPropertyPath().toString()), keyName);
+                            MessageFormat.format(ErrorCodes.EMPTY_FIELD.getDescription(), keyName), keyName);
                     errorEntities.add(errorEntity);
                 }
                 else if(constraintViolation.getConstraintDescriptor().getAnnotation().annotationType() == Size.class) {
                     ErrorEntity errorEntity = new ErrorEntity(ErrorCodes.LENGTH_EXCEEDED.name(),
-                            MessageFormat.format(ErrorCodes.LENGTH_EXCEEDED.getDescription(), constraintViolation.getPropertyPath().toString(),
+                            MessageFormat.format(ErrorCodes.LENGTH_EXCEEDED.getDescription(), keyName,
                                     constraintViolation.getConstraintDescriptor().getAttributes().get("max")), keyName);
                     errorEntities.add(errorEntity);
                 }

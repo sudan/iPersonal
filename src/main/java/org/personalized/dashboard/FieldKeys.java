@@ -20,5 +20,6 @@ public class FieldKeys {
     public static final String TASK_NAME = "name";
     public static final String TASK_DESCRIPTION = "task";
     public static final String TASK_LIST = "tasks";
+    public static final String PERCENT_COMPLETION = "percent_completed";
 
 }
