@@ -3,7 +3,7 @@ package org.personalized.dashboard.model;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.validator.constraints.NotEmpty;
-import org.personalized.dashboard.FieldKeys;
+import org.personalized.dashboard.utils.FieldKeys;
 import org.personalized.dashboard.utils.Constants;
 import org.personalized.dashboard.utils.validator.FieldName;
 

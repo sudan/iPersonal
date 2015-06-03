@@ -2,7 +2,7 @@ package org.personalized.dashboard.utils.validator;
 
 import com.google.common.collect.Lists;
 import org.hibernate.validator.constraints.NotEmpty;
-import org.personalized.dashboard.FieldKeys;
+import org.personalized.dashboard.utils.FieldKeys;
 import org.personalized.dashboard.model.Task;
 import org.personalized.dashboard.model.Todo;
 import org.personalized.dashboard.utils.Constants;

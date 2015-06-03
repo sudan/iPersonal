@@ -1,4 +1,4 @@
-package org.personalized.dashboard;
+package org.personalized.dashboard.utils;
 
 /**
  * Created by sudan on 3/6/15.

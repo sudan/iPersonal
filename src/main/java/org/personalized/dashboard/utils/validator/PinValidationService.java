@@ -3,7 +3,7 @@ package org.personalized.dashboard.utils.validator;
 import com.google.common.collect.Lists;
 import org.apache.commons.validator.routines.UrlValidator;
 import org.hibernate.validator.constraints.NotEmpty;
-import org.personalized.dashboard.FieldKeys;
+import org.personalized.dashboard.utils.FieldKeys;
 import org.personalized.dashboard.model.Pin;
 
 import javax.validation.ConstraintViolation;
