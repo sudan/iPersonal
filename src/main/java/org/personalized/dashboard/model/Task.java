@@ -2,7 +2,9 @@ package org.personalized.dashboard.model;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.personalized.dashboard.FieldKeys;
 import org.personalized.dashboard.utils.Constants;
+import org.personalized.dashboard.utils.validator.FieldName;
 
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -18,10 +20,12 @@ public class Task {
 
     @NotEmpty
     @Size(max=Constants.TITLE_MAX_LENGTH)
+    @FieldName(name= FieldKeys.TASK_NAME)
     private String name;
 
     @NotEmpty
     @Size(max=Constants.CONTENT_MAX_LENGTH)
+    @FieldName(name=FieldKeys.TASK_DESCRIPTION)
     private String task;
 
     private int percentCompletion = 0;

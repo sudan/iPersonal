@@ -3,7 +3,9 @@ package org.personalized.dashboard.model;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.personalized.dashboard.FieldKeys;
 import org.personalized.dashboard.utils.Constants;
+import org.personalized.dashboard.utils.validator.FieldName;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Size;
@@ -20,9 +22,12 @@ public class Todo {
 
     @NotEmpty
     @Size(max= Constants.TITLE_MAX_LENGTH)
+    @FieldName(name=FieldKeys.TODO_TITLE)
     private String title;
 
     @Valid
+    @NotEmpty
+    @FieldName(name=FieldKeys.TASK_LIST)
     private List<Task> tasks = Lists.newArrayList();
     private Long createdOn;
     private Long modifiedAt;
