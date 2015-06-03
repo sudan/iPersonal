@@ -1,49 +1,56 @@
 package org.personalized.dashboard.utils.validator;
 
 import com.google.common.collect.Lists;
-import org.apache.commons.lang3.StringUtils;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.personalized.dashboard.model.Note;
-import org.personalized.dashboard.utils.Constants;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import java.lang.reflect.Field;
 import java.text.MessageFormat;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by sudan on 30/5/15.
  */
 public class NoteValidationService implements ValidationService<Note> {
 
+    private final ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
+    private final Validator validator = validatorFactory.getValidator();
+
     @Override
     public List<ErrorEntity> validate(Note note) {
         List<ErrorEntity> errorEntities = Lists.newArrayList();
-        validateTitleLength(note,errorEntities);
-        validateContentLength(note, errorEntities);
+        validateConstraints(note, errorEntities);
         return errorEntities;
     }
 
-    private void validateTitleLength(Note note, List<ErrorEntity> errorEntities) {
+    private void validateConstraints(Note note, List<ErrorEntity> errorEntities) {
 
-        if(StringUtils.isEmpty(note.getTitle())) {
-            ErrorEntity errorEntity = new ErrorEntity(ErrorCodes.EMPTY_NOTE_TITLE.name(), ErrorCodes.EMPTY_NOTE_TITLE.getDescription());
-            errorEntities.add(errorEntity);
+        Field fields [] = Note.class.getDeclaredFields();
+        for(Field field : fields) {
+            Set<ConstraintViolation<Note>> constraintViolations = validator.validateProperty(note, field.getName());
+            for(ConstraintViolation<Note> constraintViolation : constraintViolations) {
+                String keyName = field.getAnnotation(FieldName.class).name();
+                if(constraintViolation.getConstraintDescriptor().getAnnotation().annotationType() == NotEmpty.class ||
+                        constraintViolation.getConstraintDescriptor().getAnnotation().annotationType() == NotNull.class) {
+                    ErrorEntity errorEntity = new ErrorEntity(ErrorCodes.EMPTY_FIELD.name(),
+                            MessageFormat.format(ErrorCodes.EMPTY_FIELD.getDescription(), constraintViolation.getPropertyPath().toString()), keyName);
+                    errorEntities.add(errorEntity);
+                }
+                else if(constraintViolation.getConstraintDescriptor().getAnnotation().annotationType() == Size.class) {
+                    ErrorEntity errorEntity = new ErrorEntity(ErrorCodes.LENGTH_EXCEEDED.name(),
+                            MessageFormat.format(ErrorCodes.LENGTH_EXCEEDED.getDescription(), constraintViolation.getPropertyPath().toString(),
+                                    constraintViolation.getConstraintDescriptor().getAttributes().get("max")), keyName);
+                    errorEntities.add(errorEntity);
+                }
+            }
         }
-        else if(note.getTitle().length() > Constants.NOTE_TITLE_MAX_LENGTH){
-            ErrorEntity errorEntity = new ErrorEntity(ErrorCodes.NOTE_TITLE_LENGTH_EXCEEDED.name(),
-                    MessageFormat.format(ErrorCodes.NOTE_TITLE_LENGTH_EXCEEDED.getDescription(), Constants.NOTE_TITLE_MAX_LENGTH));
-            errorEntities.add(errorEntity);
-        }
-    }
 
-    private void validateContentLength(Note note, List<ErrorEntity> errorEntities) {
-
-        if(StringUtils.isEmpty(note.getNote())) {
-            ErrorEntity errorEntity = new ErrorEntity(ErrorCodes.EMPTY_NOTE_CONTENT.name(), ErrorCodes.EMPTY_NOTE_CONTENT.getDescription());
-            errorEntities.add(errorEntity);
-        }
-        else if(note.getNote().length() > Constants.NOTE_CONTENT_MAX_LENGTH) {
-            ErrorEntity errorEntity = new ErrorEntity(ErrorCodes.NOTE_CONTENT_LENGTH_EXCEEDED.name(),
-                    MessageFormat.format(ErrorCodes.NOTE_CONTENT_LENGTH_EXCEEDED.getDescription(), Constants.NOTE_CONTENT_MAX_LENGTH));
-            errorEntities.add(errorEntity);
-        }
     }
 }

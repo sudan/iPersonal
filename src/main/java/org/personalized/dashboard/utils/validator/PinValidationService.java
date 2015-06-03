@@ -1,64 +1,71 @@
 package org.personalized.dashboard.utils.validator;
 
 import com.google.common.collect.Lists;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.validator.routines.UrlValidator;
+import org.hibernate.validator.constraints.NotEmpty;
+import org.personalized.dashboard.FieldKeys;
 import org.personalized.dashboard.model.Pin;
-import org.personalized.dashboard.utils.Constants;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import java.lang.reflect.Field;
 import java.text.MessageFormat;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by sudan on 30/5/15.
  */
 public class PinValidationService implements ValidationService<Pin> {
 
+    private final ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
+    private final Validator validator = validatorFactory.getValidator();
+
     @Override
     public List<ErrorEntity> validate(Pin pin) {
         List<ErrorEntity> errorEntities = Lists.newArrayList();
+        validateConstraints(pin, errorEntities);
         validateImageUrl(pin, errorEntities);
-        validateName(pin, errorEntities);
-        validateDescription(pin, errorEntities);
         return errorEntities;
     }
 
     private void validateImageUrl(Pin pin, List<ErrorEntity> errorEntities) {
         UrlValidator urlValidator = new UrlValidator();
         if(!urlValidator.isValid(pin.getImageUrl())) {
-            ErrorEntity errorEntity = new ErrorEntity(ErrorCodes.INVALID_URL.name(), ErrorCodes.INVALID_URL.getDescription());
-            errorEntities.add(errorEntity);
-        }
-        if(pin.getImageUrl().length() > Constants.PIN_URL_MAX_LENGTH) {
-            ErrorEntity errorEntity = new ErrorEntity(ErrorCodes.PIN_URL_LENGTH_EXCEEDED.name(),
-                    MessageFormat.format(ErrorCodes.PIN_URL_LENGTH_EXCEEDED.getDescription(), Constants.PIN_URL_MAX_LENGTH));
+            ErrorEntity errorEntity = new ErrorEntity(ErrorCodes.INVALID_URL.name(), ErrorCodes.INVALID_URL.getDescription(), FieldKeys.PIN_IMAGE_URL);
             errorEntities.add(errorEntity);
         }
     }
 
-    private void validateName(Pin pin, List<ErrorEntity> errorEntities) {
 
-        if(StringUtils.isEmpty(pin.getName())) {
-            ErrorEntity errorEntity = new ErrorEntity(ErrorCodes.EMPTY_PIN_NAME.name(), ErrorCodes.EMPTY_PIN_NAME.getDescription());
-            errorEntities.add(errorEntity);
-        }
-        else if(pin.getName().length() > Constants.PIN_NAME_MAX_LENGTH) {
-            ErrorEntity errorEntity = new ErrorEntity(ErrorCodes.PIN_NAME_LENGTH_EXCEEDED.name(),
-                    MessageFormat.format(ErrorCodes.PIN_NAME_LENGTH_EXCEEDED.getDescription(), Constants.PIN_NAME_MAX_LENGTH));
-            errorEntities.add(errorEntity);
-        }
-    }
+    private void validateConstraints(Pin pin, List<ErrorEntity> errorEntities) {
 
-    private void validateDescription(Pin pin, List<ErrorEntity> errorEntities) {
 
-        if(StringUtils.isEmpty(pin.getDescription())) {
-            ErrorEntity errorEntity = new ErrorEntity(ErrorCodes.EMPTY_PIN_DESC.name(), ErrorCodes.EMPTY_PIN_DESC.getDescription());
-            errorEntities.add(errorEntity);
+        Field fields [] = Pin.class.getDeclaredFields();
+        for(Field field : fields) {
+            Set<ConstraintViolation<Pin>> constraintViolations = validator.validateProperty(pin, field.getName());
+            for(ConstraintViolation<Pin> constraintViolation : constraintViolations) {
+                String keyName = field.getAnnotation(FieldName.class).name();
+                if(constraintViolation.getConstraintDescriptor().getAnnotation().annotationType() == NotEmpty.class ||
+                        constraintViolation.getConstraintDescriptor().getAnnotation().annotationType() == NotNull.class) {
+                    ErrorEntity errorEntity = new ErrorEntity(ErrorCodes.EMPTY_FIELD.name(),
+                            MessageFormat.format(ErrorCodes.EMPTY_FIELD.getDescription(), constraintViolation.getPropertyPath().toString()), keyName);
+                    errorEntities.add(errorEntity);
+                }
+                else if(constraintViolation.getConstraintDescriptor().getAnnotation().annotationType() == Size.class) {
+                    ErrorEntity errorEntity = new ErrorEntity(ErrorCodes.LENGTH_EXCEEDED.name(),
+                            MessageFormat.format(ErrorCodes.LENGTH_EXCEEDED.getDescription(), constraintViolation.getPropertyPath().toString(),
+                                    constraintViolation.getConstraintDescriptor().getAttributes().get("max")), keyName);
+                    errorEntities.add(errorEntity);
+                }
+            }
         }
-        else if(pin.getDescription().length() > Constants.PIN_DESCRIPTION_MAX_LENGTH) {
-            ErrorEntity errorEntity = new ErrorEntity(ErrorCodes.PIN_DESC_LENGTH_EXCEEDED.name(),
-                    MessageFormat.format(ErrorCodes.PIN_DESC_LENGTH_EXCEEDED.getDescription(), Constants.PIN_DESCRIPTION_MAX_LENGTH));
-            errorEntities.add(errorEntity);
-        }
+
+
+
     }
 }

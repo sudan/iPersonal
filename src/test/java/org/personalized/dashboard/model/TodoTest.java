@@ -31,7 +31,7 @@ public class TodoTest {
 
         Assert.assertTrue("Number of tasks in TODO123456789 is 4", todo.getTasks().size() == 4);
         Assert.assertEquals("TODO id is TODO123456789", "TODO123456789", todo.getTodoId());
-        Assert.assertEquals("TODO name is todo1", "todo1", todo.getName());
+        Assert.assertEquals("TODO name is todo1", "todo1", todo.getTitle());
 
         Assert.assertEquals("Task1 ID is TASA23456789","TASA23456789", todo.getTasks().get(0).getTaskId());
         Assert.assertEquals("Task2 ID is TASB23456789", "TASB23456789", todo.getTasks().get(1).getTaskId());

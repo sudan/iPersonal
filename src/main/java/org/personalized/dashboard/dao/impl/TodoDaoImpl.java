@@ -49,7 +49,7 @@ public class TodoDaoImpl implements TodoDao {
         }
         Document document = new Document()
                 .append(Constants.PRIMARY_KEY, todoId)
-                .append(Constants.TODO_NAME, todo.getName())
+                .append(Constants.TODO_NAME, todo.getTitle())
                 .append(Constants.TASKS, tasks)
                 .append(Constants.USER_ID, userId)
                 .append(Constants.CREATED_ON, System.currentTimeMillis())
@@ -72,7 +72,7 @@ public class TodoDaoImpl implements TodoDao {
         if(document != null) {
             Todo todo = new Todo();
             todo.setTodoId(document.getString(Constants.PRIMARY_KEY));
-            todo.setName(document.getString(Constants.TODO_NAME));
+            todo.setTitle(document.getString(Constants.TODO_NAME));
             todo.setCreatedOn(document.getLong(Constants.CREATED_ON));
             todo.setModifiedAt(document.getLong(Constants.MODIFIED_AT));
             List<Document> tasksDocuments = (List<Document>) document.get(Constants.TASKS);
@@ -111,7 +111,7 @@ public class TodoDaoImpl implements TodoDao {
             tasks.add(document);
         }
         Document document = new Document()
-                .append(Constants.TODO_NAME, todo.getName())
+                .append(Constants.TODO_NAME, todo.getTitle())
                 .append(Constants.TASKS, tasks)
                 .append(Constants.MODIFIED_AT, System.currentTimeMillis());
 
@@ -175,7 +175,7 @@ public class TodoDaoImpl implements TodoDao {
             public void apply(Document document) {
                 Todo todo = new Todo();
                 todo.setTodoId(document.getString(Constants.PRIMARY_KEY));
-                todo.setName(document.getString(Constants.TODO_NAME));
+                todo.setTitle(document.getString(Constants.TODO_NAME));
                 todo.setCreatedOn(document.getLong(Constants.CREATED_ON));
                 todo.setModifiedAt(document.getLong(Constants.MODIFIED_AT));
                 List<Document> tasksDocuments = (List<Document>) document.get(Constants.TASKS);

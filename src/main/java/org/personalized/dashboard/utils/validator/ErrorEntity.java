@@ -12,14 +12,16 @@ public class ErrorEntity {
 
     private String name;
     private String description;
+    private String field;
 
     public ErrorEntity() {
 
     }
 
-    public ErrorEntity(String name, String description) {
+    public ErrorEntity(String name, String description, String field) {
         this.name = name;
         this.description = description;
+        this.field = field;
     }
 
     public String getName() {
@@ -38,11 +40,22 @@ public class ErrorEntity {
         this.description = description;
     }
 
+
+    public String getField() {
+        return field;
+    }
+
+    public void setField(String field) {
+        this.field = field;
+    }
+
     @Override
+
     public String toString() {
         return new ToStringBuilder(this)
                 .append("name", name)
                 .append("description", description)
+                .append("field", field)
                 .toString();
     }
 }
