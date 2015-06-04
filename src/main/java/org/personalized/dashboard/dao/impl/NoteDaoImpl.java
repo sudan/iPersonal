@@ -11,6 +11,7 @@ import org.personalized.dashboard.bootstrap.MongoBootstrap;
 import org.personalized.dashboard.dao.api.NoteDao;
 import org.personalized.dashboard.model.Note;
 import org.personalized.dashboard.utils.Constants;
+import org.personalized.dashboard.utils.FieldKeys;
 import org.personalized.dashboard.utils.generator.IdGenerator;
 
 import java.util.List;
@@ -35,12 +36,12 @@ public class NoteDaoImpl implements NoteDao {
 
         String noteId = idGenerator.generateId(Constants.NOTE_PREFIX, Constants.ID_LENGTH);
         Document document = new Document()
-                .append(Constants.PRIMARY_KEY, noteId)
-                .append(Constants.NOTE_TITLE, note.getTitle())
-                .append(Constants.NOTE_CONTENT, note.getNote())
-                .append(Constants.USER_ID, userId)
-                .append(Constants.CREATED_ON, System.currentTimeMillis())
-                .append(Constants.MODIFIED_AT, System.currentTimeMillis());
+                .append(FieldKeys.PRIMARY_KEY, noteId)
+                .append(FieldKeys.NOTE_TITLE, note.getTitle())
+                .append(FieldKeys.NOTE_DESCRIPTION, note.getNote())
+                .append(FieldKeys.USER_ID, userId)
+                .append(FieldKeys.CREATED_ON, System.currentTimeMillis())
+                .append(FieldKeys.MODIFIED_AT, System.currentTimeMillis());
         collection.insertOne(document);
 
         return noteId;
@@ -51,19 +52,19 @@ public class NoteDaoImpl implements NoteDao {
         MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection(Constants.NOTES);
         Document document = collection.find(and
                         (
-                                eq(Constants.PRIMARY_KEY, noteId),
-                                eq(Constants.USER_ID, userId),
-                                ne(Constants.IS_DELETED, true)
+                                eq(FieldKeys.PRIMARY_KEY, noteId),
+                                eq(FieldKeys.USER_ID, userId),
+                                ne(FieldKeys.IS_DELETED, true)
                         )
         ).first();
 
         if(document != null) {
             Note note = new Note();
-            note.setNoteId(document.getString(Constants.PRIMARY_KEY));
-            note.setTitle(document.getString(Constants.NOTE_TITLE));
-            note.setNote(document.getString(Constants.NOTE_CONTENT));
-            note.setCreatedOn(document.getLong(Constants.CREATED_ON));
-            note.setModifiedAt(document.getLong(Constants.MODIFIED_AT));
+            note.setNoteId(document.getString(FieldKeys.PRIMARY_KEY));
+            note.setTitle(document.getString(FieldKeys.NOTE_TITLE));
+            note.setNote(document.getString(FieldKeys.NOTE_DESCRIPTION));
+            note.setCreatedOn(document.getLong(FieldKeys.CREATED_ON));
+            note.setModifiedAt(document.getLong(FieldKeys.MODIFIED_AT));
             return note;
         }
         return null;
@@ -74,15 +75,15 @@ public class NoteDaoImpl implements NoteDao {
     public Long update(Note note, String userId) {
         MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection(Constants.NOTES);
         Document document = new Document()
-                .append(Constants.NOTE_TITLE, note.getTitle())
-                .append(Constants.NOTE_CONTENT, note.getNote())
-                .append(Constants.MODIFIED_AT, System.currentTimeMillis());
+                .append(FieldKeys.NOTE_TITLE, note.getTitle())
+                .append(FieldKeys.NOTE_DESCRIPTION, note.getNote())
+                .append(FieldKeys.MODIFIED_AT, System.currentTimeMillis());
 
         UpdateResult updateResult = collection.updateOne(
                 and(
-                        eq(Constants.PRIMARY_KEY, note.getNoteId()),
-                        eq(Constants.USER_ID, userId),
-                        ne(Constants.IS_DELETED, true)
+                        eq(FieldKeys.PRIMARY_KEY, note.getNoteId()),
+                        eq(FieldKeys.USER_ID, userId),
+                        ne(FieldKeys.IS_DELETED, true)
                 ),
                 new Document(Constants.SET_OPERATION, document)
         );
@@ -95,12 +96,12 @@ public class NoteDaoImpl implements NoteDao {
         MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection(Constants.NOTES);
 
         Document document = new Document()
-                .append(Constants.IS_DELETED, true);
+                .append(FieldKeys.IS_DELETED, true);
 
         UpdateResult updateResult = collection.updateOne(
                 and(
-                        eq(Constants.PRIMARY_KEY, noteId),
-                        eq(Constants.USER_ID, userId)
+                        eq(FieldKeys.PRIMARY_KEY, noteId),
+                        eq(FieldKeys.USER_ID, userId)
                 ),
                 new Document(Constants.SET_OPERATION, document)
         );
@@ -114,8 +115,8 @@ public class NoteDaoImpl implements NoteDao {
 
         return collection.count(
                 and(
-                        eq(Constants.USER_ID, userId),
-                        ne(Constants.IS_DELETED, true)
+                        eq(FieldKeys.USER_ID, userId),
+                        ne(FieldKeys.IS_DELETED, true)
                 )
         );
 
@@ -127,11 +128,11 @@ public class NoteDaoImpl implements NoteDao {
 
         FindIterable<Document> iterator = collection.find(and
                         (
-                                eq(Constants.USER_ID, userId),
-                                ne(Constants.IS_DELETED, true)
+                                eq(FieldKeys.USER_ID, userId),
+                                ne(FieldKeys.IS_DELETED, true)
                         )
         ).skip(offset).limit(limit).sort(
-                new Document(Constants.MODIFIED_AT, -1)
+                new Document(FieldKeys.MODIFIED_AT, -1)
         );
 
         final List<Note> notes = Lists.newArrayList();
@@ -139,11 +140,11 @@ public class NoteDaoImpl implements NoteDao {
             @Override
             public void apply(Document document) {
                 Note note = new Note();
-                note.setNoteId(document.getString(Constants.PRIMARY_KEY));
-                note.setTitle(document.getString(Constants.NOTE_TITLE));
-                note.setNote(document.getString(Constants.NOTE_CONTENT));
-                note.setCreatedOn(document.getLong(Constants.CREATED_ON));
-                note.setModifiedAt(document.getLong(Constants.MODIFIED_AT));
+                note.setNoteId(document.getString(FieldKeys.PRIMARY_KEY));
+                note.setTitle(document.getString(FieldKeys.NOTE_TITLE));
+                note.setNote(document.getString(FieldKeys.NOTE_DESCRIPTION));
+                note.setCreatedOn(document.getLong(FieldKeys.CREATED_ON));
+                note.setModifiedAt(document.getLong(FieldKeys.MODIFIED_AT));
                 notes.add(note);
             }
         });

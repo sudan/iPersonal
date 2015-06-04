@@ -29,7 +29,7 @@ public class Task {
     private String task;
 
     @Size(max=100)
-    @FieldName(name=FieldKeys.PERCENT_COMPLETION)
+    @FieldName(name=FieldKeys.TASK_PERCENT_COMPLETION)
     private int percentCompletion = 0;
 
     public Task(){

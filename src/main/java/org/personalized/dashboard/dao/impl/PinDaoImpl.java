@@ -11,6 +11,7 @@ import org.personalized.dashboard.bootstrap.MongoBootstrap;
 import org.personalized.dashboard.dao.api.PinDao;
 import org.personalized.dashboard.model.Pin;
 import org.personalized.dashboard.utils.Constants;
+import org.personalized.dashboard.utils.FieldKeys;
 import org.personalized.dashboard.utils.generator.IdGenerator;
 
 import java.util.List;
@@ -35,13 +36,13 @@ public class PinDaoImpl implements PinDao {
 
         String pinId = idGenerator.generateId(Constants.PIN_PREFIX, Constants.ID_LENGTH);
         Document document = new Document()
-                .append(Constants.PRIMARY_KEY, pinId)
-                .append(Constants.PIN_NAME, pin.getName())
-                .append(Constants.PIN_DESCRIPTION, pin.getDescription())
-                .append(Constants.PIN_IMAGE_URL, pin.getImageUrl())
-                .append(Constants.USER_ID, userId)
-                .append(Constants.CREATED_ON, System.currentTimeMillis())
-                .append(Constants.MODIFIED_AT, System.currentTimeMillis());
+                .append(FieldKeys.PRIMARY_KEY, pinId)
+                .append(FieldKeys.PIN_NAME, pin.getName())
+                .append(FieldKeys.PIN_DESCRIPTION, pin.getDescription())
+                .append(FieldKeys.PIN_IMAGE_URL, pin.getImageUrl())
+                .append(FieldKeys.USER_ID, userId)
+                .append(FieldKeys.CREATED_ON, System.currentTimeMillis())
+                .append(FieldKeys.MODIFIED_AT, System.currentTimeMillis());
         collection.insertOne(document);
 
         return pinId;
@@ -52,20 +53,20 @@ public class PinDaoImpl implements PinDao {
         MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection(Constants.PINS);
         Document document = collection.find(and
                         (
-                                eq(Constants.PRIMARY_KEY, pinId),
-                                eq(Constants.USER_ID, userId),
-                                ne(Constants.IS_DELETED, true)
+                                eq(FieldKeys.PRIMARY_KEY, pinId),
+                                eq(FieldKeys.USER_ID, userId),
+                                ne(FieldKeys.IS_DELETED, true)
                         )
         ).first();
 
         if(document != null) {
             Pin pin = new Pin();
-            pin.setPinId(document.getString(Constants.PRIMARY_KEY));
-            pin.setName(document.getString(Constants.PIN_NAME));
-            pin.setDescription(document.getString(Constants.PIN_DESCRIPTION));
-            pin.setImageUrl(document.getString(Constants.PIN_IMAGE_URL));
-            pin.setCreatedOn(document.getLong(Constants.CREATED_ON));
-            pin.setModifiedAt(document.getLong(Constants.MODIFIED_AT));
+            pin.setPinId(document.getString(FieldKeys.PRIMARY_KEY));
+            pin.setName(document.getString(FieldKeys.PIN_NAME));
+            pin.setDescription(document.getString(FieldKeys.PIN_DESCRIPTION));
+            pin.setImageUrl(document.getString(FieldKeys.PIN_IMAGE_URL));
+            pin.setCreatedOn(document.getLong(FieldKeys.CREATED_ON));
+            pin.setModifiedAt(document.getLong(FieldKeys.MODIFIED_AT));
             return pin;
         }
         return null;
@@ -77,16 +78,16 @@ public class PinDaoImpl implements PinDao {
     public Long update(Pin pin, String userId) {
         MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection(Constants.PINS);
         Document document = new Document()
-                .append(Constants.PIN_NAME, pin.getName())
-                .append(Constants.PIN_DESCRIPTION, pin.getDescription())
-                .append(Constants.PIN_IMAGE_URL, pin.getImageUrl())
-                .append(Constants.MODIFIED_AT, System.currentTimeMillis());
+                .append(FieldKeys.PIN_NAME, pin.getName())
+                .append(FieldKeys.PIN_DESCRIPTION, pin.getDescription())
+                .append(FieldKeys.PIN_IMAGE_URL, pin.getImageUrl())
+                .append(FieldKeys.MODIFIED_AT, System.currentTimeMillis());
 
         UpdateResult updateResult = collection.updateOne(
                 and(
-                        eq(Constants.PRIMARY_KEY, pin.getPinId()),
-                        eq(Constants.USER_ID, userId),
-                        ne(Constants.IS_DELETED, true)
+                        eq(FieldKeys.PRIMARY_KEY, pin.getPinId()),
+                        eq(FieldKeys.USER_ID, userId),
+                        ne(FieldKeys.IS_DELETED, true)
                 ),
                 new Document(Constants.SET_OPERATION, document)
         );
@@ -99,12 +100,12 @@ public class PinDaoImpl implements PinDao {
         MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection(Constants.PINS);
 
         Document document = new Document()
-                .append(Constants.IS_DELETED, true);
+                .append(FieldKeys.IS_DELETED, true);
 
         UpdateResult updateResult = collection.updateOne(
                 and(
-                        eq(Constants.PRIMARY_KEY, pinId),
-                        eq(Constants.USER_ID, userId)
+                        eq(FieldKeys.PRIMARY_KEY, pinId),
+                        eq(FieldKeys.USER_ID, userId)
                 ),
                 new Document(Constants.SET_OPERATION, document)
         );
@@ -118,8 +119,8 @@ public class PinDaoImpl implements PinDao {
 
         return collection.count(
                 and(
-                        eq(Constants.USER_ID, userId),
-                        ne(Constants.IS_DELETED, true)
+                        eq(FieldKeys.USER_ID, userId),
+                        ne(FieldKeys.IS_DELETED, true)
                 )
         );
 
@@ -131,11 +132,11 @@ public class PinDaoImpl implements PinDao {
 
         FindIterable<Document> iterator = collection.find(and
                         (
-                                eq(Constants.USER_ID, userId),
-                                ne(Constants.IS_DELETED, true)
+                                eq(FieldKeys.USER_ID, userId),
+                                ne(FieldKeys.IS_DELETED, true)
                         )
         ).skip(offset).limit(limit).sort(
-                new Document(Constants.MODIFIED_AT, -1)
+                new Document(FieldKeys.MODIFIED_AT, -1)
         );
 
         final List<Pin> pins = Lists.newArrayList();
@@ -143,12 +144,12 @@ public class PinDaoImpl implements PinDao {
             @Override
             public void apply(Document document) {
                 Pin pin = new Pin();
-                pin.setPinId(document.getString(Constants.PRIMARY_KEY));
-                pin.setName(document.getString(Constants.PIN_NAME));
-                pin.setDescription(document.getString(Constants.PIN_DESCRIPTION));
-                pin.setImageUrl(document.getString(Constants.PIN_IMAGE_URL));
-                pin.setCreatedOn(document.getLong(Constants.CREATED_ON));
-                pin.setModifiedAt(document.getLong(Constants.MODIFIED_AT));
+                pin.setPinId(document.getString(FieldKeys.PRIMARY_KEY));
+                pin.setName(document.getString(FieldKeys.PIN_NAME));
+                pin.setDescription(document.getString(FieldKeys.PIN_DESCRIPTION));
+                pin.setImageUrl(document.getString(FieldKeys.PIN_IMAGE_URL));
+                pin.setCreatedOn(document.getLong(FieldKeys.CREATED_ON));
+                pin.setModifiedAt(document.getLong(FieldKeys.MODIFIED_AT));
                 pins.add(pin);
             }
         });
