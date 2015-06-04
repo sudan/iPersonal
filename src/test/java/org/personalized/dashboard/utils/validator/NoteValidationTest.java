@@ -19,7 +19,7 @@ public class NoteValidationTest {
 
     @Before
     public void initialize() {
-        this.noteValidationService = new NoteValidationService();
+        this.noteValidationService = new NoteValidationService(new ConstraintValidationService<Note>());
     }
 
     @Test

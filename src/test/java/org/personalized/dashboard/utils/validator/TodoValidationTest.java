@@ -23,7 +23,7 @@ public class TodoValidationTest {
 
     @Before
     public void initialize(){
-        this.todoValidationService = new TodoValidationService();
+        this.todoValidationService = new TodoValidationService(new ConstraintValidationService<Todo>());
     }
 
     @Test

@@ -19,7 +19,7 @@ public class PinValidationTest {
 
     @Before
     public void initialize() {
-        this.pinValidationService = new PinValidationService();
+        this.pinValidationService = new PinValidationService(new ConstraintValidationService<Pin>());
     }
 
     @Test
