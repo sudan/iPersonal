@@ -68,6 +68,13 @@ public class TodoValidationService implements ValidationService<Todo> {
         }
 
         for(Task task : todo.getTasks()) {
+
+            if(task.getPercentCompletion() < 0 || task.getPercentCompletion() > 100) {
+                ErrorEntity errorEntity = new ErrorEntity(ErrorCodes.INVALID_VALUE.name(),
+                        ErrorCodes.INVALID_VALUE.getDescription(), FieldKeys.TASK_PERCENT_COMPLETION);
+                errorEntities.add(errorEntity);
+            }
+
             Field taskFields [] = Task.class.getDeclaredFields();
             for(Field taskField : taskFields) {
                 Set<ConstraintViolation<Task>> constraintViolations = validator.validateProperty(task, taskField.getName());

@@ -11,7 +11,8 @@ public enum ErrorCodes {
     LENGTH_EXCEEDED("{0} cannot exceed {1} characters"),
     EMPTY_FIELD("{0} cannot be empty"),
     TASKS_LENGTH_EXCEEDED("Task list exceeded the limit {0}"),
-    EMPTY_TASK_LIST("Task list cannot be empty");
+    EMPTY_TASK_LIST("Task list cannot be empty"),
+    INVALID_VALUE("Invalid value");
 
     private String description;
 
