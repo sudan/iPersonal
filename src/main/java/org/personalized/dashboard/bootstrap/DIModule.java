@@ -40,6 +40,7 @@ public class DIModule extends AbstractModule {
         bind(ValidationService.class).annotatedWith(Names.named("note")).to(NoteValidationService.class);
         bind(ValidationService.class).annotatedWith(Names.named("pin")).to(PinValidationService.class);
         bind(ValidationService.class).annotatedWith(Names.named("todo")).to(TodoValidationService.class);
+        bind(ConstraintValidationService.class);
 
         bind(IdGenerator.class).asEagerSingleton();
         bind(ActivityGenerator.class).asEagerSingleton();

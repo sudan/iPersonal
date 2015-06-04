@@ -19,7 +19,7 @@ public class BookmarkValidationTest {
 
     @Before
     public void initialize(){
-        this.bookmarkValidationService = new BookmarkValidationService();
+        this.bookmarkValidationService = new BookmarkValidationService(new ConstraintValidationService<Bookmark>());
     }
 
     @Test
