@@ -11,6 +11,7 @@ import org.personalized.dashboard.bootstrap.MongoBootstrap;
 import org.personalized.dashboard.dao.api.BookmarkDao;
 import org.personalized.dashboard.model.Bookmark;
 import org.personalized.dashboard.utils.Constants;
+import org.personalized.dashboard.utils.FieldKeys;
 import org.personalized.dashboard.utils.generator.IdGenerator;
 
 import java.util.List;
@@ -35,13 +36,13 @@ public class BookmarkDaoImpl implements BookmarkDao {
 
         String bookmarkId = idGenerator.generateId(Constants.BOOKMARK_PREFIX, Constants.ID_LENGTH);
         Document document = new Document()
-                .append(Constants.PRIMARY_KEY, bookmarkId)
-                .append(Constants.BOOKMARK_NAME, bookmark.getName())
-                .append(Constants.BOOKMARK_DESCRIPTION, bookmark.getDescription())
-                .append(Constants.BOOKMARK_URL, bookmark.getUrl())
-                .append(Constants.USER_ID, userId)
-                .append(Constants.CREATED_ON, System.currentTimeMillis())
-                .append(Constants.MODIFIED_AT, System.currentTimeMillis());
+                .append(FieldKeys.PRIMARY_KEY, bookmarkId)
+                .append(FieldKeys.BOOKMARK_NAME, bookmark.getName())
+                .append(FieldKeys.BOOKMARK_DESCRIPTION, bookmark.getDescription())
+                .append(FieldKeys.BOOKMARK_URL, bookmark.getUrl())
+                .append(FieldKeys.USER_ID, userId)
+                .append(FieldKeys.CREATED_ON, System.currentTimeMillis())
+                .append(FieldKeys.MODIFIED_AT, System.currentTimeMillis());
         collection.insertOne(document);
 
         return bookmarkId;
@@ -52,19 +53,19 @@ public class BookmarkDaoImpl implements BookmarkDao {
         MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection(Constants.BOOKMARKS);
         Document document = collection.find(and
                         (
-                                eq(Constants.PRIMARY_KEY, bookmarkId),
-                                eq(Constants.USER_ID, userId),
-                                ne(Constants.IS_DELETED, true)
+                                eq(FieldKeys.PRIMARY_KEY, bookmarkId),
+                                eq(FieldKeys.USER_ID, userId),
+                                ne(FieldKeys.IS_DELETED, true)
                         )
         ).first();
         if(document != null) {
             Bookmark bookmark = new Bookmark();
-            bookmark.setBookmarkId(document.getString(Constants.PRIMARY_KEY));
-            bookmark.setName(document.getString(Constants.BOOKMARK_NAME));
-            bookmark.setDescription(document.getString(Constants.BOOKMARK_DESCRIPTION));
-            bookmark.setUrl(document.getString(Constants.BOOKMARK_URL));
-            bookmark.setCreatedOn(document.getLong(Constants.CREATED_ON));
-            bookmark.setModifiedAt(document.getLong(Constants.MODIFIED_AT));
+            bookmark.setBookmarkId(document.getString(FieldKeys.PRIMARY_KEY));
+            bookmark.setName(document.getString(FieldKeys.BOOKMARK_NAME));
+            bookmark.setDescription(document.getString(FieldKeys.BOOKMARK_DESCRIPTION));
+            bookmark.setUrl(document.getString(FieldKeys.BOOKMARK_URL));
+            bookmark.setCreatedOn(document.getLong(FieldKeys.CREATED_ON));
+            bookmark.setModifiedAt(document.getLong(FieldKeys.MODIFIED_AT));
             return bookmark;
         }
         return null;
@@ -74,16 +75,16 @@ public class BookmarkDaoImpl implements BookmarkDao {
     public Long update(Bookmark bookmark, String userId) {
         MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection(Constants.BOOKMARKS);
         Document document = new Document()
-                .append(Constants.BOOKMARK_NAME, bookmark.getName())
-                .append(Constants.BOOKMARK_DESCRIPTION, bookmark.getDescription())
-                .append(Constants.BOOKMARK_URL, bookmark.getUrl())
-                .append(Constants.MODIFIED_AT, System.currentTimeMillis());
+                .append(FieldKeys.BOOKMARK_NAME, bookmark.getName())
+                .append(FieldKeys.BOOKMARK_DESCRIPTION, bookmark.getDescription())
+                .append(FieldKeys.BOOKMARK_URL, bookmark.getUrl())
+                .append(FieldKeys.MODIFIED_AT, System.currentTimeMillis());
 
         UpdateResult updateResult = collection.updateOne(
                 and(
-                        eq(Constants.PRIMARY_KEY, bookmark.getBookmarkId()),
-                        eq(Constants.USER_ID, userId),
-                        ne(Constants.IS_DELETED, true)
+                        eq(FieldKeys.PRIMARY_KEY, bookmark.getBookmarkId()),
+                        eq(FieldKeys.USER_ID, userId),
+                        ne(FieldKeys.IS_DELETED, true)
                 ),
                 new Document(Constants.SET_OPERATION, document)
         );
@@ -95,12 +96,12 @@ public class BookmarkDaoImpl implements BookmarkDao {
         MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection(Constants.BOOKMARKS);
 
         Document document = new Document()
-                .append(Constants.IS_DELETED, true);
+                .append(FieldKeys.IS_DELETED, true);
 
         UpdateResult updateResult = collection.updateOne(
                 and(
-                        eq(Constants.PRIMARY_KEY, bookmarkId),
-                        eq(Constants.USER_ID, userId)
+                        eq(FieldKeys.PRIMARY_KEY, bookmarkId),
+                        eq(FieldKeys.USER_ID, userId)
                 ),
                 new Document(Constants.SET_OPERATION, document)
         );
@@ -113,8 +114,8 @@ public class BookmarkDaoImpl implements BookmarkDao {
 
         return collection.count(
                 and(
-                        eq(Constants.USER_ID, userId),
-                        ne(Constants.IS_DELETED, true)
+                        eq(FieldKeys.USER_ID, userId),
+                        ne(FieldKeys.IS_DELETED, true)
                 )
         );
     }
@@ -125,11 +126,11 @@ public class BookmarkDaoImpl implements BookmarkDao {
 
         FindIterable<Document> iterator = collection.find(and
                 (
-                        eq(Constants.USER_ID, userId),
-                        ne(Constants.IS_DELETED, true)
+                        eq(FieldKeys.USER_ID, userId),
+                        ne(FieldKeys.IS_DELETED, true)
                 )
         ).skip(offset).limit(limit).sort(
-                new Document(Constants.MODIFIED_AT, -1)
+                new Document(FieldKeys.MODIFIED_AT, -1)
         );
 
         final List<Bookmark> bookmarks = Lists.newArrayList();
@@ -137,12 +138,12 @@ public class BookmarkDaoImpl implements BookmarkDao {
             @Override
             public void apply(Document document) {
                 Bookmark bookmark = new Bookmark();
-                bookmark.setBookmarkId(document.getString(Constants.PRIMARY_KEY));
-                bookmark.setName(document.getString(Constants.BOOKMARK_NAME));
-                bookmark.setDescription(document.getString(Constants.BOOKMARK_DESCRIPTION));
-                bookmark.setUrl(document.getString(Constants.BOOKMARK_URL));
-                bookmark.setCreatedOn(document.getLong(Constants.CREATED_ON));
-                bookmark.setModifiedAt(document.getLong(Constants.MODIFIED_AT));
+                bookmark.setBookmarkId(document.getString(FieldKeys.PRIMARY_KEY));
+                bookmark.setName(document.getString(FieldKeys.BOOKMARK_NAME));
+                bookmark.setDescription(document.getString(FieldKeys.BOOKMARK_DESCRIPTION));
+                bookmark.setUrl(document.getString(FieldKeys.BOOKMARK_URL));
+                bookmark.setCreatedOn(document.getLong(FieldKeys.CREATED_ON));
+                bookmark.setModifiedAt(document.getLong(FieldKeys.MODIFIED_AT));
                 bookmarks.add(bookmark);
             }
         });

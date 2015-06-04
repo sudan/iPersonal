@@ -13,6 +13,7 @@ import org.personalized.dashboard.model.Priority;
 import org.personalized.dashboard.model.Task;
 import org.personalized.dashboard.model.Todo;
 import org.personalized.dashboard.utils.Constants;
+import org.personalized.dashboard.utils.FieldKeys;
 import org.personalized.dashboard.utils.generator.IdGenerator;
 
 import java.util.List;
@@ -40,20 +41,20 @@ public class TodoDaoImpl implements TodoDao {
         for(Task task : todo.getTasks()) {
             String taskId = idGenerator.generateId(Constants.TASK_PREFIX, Constants.ID_LENGTH);
             Document document = new Document()
-                    .append(Constants.PRIMARY_KEY, taskId)
-                    .append(Constants.TASK_NAME, task.getName())
-                    .append(Constants.TASK_DESC, task.getTask())
-                    .append(Constants.TASK_PERCENT_COMPLETION, task.getPercentCompletion())
-                    .append(Constants.TASK_PRIORITY, task.getPriority().name());
+                    .append(FieldKeys.PRIMARY_KEY, taskId)
+                    .append(FieldKeys.TASK_NAME, task.getName())
+                    .append(FieldKeys.TASK_DESCRIPTION, task.getTask())
+                    .append(FieldKeys.TASK_PERCENT_COMPLETION, task.getPercentCompletion())
+                    .append(FieldKeys.TASK_PRIORITY, task.getPriority().name());
             tasks.add(document);
         }
         Document document = new Document()
-                .append(Constants.PRIMARY_KEY, todoId)
-                .append(Constants.TODO_NAME, todo.getTitle())
-                .append(Constants.TASKS, tasks)
-                .append(Constants.USER_ID, userId)
-                .append(Constants.CREATED_ON, System.currentTimeMillis())
-                .append(Constants.MODIFIED_AT, System.currentTimeMillis());
+                .append(FieldKeys.PRIMARY_KEY, todoId)
+                .append(FieldKeys.TODO_TITLE, todo.getTitle())
+                .append(FieldKeys.TASKS, tasks)
+                .append(FieldKeys.USER_ID, userId)
+                .append(FieldKeys.CREATED_ON, System.currentTimeMillis())
+                .append(FieldKeys.MODIFIED_AT, System.currentTimeMillis());
         collection.insertOne(document);
         return todoId;
     }
@@ -63,27 +64,27 @@ public class TodoDaoImpl implements TodoDao {
         MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection(Constants.TODOS);
         Document document = collection.find(and
                         (
-                                eq(Constants.PRIMARY_KEY, todoId),
-                                eq(Constants.USER_ID, userId),
-                                ne(Constants.IS_DELETED, true)
+                                eq(FieldKeys.PRIMARY_KEY, todoId),
+                                eq(FieldKeys.USER_ID, userId),
+                                ne(FieldKeys.IS_DELETED, true)
                         )
         ).first();
 
         if(document != null) {
             Todo todo = new Todo();
-            todo.setTodoId(document.getString(Constants.PRIMARY_KEY));
-            todo.setTitle(document.getString(Constants.TODO_NAME));
-            todo.setCreatedOn(document.getLong(Constants.CREATED_ON));
-            todo.setModifiedAt(document.getLong(Constants.MODIFIED_AT));
-            List<Document> tasksDocuments = (List<Document>) document.get(Constants.TASKS);
+            todo.setTodoId(document.getString(FieldKeys.PRIMARY_KEY));
+            todo.setTitle(document.getString(FieldKeys.TODO_TITLE));
+            todo.setCreatedOn(document.getLong(FieldKeys.CREATED_ON));
+            todo.setModifiedAt(document.getLong(FieldKeys.MODIFIED_AT));
+            List<Document> tasksDocuments = (List<Document>) document.get(FieldKeys.TASKS);
             List<Task> tasks = Lists.newArrayList();
             for(Document taskDocument : tasksDocuments) {
                 Task task = new Task();
-                task.setTaskId(taskDocument.getString(Constants.PRIMARY_KEY));
-                task.setName(taskDocument.getString(Constants.TODO_NAME));
-                task.setTask(taskDocument.getString(Constants.TASK_DESC));
-                task.setPriority(Priority.valueOf(taskDocument.getString(Constants.TASK_PRIORITY)));
-                task.setPercentCompletion(taskDocument.getInteger(Constants.TASK_PERCENT_COMPLETION));
+                task.setTaskId(taskDocument.getString(FieldKeys.PRIMARY_KEY));
+                task.setName(taskDocument.getString(FieldKeys.TODO_TITLE));
+                task.setTask(taskDocument.getString(FieldKeys.TASK_DESCRIPTION));
+                task.setPriority(Priority.valueOf(taskDocument.getString(FieldKeys.TASK_PRIORITY)));
+                task.setPercentCompletion(taskDocument.getInteger(FieldKeys.TASK_PERCENT_COMPLETION));
                 tasks.add(task);
             }
             todo.setTasks(tasks);
@@ -103,23 +104,23 @@ public class TodoDaoImpl implements TodoDao {
         for(Task task : todo.getTasks()) {
             String taskId = idGenerator.generateId(Constants.TASK_PREFIX, Constants.ID_LENGTH);
             Document document = new Document()
-                    .append(Constants.PRIMARY_KEY, taskId)
-                    .append(Constants.TASK_NAME, task.getName())
-                    .append(Constants.TASK_DESC, task.getTask())
-                    .append(Constants.TASK_PERCENT_COMPLETION, task.getPercentCompletion())
-                    .append(Constants.TASK_PRIORITY, task.getPriority().name());
+                    .append(FieldKeys.PRIMARY_KEY, taskId)
+                    .append(FieldKeys.TASK_NAME, task.getName())
+                    .append(FieldKeys.TASK_DESCRIPTION, task.getTask())
+                    .append(FieldKeys.TASK_PERCENT_COMPLETION, task.getPercentCompletion())
+                    .append(FieldKeys.TASK_PRIORITY, task.getPriority().name());
             tasks.add(document);
         }
         Document document = new Document()
-                .append(Constants.TODO_NAME, todo.getTitle())
-                .append(Constants.TASKS, tasks)
-                .append(Constants.MODIFIED_AT, System.currentTimeMillis());
+                .append(FieldKeys.TODO_TITLE, todo.getTitle())
+                .append(FieldKeys.TASKS, tasks)
+                .append(FieldKeys.MODIFIED_AT, System.currentTimeMillis());
 
         UpdateResult updateResult = collection.updateOne(
                 and(
-                        eq(Constants.PRIMARY_KEY, todo.getTodoId()),
-                        eq(Constants.USER_ID, userId),
-                        ne(Constants.IS_DELETED, true)
+                        eq(FieldKeys.PRIMARY_KEY, todo.getTodoId()),
+                        eq(FieldKeys.USER_ID, userId),
+                        ne(FieldKeys.IS_DELETED, true)
                 ),
                 new Document(Constants.SET_OPERATION, document)
         );
@@ -131,12 +132,12 @@ public class TodoDaoImpl implements TodoDao {
         MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection(Constants.TODOS);
 
         Document document = new Document()
-                .append(Constants.IS_DELETED, true);
+                .append(FieldKeys.IS_DELETED, true);
 
         UpdateResult updateResult = collection.updateOne(
                 and(
-                        eq(Constants.PRIMARY_KEY, todoId),
-                        eq(Constants.USER_ID, userId)
+                        eq(FieldKeys.PRIMARY_KEY, todoId),
+                        eq(FieldKeys.USER_ID, userId)
                 ),
                 new Document(Constants.SET_OPERATION, document)
         );
@@ -149,8 +150,8 @@ public class TodoDaoImpl implements TodoDao {
 
         return collection.count(
                 and(
-                        eq(Constants.USER_ID, userId),
-                        ne(Constants.IS_DELETED, true)
+                        eq(FieldKeys.USER_ID, userId),
+                        ne(FieldKeys.IS_DELETED, true)
                 )
         );
 
@@ -162,11 +163,11 @@ public class TodoDaoImpl implements TodoDao {
 
         FindIterable<Document> iterator = collection.find(and
                         (
-                                eq(Constants.USER_ID, userId),
-                                ne(Constants.IS_DELETED, true)
+                                eq(FieldKeys.USER_ID, userId),
+                                ne(FieldKeys.IS_DELETED, true)
                         )
         ).skip(offset).limit(limit).sort(
-                new Document(Constants.MODIFIED_AT, -1)
+                new Document(FieldKeys.MODIFIED_AT, -1)
         );
 
         final List<Todo> todos = Lists.newArrayList();
@@ -174,19 +175,19 @@ public class TodoDaoImpl implements TodoDao {
             @Override
             public void apply(Document document) {
                 Todo todo = new Todo();
-                todo.setTodoId(document.getString(Constants.PRIMARY_KEY));
-                todo.setTitle(document.getString(Constants.TODO_NAME));
-                todo.setCreatedOn(document.getLong(Constants.CREATED_ON));
-                todo.setModifiedAt(document.getLong(Constants.MODIFIED_AT));
-                List<Document> tasksDocuments = (List<Document>) document.get(Constants.TASKS);
+                todo.setTodoId(document.getString(FieldKeys.PRIMARY_KEY));
+                todo.setTitle(document.getString(FieldKeys.TODO_TITLE));
+                todo.setCreatedOn(document.getLong(FieldKeys.CREATED_ON));
+                todo.setModifiedAt(document.getLong(FieldKeys.MODIFIED_AT));
+                List<Document> tasksDocuments = (List<Document>) document.get(FieldKeys.TASKS);
                 List<Task> tasks = Lists.newArrayList();
                 for(Document taskDocument : tasksDocuments) {
                     Task task = new Task();
-                    task.setTaskId(taskDocument.getString(Constants.PRIMARY_KEY));
-                    task.setName(taskDocument.getString(Constants.TODO_NAME));
-                    task.setTask(taskDocument.getString(Constants.TASK_DESC));
-                    task.setPriority(Priority.valueOf(taskDocument.getString(Constants.TASK_PRIORITY)));
-                    task.setPercentCompletion(taskDocument.getInteger(Constants.TASK_PERCENT_COMPLETION));
+                    task.setTaskId(taskDocument.getString(FieldKeys.PRIMARY_KEY));
+                    task.setName(taskDocument.getString(FieldKeys.TODO_TITLE));
+                    task.setTask(taskDocument.getString(FieldKeys.TASK_DESCRIPTION));
+                    task.setPriority(Priority.valueOf(taskDocument.getString(FieldKeys.TASK_PRIORITY)));
+                    task.setPercentCompletion(taskDocument.getInteger(FieldKeys.TASK_PERCENT_COMPLETION));
                     tasks.add(task);
                 }
                 todo.setTasks(tasks);

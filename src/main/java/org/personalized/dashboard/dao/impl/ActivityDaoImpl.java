@@ -13,6 +13,7 @@ import org.personalized.dashboard.model.ActivityType;
 import org.personalized.dashboard.model.Entity;
 import org.personalized.dashboard.model.EntityType;
 import org.personalized.dashboard.utils.Constants;
+import org.personalized.dashboard.utils.FieldKeys;
 import org.personalized.dashboard.utils.generator.IdGenerator;
 
 import java.util.List;
@@ -38,13 +39,13 @@ public class ActivityDaoImpl implements ActivityDao {
 
         String activityId = idGenerator.generateId(Constants.ACTIVITIES_PREFIX, Constants.ID_LENGTH);
         Document document = new Document()
-                .append(Constants.PRIMARY_KEY, activityId)
-                .append(Constants.ACTIVITY_TYPE, activity.getActivityType().name())
-                .append(Constants.ENTITY_ID, activity.getEntity().getEntityId())
-                .append(Constants.ENTITY_TYPE, activity.getEntity().getEntityType().name())
-                .append(Constants.ACTIVITY_DESC, activity.getDescription())
-                .append(Constants.USER_ID, userId)
-                .append(Constants.CREATED_ON, System.currentTimeMillis());
+                .append(FieldKeys.PRIMARY_KEY, activityId)
+                .append(FieldKeys.ACTIVITY_TYPE, activity.getActivityType().name())
+                .append(FieldKeys.ENTITY_ID, activity.getEntity().getEntityId())
+                .append(FieldKeys.ENTITY_TYPE, activity.getEntity().getEntityType().name())
+                .append(FieldKeys.ACTIVITY_DESCRIPTION, activity.getDescription())
+                .append(FieldKeys.USER_ID, userId)
+                .append(FieldKeys.CREATED_ON, System.currentTimeMillis());
         collection.insertOne(document);
 
     }
@@ -55,10 +56,10 @@ public class ActivityDaoImpl implements ActivityDao {
 
         FindIterable<Document> iterator = collection.find(and
                         (
-                                eq(Constants.USER_ID, userId)
+                                eq(FieldKeys.USER_ID, userId)
                         )
         ).skip(offset).limit(limit).sort(
-                new Document(Constants.CREATED_ON, -1)
+                new Document(FieldKeys.CREATED_ON, -1)
         );
 
         final List<Activity> activities = Lists.newArrayList();
@@ -67,12 +68,12 @@ public class ActivityDaoImpl implements ActivityDao {
             public void apply(Document document) {
                 Activity activity = new Activity();
                 Entity entity = new Entity();
-                entity.setEntityId(document.getString(Constants.ENTITY_ID));
-                entity.setEntityType(EntityType.valueOf(document.getString(Constants.ENTITY_TYPE)));
+                entity.setEntityId(document.getString(FieldKeys.ENTITY_ID));
+                entity.setEntityType(EntityType.valueOf(document.getString(FieldKeys.ENTITY_TYPE)));
                 activity.setEntity(entity);
-                activity.setCreatedOn(document.getLong(Constants.CREATED_ON));
-                activity.setDescription(document.getString(Constants.ACTIVITY_DESC));
-                activity.setActivityType(ActivityType.valueOf(document.getString(Constants.ACTIVITY_TYPE)));
+                activity.setCreatedOn(document.getLong(FieldKeys.CREATED_ON));
+                activity.setDescription(document.getString(FieldKeys.ACTIVITY_DESCRIPTION));
+                activity.setActivityType(ActivityType.valueOf(document.getString(FieldKeys.ACTIVITY_TYPE)));
                 activities.add(activity);
             }
         });
