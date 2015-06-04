@@ -40,7 +40,7 @@ public class PinDaoTest {
             and change the dbName to ipersonal-test and also enable authentication
             for that database
          */
-        if(isDebugMode /* && testCollection.equalsIgnoreCase("ipersonal-test") */) {
+        if(isDebugMode  && testCollection.equalsIgnoreCase("ipersonal-test") ) {
             MongoBootstrap.init();
             MongoBootstrap.getMongoDatabase().getCollection(Constants.PINS).drop();
 
