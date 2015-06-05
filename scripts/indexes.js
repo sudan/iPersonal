@@ -19,3 +19,8 @@ db.pins.ensureIndex({ is_deleted : 1 })
 
 db.activities.ensureIndex({ user_id : 1 })
 db.activities.ensureIndex({ created_on : -1})
+
+db.todos.ensureIndex({ user_id : 1})
+db.todos.ensureIndex({ created_on : -1})
+db.todos.ensureIndex({ modified_at : -1})
+db.todos.ensureIndex({ is_deleted : 1})
