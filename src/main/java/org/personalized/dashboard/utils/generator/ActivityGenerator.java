@@ -1,20 +1,15 @@
 package org.personalized.dashboard.utils.generator;
 
-import com.google.inject.Inject;
-import org.personalized.dashboard.model.*;
-import org.personalized.dashboard.utils.generator.IdGenerator;
+import org.personalized.dashboard.model.Activity;
+import org.personalized.dashboard.model.ActivityType;
+import org.personalized.dashboard.model.Entity;
+import org.personalized.dashboard.model.EntityType;
 
 /**
  * Created by sudan on 30/5/15.
  */
 public class ActivityGenerator<T> {
 
-    private final IdGenerator idGenerator;
-
-    @Inject
-    public ActivityGenerator(IdGenerator idGenerator) {
-        this.idGenerator = idGenerator;
-    }
     public Activity generate(ActivityType activityType, EntityType entityType, String entityId, String entityName) {
 
         StringBuilder description = new StringBuilder();
