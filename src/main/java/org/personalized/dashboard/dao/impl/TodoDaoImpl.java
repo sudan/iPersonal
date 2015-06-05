@@ -81,7 +81,7 @@ public class TodoDaoImpl implements TodoDao {
             for(Document taskDocument : tasksDocuments) {
                 Task task = new Task();
                 task.setTaskId(taskDocument.getString(FieldKeys.PRIMARY_KEY));
-                task.setName(taskDocument.getString(FieldKeys.TODO_TITLE));
+                task.setName(taskDocument.getString(FieldKeys.TASK_NAME));
                 task.setTask(taskDocument.getString(FieldKeys.TASK_DESCRIPTION));
                 task.setPriority(Priority.valueOf(taskDocument.getString(FieldKeys.TASK_PRIORITY)));
                 task.setPercentCompletion(taskDocument.getInteger(FieldKeys.TASK_PERCENT_COMPLETION));
@@ -184,7 +184,7 @@ public class TodoDaoImpl implements TodoDao {
                 for(Document taskDocument : tasksDocuments) {
                     Task task = new Task();
                     task.setTaskId(taskDocument.getString(FieldKeys.PRIMARY_KEY));
-                    task.setName(taskDocument.getString(FieldKeys.TODO_TITLE));
+                    task.setName(taskDocument.getString(FieldKeys.TASK_NAME));
                     task.setTask(taskDocument.getString(FieldKeys.TASK_DESCRIPTION));
                     task.setPriority(Priority.valueOf(taskDocument.getString(FieldKeys.TASK_PRIORITY)));
                     task.setPercentCompletion(taskDocument.getInteger(FieldKeys.TASK_PERCENT_COMPLETION));
