@@ -24,6 +24,7 @@ public class ActivityServiceImpl implements ActivityService {
 
     @Override
     public List<Activity> get() {
-        return activityDao.get(Constants.ACTIVITIES_LIMIT, 0, sessionManager.getUserIdFromSession());
+        return activityDao.get(Constants.ACTIVITIES_LIMIT, 0, sessionManager.getUserIdFromSession
+                ());
     }
 }

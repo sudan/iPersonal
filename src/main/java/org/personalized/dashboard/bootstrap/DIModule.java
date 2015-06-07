@@ -35,11 +35,16 @@ public class DIModule extends AbstractModule {
         bind(ExpenseDao.class).to(ExpenseDaoImpl.class);
         bind(ActivityDao.class).to(ActivityDaoImpl.class);
 
-        bind(ValidationService.class).annotatedWith(Names.named("bookmark")).to(BookmarkValidationService.class);
-        bind(ValidationService.class).annotatedWith(Names.named("batchSize")).to(BatchSizeValidationService.class);
-        bind(ValidationService.class).annotatedWith(Names.named("note")).to(NoteValidationService.class);
-        bind(ValidationService.class).annotatedWith(Names.named("pin")).to(PinValidationService.class);
-        bind(ValidationService.class).annotatedWith(Names.named("todo")).to(TodoValidationService.class);
+        bind(ValidationService.class).annotatedWith(Names.named("bookmark")).to
+                (BookmarkValidationService.class);
+        bind(ValidationService.class).annotatedWith(Names.named("batchSize")).to
+                (BatchSizeValidationService.class);
+        bind(ValidationService.class).annotatedWith(Names.named("note")).to(NoteValidationService
+                .class);
+        bind(ValidationService.class).annotatedWith(Names.named("pin")).to(PinValidationService
+                .class);
+        bind(ValidationService.class).annotatedWith(Names.named("todo")).to(TodoValidationService
+                .class);
         bind(ConstraintValidationService.class);
 
         bind(IdGenerator.class).asEagerSingleton();

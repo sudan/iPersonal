@@ -42,10 +42,14 @@ public class ActivityServiceTest {
         SessionManager sessionManager = new SessionManager();
         ActivityGenerator activityGenerator = new ActivityGenerator();
 
-        this.bookmarkService = new BookmarkServiceImpl(bookmarkDao, sessionManager, activityGenerator, activityDao);
-        this.noteService = new NoteServiceImpl(noteDao, sessionManager, activityGenerator, activityDao);
-        this.pinService = new PinServiceImpl(pinDao, sessionManager, activityGenerator, activityDao);
-        this.todoService = new TodoServiceImpl(todoDao, sessionManager, activityGenerator, activityDao);
+        this.bookmarkService = new BookmarkServiceImpl(bookmarkDao, sessionManager,
+                activityGenerator, activityDao);
+        this.noteService = new NoteServiceImpl(noteDao, sessionManager, activityGenerator,
+                activityDao);
+        this.pinService = new PinServiceImpl(pinDao, sessionManager, activityGenerator,
+                activityDao);
+        this.todoService = new TodoServiceImpl(todoDao, sessionManager, activityGenerator,
+                activityDao);
         this.activityService = new ActivityServiceImpl(activityDao, sessionManager);
     }
 
@@ -113,53 +117,80 @@ public class ActivityServiceTest {
 
             List<Activity> activities = activityService.get();
 
-            Assert.assertEquals("Activity type match", ActivityType.DELETED.name(), activities.get(0).getActivityType().name());
-            Assert.assertEquals("Entity type match", EntityType.TODO.name(), activities.get(0).getEntity().getEntityType().name());
+            Assert.assertEquals("Activity type match", ActivityType.DELETED.name(), activities
+                    .get(0).getActivityType().name());
+            Assert.assertEquals("Entity type match", EntityType.TODO.name(), activities.get(0)
+                    .getEntity().getEntityType().name());
             Assert.assertEquals("Id match", todoId, activities.get(0).getEntity().getEntityId());
 
-            Assert.assertEquals("Activity type match", ActivityType.UPDATED.name(), activities.get(1).getActivityType().name());
-            Assert.assertEquals("Entity type match", EntityType.TODO.name(), activities.get(1).getEntity().getEntityType().name());
+            Assert.assertEquals("Activity type match", ActivityType.UPDATED.name(), activities
+                    .get(1).getActivityType().name());
+            Assert.assertEquals("Entity type match", EntityType.TODO.name(), activities.get(1)
+                    .getEntity().getEntityType().name());
             Assert.assertEquals("Id match", todoId, activities.get(1).getEntity().getEntityId());
 
-            Assert.assertEquals("Activity type match", ActivityType.CREATED.name(), activities.get(2).getActivityType().name());
-            Assert.assertEquals("Entity type match", EntityType.TODO.name(), activities.get(2).getEntity().getEntityType().name());
+            Assert.assertEquals("Activity type match", ActivityType.CREATED.name(), activities
+                    .get(2).getActivityType().name());
+            Assert.assertEquals("Entity type match", EntityType.TODO.name(), activities.get(2)
+                    .getEntity().getEntityType().name());
             Assert.assertEquals("Id match", todoId, activities.get(2).getEntity().getEntityId());
 
-            Assert.assertEquals("Activity type match", ActivityType.DELETED.name(), activities.get(3).getActivityType().name());
-            Assert.assertEquals("Entity type match", EntityType.PIN.name(), activities.get(3).getEntity().getEntityType().name());
+            Assert.assertEquals("Activity type match", ActivityType.DELETED.name(), activities
+                    .get(3).getActivityType().name());
+            Assert.assertEquals("Entity type match", EntityType.PIN.name(), activities.get(3)
+                    .getEntity().getEntityType().name());
             Assert.assertEquals("Id match", pinId, activities.get(3).getEntity().getEntityId());
 
-            Assert.assertEquals("Activity type match", ActivityType.UPDATED.name(), activities.get(4).getActivityType().name());
-            Assert.assertEquals("Entity type match", EntityType.PIN.name(), activities.get(4).getEntity().getEntityType().name());
+            Assert.assertEquals("Activity type match", ActivityType.UPDATED.name(), activities
+                    .get(4).getActivityType().name());
+            Assert.assertEquals("Entity type match", EntityType.PIN.name(), activities.get(4)
+                    .getEntity().getEntityType().name());
             Assert.assertEquals("Id match", pinId, activities.get(4).getEntity().getEntityId());
 
-            Assert.assertEquals("Activity type match", ActivityType.CREATED.name(), activities.get(5).getActivityType().name());
-            Assert.assertEquals("Entity type match", EntityType.PIN.name(), activities.get(5).getEntity().getEntityType().name());
+            Assert.assertEquals("Activity type match", ActivityType.CREATED.name(), activities
+                    .get(5).getActivityType().name());
+            Assert.assertEquals("Entity type match", EntityType.PIN.name(), activities.get(5)
+                    .getEntity().getEntityType().name());
             Assert.assertEquals("Id match", pinId, activities.get(5).getEntity().getEntityId());
 
-            Assert.assertEquals("Activity type match", ActivityType.DELETED.name(), activities.get(6).getActivityType().name());
-            Assert.assertEquals("Entity type match", EntityType.NOTE.name(), activities.get(6).getEntity().getEntityType().name());
+            Assert.assertEquals("Activity type match", ActivityType.DELETED.name(), activities
+                    .get(6).getActivityType().name());
+            Assert.assertEquals("Entity type match", EntityType.NOTE.name(), activities.get(6)
+                    .getEntity().getEntityType().name());
             Assert.assertEquals("Id match", noteId, activities.get(6).getEntity().getEntityId());
 
-            Assert.assertEquals("Activity type match", ActivityType.UPDATED.name(), activities.get(7).getActivityType().name());
-            Assert.assertEquals("Entity type match", EntityType.NOTE.name(), activities.get(7).getEntity().getEntityType().name());
+            Assert.assertEquals("Activity type match", ActivityType.UPDATED.name(), activities
+                    .get(7).getActivityType().name());
+            Assert.assertEquals("Entity type match", EntityType.NOTE.name(), activities.get(7)
+                    .getEntity().getEntityType().name());
             Assert.assertEquals("Id match", noteId, activities.get(7).getEntity().getEntityId());
 
-            Assert.assertEquals("Activity type match", ActivityType.CREATED.name(), activities.get(8).getActivityType().name());
-            Assert.assertEquals("Entity type match", EntityType.NOTE.name(), activities.get(8).getEntity().getEntityType().name());
+            Assert.assertEquals("Activity type match", ActivityType.CREATED.name(), activities
+                    .get(8).getActivityType().name());
+            Assert.assertEquals("Entity type match", EntityType.NOTE.name(), activities.get(8)
+                    .getEntity().getEntityType().name());
             Assert.assertEquals("Id match", noteId, activities.get(8).getEntity().getEntityId());
 
-            Assert.assertEquals("Activity type match", ActivityType.DELETED.name(), activities.get(9).getActivityType().name());
-            Assert.assertEquals("Entity type match", EntityType.BOOKMARK.name(), activities.get(9).getEntity().getEntityType().name());
-            Assert.assertEquals("Id match", bookmarkId, activities.get(9).getEntity().getEntityId());
+            Assert.assertEquals("Activity type match", ActivityType.DELETED.name(), activities
+                    .get(9).getActivityType().name());
+            Assert.assertEquals("Entity type match", EntityType.BOOKMARK.name(), activities.get
+                    (9).getEntity().getEntityType().name());
+            Assert.assertEquals("Id match", bookmarkId, activities.get(9).getEntity().getEntityId
+                    ());
 
-            Assert.assertEquals("Activity type match", ActivityType.UPDATED.name(), activities.get(10).getActivityType().name());
-            Assert.assertEquals("Entity type match", EntityType.BOOKMARK.name(), activities.get(10).getEntity().getEntityType().name());
-            Assert.assertEquals("Id match", bookmarkId, activities.get(10).getEntity().getEntityId());
+            Assert.assertEquals("Activity type match", ActivityType.UPDATED.name(), activities
+                    .get(10).getActivityType().name());
+            Assert.assertEquals("Entity type match", EntityType.BOOKMARK.name(), activities.get
+                    (10).getEntity().getEntityType().name());
+            Assert.assertEquals("Id match", bookmarkId, activities.get(10).getEntity()
+                    .getEntityId());
 
-            Assert.assertEquals("Activity type match", ActivityType.CREATED.name(), activities.get(11).getActivityType().name());
-            Assert.assertEquals("Entity type match", EntityType.BOOKMARK.name(), activities.get(11).getEntity().getEntityType().name());
-            Assert.assertEquals("Id match", bookmarkId, activities.get(11).getEntity().getEntityId());
+            Assert.assertEquals("Activity type match", ActivityType.CREATED.name(), activities
+                    .get(11).getActivityType().name());
+            Assert.assertEquals("Entity type match", EntityType.BOOKMARK.name(), activities.get
+                    (11).getEntity().getEntityType().name());
+            Assert.assertEquals("Id match", bookmarkId, activities.get(11).getEntity()
+                    .getEntityId());
         }
     }
 }

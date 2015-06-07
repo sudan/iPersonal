@@ -10,7 +10,8 @@ import org.personalized.dashboard.model.EntityType;
  */
 public class ActivityGenerator<T> {
 
-    public Activity generate(ActivityType activityType, EntityType entityType, String entityId, String entityName) {
+    public Activity generate(ActivityType activityType, EntityType entityType, String entityId,
+                             String entityName) {
 
         StringBuilder description = new StringBuilder();
         description

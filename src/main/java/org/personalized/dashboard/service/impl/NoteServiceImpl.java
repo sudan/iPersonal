@@ -27,7 +27,8 @@ public class NoteServiceImpl implements NoteService {
     private final ActivityDao activityDao;
 
     @Inject
-    public NoteServiceImpl(NoteDao noteDao, SessionManager sessionManager, ActivityGenerator activityGenerator, ActivityDao activityDao) {
+    public NoteServiceImpl(NoteDao noteDao, SessionManager sessionManager, ActivityGenerator
+            activityGenerator, ActivityDao activityDao) {
         this.noteDao = noteDao;
         this.sessionManager = sessionManager;
         this.activityGenerator = activityGenerator;
@@ -37,7 +38,8 @@ public class NoteServiceImpl implements NoteService {
     @Override
     public String createNote(Note note) {
         String noteId = noteDao.create(note, sessionManager.getUserIdFromSession());
-        Activity activity = activityGenerator.generate(ActivityType.CREATED, EntityType.NOTE, noteId, note.getTitle());
+        Activity activity = activityGenerator.generate(ActivityType.CREATED, EntityType.NOTE,
+                noteId, note.getTitle());
         activityDao.add(activity, sessionManager.getUserIdFromSession());
         return noteId;
     }
@@ -51,7 +53,8 @@ public class NoteServiceImpl implements NoteService {
     public Long updateNote(Note note) {
         Long modifiedCount = noteDao.update(note, sessionManager.getUserIdFromSession());
         if (modifiedCount > 0) {
-            Activity activity = activityGenerator.generate(ActivityType.UPDATED, EntityType.NOTE, note.getNoteId(), note.getTitle());
+            Activity activity = activityGenerator.generate(ActivityType.UPDATED, EntityType.NOTE,
+                    note.getNoteId(), note.getTitle());
             activityDao.add(activity, sessionManager.getUserIdFromSession());
         }
         return modifiedCount;
@@ -61,7 +64,8 @@ public class NoteServiceImpl implements NoteService {
     public void deleteNote(String noteId) {
         Long deletedCount = noteDao.delete(noteId, sessionManager.getUserIdFromSession());
         if (deletedCount > 0) {
-            Activity activity = activityGenerator.generate(ActivityType.DELETED, EntityType.NOTE, noteId, StringUtils.EMPTY);
+            Activity activity = activityGenerator.generate(ActivityType.DELETED, EntityType.NOTE,
+                    noteId, StringUtils.EMPTY);
             activityDao.add(activity, sessionManager.getUserIdFromSession());
         }
     }

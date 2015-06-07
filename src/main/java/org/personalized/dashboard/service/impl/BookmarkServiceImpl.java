@@ -38,7 +38,8 @@ public class BookmarkServiceImpl implements BookmarkService {
     @Override
     public String createBookmark(Bookmark bookmark) {
         String bookmarkId = bookmarkDao.create(bookmark, sessionManager.getUserIdFromSession());
-        Activity activity = activityGenerator.generate(ActivityType.CREATED, EntityType.BOOKMARK, bookmarkId, bookmark.getName());
+        Activity activity = activityGenerator.generate(ActivityType.CREATED, EntityType.BOOKMARK,
+                bookmarkId, bookmark.getName());
         activityDao.add(activity, sessionManager.getUserIdFromSession());
         return bookmarkId;
     }
@@ -52,7 +53,8 @@ public class BookmarkServiceImpl implements BookmarkService {
     public Long updateBookmark(Bookmark bookmark) {
         Long modifiedCount = bookmarkDao.update(bookmark, sessionManager.getUserIdFromSession());
         if (modifiedCount > 0) {
-            Activity activity = activityGenerator.generate(ActivityType.UPDATED, EntityType.BOOKMARK, bookmark.getBookmarkId(), bookmark.getName());
+            Activity activity = activityGenerator.generate(ActivityType.UPDATED, EntityType
+                    .BOOKMARK, bookmark.getBookmarkId(), bookmark.getName());
             activityDao.add(activity, sessionManager.getUserIdFromSession());
         }
         return modifiedCount;
@@ -62,7 +64,8 @@ public class BookmarkServiceImpl implements BookmarkService {
     public void deleteBookmark(String bookmarkId) {
         Long deletedCount = bookmarkDao.delete(bookmarkId, sessionManager.getUserIdFromSession());
         if (deletedCount > 0) {
-            Activity activity = activityGenerator.generate(ActivityType.DELETED, EntityType.BOOKMARK, bookmarkId, StringUtils.EMPTY);
+            Activity activity = activityGenerator.generate(ActivityType.DELETED, EntityType
+                    .BOOKMARK, bookmarkId, StringUtils.EMPTY);
             activityDao.add(activity, sessionManager.getUserIdFromSession());
         }
     }

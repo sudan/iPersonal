@@ -35,9 +35,11 @@ public class ActivityDaoImpl implements ActivityDao {
 
     @Override
     public void add(Activity activity, String userId) {
-        MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection(Constants.ACTIVITIES);
+        MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection
+                (Constants.ACTIVITIES);
 
-        String activityId = idGenerator.generateId(Constants.ACTIVITIES_PREFIX, Constants.ID_LENGTH);
+        String activityId = idGenerator.generateId(Constants.ACTIVITIES_PREFIX, Constants
+                .ID_LENGTH);
         Document document = new Document()
                 .append(FieldKeys.PRIMARY_KEY, activityId)
                 .append(FieldKeys.ACTIVITY_TYPE, activity.getActivityType().name())
@@ -52,7 +54,8 @@ public class ActivityDaoImpl implements ActivityDao {
 
     @Override
     public List<Activity> get(int limit, int offset, String userId) {
-        MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection(Constants.ACTIVITIES);
+        MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection
+                (Constants.ACTIVITIES);
 
         FindIterable<Document> iterator = collection.find(and
                         (
@@ -73,7 +76,8 @@ public class ActivityDaoImpl implements ActivityDao {
                 activity.setEntity(entity);
                 activity.setCreatedOn(document.getLong(FieldKeys.CREATED_ON));
                 activity.setDescription(document.getString(FieldKeys.ACTIVITY_DESCRIPTION));
-                activity.setActivityType(ActivityType.valueOf(document.getString(FieldKeys.ACTIVITY_TYPE)));
+                activity.setActivityType(ActivityType.valueOf(document.getString(FieldKeys
+                        .ACTIVITY_TYPE)));
                 activities.add(activity);
             }
         });

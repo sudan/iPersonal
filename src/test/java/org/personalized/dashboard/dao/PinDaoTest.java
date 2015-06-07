@@ -104,14 +104,16 @@ public class PinDaoTest {
             Assert.assertEquals("PinIds match", pinid2, pins.get(0).getPinId());
             Assert.assertEquals("name match", "google_advanced", pins.get(0).getName());
             Assert.assertEquals("description match", "desc_advanced", pins.get(0).getDescription());
-            Assert.assertEquals("image url match", "http://www.bing.com", pins.get(0).getImageUrl());
+            Assert.assertEquals("image url match", "http://www.bing.com", pins.get(0).getImageUrl
+                    ());
             Assert.assertNotNull("Createdon is not null", pins.get(0).getCreatedOn());
             Assert.assertNotNull("modifiedAt is not null", pins.get(0).getModifiedAt());
 
             Assert.assertEquals("PinIds match", pinid1, pins.get(1).getPinId());
             Assert.assertEquals("name match", "pin1", pins.get(1).getName());
             Assert.assertEquals("description match", "desc1", pins.get(1).getDescription());
-            Assert.assertEquals("image url match", "http://www.google.com", pins.get(1).getImageUrl());
+            Assert.assertEquals("image url match", "http://www.google.com", pins.get(1)
+                    .getImageUrl());
             Assert.assertNotNull("Createdon is not null", pins.get(1).getCreatedOn());
             Assert.assertNotNull("modifiedAt is not null", pins.get(1).getModifiedAt());
 
@@ -128,7 +130,8 @@ public class PinDaoTest {
             Assert.assertEquals("PinIds match", pinid1, pins.get(0).getPinId());
             Assert.assertEquals("name match", "pin1", pins.get(0).getName());
             Assert.assertEquals("description match", "desc1", pins.get(0).getDescription());
-            Assert.assertEquals("image url match", "http://www.google.com", pins.get(0).getImageUrl());
+            Assert.assertEquals("image url match", "http://www.google.com", pins.get(0)
+                    .getImageUrl());
             Assert.assertNotNull("Createdon is not null", pins.get(0).getCreatedOn());
             Assert.assertNotNull("modifiedAt is not null", pins.get(0).getModifiedAt());
 

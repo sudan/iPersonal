@@ -34,7 +34,8 @@ public class TodoDaoImpl implements TodoDao {
 
     @Override
     public String create(Todo todo, String userId) {
-        MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection(Constants.TODOS);
+        MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection
+                (Constants.TODOS);
         String todoId = idGenerator.generateId(Constants.TODO_PREFIX, Constants.ID_LENGTH);
 
         List<Document> tasks = Lists.newArrayList();
@@ -61,7 +62,8 @@ public class TodoDaoImpl implements TodoDao {
 
     @Override
     public Todo get(String todoId, String userId) {
-        MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection(Constants.TODOS);
+        MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection
+                (Constants.TODOS);
         Document document = collection.find(and
                         (
                                 eq(FieldKeys.PRIMARY_KEY, todoId),
@@ -84,7 +86,8 @@ public class TodoDaoImpl implements TodoDao {
                 task.setName(taskDocument.getString(FieldKeys.TASK_NAME));
                 task.setTask(taskDocument.getString(FieldKeys.TASK_DESCRIPTION));
                 task.setPriority(Priority.valueOf(taskDocument.getString(FieldKeys.TASK_PRIORITY)));
-                task.setPercentCompletion(taskDocument.getInteger(FieldKeys.TASK_PERCENT_COMPLETION));
+                task.setPercentCompletion(taskDocument.getInteger(FieldKeys
+                        .TASK_PERCENT_COMPLETION));
                 tasks.add(task);
             }
             todo.setTasks(tasks);
@@ -98,7 +101,8 @@ public class TodoDaoImpl implements TodoDao {
 
     @Override
     public Long update(Todo todo, String userId) {
-        MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection(Constants.TODOS);
+        MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection
+                (Constants.TODOS);
 
         List<Document> tasks = Lists.newArrayList();
         for (Task task : todo.getTasks()) {
@@ -129,7 +133,8 @@ public class TodoDaoImpl implements TodoDao {
 
     @Override
     public Long delete(String todoId, String userId) {
-        MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection(Constants.TODOS);
+        MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection
+                (Constants.TODOS);
 
         Document document = new Document()
                 .append(FieldKeys.IS_DELETED, true);
@@ -146,7 +151,8 @@ public class TodoDaoImpl implements TodoDao {
 
     @Override
     public Long count(String userId) {
-        MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection(Constants.TODOS);
+        MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection
+                (Constants.TODOS);
 
         return collection.count(
                 and(
@@ -159,7 +165,8 @@ public class TodoDaoImpl implements TodoDao {
 
     @Override
     public List<Todo> get(int limit, int offset, String userId) {
-        MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection(Constants.TODOS);
+        MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection
+                (Constants.TODOS);
 
         FindIterable<Document> iterator = collection.find(and
                         (
@@ -186,8 +193,10 @@ public class TodoDaoImpl implements TodoDao {
                     task.setTaskId(taskDocument.getString(FieldKeys.PRIMARY_KEY));
                     task.setName(taskDocument.getString(FieldKeys.TASK_NAME));
                     task.setTask(taskDocument.getString(FieldKeys.TASK_DESCRIPTION));
-                    task.setPriority(Priority.valueOf(taskDocument.getString(FieldKeys.TASK_PRIORITY)));
-                    task.setPercentCompletion(taskDocument.getInteger(FieldKeys.TASK_PERCENT_COMPLETION));
+                    task.setPriority(Priority.valueOf(taskDocument.getString(FieldKeys
+                            .TASK_PRIORITY)));
+                    task.setPercentCompletion(taskDocument.getInteger(FieldKeys
+                            .TASK_PERCENT_COMPLETION));
                     tasks.add(task);
                 }
                 todo.setTasks(tasks);

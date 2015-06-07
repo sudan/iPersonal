@@ -19,7 +19,8 @@ public class PinValidationTest {
 
     @Before
     public void initialize() {
-        this.pinValidationService = new PinValidationService(new ConstraintValidationService<Pin>());
+        this.pinValidationService = new PinValidationService(new ConstraintValidationService<Pin>
+                ());
     }
 
     @Test
@@ -28,20 +29,29 @@ public class PinValidationTest {
         List<ErrorEntity> errorEntities = pinValidationService.validate(pin);
         Assert.assertEquals("Error count is 4", 4, errorEntities.size());
 
-        Assert.assertEquals("Error 1 name matches", ErrorCodes.EMPTY_FIELD.name(), errorEntities.get(0).getName());
-        Assert.assertEquals("Error 1 description matches", "name cannot be empty", errorEntities.get(0).getDescription());
+        Assert.assertEquals("Error 1 name matches", ErrorCodes.EMPTY_FIELD.name(), errorEntities
+                .get(0).getName());
+        Assert.assertEquals("Error 1 description matches", "name cannot be empty", errorEntities
+                .get(0).getDescription());
         Assert.assertEquals("Error 1 field matches", "name", errorEntities.get(0).getField());
 
-        Assert.assertEquals("Error 2 name matches", ErrorCodes.EMPTY_FIELD.name(), errorEntities.get(1).getName());
-        Assert.assertEquals("Error 2 description matches", "description cannot be empty", errorEntities.get(1).getDescription());
-        Assert.assertEquals("Error 2 field matches", "description", errorEntities.get(1).getField());
+        Assert.assertEquals("Error 2 name matches", ErrorCodes.EMPTY_FIELD.name(), errorEntities
+                .get(1).getName());
+        Assert.assertEquals("Error 2 description matches", "description cannot be empty",
+                errorEntities.get(1).getDescription());
+        Assert.assertEquals("Error 2 field matches", "description", errorEntities.get(1).getField
+                ());
 
-        Assert.assertEquals("Error 3 name matches", ErrorCodes.EMPTY_FIELD.name(), errorEntities.get(2).getName());
-        Assert.assertEquals("Error 3 description matches", "image_url cannot be empty", errorEntities.get(2).getDescription());
+        Assert.assertEquals("Error 3 name matches", ErrorCodes.EMPTY_FIELD.name(), errorEntities
+                .get(2).getName());
+        Assert.assertEquals("Error 3 description matches", "image_url cannot be empty",
+                errorEntities.get(2).getDescription());
         Assert.assertEquals("Error 3 field matches", "image_url", errorEntities.get(2).getField());
 
-        Assert.assertEquals("Error 4 name matches", ErrorCodes.INVALID_URL.name(), errorEntities.get(3).getName());
-        Assert.assertEquals("Error 4 description matches", "Invalid URL format", errorEntities.get(3).getDescription());
+        Assert.assertEquals("Error 4 name matches", ErrorCodes.INVALID_URL.name(), errorEntities
+                .get(3).getName());
+        Assert.assertEquals("Error 4 description matches", "Invalid URL format", errorEntities
+                .get(3).getDescription());
         Assert.assertEquals("Error 4 field matches", "image_url", errorEntities.get(3).getField());
 
         pin = new Pin("PIN123456789", "name", "desc", "http://www.google.com");
@@ -63,25 +73,35 @@ public class PinValidationTest {
             invalidDescription.append("c");
         }
 
-        pin = new Pin("PIN123456789", invalidName.toString(), invalidDescription.toString(), invalidImageUrl.toString());
+        pin = new Pin("PIN123456789", invalidName.toString(), invalidDescription.toString(),
+                invalidImageUrl.toString());
         errorEntities = pinValidationService.validate(pin);
         Assert.assertEquals("Error count is 4", 4, errorEntities.size());
 
 
-        Assert.assertEquals("Error 1 name matches", ErrorCodes.LENGTH_EXCEEDED.name(), errorEntities.get(0).getName());
-        Assert.assertEquals("Error 1 description matches", "name cannot exceed 50 characters", errorEntities.get(0).getDescription());
+        Assert.assertEquals("Error 1 name matches", ErrorCodes.LENGTH_EXCEEDED.name(),
+                errorEntities.get(0).getName());
+        Assert.assertEquals("Error 1 description matches", "name cannot exceed 50 characters",
+                errorEntities.get(0).getDescription());
         Assert.assertEquals("Error 1 field matches", "name", errorEntities.get(0).getField());
 
-        Assert.assertEquals("Error 2 name matches", ErrorCodes.LENGTH_EXCEEDED.name(), errorEntities.get(1).getName());
-        Assert.assertEquals("Error 2 description matches", "description cannot exceed 1,000 characters", errorEntities.get(1).getDescription());
-        Assert.assertEquals("Error 2 field matches", "description", errorEntities.get(1).getField());
+        Assert.assertEquals("Error 2 name matches", ErrorCodes.LENGTH_EXCEEDED.name(),
+                errorEntities.get(1).getName());
+        Assert.assertEquals("Error 2 description matches", "description cannot exceed 1,000 " +
+                "characters", errorEntities.get(1).getDescription());
+        Assert.assertEquals("Error 2 field matches", "description", errorEntities.get(1).getField
+                ());
 
-        Assert.assertEquals("Error 3 name matches", ErrorCodes.LENGTH_EXCEEDED.name(), errorEntities.get(2).getName());
-        Assert.assertEquals("Error 3 description matches", "image_url cannot exceed 300 characters", errorEntities.get(2).getDescription());
+        Assert.assertEquals("Error 3 name matches", ErrorCodes.LENGTH_EXCEEDED.name(),
+                errorEntities.get(2).getName());
+        Assert.assertEquals("Error 3 description matches", "image_url cannot exceed 300 " +
+                "characters", errorEntities.get(2).getDescription());
         Assert.assertEquals("Error 3 field matches", "image_url", errorEntities.get(2).getField());
 
-        Assert.assertEquals("Error 4 name matches", ErrorCodes.INVALID_URL.name(), errorEntities.get(3).getName());
-        Assert.assertEquals("Error 4 description matches", "Invalid URL format", errorEntities.get(3).getDescription());
+        Assert.assertEquals("Error 4 name matches", ErrorCodes.INVALID_URL.name(), errorEntities
+                .get(3).getName());
+        Assert.assertEquals("Error 4 description matches", "Invalid URL format", errorEntities
+                .get(3).getDescription());
         Assert.assertEquals("Error 4 field matches", "image_url", errorEntities.get(3).getField());
 
     }

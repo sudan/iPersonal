@@ -17,11 +17,13 @@ public class BatchSizeValidationService implements ValidationService<BatchSize> 
         List<ErrorEntity> errorEntities = Lists.newArrayList();
 
         if (batchSize.getLimit() > Constants.MAX_BATCH_SIZE || batchSize.getLimit() < 0) {
-            ErrorEntity errorEntity = new ErrorEntity(ErrorCodes.INVALID_LIMIT.name(), ErrorCodes.INVALID_LIMIT.getDescription(), StringUtils.EMPTY);
+            ErrorEntity errorEntity = new ErrorEntity(ErrorCodes.INVALID_LIMIT.name(), ErrorCodes
+                    .INVALID_LIMIT.getDescription(), StringUtils.EMPTY);
             errorEntities.add(errorEntity);
         }
         if (batchSize.getOffset() < 0) {
-            ErrorEntity errorEntity = new ErrorEntity(ErrorCodes.INVALID_OFFSET.name(), ErrorCodes.INVALID_OFFSET.getDescription(), StringUtils.EMPTY);
+            ErrorEntity errorEntity = new ErrorEntity(ErrorCodes.INVALID_OFFSET.name(),
+                    ErrorCodes.INVALID_OFFSET.getDescription(), StringUtils.EMPTY);
             errorEntities.add(errorEntity);
         }
         return errorEntities;

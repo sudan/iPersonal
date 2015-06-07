@@ -23,7 +23,8 @@ public class Bill {
 
     }
 
-    public Bill(String billId, String name, String description, double amount, Currency currency, Date date) {
+    public Bill(String billId, String name, String description, double amount, Currency currency,
+                Date date) {
         this.billId = billId;
         this.name = name;
         this.description = description;

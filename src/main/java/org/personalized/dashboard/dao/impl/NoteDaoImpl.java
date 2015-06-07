@@ -32,7 +32,8 @@ public class NoteDaoImpl implements NoteDao {
 
     @Override
     public String create(Note note, String userId) {
-        MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection(Constants.NOTES);
+        MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection
+                (Constants.NOTES);
 
         String noteId = idGenerator.generateId(Constants.NOTE_PREFIX, Constants.ID_LENGTH);
         Document document = new Document()
@@ -49,7 +50,8 @@ public class NoteDaoImpl implements NoteDao {
 
     @Override
     public Note get(String noteId, String userId) {
-        MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection(Constants.NOTES);
+        MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection
+                (Constants.NOTES);
         Document document = collection.find(and
                         (
                                 eq(FieldKeys.PRIMARY_KEY, noteId),
@@ -73,7 +75,8 @@ public class NoteDaoImpl implements NoteDao {
 
     @Override
     public Long update(Note note, String userId) {
-        MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection(Constants.NOTES);
+        MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection
+                (Constants.NOTES);
         Document document = new Document()
                 .append(FieldKeys.NOTE_TITLE, note.getTitle())
                 .append(FieldKeys.NOTE_DESCRIPTION, note.getNote())
@@ -93,7 +96,8 @@ public class NoteDaoImpl implements NoteDao {
 
     @Override
     public Long delete(String noteId, String userId) {
-        MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection(Constants.NOTES);
+        MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection
+                (Constants.NOTES);
 
         Document document = new Document()
                 .append(FieldKeys.IS_DELETED, true);
@@ -111,7 +115,8 @@ public class NoteDaoImpl implements NoteDao {
 
     @Override
     public Long count(String userId) {
-        MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection(Constants.NOTES);
+        MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection
+                (Constants.NOTES);
 
         return collection.count(
                 and(
@@ -124,7 +129,8 @@ public class NoteDaoImpl implements NoteDao {
 
     @Override
     public List<Note> get(int limit, int offset, String userId) {
-        MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection(Constants.NOTES);
+        MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection
+                (Constants.NOTES);
 
         FindIterable<Document> iterator = collection.find(and
                         (

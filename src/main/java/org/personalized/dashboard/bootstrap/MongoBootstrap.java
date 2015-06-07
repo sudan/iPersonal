@@ -25,8 +25,10 @@ public class MongoBootstrap {
             String dbName = ConfigManager.getValue("mongo.dbName");
             String hostName = ConfigManager.getValue("mongo.hostName");
             String portNumber = ConfigManager.getValue("mongo.portNumber");
-            MongoCredential mongoCredential = MongoCredential.createCredential(username, dbName, password.toCharArray());
-            MongoClient mongoClient = new MongoClient(new ServerAddress(hostName, Integer.parseInt(portNumber)), Arrays.asList(mongoCredential));
+            MongoCredential mongoCredential = MongoCredential.createCredential(username, dbName,
+                    password.toCharArray());
+            MongoClient mongoClient = new MongoClient(new ServerAddress(hostName, Integer
+                    .parseInt(portNumber)), Arrays.asList(mongoCredential));
             return mongoClient.getDatabase(dbName);
         }
         return mongoDatabase;

@@ -86,7 +86,8 @@ public class BookmarkDaoTest {
 
             Assert.assertEquals("BookmarkIds match", bookmarkid2, bookmarkRead2.getBookmarkId());
             Assert.assertEquals("name match", "google_advanced", bookmarkRead2.getName());
-            Assert.assertEquals("description match", "desc_advanced", bookmarkRead2.getDescription());
+            Assert.assertEquals("description match", "desc_advanced", bookmarkRead2
+                    .getDescription());
             Assert.assertEquals("url match", "http://www.inmobi.com", bookmarkRead2.getUrl());
             Assert.assertNotNull("Createdon is not null", bookmarkRead2.getCreatedOn());
             Assert.assertNotNull("modifiedAt is not null", bookmarkRead2.getModifiedAt());
@@ -101,7 +102,8 @@ public class BookmarkDaoTest {
 
             Assert.assertEquals("BookmarkIds match", bookmarkid2, bookmarks.get(0).getBookmarkId());
             Assert.assertEquals("name match", "google_advanced", bookmarks.get(0).getName());
-            Assert.assertEquals("description match", "desc_advanced", bookmarks.get(0).getDescription());
+            Assert.assertEquals("description match", "desc_advanced", bookmarks.get(0)
+                    .getDescription());
             Assert.assertEquals("url match", "http://www.inmobi.com", bookmarks.get(0).getUrl());
             Assert.assertNotNull("Createdon is not null", bookmarks.get(0).getCreatedOn());
             Assert.assertNotNull("modifiedAt is not null", bookmarks.get(0).getModifiedAt());
