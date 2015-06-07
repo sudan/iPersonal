@@ -34,20 +34,24 @@ public class BatchSizeValidationTest {
         batchSize.setOffset(-1);
         errorEntities = batchSizeValidationService.validate(batchSize);
         Assert.assertEquals("Error count is 1", 1, errorEntities.size());
-        Assert.assertEquals("Error is INVALID_OFFSET", ErrorCodes.INVALID_OFFSET.name(), errorEntities.get(0).getName());
+        Assert.assertEquals("Error is INVALID_OFFSET", ErrorCodes.INVALID_OFFSET.name(),
+                errorEntities.get(0).getName());
 
         batchSize.setOffset(0);
         batchSize.setLimit(Constants.MAX_BATCH_SIZE + 1);
         errorEntities = batchSizeValidationService.validate(batchSize);
         Assert.assertEquals("Error count is 1", 1, errorEntities.size());
-        Assert.assertEquals("Error is INVALID_LIMIT", ErrorCodes.INVALID_LIMIT.name(), errorEntities.get(0).getName());
+        Assert.assertEquals("Error is INVALID_LIMIT", ErrorCodes.INVALID_LIMIT.name(),
+                errorEntities.get(0).getName());
 
         batchSize.setOffset(-1);
         batchSize.setLimit(-1);
         errorEntities = batchSizeValidationService.validate(batchSize);
         Assert.assertEquals("Error count is 2", 2, errorEntities.size());
-        Assert.assertEquals("Error 1 is INVALID_LIMIT", ErrorCodes.INVALID_LIMIT.name(), errorEntities.get(0).getName());
-        Assert.assertEquals("Error 2 is INVALID_OFFSET", ErrorCodes.INVALID_OFFSET.name(), errorEntities.get(1).getName());
+        Assert.assertEquals("Error 1 is INVALID_LIMIT", ErrorCodes.INVALID_LIMIT.name(),
+                errorEntities.get(0).getName());
+        Assert.assertEquals("Error 2 is INVALID_OFFSET", ErrorCodes.INVALID_OFFSET.name(),
+                errorEntities.get(1).getName());
 
     }
 }

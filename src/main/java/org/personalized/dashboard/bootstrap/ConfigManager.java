@@ -14,7 +14,8 @@ public class ConfigManager {
     private static boolean isInitialized = false;
 
     private ConfigManager() throws IOException {
-        InputStream inputStream = getClass().getClassLoader().getResourceAsStream("config.properties");
+        InputStream inputStream = getClass().getClassLoader().getResourceAsStream("config" +
+                ".properties");
 
         if (inputStream == null) {
             throw new FileNotFoundException("Property files cannot be found in the classpath");

@@ -49,7 +49,8 @@ public class NoteController {
             String noteId = noteService.createNote(note);
             return Response.status(Response.Status.CREATED).entity(noteId).build();
         } else {
-            GenericEntity<List<ErrorEntity>> errorObj = new GenericEntity<List<ErrorEntity>>(errorEntities) {
+            GenericEntity<List<ErrorEntity>> errorObj = new GenericEntity<List<ErrorEntity>>
+                    (errorEntities) {
             };
             return Response.status(Response.Status.BAD_REQUEST).entity(errorObj).build();
         }
@@ -84,7 +85,8 @@ public class NoteController {
                 return Response.status(Response.Status.BAD_REQUEST).build();
             }
         } else {
-            GenericEntity<List<ErrorEntity>> errorObj = new GenericEntity<List<ErrorEntity>>(errorEntities) {
+            GenericEntity<List<ErrorEntity>> errorObj = new GenericEntity<List<ErrorEntity>>
+                    (errorEntities) {
             };
             return Response.status(Response.Status.BAD_REQUEST).entity(errorObj).build();
         }
@@ -120,7 +122,8 @@ public class NoteController {
             };
             return Response.status(Response.Status.OK).entity(noteListObj).build();
         } else {
-            GenericEntity<List<ErrorEntity>> errorObj = new GenericEntity<List<ErrorEntity>>(errorEntities) {
+            GenericEntity<List<ErrorEntity>> errorObj = new GenericEntity<List<ErrorEntity>>
+                    (errorEntities) {
             };
             return Response.status(Response.Status.BAD_REQUEST).entity(errorObj).build();
         }

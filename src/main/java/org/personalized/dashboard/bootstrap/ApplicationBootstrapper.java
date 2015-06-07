@@ -36,7 +36,8 @@ public class ApplicationBootstrapper extends GuiceServletContextListener {
             protected void configureServlets() {
                 super.configureServlets();
 
-                ResourceConfig resourceConfig = new PackagesResourceConfig("org.personalized.dashboard.controller");
+                ResourceConfig resourceConfig = new PackagesResourceConfig("org.personalized" +
+                        ".dashboard.controller");
                 for (Class<?> resource : resourceConfig.getClasses()) {
                     bind(resource);
                 }

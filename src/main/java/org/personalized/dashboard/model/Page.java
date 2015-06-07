@@ -23,7 +23,8 @@ public class Page {
 
     }
 
-    public Page(String pageId, String title, String template, Map<String, String> placeholders, int month, int date) {
+    public Page(String pageId, String title, String template, Map<String, String> placeholders,
+                int month, int date) {
         this.pageId = pageId;
         this.title = title;
         this.template = template;

@@ -32,7 +32,8 @@ public class BookmarkDaoImpl implements BookmarkDao {
 
     @Override
     public String create(Bookmark bookmark, String userId) {
-        MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection(Constants.BOOKMARKS);
+        MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection
+                (Constants.BOOKMARKS);
 
         String bookmarkId = idGenerator.generateId(Constants.BOOKMARK_PREFIX, Constants.ID_LENGTH);
         Document document = new Document()
@@ -50,7 +51,8 @@ public class BookmarkDaoImpl implements BookmarkDao {
 
     @Override
     public Bookmark get(String bookmarkId, String userId) {
-        MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection(Constants.BOOKMARKS);
+        MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection
+                (Constants.BOOKMARKS);
         Document document = collection.find(and
                         (
                                 eq(FieldKeys.PRIMARY_KEY, bookmarkId),
@@ -73,7 +75,8 @@ public class BookmarkDaoImpl implements BookmarkDao {
 
     @Override
     public Long update(Bookmark bookmark, String userId) {
-        MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection(Constants.BOOKMARKS);
+        MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection
+                (Constants.BOOKMARKS);
         Document document = new Document()
                 .append(FieldKeys.BOOKMARK_NAME, bookmark.getName())
                 .append(FieldKeys.BOOKMARK_DESCRIPTION, bookmark.getDescription())
@@ -93,7 +96,8 @@ public class BookmarkDaoImpl implements BookmarkDao {
 
     @Override
     public Long delete(String bookmarkId, String userId) {
-        MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection(Constants.BOOKMARKS);
+        MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection
+                (Constants.BOOKMARKS);
 
         Document document = new Document()
                 .append(FieldKeys.IS_DELETED, true);
@@ -110,7 +114,8 @@ public class BookmarkDaoImpl implements BookmarkDao {
 
     @Override
     public Long count(String userId) {
-        MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection(Constants.BOOKMARKS);
+        MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection
+                (Constants.BOOKMARKS);
 
         return collection.count(
                 and(
@@ -122,7 +127,8 @@ public class BookmarkDaoImpl implements BookmarkDao {
 
     @Override
     public List<Bookmark> get(int limit, int offset, String userId) {
-        MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection(Constants.BOOKMARKS);
+        MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection
+                (Constants.BOOKMARKS);
 
         FindIterable<Document> iterator = collection.find(and
                         (

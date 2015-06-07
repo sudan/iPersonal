@@ -19,7 +19,8 @@ public class NoteValidationTest {
 
     @Before
     public void initialize() {
-        this.noteValidationService = new NoteValidationService(new ConstraintValidationService<Note>());
+        this.noteValidationService = new NoteValidationService(new
+                ConstraintValidationService<Note>());
     }
 
     @Test
@@ -28,12 +29,16 @@ public class NoteValidationTest {
         List<ErrorEntity> errorEntities = noteValidationService.validate(note);
         Assert.assertEquals("Error count is 2", 2, errorEntities.size());
 
-        Assert.assertEquals("Error 1 name matches", ErrorCodes.EMPTY_FIELD.name(), errorEntities.get(0).getName());
-        Assert.assertEquals("Error 1 description matches", "title cannot be empty", errorEntities.get(0).getDescription());
+        Assert.assertEquals("Error 1 name matches", ErrorCodes.EMPTY_FIELD.name(), errorEntities
+                .get(0).getName());
+        Assert.assertEquals("Error 1 description matches", "title cannot be empty", errorEntities
+                .get(0).getDescription());
         Assert.assertEquals("Error 1 field matches", "title", errorEntities.get(0).getField());
 
-        Assert.assertEquals("Error 2 name matches", ErrorCodes.EMPTY_FIELD.name(), errorEntities.get(1).getName());
-        Assert.assertEquals("Error 2 description matches", "note cannot be empty", errorEntities.get(1).getDescription());
+        Assert.assertEquals("Error 2 name matches", ErrorCodes.EMPTY_FIELD.name(), errorEntities
+                .get(1).getName());
+        Assert.assertEquals("Error 2 description matches", "note cannot be empty", errorEntities
+                .get(1).getDescription());
         Assert.assertEquals("Error 2 field matches", "note", errorEntities.get(1).getField());
 
 
@@ -57,12 +62,16 @@ public class NoteValidationTest {
         Assert.assertEquals("Error count is 2", 2, errorEntities.size());
 
 
-        Assert.assertEquals("Error 1 name matches", ErrorCodes.LENGTH_EXCEEDED.name(), errorEntities.get(0).getName());
-        Assert.assertEquals("Error 1 description matches", "title cannot exceed 50 characters", errorEntities.get(0).getDescription());
+        Assert.assertEquals("Error 1 name matches", ErrorCodes.LENGTH_EXCEEDED.name(),
+                errorEntities.get(0).getName());
+        Assert.assertEquals("Error 1 description matches", "title cannot exceed 50 characters",
+                errorEntities.get(0).getDescription());
         Assert.assertEquals("Error 1 field matches", "title", errorEntities.get(0).getField());
 
-        Assert.assertEquals("Error 2 name matches", ErrorCodes.LENGTH_EXCEEDED.name(), errorEntities.get(1).getName());
-        Assert.assertEquals("Error 2 description matches", "note cannot exceed 1,000 characters", errorEntities.get(1).getDescription());
+        Assert.assertEquals("Error 2 name matches", ErrorCodes.LENGTH_EXCEEDED.name(),
+                errorEntities.get(1).getName());
+        Assert.assertEquals("Error 2 description matches", "note cannot exceed 1,000 characters",
+                errorEntities.get(1).getDescription());
         Assert.assertEquals("Error 2 field matches", "note", errorEntities.get(1).getField());
     }
 }

@@ -27,7 +27,8 @@ public class PinServiceImpl implements PinService {
     private final ActivityDao activityDao;
 
     @Inject
-    public PinServiceImpl(PinDao pinDao, SessionManager sessionManager, ActivityGenerator activityGenerator, ActivityDao activityDao) {
+    public PinServiceImpl(PinDao pinDao, SessionManager sessionManager, ActivityGenerator
+            activityGenerator, ActivityDao activityDao) {
         this.pinDao = pinDao;
         this.sessionManager = sessionManager;
         this.activityGenerator = activityGenerator;
@@ -37,7 +38,8 @@ public class PinServiceImpl implements PinService {
     @Override
     public String createPin(Pin pin) {
         String pinId = pinDao.create(pin, sessionManager.getUserIdFromSession());
-        Activity activity = activityGenerator.generate(ActivityType.CREATED, EntityType.PIN, pinId, pin.getName());
+        Activity activity = activityGenerator.generate(ActivityType.CREATED, EntityType.PIN,
+                pinId, pin.getName());
         activityDao.add(activity, sessionManager.getUserIdFromSession());
         return pinId;
     }
@@ -51,7 +53,8 @@ public class PinServiceImpl implements PinService {
     public Long updatePin(Pin pin) {
         Long modifiedCount = pinDao.update(pin, sessionManager.getUserIdFromSession());
         if (modifiedCount > 0) {
-            Activity activity = activityGenerator.generate(ActivityType.UPDATED, EntityType.PIN, pin.getPinId(), pin.getName());
+            Activity activity = activityGenerator.generate(ActivityType.UPDATED, EntityType.PIN,
+                    pin.getPinId(), pin.getName());
             activityDao.add(activity, sessionManager.getUserIdFromSession());
         }
         return modifiedCount;
@@ -61,7 +64,8 @@ public class PinServiceImpl implements PinService {
     public void deletePin(String pinId) {
         Long deletedCount = pinDao.delete(pinId, sessionManager.getUserIdFromSession());
         if (deletedCount > 0) {
-            Activity activity = activityGenerator.generate(ActivityType.DELETED, EntityType.PIN, pinId, StringUtils.EMPTY);
+            Activity activity = activityGenerator.generate(ActivityType.DELETED, EntityType.PIN,
+                    pinId, StringUtils.EMPTY);
             activityDao.add(activity, sessionManager.getUserIdFromSession());
         }
     }

@@ -20,17 +20,23 @@ public class ConstraintValidationService<T> {
     private final ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
     private final Validator validator = validatorFactory.getValidator();
 
-    public void validateConstraints(Field field, ConstraintViolation<T> constraintViolation, List<ErrorEntity> errorEntities) {
+    public void validateConstraints(Field field, ConstraintViolation<T> constraintViolation,
+                                    List<ErrorEntity> errorEntities) {
         String keyName = field.getAnnotation(FieldName.class).name();
-        if (constraintViolation.getConstraintDescriptor().getAnnotation().annotationType() == NotEmpty.class ||
-                constraintViolation.getConstraintDescriptor().getAnnotation().annotationType() == NotNull.class) {
+        if (constraintViolation.getConstraintDescriptor().getAnnotation().annotationType() ==
+                NotEmpty.class ||
+                constraintViolation.getConstraintDescriptor().getAnnotation().annotationType() ==
+                        NotNull.class) {
             ErrorEntity errorEntity = new ErrorEntity(ErrorCodes.EMPTY_FIELD.name(),
-                    MessageFormat.format(ErrorCodes.EMPTY_FIELD.getDescription(), keyName), keyName);
+                    MessageFormat.format(ErrorCodes.EMPTY_FIELD.getDescription(), keyName),
+                    keyName);
             errorEntities.add(errorEntity);
-        } else if (constraintViolation.getConstraintDescriptor().getAnnotation().annotationType() == Size.class) {
+        } else if (constraintViolation.getConstraintDescriptor().getAnnotation().annotationType()
+                == Size.class) {
             ErrorEntity errorEntity = new ErrorEntity(ErrorCodes.LENGTH_EXCEEDED.name(),
                     MessageFormat.format(ErrorCodes.LENGTH_EXCEEDED.getDescription(), keyName,
-                            constraintViolation.getConstraintDescriptor().getAttributes().get("max")), keyName);
+                            constraintViolation.getConstraintDescriptor().getAttributes().get
+                                    ("max")), keyName);
             errorEntities.add(errorEntity);
         }
     }

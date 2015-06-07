@@ -20,7 +20,8 @@ public class Activity {
 
     }
 
-    public Activity(String activityId, ActivityType activityType, Entity entity, String description) {
+    public Activity(String activityId, ActivityType activityType, Entity entity, String
+            description) {
         this.activityId = activityId;
         this.activityType = activityType;
         this.entity = entity;

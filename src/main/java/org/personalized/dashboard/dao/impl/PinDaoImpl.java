@@ -32,7 +32,8 @@ public class PinDaoImpl implements PinDao {
 
     @Override
     public String create(Pin pin, String userId) {
-        MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection(Constants.PINS);
+        MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection
+                (Constants.PINS);
 
         String pinId = idGenerator.generateId(Constants.PIN_PREFIX, Constants.ID_LENGTH);
         Document document = new Document()
@@ -50,7 +51,8 @@ public class PinDaoImpl implements PinDao {
 
     @Override
     public Pin get(String pinId, String userId) {
-        MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection(Constants.PINS);
+        MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection
+                (Constants.PINS);
         Document document = collection.find(and
                         (
                                 eq(FieldKeys.PRIMARY_KEY, pinId),
@@ -76,7 +78,8 @@ public class PinDaoImpl implements PinDao {
 
     @Override
     public Long update(Pin pin, String userId) {
-        MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection(Constants.PINS);
+        MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection
+                (Constants.PINS);
         Document document = new Document()
                 .append(FieldKeys.PIN_NAME, pin.getName())
                 .append(FieldKeys.PIN_DESCRIPTION, pin.getDescription())
@@ -97,7 +100,8 @@ public class PinDaoImpl implements PinDao {
 
     @Override
     public Long delete(String pinId, String userId) {
-        MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection(Constants.PINS);
+        MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection
+                (Constants.PINS);
 
         Document document = new Document()
                 .append(FieldKeys.IS_DELETED, true);
@@ -115,7 +119,8 @@ public class PinDaoImpl implements PinDao {
 
     @Override
     public Long count(String userId) {
-        MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection(Constants.PINS);
+        MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection
+                (Constants.PINS);
 
         return collection.count(
                 and(
@@ -128,7 +133,8 @@ public class PinDaoImpl implements PinDao {
 
     @Override
     public List<Pin> get(int limit, int offset, String userId) {
-        MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection(Constants.PINS);
+        MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection
+                (Constants.PINS);
 
         FindIterable<Document> iterator = collection.find(and
                         (

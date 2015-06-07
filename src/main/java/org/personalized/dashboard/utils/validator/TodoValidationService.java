@@ -41,9 +41,11 @@ public class TodoValidationService implements ValidationService<Todo> {
     }
 
     private void validateTasks(Todo todo, List<ErrorEntity> errorEntities) {
-        if (!CollectionUtils.isEmpty(todo.getTasks()) && todo.getTasks().size() > Constants.MAX_TASK_SIZE) {
+        if (!CollectionUtils.isEmpty(todo.getTasks()) && todo.getTasks().size() > Constants
+                .MAX_TASK_SIZE) {
             ErrorEntity errorEntity = new ErrorEntity(ErrorCodes.TASKS_LENGTH_EXCEEDED.name(),
-                    MessageFormat.format(ErrorCodes.TASKS_LENGTH_EXCEEDED.getDescription(), Constants.MAX_TASK_SIZE), FieldKeys.TASK_LIST);
+                    MessageFormat.format(ErrorCodes.TASKS_LENGTH_EXCEEDED.getDescription(),
+                            Constants.MAX_TASK_SIZE), FieldKeys.TASK_LIST);
             errorEntities.add(errorEntity);
         }
     }
@@ -53,9 +55,11 @@ public class TodoValidationService implements ValidationService<Todo> {
 
         Field todoFields[] = Todo.class.getDeclaredFields();
         for (Field todoField : todoFields) {
-            Set<ConstraintViolation<Todo>> constraintViolations = validator.validateProperty(todo, todoField.getName());
+            Set<ConstraintViolation<Todo>> constraintViolations = validator.validateProperty
+                    (todo, todoField.getName());
             for (ConstraintViolation<Todo> constraintViolation : constraintViolations) {
-                constraintValidationService.validateConstraints(todoField, constraintViolation, errorEntities);
+                constraintValidationService.validateConstraints(todoField, constraintViolation,
+                        errorEntities);
             }
         }
 
@@ -63,15 +67,18 @@ public class TodoValidationService implements ValidationService<Todo> {
 
             if (task.getPercentCompletion() < 0 || task.getPercentCompletion() > 100) {
                 ErrorEntity errorEntity = new ErrorEntity(ErrorCodes.INVALID_VALUE.name(),
-                        ErrorCodes.INVALID_VALUE.getDescription(), FieldKeys.TASK_PERCENT_COMPLETION);
+                        ErrorCodes.INVALID_VALUE.getDescription(), FieldKeys
+                        .TASK_PERCENT_COMPLETION);
                 errorEntities.add(errorEntity);
             }
 
             Field taskFields[] = Task.class.getDeclaredFields();
             for (Field taskField : taskFields) {
-                Set<ConstraintViolation<Task>> constraintViolations = validator.validateProperty(task, taskField.getName());
+                Set<ConstraintViolation<Task>> constraintViolations = validator.validateProperty
+                        (task, taskField.getName());
                 for (ConstraintViolation<Task> constraintViolation : constraintViolations) {
-                    constraintValidationService.validateConstraints(taskField, constraintViolation, errorEntities);
+                    constraintValidationService.validateConstraints(taskField,
+                            constraintViolation, errorEntities);
                 }
             }
         }

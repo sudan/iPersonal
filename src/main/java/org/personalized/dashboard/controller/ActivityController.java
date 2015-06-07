@@ -33,7 +33,8 @@ public class ActivityController {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getActivities() {
         List<Activity> activities = activityService.get();
-        GenericEntity<List<Activity>> activityListObj = new GenericEntity<List<Activity>>(activities) {
+        GenericEntity<List<Activity>> activityListObj = new GenericEntity<List<Activity>>
+                (activities) {
         };
         return Response.status(Response.Status.OK).entity(activityListObj).build();
     }

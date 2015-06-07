@@ -41,7 +41,8 @@ public class BookmarkValidationService implements ValidationService<Bookmark> {
     private void validateUrl(Bookmark bookmark, List<ErrorEntity> errorEntities) {
         UrlValidator urlValidator = new UrlValidator();
         if (!urlValidator.isValid(bookmark.getUrl())) {
-            ErrorEntity errorEntity = new ErrorEntity(ErrorCodes.INVALID_URL.name(), ErrorCodes.INVALID_URL.getDescription(), FieldKeys.BOOKMARK_URL);
+            ErrorEntity errorEntity = new ErrorEntity(ErrorCodes.INVALID_URL.name(), ErrorCodes
+                    .INVALID_URL.getDescription(), FieldKeys.BOOKMARK_URL);
             errorEntities.add(errorEntity);
         }
     }
@@ -50,9 +51,11 @@ public class BookmarkValidationService implements ValidationService<Bookmark> {
 
         Field fields[] = Bookmark.class.getDeclaredFields();
         for (Field field : fields) {
-            Set<ConstraintViolation<Bookmark>> constraintViolations = validator.validateProperty(bookmark, field.getName());
+            Set<ConstraintViolation<Bookmark>> constraintViolations = validator.validateProperty
+                    (bookmark, field.getName());
             for (ConstraintViolation<Bookmark> constraintViolation : constraintViolations) {
-                constraintValidationService.validateConstraints(field, constraintViolation, errorEntities);
+                constraintValidationService.validateConstraints(field, constraintViolation,
+                        errorEntities);
             }
         }
     }

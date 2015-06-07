@@ -50,7 +50,8 @@ public class BookmarkController {
             String bookmarkId = bookmarkService.createBookmark(bookmark);
             return Response.status(Response.Status.CREATED).entity(bookmarkId).build();
         } else {
-            GenericEntity<List<ErrorEntity>> errorObj = new GenericEntity<List<ErrorEntity>>(errorEntities) {
+            GenericEntity<List<ErrorEntity>> errorObj = new GenericEntity<List<ErrorEntity>>
+                    (errorEntities) {
             };
             return Response.status(Response.Status.BAD_REQUEST).entity(errorObj).build();
         }
@@ -85,7 +86,8 @@ public class BookmarkController {
                 return Response.status(Response.Status.BAD_REQUEST).build();
             }
         } else {
-            GenericEntity<List<ErrorEntity>> errorObj = new GenericEntity<List<ErrorEntity>>(errorEntities) {
+            GenericEntity<List<ErrorEntity>> errorObj = new GenericEntity<List<ErrorEntity>>
+                    (errorEntities) {
             };
             return Response.status(Response.Status.BAD_REQUEST).entity(errorObj).build();
         }
@@ -112,16 +114,20 @@ public class BookmarkController {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response fetchBookmarks(@QueryParam("limit") int limit, @QueryParam("offset") int offset) {
+    public Response fetchBookmarks(@QueryParam("limit") int limit, @QueryParam("offset") int
+            offset) {
         BatchSize batchSize = new BatchSize(limit, offset);
         List<ErrorEntity> errorEntities = batchSizeValidationService.validate(batchSize);
         if (CollectionUtils.isEmpty(errorEntities)) {
-            List<Bookmark> bookmarks = bookmarkService.fetchBookmarks(batchSize.getLimit(), batchSize.getOffset());
-            GenericEntity<List<Bookmark>> bookmarkListObj = new GenericEntity<List<Bookmark>>(bookmarks) {
+            List<Bookmark> bookmarks = bookmarkService.fetchBookmarks(batchSize.getLimit(),
+                    batchSize.getOffset());
+            GenericEntity<List<Bookmark>> bookmarkListObj = new GenericEntity<List<Bookmark>>
+                    (bookmarks) {
             };
             return Response.status(Response.Status.OK).entity(bookmarkListObj).build();
         } else {
-            GenericEntity<List<ErrorEntity>> errorObj = new GenericEntity<List<ErrorEntity>>(errorEntities) {
+            GenericEntity<List<ErrorEntity>> errorObj = new GenericEntity<List<ErrorEntity>>
+                    (errorEntities) {
             };
             return Response.status(Response.Status.BAD_REQUEST).entity(errorObj).build();
         }
