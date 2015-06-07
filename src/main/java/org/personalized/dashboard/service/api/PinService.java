@@ -12,6 +12,7 @@ public interface PinService {
 
     /**
      * Create a pin for the user
+     *
      * @param pin
      * @return
      */
@@ -19,6 +20,7 @@ public interface PinService {
 
     /**
      * Get the pin for the id
+     *
      * @param pinId
      * @return
      */
@@ -26,6 +28,7 @@ public interface PinService {
 
     /**
      * Update the pin
+     *
      * @param pin
      * @return
      */
@@ -33,22 +36,25 @@ public interface PinService {
 
     /**
      * Delete the  pin for the pinId
+     *
      * @param pinId
      */
     void deletePin(String pinId);
 
     /**
      * Count the pin for the user
+     *
      * @return
      */
     Long countPins();
 
     /**
      * Fetch the pins with given limit and offset
+     *
      * @param limit
      * @param offset
      * @return
      */
-    List<Pin> fetchPins(int limit , int offset);
+    List<Pin> fetchPins(int limit, int offset);
 
 }

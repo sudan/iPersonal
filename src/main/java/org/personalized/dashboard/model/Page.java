@@ -19,11 +19,11 @@ public class Page {
     private Long createdOn;
     private Long modifiedAt;
 
-    public Page(){
+    public Page() {
 
     }
 
-    public Page(String pageId, String title, String template, Map<String,String> placeholders, int month, int date){
+    public Page(String pageId, String title, String template, Map<String, String> placeholders, int month, int date) {
         this.pageId = pageId;
         this.title = title;
         this.template = template;
@@ -68,7 +68,7 @@ public class Page {
         return month;
     }
 
-    public void setMonth(int month){
+    public void setMonth(int month) {
         this.month = month;
     }
 
@@ -89,7 +89,7 @@ public class Page {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return new ToStringBuilder(this)
                 .append("pageId", pageId)
                 .append("title", title)

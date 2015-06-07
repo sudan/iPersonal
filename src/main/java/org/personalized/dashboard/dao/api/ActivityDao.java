@@ -11,12 +11,14 @@ public interface ActivityDao {
 
     /**
      * Add an entry of activity for the user
+     *
      * @param activity
      */
     void add(Activity activity, String userId);
 
     /**
      * Get the latest activities for the user
+     *
      * @param limit
      * @param offset
      * @param userId

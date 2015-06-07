@@ -11,6 +11,7 @@ public interface NoteDao {
 
     /**
      * Create a new note for the user
+     *
      * @param note
      * @param userId
      * @return
@@ -19,6 +20,7 @@ public interface NoteDao {
 
     /**
      * Get note for the noteId and userId
+     *
      * @param noteId
      * @param userId
      * @return
@@ -27,6 +29,7 @@ public interface NoteDao {
 
     /**
      * Update the note and return the updated one
+     *
      * @param note
      * @param userId
      * @return
@@ -35,6 +38,7 @@ public interface NoteDao {
 
     /**
      * Delete the note for the given noteId and userId
+     *
      * @param noteId
      * @param userId
      * @return
@@ -48,10 +52,11 @@ public interface NoteDao {
 
     /**
      * Fetch all notes for the userId with limit and offset
+     *
      * @param limit
      * @param offset
      * @param userId
      */
-    List<Note> get(int limit , int offset, String userId);
+    List<Note> get(int limit, int offset, String userId);
 
 }

@@ -12,7 +12,7 @@ public class ExpenseServiceImpl implements ExpenseService {
     private final ExpenseDao expenseDao;
 
     @Inject
-    public ExpenseServiceImpl(ExpenseDao expenseDao){
+    public ExpenseServiceImpl(ExpenseDao expenseDao) {
         this.expenseDao = expenseDao;
     }
 }

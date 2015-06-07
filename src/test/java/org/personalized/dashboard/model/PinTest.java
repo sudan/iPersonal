@@ -11,14 +11,14 @@ import org.springframework.test.context.ActiveProfiles;
 public class PinTest {
 
     @Test
-    public void pinEntityTest(){
+    public void pinEntityTest() {
 
         Pin pin = new Pin("PIN123456789", "pin", "description", "http://www.google.com");
         Assert.assertEquals("Pin ID is PIN123456789", "PIN123456789", pin.getPinId());
         Assert.assertEquals("pin name is pin", "pin", pin.getName());
         Assert.assertEquals("pin description is description", "description", pin.getDescription());
-        Assert.assertEquals("pin imageurl is http://www.google.com","http://www.google.com", pin.getImageUrl());
-        Assert.assertNull("CreatedOn is null on creation.Hence only Data Layer can set it",pin.getCreatedOn());
+        Assert.assertEquals("pin imageurl is http://www.google.com", "http://www.google.com", pin.getImageUrl());
+        Assert.assertNull("CreatedOn is null on creation.Hence only Data Layer can set it", pin.getCreatedOn());
         Assert.assertNull("modifiedAt is null.Hence only data layer can set it", pin.getModifiedAt());
 
         pin.setPinId("PIN123456798");
@@ -29,6 +29,6 @@ public class PinTest {
         Assert.assertEquals("Pin ID is PIN123456798", "PIN123456798", pin.getPinId());
         Assert.assertEquals("pin name is pin1", "pin1", pin.getName());
         Assert.assertEquals("pin description is description1", "description1", pin.getDescription());
-        Assert.assertEquals("pin imageurl is http://www.yahoo.com","http://www.yahoo.com", pin.getImageUrl());
+        Assert.assertEquals("pin imageurl is http://www.yahoo.com", "http://www.yahoo.com", pin.getImageUrl());
     }
 }

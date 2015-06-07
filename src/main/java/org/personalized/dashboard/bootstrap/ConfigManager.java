@@ -16,21 +16,20 @@ public class ConfigManager {
     private ConfigManager() throws IOException {
         InputStream inputStream = getClass().getClassLoader().getResourceAsStream("config.properties");
 
-        if(inputStream == null){
+        if (inputStream == null) {
             throw new FileNotFoundException("Property files cannot be found in the classpath");
-        }
-        else{
+        } else {
             propertyConfig.load(inputStream);
             isInitialized = true;
         }
     }
 
-    public static void init() throws IOException{
-        if(!isInitialized)
+    public static void init() throws IOException {
+        if (!isInitialized)
             new ConfigManager();
     }
 
-    public static String getValue(String key){
+    public static String getValue(String key) {
         return propertyConfig.getProperty(key);
     }
 }

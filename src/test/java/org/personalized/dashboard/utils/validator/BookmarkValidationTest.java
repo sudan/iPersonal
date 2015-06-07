@@ -18,12 +18,12 @@ public class BookmarkValidationTest {
     private ValidationService bookmarkValidationService;
 
     @Before
-    public void initialize(){
+    public void initialize() {
         this.bookmarkValidationService = new BookmarkValidationService(new ConstraintValidationService<Bookmark>());
     }
 
     @Test
-    public void testBookmarkValidation(){
+    public void testBookmarkValidation() {
         Bookmark bookmark = new Bookmark("BOK123456789", "", "", "");
         List<ErrorEntity> errorEntities = bookmarkValidationService.validate(bookmark);
         Assert.assertEquals("Error count is 4", 4, errorEntities.size());
@@ -49,17 +49,17 @@ public class BookmarkValidationTest {
         Assert.assertEquals("Error count is 0", 0, errorEntities.size());
 
         StringBuilder invalidUrl = new StringBuilder();
-        for(int i = 0; i < Constants.URL_MAX_LENGTH + 1; i++) {
+        for (int i = 0; i < Constants.URL_MAX_LENGTH + 1; i++) {
             invalidUrl.append("a");
         }
 
         StringBuilder invalidName = new StringBuilder();
-        for(int i = 0; i < Constants.TITLE_MAX_LENGTH + 1; i++) {
+        for (int i = 0; i < Constants.TITLE_MAX_LENGTH + 1; i++) {
             invalidName.append("n");
         }
 
         StringBuilder invalidDescription = new StringBuilder();
-        for(int i = 0; i < Constants.CONTENT_MAX_LENGTH + 1; i++) {
+        for (int i = 0; i < Constants.CONTENT_MAX_LENGTH + 1; i++) {
             invalidDescription.append("c");
         }
 

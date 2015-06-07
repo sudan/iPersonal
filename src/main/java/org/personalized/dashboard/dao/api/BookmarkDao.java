@@ -11,6 +11,7 @@ public interface BookmarkDao {
 
     /**
      * Create a new bookmark for the user
+     *
      * @param bookmark
      * @param userId
      */
@@ -18,6 +19,7 @@ public interface BookmarkDao {
 
     /**
      * Get bookmark for the given bookmarkId and userId
+     *
      * @param bookmarkId
      * @param userId
      * @return
@@ -26,6 +28,7 @@ public interface BookmarkDao {
 
     /**
      * Update the bookmark and return the updated one
+     *
      * @param bookmark
      * @return
      */
@@ -33,6 +36,7 @@ public interface BookmarkDao {
 
     /**
      * Delete the bookmark for the given bookmarkId and userId
+     *
      * @param bookmarkId
      * @param userId
      */
@@ -45,9 +49,10 @@ public interface BookmarkDao {
 
     /**
      * Fetch all bookmarks for the userId with limit and offset
+     *
      * @param limit
      * @param offset
      * @param userId
      */
-    List<Bookmark> get(int limit , int offset, String userId);
+    List<Bookmark> get(int limit, int offset, String userId);
 }

@@ -41,7 +41,7 @@ public class NoteDaoTest {
             and change the dbName to ipersonal-test and also enable authentication
             for that database
          */
-        if(isDebugMode  && testCollection.equalsIgnoreCase("ipersonal-test")) {
+        if (isDebugMode && testCollection.equalsIgnoreCase("ipersonal-test")) {
             MongoBootstrap.init();
             MongoBootstrap.getMongoDatabase().getCollection(Constants.NOTES).drop();
 
@@ -93,7 +93,7 @@ public class NoteDaoTest {
 
 
             // verify the paginated api
-            List<Note> notes = noteDao.get(10,0,"1");
+            List<Note> notes = noteDao.get(10, 0, "1");
             Assert.assertEquals("Count is 2", 2, notes.size());
 
             Assert.assertEquals("NoteIds match", noteid2, notes.get(0).getNoteId());
@@ -113,9 +113,9 @@ public class NoteDaoTest {
             count = noteDao.count("1");
             Assert.assertNull("Note2 is deleted", noteDao.get(noteid2, "1"));
             Assert.assertNotNull("Note1 is not deleted", noteDao.get(noteid1, "1"));
-            Assert.assertEquals("Count now is 1", 1 , count);
+            Assert.assertEquals("Count now is 1", 1, count);
 
-            notes = noteDao.get(10,0,"1");
+            notes = noteDao.get(10, 0, "1");
             Assert.assertEquals("Count is 1", 1, notes.size());
 
             Assert.assertEquals("NoteIds match", noteid1, notes.get(0).getNoteId());

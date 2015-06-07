@@ -58,7 +58,7 @@ public class NoteDaoImpl implements NoteDao {
                         )
         ).first();
 
-        if(document != null) {
+        if (document != null) {
             Note note = new Note();
             note.setNoteId(document.getString(FieldKeys.PRIMARY_KEY));
             note.setTitle(document.getString(FieldKeys.NOTE_TITLE));

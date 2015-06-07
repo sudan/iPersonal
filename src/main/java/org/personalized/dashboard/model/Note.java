@@ -2,8 +2,8 @@ package org.personalized.dashboard.model;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.validator.constraints.NotEmpty;
-import org.personalized.dashboard.utils.FieldKeys;
 import org.personalized.dashboard.utils.Constants;
+import org.personalized.dashboard.utils.FieldKeys;
 import org.personalized.dashboard.utils.validator.FieldName;
 
 import javax.validation.constraints.Size;
@@ -18,23 +18,23 @@ public class Note {
     private String noteId;
 
     @NotEmpty
-    @Size(max= Constants.TITLE_MAX_LENGTH)
-    @FieldName(name= FieldKeys.NOTE_TITLE)
+    @Size(max = Constants.TITLE_MAX_LENGTH)
+    @FieldName(name = FieldKeys.NOTE_TITLE)
     private String title;
 
     @NotEmpty
-    @Size(max=Constants.CONTENT_MAX_LENGTH)
-    @FieldName(name=FieldKeys.NOTE_DESCRIPTION)
+    @Size(max = Constants.CONTENT_MAX_LENGTH)
+    @FieldName(name = FieldKeys.NOTE_DESCRIPTION)
     private String note;
 
     private Long createdOn;
     private Long modifiedAt;
 
-    public Note(){
+    public Note() {
 
     }
 
-    public Note(String noteId, String title, String note){
+    public Note(String noteId, String title, String note) {
         this.noteId = noteId;
         this.title = title;
         this.note = note;
@@ -76,12 +76,12 @@ public class Note {
         return modifiedAt;
     }
 
-    public void setModifiedAt(Long modifiedAt){
+    public void setModifiedAt(Long modifiedAt) {
         this.modifiedAt = modifiedAt;
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return new ToStringBuilder(this)
                 .append("noteId", noteId)
                 .append("title", title)

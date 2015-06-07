@@ -49,17 +49,17 @@ public class PinValidationTest {
         Assert.assertEquals("Error count is 0", 0, errorEntities.size());
 
         StringBuilder invalidImageUrl = new StringBuilder();
-        for(int i = 0; i < Constants.URL_MAX_LENGTH + 1; i++) {
+        for (int i = 0; i < Constants.URL_MAX_LENGTH + 1; i++) {
             invalidImageUrl.append("a");
         }
 
         StringBuilder invalidName = new StringBuilder();
-        for(int i = 0; i < Constants.TITLE_MAX_LENGTH + 1; i++) {
+        for (int i = 0; i < Constants.TITLE_MAX_LENGTH + 1; i++) {
             invalidName.append("n");
         }
 
         StringBuilder invalidDescription = new StringBuilder();
-        for(int i = 0; i < Constants.CONTENT_MAX_LENGTH + 1; i++) {
+        for (int i = 0; i < Constants.CONTENT_MAX_LENGTH + 1; i++) {
             invalidDescription.append("c");
         }
 

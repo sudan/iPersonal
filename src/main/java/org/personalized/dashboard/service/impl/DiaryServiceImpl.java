@@ -14,7 +14,7 @@ public class DiaryServiceImpl implements DiaryService {
     private final DiaryDao diaryDao;
 
     @Inject
-    public DiaryServiceImpl(DiaryDao diaryDao){
+    public DiaryServiceImpl(DiaryDao diaryDao) {
         this.diaryDao = diaryDao;
     }
 }

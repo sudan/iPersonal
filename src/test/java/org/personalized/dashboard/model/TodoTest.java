@@ -14,12 +14,12 @@ import java.util.List;
 public class TodoTest {
 
     @Test
-    public void todoEntityTest(){
+    public void todoEntityTest() {
 
-        Task task1 = new Task("TASA23456789", Priority.HIGH, "name1","task1");
-        Task task2 = new Task("TASB23456789", Priority.LOW, "name2","task2");
-        Task task3 = new Task("TASC23456789", Priority.MEDIUM, "name3","task3");
-        Task task4 = new Task("TASD23456789", Priority.MEDIUM, "name4","task4", 50);
+        Task task1 = new Task("TASA23456789", Priority.HIGH, "name1", "task1");
+        Task task2 = new Task("TASB23456789", Priority.LOW, "name2", "task2");
+        Task task3 = new Task("TASC23456789", Priority.MEDIUM, "name3", "task3");
+        Task task4 = new Task("TASD23456789", Priority.MEDIUM, "name4", "task4", 50);
 
         List<Task> tasks = Lists.newArrayList();
         tasks.add(task1);
@@ -33,7 +33,7 @@ public class TodoTest {
         Assert.assertEquals("TODO id is TODO123456789", "TODO123456789", todo.getTodoId());
         Assert.assertEquals("TODO name is todo1", "todo1", todo.getTitle());
 
-        Assert.assertEquals("Task1 ID is TASA23456789","TASA23456789", todo.getTasks().get(0).getTaskId());
+        Assert.assertEquals("Task1 ID is TASA23456789", "TASA23456789", todo.getTasks().get(0).getTaskId());
         Assert.assertEquals("Task2 ID is TASB23456789", "TASB23456789", todo.getTasks().get(1).getTaskId());
         Assert.assertEquals("Task3 ID is TASC23456789", "TASC23456789", todo.getTasks().get(2).getTaskId());
         Assert.assertEquals("Task4 ID is TASD23456789", "TASD23456789", todo.getTasks().get(3).getTaskId());

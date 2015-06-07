@@ -2,8 +2,8 @@ package org.personalized.dashboard.model;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.validator.constraints.NotEmpty;
-import org.personalized.dashboard.utils.FieldKeys;
 import org.personalized.dashboard.utils.Constants;
+import org.personalized.dashboard.utils.FieldKeys;
 import org.personalized.dashboard.utils.validator.FieldName;
 
 import javax.validation.constraints.Size;
@@ -19,23 +19,23 @@ public class Task {
     private Priority priority = Priority.MEDIUM;
 
     @NotEmpty
-    @Size(max=Constants.TITLE_MAX_LENGTH)
-    @FieldName(name= FieldKeys.TASK_NAME)
+    @Size(max = Constants.TITLE_MAX_LENGTH)
+    @FieldName(name = FieldKeys.TASK_NAME)
     private String name;
 
     @NotEmpty
-    @Size(max=Constants.CONTENT_MAX_LENGTH)
-    @FieldName(name=FieldKeys.TASK_DESCRIPTION)
+    @Size(max = Constants.CONTENT_MAX_LENGTH)
+    @FieldName(name = FieldKeys.TASK_DESCRIPTION)
     private String task;
 
-    @FieldName(name=FieldKeys.TASK_PERCENT_COMPLETION)
+    @FieldName(name = FieldKeys.TASK_PERCENT_COMPLETION)
     private int percentCompletion = 0;
 
-    public Task(){
+    public Task() {
 
     }
 
-    public Task(String taskId, Priority priority, String name, String task){
+    public Task(String taskId, Priority priority, String name, String task) {
         this.taskId = taskId;
         this.priority = priority;
         this.name = name;
@@ -43,7 +43,7 @@ public class Task {
 
     }
 
-    public Task(String taskId, Priority priority, String name, String task, int percentCompletion){
+    public Task(String taskId, Priority priority, String name, String task, int percentCompletion) {
         this.taskId = taskId;
         this.priority = priority;
         this.name = name;
@@ -83,16 +83,16 @@ public class Task {
         this.task = task;
     }
 
-    public int getPercentCompletion(){
+    public int getPercentCompletion() {
         return percentCompletion;
     }
 
-    public void setPercentCompletion(int percentCompletion){
+    public void setPercentCompletion(int percentCompletion) {
         this.percentCompletion = percentCompletion;
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return new ToStringBuilder(this)
                 .append("taskId", taskId)
                 .append("priority", priority)

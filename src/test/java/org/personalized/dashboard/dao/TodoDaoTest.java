@@ -79,7 +79,7 @@ public class TodoDaoTest {
             Todo todoRead1 = todoDao.get(todoId1, "1");
             Todo todoRead2 = todoDao.get(todoId2, "1");
 
-            Assert.assertEquals("Count is 2", new Long(2) , todoDao.count("1"));
+            Assert.assertEquals("Count is 2", new Long(2), todoDao.count("1"));
 
             Assert.assertEquals("todo1 name is todo1", "todo1", todoRead1.getTitle());
             Assert.assertEquals("todo1 task1 name is name1", "name1", todoRead1.getTasks().get(0).getName());
@@ -112,7 +112,7 @@ public class TodoDaoTest {
             Assert.assertEquals("todo2 task1 priority is HIGH", "HIGH", todoUpdate1.getTasks().get(0).getPriority().name());
             Assert.assertEquals("todo2 task1 percent is 10", 10, todoUpdate1.getTasks().get(0).getPercentCompletion());
 
-            List<Todo> todos = todoDao.get(2,0,"1");
+            List<Todo> todos = todoDao.get(2, 0, "1");
 
             Assert.assertEquals("todo1 name is todo1", "newtitle", todos.get(0).getTitle());
             Assert.assertEquals("todo1 task1 name is name1", "name1", todos.get(0).getTasks().get(0).getName());
@@ -130,11 +130,11 @@ public class TodoDaoTest {
             Assert.assertEquals("todo2 task1 percent is 10", 10, todos.get(1).getTasks().get(0).getPercentCompletion());
             Assert.assertEquals("todo2 task2 percent is 20", 20, todos.get(1).getTasks().get(1).getPercentCompletion());
 
-            todoDao.delete(todoId1,"1");
+            todoDao.delete(todoId1, "1");
             Todo todo = todoDao.get(todoId1, "1");
             Assert.assertNull("todo is deleted", todo);
             Assert.assertNotNull("todo is not deleted", todoDao.get(todoId2, "1"));
             Assert.assertEquals("Count is 1", new Long(1), todoDao.count("1"));
-          }
+        }
     }
 }

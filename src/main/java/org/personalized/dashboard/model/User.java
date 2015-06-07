@@ -7,60 +7,60 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
  */
 public class User {
 
+    private final boolean isAdmin = false;
     private String userId;
     private String username;
     private String email;
     private String profilePicURL;
-    private final boolean isAdmin = false;
 
-    public User(String userId, String username, String email, String profilePicURL){
+    public User(String userId, String username, String email, String profilePicURL) {
         this.userId = userId;
         this.username = username;
         this.email = email;
         this.profilePicURL = profilePicURL;
     }
 
-    public String getUserId(){
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId){
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 
-    public String getUsername(){
+    public String getUsername() {
         return username;
     }
 
-    public void setUsername(String username){
+    public void setUsername(String username) {
         this.username = username;
     }
 
-    public String getEmail(){
+    public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email){
+    public void setEmail(String email) {
         this.email = email;
     }
 
-    public String getProfilePicURL(){
+    public String getProfilePicURL() {
         return profilePicURL;
     }
 
-    public void setProfilePicURL(String profilePicURL){
+    public void setProfilePicURL(String profilePicURL) {
         this.profilePicURL = profilePicURL;
     }
 
-    public boolean isAdmin(){
+    public boolean isAdmin() {
         return isAdmin;
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this)
-                .append("userId",userId)
-                .append("username",username)
+                .append("userId", userId)
+                .append("username", username)
                 .append("email", email)
                 .append("profilePicURL", profilePicURL)
                 .toString();

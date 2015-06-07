@@ -20,7 +20,7 @@ public class Expense {
 
     }
 
-    public Expense(String expenseId, String name, List<Bill> bills){
+    public Expense(String expenseId, String name, List<Bill> bills) {
         this.expenseId = expenseId;
         this.name = name;
         this.bills = bills;
@@ -59,7 +59,7 @@ public class Expense {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return new ToStringBuilder(this)
                 .append("expenseId", expenseId)
                 .append("name", name)
