@@ -20,7 +20,7 @@ public class Activity {
 
     }
 
-    public Activity(String activityId, ActivityType activityType,Entity entity, String description) {
+    public Activity(String activityId, ActivityType activityType, Entity entity, String description) {
         this.activityId = activityId;
         this.activityType = activityType;
         this.entity = entity;
@@ -47,6 +47,10 @@ public class Activity {
         return description;
     }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public Entity getEntity() {
         return entity;
     }
@@ -54,11 +58,6 @@ public class Activity {
     public void setEntity(Entity entity) {
         this.entity = entity;
     }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
 
     public Long getCreatedOn() {
         return createdOn;
@@ -69,7 +68,7 @@ public class Activity {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return new ToStringBuilder(this)
                 .append("activityId", activityId)
                 .append("activityType", activityType)

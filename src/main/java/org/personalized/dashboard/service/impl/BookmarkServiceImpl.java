@@ -9,8 +9,8 @@ import org.personalized.dashboard.model.ActivityType;
 import org.personalized.dashboard.model.Bookmark;
 import org.personalized.dashboard.model.EntityType;
 import org.personalized.dashboard.service.api.BookmarkService;
-import org.personalized.dashboard.utils.generator.ActivityGenerator;
 import org.personalized.dashboard.utils.auth.SessionManager;
+import org.personalized.dashboard.utils.generator.ActivityGenerator;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -28,7 +28,7 @@ public class BookmarkServiceImpl implements BookmarkService {
 
     @Inject
     public BookmarkServiceImpl(BookmarkDao bookmarkDao, SessionManager sessionManager,
-                               ActivityGenerator activityGenerator, ActivityDao activityDao){
+                               ActivityGenerator activityGenerator, ActivityDao activityDao) {
         this.bookmarkDao = bookmarkDao;
         this.sessionManager = sessionManager;
         this.activityGenerator = activityGenerator;
@@ -36,11 +36,11 @@ public class BookmarkServiceImpl implements BookmarkService {
     }
 
     @Override
-    public String  createBookmark(Bookmark bookmark) {
-            String bookmarkId = bookmarkDao.create(bookmark, sessionManager.getUserIdFromSession());
-            Activity activity = activityGenerator.generate(ActivityType.CREATED, EntityType.BOOKMARK, bookmarkId, bookmark.getName());
-            activityDao.add(activity, sessionManager.getUserIdFromSession());
-            return bookmarkId;
+    public String createBookmark(Bookmark bookmark) {
+        String bookmarkId = bookmarkDao.create(bookmark, sessionManager.getUserIdFromSession());
+        Activity activity = activityGenerator.generate(ActivityType.CREATED, EntityType.BOOKMARK, bookmarkId, bookmark.getName());
+        activityDao.add(activity, sessionManager.getUserIdFromSession());
+        return bookmarkId;
     }
 
     @Override
@@ -51,7 +51,7 @@ public class BookmarkServiceImpl implements BookmarkService {
     @Override
     public Long updateBookmark(Bookmark bookmark) {
         Long modifiedCount = bookmarkDao.update(bookmark, sessionManager.getUserIdFromSession());
-        if(modifiedCount > 0) {
+        if (modifiedCount > 0) {
             Activity activity = activityGenerator.generate(ActivityType.UPDATED, EntityType.BOOKMARK, bookmark.getBookmarkId(), bookmark.getName());
             activityDao.add(activity, sessionManager.getUserIdFromSession());
         }

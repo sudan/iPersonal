@@ -19,7 +19,7 @@ public class DiaryController {
     private final DiaryService diaryService;
 
     @Inject
-    public DiaryController(DiaryService diaryService){
+    public DiaryController(DiaryService diaryService) {
         this.diaryService = diaryService;
     }
 }

@@ -2,8 +2,8 @@ package org.personalized.dashboard.model;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.validator.constraints.NotEmpty;
-import org.personalized.dashboard.utils.FieldKeys;
 import org.personalized.dashboard.utils.Constants;
+import org.personalized.dashboard.utils.FieldKeys;
 import org.personalized.dashboard.utils.validator.FieldName;
 
 import javax.validation.constraints.Size;
@@ -18,28 +18,28 @@ public class Pin {
     private String pinId;
 
     @NotEmpty
-    @Size(max=Constants.TITLE_MAX_LENGTH)
-    @FieldName(name= FieldKeys.PIN_NAME)
+    @Size(max = Constants.TITLE_MAX_LENGTH)
+    @FieldName(name = FieldKeys.PIN_NAME)
     private String name;
 
     @NotEmpty
-    @Size(max=Constants.CONTENT_MAX_LENGTH)
-    @FieldName(name=FieldKeys.PIN_DESCRIPTION)
+    @Size(max = Constants.CONTENT_MAX_LENGTH)
+    @FieldName(name = FieldKeys.PIN_DESCRIPTION)
     private String description;
 
     @NotEmpty
-    @Size(max=Constants.URL_MAX_LENGTH)
-    @FieldName(name=FieldKeys.PIN_IMAGE_URL)
+    @Size(max = Constants.URL_MAX_LENGTH)
+    @FieldName(name = FieldKeys.PIN_IMAGE_URL)
     private String imageUrl;
 
     private Long createdOn;
     private Long modifiedAt;
 
-    public Pin(){
+    public Pin() {
 
     }
 
-    public Pin(String pinId, String name, String description, String imageUrl){
+    public Pin(String pinId, String name, String description, String imageUrl) {
         this.pinId = pinId;
         this.name = name;
         this.description = description;
@@ -95,7 +95,7 @@ public class Pin {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return new ToStringBuilder(this)
                 .append("pinId", pinId)
                 .append("name", name)

@@ -38,7 +38,7 @@ public class TodoDaoImpl implements TodoDao {
         String todoId = idGenerator.generateId(Constants.TODO_PREFIX, Constants.ID_LENGTH);
 
         List<Document> tasks = Lists.newArrayList();
-        for(Task task : todo.getTasks()) {
+        for (Task task : todo.getTasks()) {
             String taskId = idGenerator.generateId(Constants.TASK_PREFIX, Constants.ID_LENGTH);
             Document document = new Document()
                     .append(FieldKeys.PRIMARY_KEY, taskId)
@@ -70,7 +70,7 @@ public class TodoDaoImpl implements TodoDao {
                         )
         ).first();
 
-        if(document != null) {
+        if (document != null) {
             Todo todo = new Todo();
             todo.setTodoId(document.getString(FieldKeys.PRIMARY_KEY));
             todo.setTitle(document.getString(FieldKeys.TODO_TITLE));
@@ -78,7 +78,7 @@ public class TodoDaoImpl implements TodoDao {
             todo.setModifiedAt(document.getLong(FieldKeys.MODIFIED_AT));
             List<Document> tasksDocuments = (List<Document>) document.get(FieldKeys.TASKS);
             List<Task> tasks = Lists.newArrayList();
-            for(Document taskDocument : tasksDocuments) {
+            for (Document taskDocument : tasksDocuments) {
                 Task task = new Task();
                 task.setTaskId(taskDocument.getString(FieldKeys.PRIMARY_KEY));
                 task.setName(taskDocument.getString(FieldKeys.TASK_NAME));
@@ -101,7 +101,7 @@ public class TodoDaoImpl implements TodoDao {
         MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection(Constants.TODOS);
 
         List<Document> tasks = Lists.newArrayList();
-        for(Task task : todo.getTasks()) {
+        for (Task task : todo.getTasks()) {
             String taskId = idGenerator.generateId(Constants.TASK_PREFIX, Constants.ID_LENGTH);
             Document document = new Document()
                     .append(FieldKeys.PRIMARY_KEY, taskId)
@@ -181,7 +181,7 @@ public class TodoDaoImpl implements TodoDao {
                 todo.setModifiedAt(document.getLong(FieldKeys.MODIFIED_AT));
                 List<Document> tasksDocuments = (List<Document>) document.get(FieldKeys.TASKS);
                 List<Task> tasks = Lists.newArrayList();
-                for(Document taskDocument : tasksDocuments) {
+                for (Document taskDocument : tasksDocuments) {
                     Task task = new Task();
                     task.setTaskId(taskDocument.getString(FieldKeys.PRIMARY_KEY));
                     task.setName(taskDocument.getString(FieldKeys.TASK_NAME));

@@ -11,6 +11,7 @@ public interface ActivityService {
 
     /**
      * Get the latest activities for the user
+     *
      * @return
      */
     List<Activity> get();

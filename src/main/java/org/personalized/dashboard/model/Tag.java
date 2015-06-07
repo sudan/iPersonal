@@ -13,11 +13,11 @@ public class Tag {
     private String tagName;
     private List<Entity> entities;
 
-    public Tag(){
+    public Tag() {
 
     }
 
-    public Tag(String userId,String tagName, List<Entity> entities){
+    public Tag(String userId, String tagName, List<Entity> entities) {
         this.userId = userId;
         this.tagName = tagName;
         this.entities = entities;
@@ -48,7 +48,7 @@ public class Tag {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return new ToStringBuilder(this)
                 .append("userId", userId)
                 .append("tagName", tagName)

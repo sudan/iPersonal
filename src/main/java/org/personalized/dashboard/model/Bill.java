@@ -19,11 +19,11 @@ public class Bill {
     private Long modifiedAt;
     private Date date;
 
-    public Bill(){
+    public Bill() {
 
     }
 
-    public Bill(String billId, String name, String description, double amount, Currency currency, Date date){
+    public Bill(String billId, String name, String description, double amount, Currency currency, Date date) {
         this.billId = billId;
         this.name = name;
         this.description = description;
@@ -89,7 +89,7 @@ public class Bill {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return new ToStringBuilder(this)
                 .append("billId", billId)
                 .append("name", name)

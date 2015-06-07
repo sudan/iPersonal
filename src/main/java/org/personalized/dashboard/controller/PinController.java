@@ -34,7 +34,7 @@ public class PinController {
     @Inject
     public PinController(PinService pinService,
                          @Named("pin") ValidationService pinValidationService,
-                         @Named("batchSize") ValidationService batchSizeValidationService){
+                         @Named("batchSize") ValidationService batchSizeValidationService) {
         this.pinService = pinService;
         this.pinValidationService = pinValidationService;
         this.batchSizeValidationService = batchSizeValidationService;
@@ -43,14 +43,14 @@ public class PinController {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response createPin(Pin pin){
+    public Response createPin(Pin pin) {
         List<ErrorEntity> errorEntities = pinValidationService.validate(pin);
-        if(CollectionUtils.isEmpty(errorEntities)){
+        if (CollectionUtils.isEmpty(errorEntities)) {
             String pinId = pinService.createPin(pin);
             return Response.status(Response.Status.CREATED).entity(pinId).build();
-        }
-        else {
-            GenericEntity<List<ErrorEntity>> errorObj = new GenericEntity<List<ErrorEntity>>(errorEntities){};
+        } else {
+            GenericEntity<List<ErrorEntity>> errorObj = new GenericEntity<List<ErrorEntity>>(errorEntities) {
+            };
             return Response.status(Response.Status.BAD_REQUEST).entity(errorObj).build();
         }
     }
@@ -59,15 +59,13 @@ public class PinController {
     @Path("{pinId}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getPin(@PathParam("pinId") String pinId) {
-        if(StringUtils.isEmpty(pinId)){
+        if (StringUtils.isEmpty(pinId)) {
             return Response.status(Response.Status.BAD_REQUEST).build();
-        }
-        else {
+        } else {
             Pin pin = pinService.getPin(pinId);
-            if(pin == null) {
+            if (pin == null) {
                 return Response.status(Response.Status.NOT_FOUND).build();
-            }
-            else {
+            } else {
                 return Response.status(Response.Status.OK).entity(pin).build();
             }
         }
@@ -77,18 +75,17 @@ public class PinController {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updatePin(Pin pin) {
-        List<ErrorEntity> errorEntities = pinValidationService.validate(pin) ;
-        if(CollectionUtils.isEmpty(errorEntities)) {
+        List<ErrorEntity> errorEntities = pinValidationService.validate(pin);
+        if (CollectionUtils.isEmpty(errorEntities)) {
             Long modifiedCount = pinService.updatePin(pin);
-            if(modifiedCount > 0) {
+            if (modifiedCount > 0) {
                 return Response.status(Response.Status.OK).entity(pin).build();
-            }
-            else {
+            } else {
                 return Response.status(Response.Status.BAD_REQUEST).build();
             }
-        }
-        else {
-            GenericEntity<List<ErrorEntity>> errorObj = new GenericEntity<List<ErrorEntity>>(errorEntities){};
+        } else {
+            GenericEntity<List<ErrorEntity>> errorObj = new GenericEntity<List<ErrorEntity>>(errorEntities) {
+            };
             return Response.status(Response.Status.BAD_REQUEST).entity(errorObj).build();
         }
     }
@@ -96,10 +93,9 @@ public class PinController {
     @DELETE
     @Path("{pinId}")
     public Response deletePin(@PathParam("pinId") String pinId) {
-        if(StringUtils.isEmpty(pinId)){
+        if (StringUtils.isEmpty(pinId)) {
             return Response.status(Response.Status.BAD_REQUEST).build();
-        }
-        else {
+        } else {
             pinService.deletePin(pinId);
             return Response.status(Response.Status.OK).build();
         }
@@ -118,13 +114,14 @@ public class PinController {
     public Response fetchPins(@QueryParam("limit") int limit, @QueryParam("offset") int offset) {
         BatchSize batchSize = new BatchSize(limit, offset);
         List<ErrorEntity> errorEntities = batchSizeValidationService.validate(batchSize);
-        if(CollectionUtils.isEmpty(errorEntities)) {
+        if (CollectionUtils.isEmpty(errorEntities)) {
             List<Pin> pins = pinService.fetchPins(batchSize.getLimit(), batchSize.getOffset());
-            GenericEntity<List<Pin>> pinListObj = new GenericEntity<List<Pin>>(pins){};
+            GenericEntity<List<Pin>> pinListObj = new GenericEntity<List<Pin>>(pins) {
+            };
             return Response.status(Response.Status.OK).entity(pinListObj).build();
-        }
-        else {
-            GenericEntity<List<ErrorEntity>> errorObj = new GenericEntity<List<ErrorEntity>>(errorEntities){};
+        } else {
+            GenericEntity<List<ErrorEntity>> errorObj = new GenericEntity<List<ErrorEntity>>(errorEntities) {
+            };
             return Response.status(Response.Status.BAD_REQUEST).entity(errorObj).build();
         }
     }

@@ -12,6 +12,7 @@ public interface PinDao {
 
     /**
      * Create a new pin for the user
+     *
      * @param pin
      * @param userId
      * @return
@@ -20,6 +21,7 @@ public interface PinDao {
 
     /**
      * Get pin for the pinId and userId
+     *
      * @param pinId
      * @param userId
      * @return
@@ -28,6 +30,7 @@ public interface PinDao {
 
     /**
      * Update the pin and return the updated one
+     *
      * @param pin
      * @param userId
      * @return
@@ -36,6 +39,7 @@ public interface PinDao {
 
     /**
      * Delete the pin for the given pinId and userId
+     *
      * @param pinId
      * @param userId
      * @return
@@ -49,10 +53,11 @@ public interface PinDao {
 
     /**
      * Fetch all pins for the userId with limit and offset
+     *
      * @param limit
      * @param offset
      * @param userId
      */
-    List<Pin> get(int limit , int offset, String userId);
+    List<Pin> get(int limit, int offset, String userId);
 
 }

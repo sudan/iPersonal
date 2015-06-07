@@ -22,7 +22,7 @@ public class TodoValidationTest {
     private ValidationService todoValidationService;
 
     @Before
-    public void initialize(){
+    public void initialize() {
         this.todoValidationService = new TodoValidationService(new ConstraintValidationService<Todo>());
     }
 
@@ -48,7 +48,7 @@ public class TodoValidationTest {
         todo = new Todo("TOD123456789", "title", tasks);
         errorEntities = todoValidationService.validate(todo);
 
-        Assert.assertEquals("Error count is 0", 0 , errorEntities.size());
+        Assert.assertEquals("Error count is 0", 0, errorEntities.size());
 
         Task task1 = new Task("TAS123456789", Priority.MEDIUM, "", "", 101);
         Task task2 = new Task("TAS123456789", Priority.HIGH, "name", "Desc", -1);
@@ -79,12 +79,12 @@ public class TodoValidationTest {
         Assert.assertEquals("Error 4 field matches", "percent_completed", errorEntities.get(3).getField());
 
         StringBuilder invalidName = new StringBuilder();
-        for(int i = 0; i < Constants.TITLE_MAX_LENGTH + 1; i++) {
+        for (int i = 0; i < Constants.TITLE_MAX_LENGTH + 1; i++) {
             invalidName.append("n");
         }
 
         StringBuilder invalidDescription = new StringBuilder();
-        for(int i = 0; i < Constants.CONTENT_MAX_LENGTH + 1; i++) {
+        for (int i = 0; i < Constants.CONTENT_MAX_LENGTH + 1; i++) {
             invalidDescription.append("c");
         }
 
@@ -109,14 +109,14 @@ public class TodoValidationTest {
         Assert.assertEquals("Error 3 description matches", "task cannot exceed 1,000 characters", errorEntities.get(2).getDescription());
         Assert.assertEquals("Error 3 field matches", "task", errorEntities.get(2).getField());
 
-        task = new Task("TAS123456789",Priority.HIGH, "name", "Desc", 10);
+        task = new Task("TAS123456789", Priority.HIGH, "name", "Desc", 10);
         tasks = Lists.newArrayList();
-        for(int i = 0; i < 12; i++)
+        for (int i = 0; i < 12; i++)
             tasks.add(task);
 
         todo = new Todo("TOD123456789", "name", tasks);
         errorEntities = todoValidationService.validate(todo);
-        Assert.assertEquals("Error count is 1", 1 , errorEntities.size());
+        Assert.assertEquals("Error count is 1", 1, errorEntities.size());
 
         Assert.assertEquals("Error 1 name matches", ErrorCodes.TASKS_LENGTH_EXCEEDED.name(), errorEntities.get(0).getName());
         Assert.assertEquals("Error 1 description matches", "Task list exceeded the limit 10", errorEntities.get(0).getDescription());

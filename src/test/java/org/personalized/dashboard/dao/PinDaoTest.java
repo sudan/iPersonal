@@ -40,7 +40,7 @@ public class PinDaoTest {
             and change the dbName to ipersonal-test and also enable authentication
             for that database
          */
-        if(isDebugMode  && testCollection.equalsIgnoreCase("ipersonal-test") ) {
+        if (isDebugMode && testCollection.equalsIgnoreCase("ipersonal-test")) {
             MongoBootstrap.init();
             MongoBootstrap.getMongoDatabase().getCollection(Constants.PINS).drop();
 
@@ -88,7 +88,7 @@ public class PinDaoTest {
             Assert.assertEquals("PinIds match", pinid2, pinRead2.getPinId());
             Assert.assertEquals("name match", "google_advanced", pinRead2.getName());
             Assert.assertEquals("description match", "desc_advanced", pinRead2.getDescription());
-            Assert.assertEquals("image url match", "http://www.bing.com",pinRead2.getImageUrl());
+            Assert.assertEquals("image url match", "http://www.bing.com", pinRead2.getImageUrl());
             Assert.assertNotNull("Createdon is not null", pinRead2.getCreatedOn());
             Assert.assertNotNull("modifiedAt is not null", pinRead2.getModifiedAt());
 
@@ -98,7 +98,7 @@ public class PinDaoTest {
 
 
             // verify the paginated api
-            List<Pin> pins = pinDao.get(10,0,"1");
+            List<Pin> pins = pinDao.get(10, 0, "1");
             Assert.assertEquals("Count is 2", 2, pins.size());
 
             Assert.assertEquals("PinIds match", pinid2, pins.get(0).getPinId());
@@ -120,9 +120,9 @@ public class PinDaoTest {
             count = pinDao.count("1");
             Assert.assertNull("Pin2 is deleted", pinDao.get(pinid2, "1"));
             Assert.assertNotNull("Pin1 is not deleted", pinDao.get(pinid1, "1"));
-            Assert.assertEquals("Count now is 1", 1 , count);
+            Assert.assertEquals("Count now is 1", 1, count);
 
-            pins = pinDao.get(10,0,"1");
+            pins = pinDao.get(10, 0, "1");
             Assert.assertEquals("Count is 1", 1, pins.size());
 
             Assert.assertEquals("PinIds match", pinid1, pins.get(0).getPinId());

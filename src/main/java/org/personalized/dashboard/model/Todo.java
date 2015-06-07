@@ -3,8 +3,8 @@ package org.personalized.dashboard.model;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.validator.constraints.NotEmpty;
-import org.personalized.dashboard.utils.FieldKeys;
 import org.personalized.dashboard.utils.Constants;
+import org.personalized.dashboard.utils.FieldKeys;
 import org.personalized.dashboard.utils.validator.FieldName;
 
 import javax.validation.Valid;
@@ -21,22 +21,22 @@ public class Todo {
     private String todoId;
 
     @NotEmpty
-    @Size(max= Constants.TITLE_MAX_LENGTH)
-    @FieldName(name=FieldKeys.TODO_TITLE)
+    @Size(max = Constants.TITLE_MAX_LENGTH)
+    @FieldName(name = FieldKeys.TODO_TITLE)
     private String title;
 
     @Valid
     @NotEmpty
-    @FieldName(name=FieldKeys.TASK_LIST)
+    @FieldName(name = FieldKeys.TASK_LIST)
     private List<Task> tasks = Lists.newArrayList();
     private Long createdOn;
     private Long modifiedAt;
 
-    public Todo(){
+    public Todo() {
 
     }
 
-    public Todo(String todoId, String title, List<Task> tasks){
+    public Todo(String todoId, String title, List<Task> tasks) {
         this.todoId = todoId;
         this.title = title;
         this.tasks = tasks;
@@ -83,11 +83,11 @@ public class Todo {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return new ToStringBuilder(this)
-                .append("todoId",todoId)
+                .append("todoId", todoId)
                 .append("title", title)
-                .append("tasks",tasks)
+                .append("tasks", tasks)
                 .append("createdOn", createdOn)
                 .append("modifiedAt", modifiedAt)
                 .toString();

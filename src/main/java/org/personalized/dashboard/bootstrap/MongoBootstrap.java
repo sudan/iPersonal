@@ -14,12 +14,12 @@ public class MongoBootstrap {
 
     private static final MongoDatabase mongoDatabase = MongoBootstrap.init();
 
-    private MongoBootstrap(){
+    private MongoBootstrap() {
 
     }
 
-    public static MongoDatabase init(){
-        if(mongoDatabase == null){
+    public static MongoDatabase init() {
+        if (mongoDatabase == null) {
             String username = ConfigManager.getValue("mongo.username");
             String password = ConfigManager.getValue("mongo.password");
             String dbName = ConfigManager.getValue("mongo.dbName");

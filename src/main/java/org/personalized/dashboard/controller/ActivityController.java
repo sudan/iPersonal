@@ -25,15 +25,16 @@ public class ActivityController {
     private final ActivityService activityService;
 
     @Inject
-    public ActivityController(ActivityService activityService){
+    public ActivityController(ActivityService activityService) {
         this.activityService = activityService;
     }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getActivities() {
-        List<Activity> activities  = activityService.get();
-        GenericEntity<List<Activity>> activityListObj = new GenericEntity<List<Activity>>(activities ){};
+        List<Activity> activities = activityService.get();
+        GenericEntity<List<Activity>> activityListObj = new GenericEntity<List<Activity>>(activities) {
+        };
         return Response.status(Response.Status.OK).entity(activityListObj).build();
     }
 }

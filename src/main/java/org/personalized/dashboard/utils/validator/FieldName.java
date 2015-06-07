@@ -8,8 +8,8 @@ import java.lang.annotation.Target;
 /**
  * Created by sudan on 3/6/15.
  */
-@Target(value= ElementType.FIELD)
-@Retention(value= RetentionPolicy.RUNTIME)
+@Target(value = ElementType.FIELD)
+@Retention(value = RetentionPolicy.RUNTIME)
 public @interface FieldName {
 
     String name();

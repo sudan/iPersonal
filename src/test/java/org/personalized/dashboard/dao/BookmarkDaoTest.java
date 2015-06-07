@@ -24,7 +24,7 @@ public class BookmarkDaoTest {
     private BookmarkDao bookmarkDao;
 
     @Before
-    public void initialize() throws IOException{
+    public void initialize() throws IOException {
         ConfigManager.init();
         this.bookmarkDao = new BookmarkDaoImpl(new IdGenerator());
     }
@@ -40,7 +40,7 @@ public class BookmarkDaoTest {
             and change the dbName to ipersonal-test and also enable authentication
             for that database
          */
-        if(isDebugMode  && testCollection.equalsIgnoreCase("ipersonal-test")) {
+        if (isDebugMode && testCollection.equalsIgnoreCase("ipersonal-test")) {
             MongoBootstrap.init();
             MongoBootstrap.getMongoDatabase().getCollection(Constants.BOOKMARKS).drop();
 
@@ -96,7 +96,7 @@ public class BookmarkDaoTest {
             Assert.assertEquals("Count is 2", 2, count);
 
             // verify the paginated api
-            List<Bookmark> bookmarks = bookmarkDao.get(10,0,"1");
+            List<Bookmark> bookmarks = bookmarkDao.get(10, 0, "1");
             Assert.assertEquals("Count is 2", 2, bookmarks.size());
 
             Assert.assertEquals("BookmarkIds match", bookmarkid2, bookmarks.get(0).getBookmarkId());
@@ -118,9 +118,9 @@ public class BookmarkDaoTest {
             count = bookmarkDao.count("1");
             Assert.assertNull("Bookmark2 is deleted", bookmarkDao.get(bookmarkid2, "1"));
             Assert.assertNotNull("Bookmark1 is not deleted", bookmarkDao.get(bookmarkid1, "1"));
-            Assert.assertEquals("Count now is 1", 1 , count);
+            Assert.assertEquals("Count now is 1", 1, count);
 
-            bookmarks = bookmarkDao.get(10,0,"1");
+            bookmarks = bookmarkDao.get(10, 0, "1");
             Assert.assertEquals("Count is 1", 1, bookmarks.size());
 
             Assert.assertEquals("BookmarkIds match", bookmarkid1, bookmarks.get(0).getBookmarkId());

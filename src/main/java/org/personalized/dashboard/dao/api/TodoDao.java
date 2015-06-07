@@ -11,6 +11,7 @@ public interface TodoDao {
 
     /**
      * Create a new todo for the user
+     *
      * @param todo
      * @param userId
      * @return
@@ -19,6 +20,7 @@ public interface TodoDao {
 
     /**
      * Get the todo for the todoId and userId
+     *
      * @param todoId
      * @param userId
      * @return
@@ -27,6 +29,7 @@ public interface TodoDao {
 
     /**
      * Update the todo and return the updated one
+     *
      * @param todo
      * @param userId
      * @return
@@ -35,6 +38,7 @@ public interface TodoDao {
 
     /**
      * Delete the todo for the todoId and userId
+     *
      * @param todoId
      * @param userId
      */
@@ -42,6 +46,7 @@ public interface TodoDao {
 
     /**
      * Count the number of todos for the userId
+     *
      * @param userId
      * @return
      */
@@ -49,6 +54,7 @@ public interface TodoDao {
 
     /**
      * Fetch the todos for the given limit, offset and userId
+     *
      * @param limit
      * @param offset
      * @param userId

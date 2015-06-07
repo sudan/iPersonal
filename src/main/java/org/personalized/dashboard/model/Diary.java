@@ -16,11 +16,11 @@ public class Diary {
     private Long createdOn;
     private Long modifiedAt;
 
-    public Diary(){
+    public Diary() {
 
     }
 
-    public Diary(String diaryId, List<Page> pages,int year){
+    public Diary(String diaryId, List<Page> pages, int year) {
         this.diaryId = diaryId;
         this.pages = pages;
         this.year = year;
@@ -46,7 +46,7 @@ public class Diary {
         return year;
     }
 
-    public void setYear(int year){
+    public void setYear(int year) {
         this.year = year;
     }
 
@@ -59,7 +59,7 @@ public class Diary {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return new ToStringBuilder(this)
                 .append("diaryId", diaryId)
                 .append("pages", pages)

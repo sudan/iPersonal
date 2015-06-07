@@ -58,7 +58,7 @@ public class BookmarkDaoImpl implements BookmarkDao {
                                 ne(FieldKeys.IS_DELETED, true)
                         )
         ).first();
-        if(document != null) {
+        if (document != null) {
             Bookmark bookmark = new Bookmark();
             bookmark.setBookmarkId(document.getString(FieldKeys.PRIMARY_KEY));
             bookmark.setName(document.getString(FieldKeys.BOOKMARK_NAME));
@@ -125,10 +125,10 @@ public class BookmarkDaoImpl implements BookmarkDao {
         MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection(Constants.BOOKMARKS);
 
         FindIterable<Document> iterator = collection.find(and
-                (
-                        eq(FieldKeys.USER_ID, userId),
-                        ne(FieldKeys.IS_DELETED, true)
-                )
+                        (
+                                eq(FieldKeys.USER_ID, userId),
+                                ne(FieldKeys.IS_DELETED, true)
+                        )
         ).skip(offset).limit(limit).sort(
                 new Document(FieldKeys.MODIFIED_AT, -1)
         );

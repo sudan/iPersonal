@@ -35,10 +35,10 @@ public class NoteValidationService implements ValidationService<Note> {
 
     private void validateConstraints(Note note, List<ErrorEntity> errorEntities) {
 
-        Field fields [] = Note.class.getDeclaredFields();
-        for(Field field : fields) {
+        Field fields[] = Note.class.getDeclaredFields();
+        for (Field field : fields) {
             Set<ConstraintViolation<Note>> constraintViolations = validator.validateProperty(note, field.getName());
-            for(ConstraintViolation<Note> constraintViolation : constraintViolations) {
+            for (ConstraintViolation<Note> constraintViolation : constraintViolations) {
                 constraintValidationService.validateConstraints(field, constraintViolation, errorEntities);
             }
         }

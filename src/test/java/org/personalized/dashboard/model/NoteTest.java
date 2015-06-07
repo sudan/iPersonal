@@ -18,7 +18,7 @@ public class NoteTest {
         Assert.assertEquals("Note ID is NOT123456789", "NOT123456789", note.getNoteId());
         Assert.assertEquals("Title for the note is todo", "todo", note.getTitle());
         Assert.assertEquals("Note is 'my todo today is to walk'", "my todo today is to walk", note.getNote());
-        Assert.assertNull("CreatedOn is null on creation.Hence only Data Layer can set it",note.getCreatedOn());
+        Assert.assertNull("CreatedOn is null on creation.Hence only Data Layer can set it", note.getCreatedOn());
         Assert.assertNull("modifiedAt is null.Hence only data layer can set it", note.getModifiedAt());
 
         note.setNoteId("NOT12346798");

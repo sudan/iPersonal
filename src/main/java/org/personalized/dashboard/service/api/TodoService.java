@@ -11,6 +11,7 @@ public interface TodoService {
 
     /**
      * Create a new todo for the user
+     *
      * @param todo
      * @return
      */
@@ -18,6 +19,7 @@ public interface TodoService {
 
     /**
      * Get the todo for the todoId
+     *
      * @param todoId
      * @return
      */
@@ -25,6 +27,7 @@ public interface TodoService {
 
     /**
      * Updates the todo
+     *
      * @param todo
      * @return
      */
@@ -32,6 +35,7 @@ public interface TodoService {
 
     /**
      * Delete the todo
+     *
      * @param todoId
      * @return
      */
@@ -40,6 +44,7 @@ public interface TodoService {
 
     /**
      * Count the todos for the user
+     *
      * @return
      */
     Long countTodos();
@@ -47,10 +52,11 @@ public interface TodoService {
 
     /**
      * Fetch the todos with given limit and offset
+     *
      * @param limit
      * @param offset
      * @return
      */
-    List<Todo> fetchTodos(int limit , int offset);
+    List<Todo> fetchTodos(int limit, int offset);
 
 }

@@ -59,7 +59,7 @@ public class PinDaoImpl implements PinDao {
                         )
         ).first();
 
-        if(document != null) {
+        if (document != null) {
             Pin pin = new Pin();
             pin.setPinId(document.getString(FieldKeys.PRIMARY_KEY));
             pin.setName(document.getString(FieldKeys.PIN_NAME));

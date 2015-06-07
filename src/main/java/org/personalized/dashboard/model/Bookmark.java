@@ -2,9 +2,9 @@ package org.personalized.dashboard.model;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.personalized.dashboard.utils.Constants;
 import org.personalized.dashboard.utils.FieldKeys;
 import org.personalized.dashboard.utils.validator.FieldName;
-import org.personalized.dashboard.utils.Constants;
 
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -18,67 +18,67 @@ public class Bookmark {
     private String bookmarkId;
 
     @NotEmpty
-    @Size(max= Constants.TITLE_MAX_LENGTH)
-    @FieldName(name= FieldKeys.BOOKMARK_NAME)
+    @Size(max = Constants.TITLE_MAX_LENGTH)
+    @FieldName(name = FieldKeys.BOOKMARK_NAME)
     private String name;
 
     @NotEmpty
-    @Size(max=Constants.CONTENT_MAX_LENGTH)
-    @FieldName(name=FieldKeys.BOOKMARK_DESCRIPTION)
+    @Size(max = Constants.CONTENT_MAX_LENGTH)
+    @FieldName(name = FieldKeys.BOOKMARK_DESCRIPTION)
     private String description;
 
     @NotEmpty
-    @Size(max=Constants.URL_MAX_LENGTH)
-    @FieldName(name=FieldKeys.BOOKMARK_URL)
+    @Size(max = Constants.URL_MAX_LENGTH)
+    @FieldName(name = FieldKeys.BOOKMARK_URL)
     private String url;
 
     private Long createdOn;
     private Long modifiedAt;
 
-    public Bookmark(){
+    public Bookmark() {
 
     }
 
-    public Bookmark(String bookmarkId, String name, String description, String url){
+    public Bookmark(String bookmarkId, String name, String description, String url) {
         this.bookmarkId = bookmarkId;
         this.name = name;
         this.description = description;
         this.url = url;
     }
 
-    public String getBookmarkId(){
+    public String getBookmarkId() {
         return bookmarkId;
     }
 
-    public void setBookmarkId(String bookmarkId){
+    public void setBookmarkId(String bookmarkId) {
         this.bookmarkId = bookmarkId;
     }
 
-    public String getName(){
+    public String getName() {
         return name;
     }
 
-    public void setName(String name){
+    public void setName(String name) {
         this.name = name;
     }
 
-    public String getDescription(){
+    public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description){
+    public void setDescription(String description) {
         this.description = description;
     }
 
-    public String getUrl(){
+    public String getUrl() {
         return url;
     }
 
-    public void setUrl(String url){
+    public void setUrl(String url) {
         this.url = url;
     }
 
-    public Long getCreatedOn(){
+    public Long getCreatedOn() {
         return createdOn;
     }
 
@@ -86,7 +86,7 @@ public class Bookmark {
         this.createdOn = createdOn;
     }
 
-    public Long getModifiedAt(){
+    public Long getModifiedAt() {
         return modifiedAt;
     }
 
@@ -95,7 +95,7 @@ public class Bookmark {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return new ToStringBuilder(this)
                 .append("bookmarkId", bookmarkId)
                 .append("name", name)

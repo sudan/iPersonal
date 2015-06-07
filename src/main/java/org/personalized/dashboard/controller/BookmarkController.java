@@ -34,7 +34,7 @@ public class BookmarkController {
     @Inject
     public BookmarkController(BookmarkService bookmarkService,
                               @Named("bookmark") ValidationService bookmarkValidationService,
-                              @Named("batchSize") ValidationService batchSizeValidationService){
+                              @Named("batchSize") ValidationService batchSizeValidationService) {
         this.bookmarkService = bookmarkService;
         this.bookmarkValidationService = bookmarkValidationService;
         this.batchSizeValidationService = batchSizeValidationService;
@@ -45,13 +45,13 @@ public class BookmarkController {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response createBookmark(Bookmark bookmark) {
-        List<ErrorEntity> errorEntities = bookmarkValidationService.validate(bookmark) ;
-        if(CollectionUtils.isEmpty(errorEntities)) {
+        List<ErrorEntity> errorEntities = bookmarkValidationService.validate(bookmark);
+        if (CollectionUtils.isEmpty(errorEntities)) {
             String bookmarkId = bookmarkService.createBookmark(bookmark);
             return Response.status(Response.Status.CREATED).entity(bookmarkId).build();
-        }
-        else{
-            GenericEntity<List<ErrorEntity>> errorObj = new GenericEntity<List<ErrorEntity>>(errorEntities){};
+        } else {
+            GenericEntity<List<ErrorEntity>> errorObj = new GenericEntity<List<ErrorEntity>>(errorEntities) {
+            };
             return Response.status(Response.Status.BAD_REQUEST).entity(errorObj).build();
         }
     }
@@ -60,15 +60,13 @@ public class BookmarkController {
     @Path("{bookmarkId}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getBookmark(@PathParam("bookmarkId") String bookmarkId) {
-        if(StringUtils.isEmpty(bookmarkId)){
+        if (StringUtils.isEmpty(bookmarkId)) {
             return Response.status(Response.Status.BAD_REQUEST).build();
-        }
-        else {
+        } else {
             Bookmark bookmark = bookmarkService.getBookmark(bookmarkId);
-            if(bookmark == null) {
+            if (bookmark == null) {
                 return Response.status(Response.Status.NOT_FOUND).build();
-            }
-            else {
+            } else {
                 return Response.status(Response.Status.OK).entity(bookmark).build();
             }
         }
@@ -78,18 +76,17 @@ public class BookmarkController {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updateBookmark(Bookmark bookmark) {
-        List<ErrorEntity> errorEntities = bookmarkValidationService.validate(bookmark) ;
-        if(CollectionUtils.isEmpty(errorEntities)) {
+        List<ErrorEntity> errorEntities = bookmarkValidationService.validate(bookmark);
+        if (CollectionUtils.isEmpty(errorEntities)) {
             Long modifiedCount = bookmarkService.updateBookmark(bookmark);
-            if(modifiedCount > 0) {
+            if (modifiedCount > 0) {
                 return Response.status(Response.Status.OK).entity(bookmark).build();
-            }
-            else {
+            } else {
                 return Response.status(Response.Status.BAD_REQUEST).build();
             }
-        }
-        else {
-            GenericEntity<List<ErrorEntity>> errorObj = new GenericEntity<List<ErrorEntity>>(errorEntities){};
+        } else {
+            GenericEntity<List<ErrorEntity>> errorObj = new GenericEntity<List<ErrorEntity>>(errorEntities) {
+            };
             return Response.status(Response.Status.BAD_REQUEST).entity(errorObj).build();
         }
     }
@@ -97,10 +94,9 @@ public class BookmarkController {
     @DELETE
     @Path("{bookmarkId}")
     public Response deleteBookmark(@PathParam("bookmarkId") String bookmarkId) {
-        if(StringUtils.isEmpty(bookmarkId)){
+        if (StringUtils.isEmpty(bookmarkId)) {
             return Response.status(Response.Status.BAD_REQUEST).build();
-        }
-        else {
+        } else {
             bookmarkService.deleteBookmark(bookmarkId);
             return Response.status(Response.Status.OK).build();
         }
@@ -119,13 +115,14 @@ public class BookmarkController {
     public Response fetchBookmarks(@QueryParam("limit") int limit, @QueryParam("offset") int offset) {
         BatchSize batchSize = new BatchSize(limit, offset);
         List<ErrorEntity> errorEntities = batchSizeValidationService.validate(batchSize);
-        if(CollectionUtils.isEmpty(errorEntities)) {
+        if (CollectionUtils.isEmpty(errorEntities)) {
             List<Bookmark> bookmarks = bookmarkService.fetchBookmarks(batchSize.getLimit(), batchSize.getOffset());
-            GenericEntity<List<Bookmark>> bookmarkListObj = new GenericEntity<List<Bookmark>>(bookmarks){};
+            GenericEntity<List<Bookmark>> bookmarkListObj = new GenericEntity<List<Bookmark>>(bookmarks) {
+            };
             return Response.status(Response.Status.OK).entity(bookmarkListObj).build();
-        }
-        else {
-            GenericEntity<List<ErrorEntity>> errorObj = new GenericEntity<List<ErrorEntity>>(errorEntities){};
+        } else {
+            GenericEntity<List<ErrorEntity>> errorObj = new GenericEntity<List<ErrorEntity>>(errorEntities) {
+            };
             return Response.status(Response.Status.BAD_REQUEST).entity(errorObj).build();
         }
     }

@@ -9,8 +9,8 @@ import org.personalized.dashboard.model.ActivityType;
 import org.personalized.dashboard.model.EntityType;
 import org.personalized.dashboard.model.Todo;
 import org.personalized.dashboard.service.api.TodoService;
-import org.personalized.dashboard.utils.generator.ActivityGenerator;
 import org.personalized.dashboard.utils.auth.SessionManager;
+import org.personalized.dashboard.utils.generator.ActivityGenerator;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -29,7 +29,7 @@ public class TodoServiceImpl implements TodoService {
     @Inject
     public TodoServiceImpl(TodoDao todoDao, SessionManager sessionManager,
                            ActivityGenerator activityGenerator,
-                           ActivityDao activityDao){
+                           ActivityDao activityDao) {
         this.todoDao = todoDao;
         this.sessionManager = sessionManager;
         this.activityGenerator = activityGenerator;
@@ -52,7 +52,7 @@ public class TodoServiceImpl implements TodoService {
     @Override
     public Long updateTodo(Todo todo) {
         Long modifiedCount = todoDao.update(todo, sessionManager.getUserIdFromSession());
-        if(modifiedCount > 0) {
+        if (modifiedCount > 0) {
             Activity activity = activityGenerator.generate(ActivityType.UPDATED, EntityType.TODO, todo.getTodoId(), todo.getTitle());
             activityDao.add(activity, sessionManager.getUserIdFromSession());
         }
@@ -61,8 +61,8 @@ public class TodoServiceImpl implements TodoService {
 
     @Override
     public void deleteTodo(String todoId) {
-        Long deletedCount =todoDao.delete(todoId, sessionManager.getUserIdFromSession());
-        if(deletedCount > 0) {
+        Long deletedCount = todoDao.delete(todoId, sessionManager.getUserIdFromSession());
+        if (deletedCount > 0) {
             Activity activity = activityGenerator.generate(ActivityType.DELETED, EntityType.TODO, todoId, StringUtils.EMPTY);
             activityDao.add(activity, sessionManager.getUserIdFromSession());
         }

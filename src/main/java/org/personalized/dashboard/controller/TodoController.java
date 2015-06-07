@@ -33,8 +33,8 @@ public class TodoController {
 
     @Inject
     public TodoController(TodoService todoService,
-                         @Named("batchSize") ValidationService batchSizeValidationService,
-                         @Named("todo") ValidationService todoValidationService){
+                          @Named("batchSize") ValidationService batchSizeValidationService,
+                          @Named("todo") ValidationService todoValidationService) {
         this.todoService = todoService;
         this.batchSizeValidationService = batchSizeValidationService;
         this.todoValidationService = todoValidationService;
@@ -43,14 +43,14 @@ public class TodoController {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response createTodo(Todo todo){
+    public Response createTodo(Todo todo) {
         List<ErrorEntity> errorEntities = todoValidationService.validate(todo);
-        if(CollectionUtils.isEmpty(errorEntities)){
+        if (CollectionUtils.isEmpty(errorEntities)) {
             String todoId = todoService.createTodo(todo);
             return Response.status(Response.Status.CREATED).entity(todoId).build();
-        }
-        else {
-            GenericEntity<List<ErrorEntity>> errorObj = new GenericEntity<List<ErrorEntity>>(errorEntities){};
+        } else {
+            GenericEntity<List<ErrorEntity>> errorObj = new GenericEntity<List<ErrorEntity>>(errorEntities) {
+            };
             return Response.status(Response.Status.BAD_REQUEST).entity(errorObj).build();
         }
     }
@@ -59,15 +59,13 @@ public class TodoController {
     @Path("{todoId}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getTodo(@PathParam("todoId") String todoId) {
-        if(StringUtils.isEmpty(todoId)){
+        if (StringUtils.isEmpty(todoId)) {
             return Response.status(Response.Status.BAD_REQUEST).build();
-        }
-        else {
+        } else {
             Todo todo = todoService.getTodo(todoId);
-            if(todo == null) {
+            if (todo == null) {
                 return Response.status(Response.Status.NOT_FOUND).build();
-            }
-            else {
+            } else {
                 return Response.status(Response.Status.OK).entity(todo).build();
             }
         }
@@ -77,18 +75,17 @@ public class TodoController {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updateTodo(Todo todo) {
-        List<ErrorEntity> errorEntities = todoValidationService.validate(todo) ;
-        if(CollectionUtils.isEmpty(errorEntities)) {
+        List<ErrorEntity> errorEntities = todoValidationService.validate(todo);
+        if (CollectionUtils.isEmpty(errorEntities)) {
             Long modifiedCount = todoService.updateTodo(todo);
-            if(modifiedCount > 0) {
+            if (modifiedCount > 0) {
                 return Response.status(Response.Status.OK).entity(todo).build();
-            }
-            else {
+            } else {
                 return Response.status(Response.Status.BAD_REQUEST).build();
             }
-        }
-        else {
-            GenericEntity<List<ErrorEntity>> errorObj = new GenericEntity<List<ErrorEntity>>(errorEntities){};
+        } else {
+            GenericEntity<List<ErrorEntity>> errorObj = new GenericEntity<List<ErrorEntity>>(errorEntities) {
+            };
             return Response.status(Response.Status.BAD_REQUEST).entity(errorObj).build();
         }
     }
@@ -96,10 +93,9 @@ public class TodoController {
     @DELETE
     @Path("{todoId}")
     public Response deletePin(@PathParam("todoId") String todoId) {
-        if(StringUtils.isEmpty(todoId)){
+        if (StringUtils.isEmpty(todoId)) {
             return Response.status(Response.Status.BAD_REQUEST).build();
-        }
-        else {
+        } else {
             todoService.deleteTodo(todoId);
             return Response.status(Response.Status.OK).build();
         }
@@ -118,13 +114,14 @@ public class TodoController {
     public Response fetchTodos(@QueryParam("limit") int limit, @QueryParam("offset") int offset) {
         BatchSize batchSize = new BatchSize(limit, offset);
         List<ErrorEntity> errorEntities = batchSizeValidationService.validate(batchSize);
-        if(CollectionUtils.isEmpty(errorEntities)) {
+        if (CollectionUtils.isEmpty(errorEntities)) {
             List<Todo> todos = todoService.fetchTodos(batchSize.getLimit(), batchSize.getOffset());
-            GenericEntity<List<Todo>> todoListObj = new GenericEntity<List<Todo>>(todos){};
+            GenericEntity<List<Todo>> todoListObj = new GenericEntity<List<Todo>>(todos) {
+            };
             return Response.status(Response.Status.OK).entity(todoListObj).build();
-        }
-        else {
-            GenericEntity<List<ErrorEntity>> errorObj = new GenericEntity<List<ErrorEntity>>(errorEntities){};
+        } else {
+            GenericEntity<List<ErrorEntity>> errorObj = new GenericEntity<List<ErrorEntity>>(errorEntities) {
+            };
             return Response.status(Response.Status.BAD_REQUEST).entity(errorObj).build();
         }
     }

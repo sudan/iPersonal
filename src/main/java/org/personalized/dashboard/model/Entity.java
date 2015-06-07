@@ -40,7 +40,7 @@ public class Entity {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return new ToStringBuilder(this)
                 .append("entityType", entityType)
                 .append("entityId", entityId)

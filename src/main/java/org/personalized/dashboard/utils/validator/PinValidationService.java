@@ -38,7 +38,7 @@ public class PinValidationService implements ValidationService<Pin> {
 
     private void validateImageUrl(Pin pin, List<ErrorEntity> errorEntities) {
         UrlValidator urlValidator = new UrlValidator();
-        if(!urlValidator.isValid(pin.getImageUrl())) {
+        if (!urlValidator.isValid(pin.getImageUrl())) {
             ErrorEntity errorEntity = new ErrorEntity(ErrorCodes.INVALID_URL.name(), ErrorCodes.INVALID_URL.getDescription(), FieldKeys.PIN_IMAGE_URL);
             errorEntities.add(errorEntity);
         }
@@ -48,14 +48,13 @@ public class PinValidationService implements ValidationService<Pin> {
     private void validateConstraints(Pin pin, List<ErrorEntity> errorEntities) {
 
 
-        Field fields [] = Pin.class.getDeclaredFields();
-        for(Field field : fields) {
+        Field fields[] = Pin.class.getDeclaredFields();
+        for (Field field : fields) {
             Set<ConstraintViolation<Pin>> constraintViolations = validator.validateProperty(pin, field.getName());
-            for(ConstraintViolation<Pin> constraintViolation : constraintViolations) {
+            for (ConstraintViolation<Pin> constraintViolation : constraintViolations) {
                 constraintValidationService.validateConstraints(field, constraintViolation, errorEntities);
             }
         }
-
 
 
     }

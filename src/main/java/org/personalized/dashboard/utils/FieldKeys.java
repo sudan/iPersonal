@@ -11,7 +11,7 @@ public class FieldKeys {
     public static final String IS_DELETED = "is_deleted";
     public static final String PRIMARY_KEY = "_id";
 
-    public static final  String BOOKMARK_NAME = "name";
+    public static final String BOOKMARK_NAME = "name";
     public static final String BOOKMARK_URL = "url";
     public static final String BOOKMARK_DESCRIPTION = "description";
 

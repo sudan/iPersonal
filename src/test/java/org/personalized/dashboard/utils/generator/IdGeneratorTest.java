@@ -23,6 +23,6 @@ public class IdGeneratorTest {
 
         String id = idGenerator.generateId("BOK", 16);
         Assert.assertEquals("ID length is 16", 16, id.length());
-        Assert.assertEquals("ID prefix is BOK",0, id.indexOf("BOK"));
+        Assert.assertEquals("ID prefix is BOK", 0, id.indexOf("BOK"));
     }
 }
