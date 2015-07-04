@@ -35,5 +35,10 @@ public class FieldKeys {
     public static final String ENTITY_TYPE = "entity_type";
     public static final String ENTITY_ID = "entity_id";
 
-
+    public static final String ES_ID = "id";
+    public static final String ES_TITLE = "title";
+    public static final String ES_DESCRIPTION = "description";
+    public static final String ES_ENTITY_TYPE = "entity_type";
+    public static final String ES_OP_TYPE = "op_type";
+    public static final String ES_EXT_URL = "url";
 }
