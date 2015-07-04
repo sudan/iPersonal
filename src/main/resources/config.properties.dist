@@ -1,0 +1,6 @@
+mongo.username=your-username
+mongo.password=your-password
+mongo.dbName=your-dbname
+mongo.hostName=your-hostname
+mongo.portNumber=your-portnumber
+mongo.isDebugMode=false
