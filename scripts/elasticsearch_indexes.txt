@@ -1,0 +1,66 @@
+curl -XPUT 'http://localhost:9200/entities/' -d '{
+    "settings":{
+        "number_of_shards": 2,
+        "number_of_replicas": 2,
+        "analysis": {
+            "filter": {
+                "autocomplete_filter": {
+                    "type": "edgeNGram",
+                    "min_gram": 1,
+                    "max_gram": 5
+                }
+            },
+            "analyzer":{
+                "stop_keywords":{
+                    "type": "custom",
+                    "tokenizer": "keyword",
+                    "filter": ["lowercase"]
+                },
+                "stop_keywords_whitespace":{
+                    "type": "custom",
+                    "tokenizer": "whitespace",
+                    "filter": ["lowercase"]
+                },
+                "autocomplete": {
+                    "type": "custom",
+                    "tokenizer": "keyword",
+                    "filter": ["lowercase", "autocomplete_filter"]
+                },
+                "autocomplete_whitespace": {
+                    "type": "custom",
+                    "tokenizer": "whitespace",
+                    "filter": ["lowercase", "autocomplete_filter"]
+                },
+                "standard": {
+                    "type": "custom",
+                    "tokenizer": "whitespace",
+                    "filter": ["lowercase"]
+                }
+            }
+        }
+    },
+    "mappings": {
+        "entity": {
+            "properties" :{
+                "entity_type": {
+                    "type": "string",
+                    "index": "not_analyzed"
+                },
+                "title": {
+                    "type": "string",
+                    "index_analyzer": "autocomplete_whitespace",
+                    "search_analyzer": "stop_keywords_whitespace"
+                },
+                "description": {
+                    "type": "string",
+                    "index_analyzer": "autocomplete_whitespace",
+                    "search_analyzer": "stop_keywords_whitespace"
+                },
+                "timestamp": {
+                    "type": "long",
+                    "index": "not_analyzed"
+                }
+            }
+        }
+    }
+}'
