@@ -7,6 +7,7 @@ import org.personalized.dashboard.bootstrap.ConfigManager;
 import org.personalized.dashboard.dao.api.*;
 import org.personalized.dashboard.dao.impl.*;
 import org.personalized.dashboard.model.*;
+import org.personalized.dashboard.queue.*;
 import org.personalized.dashboard.service.api.*;
 import org.personalized.dashboard.service.impl.BookmarkServiceImpl;
 import org.personalized.dashboard.service.impl.NoteServiceImpl;
@@ -41,15 +42,19 @@ public class ActivityServiceTest {
         ActivityDao activityDao = new ActivityDaoImpl(idGenerator);
         SessionManager sessionManager = new SessionManager();
         ActivityGenerator activityGenerator = new ActivityGenerator();
+        ESIndexProducer bookmarkESIndexProducer = new BookmarkESIndexProducer();
+        ESIndexProducer noteESIndexProducer = new NoteESIndexProducer();
+        ESIndexProducer pinESIndexProducer = new PinESIndexProducer();
+        ESIndexProducer todoESIndexProducer = new TodoESIndexProducer();
 
         this.bookmarkService = new BookmarkServiceImpl(bookmarkDao, sessionManager,
-                activityGenerator, activityDao);
+                activityGenerator, activityDao, bookmarkESIndexProducer);
         this.noteService = new NoteServiceImpl(noteDao, sessionManager, activityGenerator,
-                activityDao);
+                activityDao, noteESIndexProducer);
         this.pinService = new PinServiceImpl(pinDao, sessionManager, activityGenerator,
-                activityDao);
+                activityDao, pinESIndexProducer);
         this.todoService = new TodoServiceImpl(todoDao, sessionManager, activityGenerator,
-                activityDao);
+                activityDao, todoESIndexProducer);
         this.activityService = new ActivityServiceImpl(activityDao, sessionManager);
     }
 

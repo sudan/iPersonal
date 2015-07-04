@@ -1,13 +1,12 @@
 package org.personalized.dashboard.service.impl;
 
 import com.google.inject.Inject;
+import com.google.inject.name.Named;
 import org.apache.commons.lang3.StringUtils;
 import org.personalized.dashboard.dao.api.ActivityDao;
 import org.personalized.dashboard.dao.api.NoteDao;
-import org.personalized.dashboard.model.Activity;
-import org.personalized.dashboard.model.ActivityType;
-import org.personalized.dashboard.model.EntityType;
-import org.personalized.dashboard.model.Note;
+import org.personalized.dashboard.model.*;
+import org.personalized.dashboard.queue.ESIndexProducer;
 import org.personalized.dashboard.service.api.NoteService;
 import org.personalized.dashboard.utils.auth.SessionManager;
 import org.personalized.dashboard.utils.generator.ActivityGenerator;
@@ -25,14 +24,16 @@ public class NoteServiceImpl implements NoteService {
     private final SessionManager sessionManager;
     private final ActivityGenerator activityGenerator;
     private final ActivityDao activityDao;
+    private final ESIndexProducer esIndexProducer;
 
     @Inject
     public NoteServiceImpl(NoteDao noteDao, SessionManager sessionManager, ActivityGenerator
-            activityGenerator, ActivityDao activityDao) {
+            activityGenerator, ActivityDao activityDao, @Named("note") ESIndexProducer esIndexProducer) {
         this.noteDao = noteDao;
         this.sessionManager = sessionManager;
         this.activityGenerator = activityGenerator;
         this.activityDao = activityDao;
+        this.esIndexProducer = esIndexProducer;
     }
 
     @Override
@@ -41,6 +42,7 @@ public class NoteServiceImpl implements NoteService {
         Activity activity = activityGenerator.generate(ActivityType.CREATED, EntityType.NOTE,
                 noteId, note.getTitle());
         activityDao.add(activity, sessionManager.getUserIdFromSession());
+        esIndexProducer.enqueue(note, EntityType.NOTE, OperationType.CREATE, noteId);
         return noteId;
     }
 
@@ -56,6 +58,8 @@ public class NoteServiceImpl implements NoteService {
             Activity activity = activityGenerator.generate(ActivityType.UPDATED, EntityType.NOTE,
                     note.getNoteId(), note.getTitle());
             activityDao.add(activity, sessionManager.getUserIdFromSession());
+            esIndexProducer.enqueue(note, EntityType.NOTE, OperationType.UPDATE, note.getNoteId());
+
         }
         return modifiedCount;
     }
@@ -67,6 +71,7 @@ public class NoteServiceImpl implements NoteService {
             Activity activity = activityGenerator.generate(ActivityType.DELETED, EntityType.NOTE,
                     noteId, StringUtils.EMPTY);
             activityDao.add(activity, sessionManager.getUserIdFromSession());
+            esIndexProducer.enqueue(null, EntityType.NOTE, OperationType.DELETE, noteId);
         }
     }
 
