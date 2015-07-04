@@ -2,6 +2,9 @@ package org.personalized.dashboard.bootstrap;
 
 
 import org.apache.activemq.ActiveMQConnectionFactory;
+import org.personalized.dashboard.queue.ESIndexConsumer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.jms.*;
 
@@ -10,32 +13,50 @@ import javax.jms.*;
  */
 public class QueueBootstrap {
 
-    private  static MessageProducer messageProducer;
-    private  static MessageConsumer messageConsumer;
+    private ESIndexConsumer esIndexConsumer;
+
+    private final Logger LOGGER = LoggerFactory.getLogger(QueueBootstrap.class);
+
+    private static QueueBootstrap queueBootstrap;
+    private MessageProducer messageProducer;
+    private MessageConsumer messageConsumer;
+    private Session session;
 
     private static boolean isInitialized = false;
 
-    public QueueBootstrap() {
+    public static void init() throws JMSException{
+        if(!isInitialized) {
+            queueBootstrap = new QueueBootstrap();
+            queueBootstrap.setUp();
+        }
+    }
+
+    public static QueueBootstrap getInstance() {
+        return queueBootstrap;
+    }
+
+    private QueueBootstrap() {
 
     }
 
-    public static  void init() throws JMSException{
-        if(!isInitialized) {
+    private void setUp() throws JMSException{
 
-            ConnectionFactory connectionFactory = new ActiveMQConnectionFactory
-                    (
-                            ConfigManager.getValue("activemq.username"),
-                            ConfigManager.getValue("activemq.password"),
-                            ConfigManager.getValue("activemq.url")
-                    );
-            Connection connection = connectionFactory.createConnection();
-            connection.start();
-            Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-            Destination destination = session.createQueue(ConfigManager.getValue("activemq.destQueue"));
-            messageProducer = session.createProducer(destination);
-            messageConsumer = session.createConsumer(destination);
-            isInitialized = true;
-        }
+        ConnectionFactory connectionFactory = new ActiveMQConnectionFactory
+                (
+                        ConfigManager.getValue("activemq.username"),
+                        ConfigManager.getValue("activemq.password"),
+                        ConfigManager.getValue("activemq.url")
+                );
+        Connection connection = connectionFactory.createConnection();
+        session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+        Destination destination = session.createQueue(ConfigManager.getValue("activemq.destQueue"));
+        messageProducer = session.createProducer(destination);
+        messageConsumer = session.createConsumer(destination);
+        new ESIndexConsumer();
+        session.setMessageListener(esIndexConsumer);
+        connection.start();
+        isInitialized = true;
+
     }
 
     public MessageProducer getMessageProducer()  {
@@ -45,5 +66,7 @@ public class QueueBootstrap {
     public MessageConsumer getMessageConsumer() {
         return messageConsumer;
     }
+
+    public Session getSession() { return session; }
 
 }
