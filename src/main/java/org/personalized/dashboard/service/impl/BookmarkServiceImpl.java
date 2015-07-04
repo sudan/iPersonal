@@ -29,7 +29,7 @@ public class BookmarkServiceImpl implements BookmarkService {
     @Inject
     public BookmarkServiceImpl(BookmarkDao bookmarkDao, SessionManager sessionManager,
                                ActivityGenerator activityGenerator, ActivityDao activityDao,
-                                @Named("bookmark") ESIndexProducer esIndexProducer) {
+                               @Named("bookmark") ESIndexProducer esIndexProducer) {
         this.bookmarkDao = bookmarkDao;
         this.sessionManager = sessionManager;
         this.activityGenerator = activityGenerator;
