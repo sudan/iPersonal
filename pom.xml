@@ -30,6 +30,7 @@
         <apache-validator.version>1.4.0</apache-validator.version>
         <javax-validator.version>1.0.0.GA</javax-validator.version>
         <hibernate-validator.version>4.0.2.GA</hibernate-validator.version>
+        <activemq.version>5.10.0</activemq.version>
     </properties>
 
     <dependencies>
@@ -238,6 +239,12 @@
             <version>${hibernate-validator.version}</version>
         </dependency>
 
+        <!-- activemq -->
+        <dependency>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>activemq-all</artifactId>
+            <version>${activemq.version}</version>
+        </dependency>
 
     </dependencies>
 
