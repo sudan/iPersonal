@@ -1,6 +1,11 @@
-mongo.username=your-username
-mongo.password=your-password
-mongo.dbName=your-dbname
-mongo.hostName=your-hostname
-mongo.portNumber=your-portnumber
+mongo.username=mongo-username
+mongo.password=mongo-password
+mongo.dbName=mongo-dbname
+mongo.hostName=mongo-hostname
+mongo.portNumber=mongo-portnumber
 mongo.isDebugMode=false
+
+activemq.url=your-activemq-url
+activemq.destQueue=activemq-destname
+activemq.username=activemq-username
+activemq.password=activemq-password

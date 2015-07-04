@@ -4,6 +4,7 @@ import com.google.inject.AbstractModule;
 import com.google.inject.name.Names;
 import org.personalized.dashboard.dao.api.*;
 import org.personalized.dashboard.dao.impl.*;
+import org.personalized.dashboard.queue.ESIndexProducer;
 import org.personalized.dashboard.service.api.*;
 import org.personalized.dashboard.service.impl.*;
 import org.personalized.dashboard.utils.auth.SessionManager;
@@ -51,5 +52,7 @@ public class DIModule extends AbstractModule {
         bind(ActivityGenerator.class).asEagerSingleton();
 
         bind(SessionManager.class);
+
+        bind(ESIndexProducer.class);
     }
 }
