@@ -13,19 +13,20 @@ import javax.jms.*;
  */
 public class QueueBootstrap {
 
-    private ESIndexConsumer esIndexConsumer;
-
-    private final Logger LOGGER = LoggerFactory.getLogger(QueueBootstrap.class);
-
     private static QueueBootstrap queueBootstrap;
+    private static boolean isInitialized = false;
+    private final Logger LOGGER = LoggerFactory.getLogger(QueueBootstrap.class);
+    private ESIndexConsumer esIndexConsumer;
     private MessageProducer messageProducer;
     private MessageConsumer messageConsumer;
     private Session session;
 
-    private static boolean isInitialized = false;
+    private QueueBootstrap() {
 
-    public static void init() throws JMSException{
-        if(!isInitialized) {
+    }
+
+    public static void init() throws JMSException {
+        if (!isInitialized) {
             queueBootstrap = new QueueBootstrap();
             queueBootstrap.setUp();
         }
@@ -35,11 +36,7 @@ public class QueueBootstrap {
         return queueBootstrap;
     }
 
-    private QueueBootstrap() {
-
-    }
-
-    private void setUp() throws JMSException{
+    private void setUp() throws JMSException {
 
         ConnectionFactory connectionFactory = new ActiveMQConnectionFactory
                 (
@@ -59,7 +56,7 @@ public class QueueBootstrap {
 
     }
 
-    public MessageProducer getMessageProducer()  {
+    public MessageProducer getMessageProducer() {
         return messageProducer;
     }
 
@@ -67,6 +64,8 @@ public class QueueBootstrap {
         return messageConsumer;
     }
 
-    public Session getSession() { return session; }
+    public Session getSession() {
+        return session;
+    }
 
 }

@@ -4,15 +4,14 @@ import com.google.inject.Inject;
 import org.apache.commons.lang3.StringUtils;
 import org.personalized.dashboard.dao.api.ActivityDao;
 import org.personalized.dashboard.dao.api.BookmarkDao;
-import org.personalized.dashboard.model.Activity;
-import org.personalized.dashboard.model.ActivityType;
-import org.personalized.dashboard.model.Bookmark;
-import org.personalized.dashboard.model.EntityType;
+import org.personalized.dashboard.model.*;
+import org.personalized.dashboard.queue.ESIndexProducer;
 import org.personalized.dashboard.service.api.BookmarkService;
 import org.personalized.dashboard.utils.auth.SessionManager;
 import org.personalized.dashboard.utils.generator.ActivityGenerator;
 import org.springframework.stereotype.Repository;
 
+import javax.inject.Named;
 import java.util.List;
 
 /**
@@ -25,14 +24,17 @@ public class BookmarkServiceImpl implements BookmarkService {
     private final SessionManager sessionManager;
     private final ActivityGenerator activityGenerator;
     private final ActivityDao activityDao;
+    private final ESIndexProducer esIndexProducer;
 
     @Inject
     public BookmarkServiceImpl(BookmarkDao bookmarkDao, SessionManager sessionManager,
-                               ActivityGenerator activityGenerator, ActivityDao activityDao) {
+                               ActivityGenerator activityGenerator, ActivityDao activityDao,
+                               @Named("bookmark") ESIndexProducer esIndexProducer) {
         this.bookmarkDao = bookmarkDao;
         this.sessionManager = sessionManager;
         this.activityGenerator = activityGenerator;
         this.activityDao = activityDao;
+        this.esIndexProducer = esIndexProducer;
     }
 
     @Override
@@ -41,6 +43,7 @@ public class BookmarkServiceImpl implements BookmarkService {
         Activity activity = activityGenerator.generate(ActivityType.CREATED, EntityType.BOOKMARK,
                 bookmarkId, bookmark.getName());
         activityDao.add(activity, sessionManager.getUserIdFromSession());
+        esIndexProducer.enqueue(bookmark, EntityType.BOOKMARK, OperationType.CREATE, bookmarkId);
         return bookmarkId;
     }
 
@@ -56,6 +59,7 @@ public class BookmarkServiceImpl implements BookmarkService {
             Activity activity = activityGenerator.generate(ActivityType.UPDATED, EntityType
                     .BOOKMARK, bookmark.getBookmarkId(), bookmark.getName());
             activityDao.add(activity, sessionManager.getUserIdFromSession());
+            esIndexProducer.enqueue(bookmark, EntityType.BOOKMARK, OperationType.UPDATE, bookmark.getBookmarkId());
         }
         return modifiedCount;
     }
@@ -67,6 +71,8 @@ public class BookmarkServiceImpl implements BookmarkService {
             Activity activity = activityGenerator.generate(ActivityType.DELETED, EntityType
                     .BOOKMARK, bookmarkId, StringUtils.EMPTY);
             activityDao.add(activity, sessionManager.getUserIdFromSession());
+            esIndexProducer.enqueue(null, EntityType.BOOKMARK, OperationType.DELETE, bookmarkId);
+
         }
     }
 

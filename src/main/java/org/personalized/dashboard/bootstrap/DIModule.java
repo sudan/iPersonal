@@ -4,7 +4,7 @@ import com.google.inject.AbstractModule;
 import com.google.inject.name.Names;
 import org.personalized.dashboard.dao.api.*;
 import org.personalized.dashboard.dao.impl.*;
-import org.personalized.dashboard.queue.ESIndexProducer;
+import org.personalized.dashboard.queue.*;
 import org.personalized.dashboard.service.api.*;
 import org.personalized.dashboard.service.impl.*;
 import org.personalized.dashboard.utils.auth.SessionManager;
@@ -53,6 +53,9 @@ public class DIModule extends AbstractModule {
 
         bind(SessionManager.class);
 
-        bind(ESIndexProducer.class);
+        bind(ESIndexProducer.class).annotatedWith(Names.named("bookmark")).to(BookmarkESIndexProducer.class);
+        bind(ESIndexProducer.class).annotatedWith(Names.named("note")).to(NoteESIndexProducer.class);
+        bind(ESIndexProducer.class).annotatedWith(Names.named("todo")).to(TodoESIndexProducer.class);
+        bind(ESIndexProducer.class).annotatedWith(Names.named("pin")).to(PinESIndexProducer.class);
     }
 }
