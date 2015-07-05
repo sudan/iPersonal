@@ -6,6 +6,7 @@ import com.google.gson.GsonBuilder;
 import org.personalized.dashboard.bootstrap.QueueBootstrap;
 import org.personalized.dashboard.model.EntityType;
 import org.personalized.dashboard.model.OperationType;
+import org.personalized.dashboard.model.Task;
 import org.personalized.dashboard.model.Todo;
 import org.personalized.dashboard.utils.FieldKeys;
 import org.slf4j.Logger;
@@ -33,7 +34,14 @@ public class TodoESIndexProducer implements ESIndexProducer<Todo> {
         payload.put(FieldKeys.ES_OP_TYPE, operationType.name());
         if (operationType != OperationType.DELETE) {
             payload.put(FieldKeys.ES_TITLE, obj.getTitle());
-            payload.put(FieldKeys.ES_DESCRIPTION, obj.getTasks().get(0).getTask());
+            StringBuilder desc = new StringBuilder();
+            for(Task task : obj.getTasks()) {
+                desc.append(task.getName());
+                desc.append("  ");
+                desc.append(task.getTask());
+                desc.append("              ");
+            }
+            payload.put(FieldKeys.ES_DESCRIPTION, desc.toString());
         }
         String text = gson.toJson(payload);
         MessageProducer producer = QueueBootstrap.getInstance().getMessageProducer();
