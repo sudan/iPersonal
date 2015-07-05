@@ -7,6 +7,7 @@ import org.personalized.dashboard.bootstrap.QueueBootstrap;
 import org.personalized.dashboard.model.Bookmark;
 import org.personalized.dashboard.model.EntityType;
 import org.personalized.dashboard.model.OperationType;
+import org.personalized.dashboard.utils.Constants;
 import org.personalized.dashboard.utils.FieldKeys;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,7 +35,11 @@ public class BookmarkESIndexProducer implements ESIndexProducer<Bookmark> {
         if (operationType != OperationType.DELETE) {
             payload.put(FieldKeys.ES_TITLE, obj.getName());
             payload.put(FieldKeys.ES_EXT_URL, obj.getUrl());
-            payload.put(FieldKeys.ES_DESCRIPTION, obj.getDescription());
+            StringBuilder desc = new StringBuilder();
+            desc.append(obj.getUrl());
+            desc.append(Constants.SEPARATOR);
+            desc.append(obj.getDescription());
+            payload.put(FieldKeys.ES_DESCRIPTION, desc.toString());
         }
         String text = gson.toJson(payload);
         MessageProducer producer = QueueBootstrap.getInstance().getMessageProducer();

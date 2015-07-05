@@ -8,6 +8,7 @@ import org.personalized.dashboard.model.EntityType;
 import org.personalized.dashboard.model.OperationType;
 import org.personalized.dashboard.model.Task;
 import org.personalized.dashboard.model.Todo;
+import org.personalized.dashboard.utils.Constants;
 import org.personalized.dashboard.utils.FieldKeys;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,9 +38,9 @@ public class TodoESIndexProducer implements ESIndexProducer<Todo> {
             StringBuilder desc = new StringBuilder();
             for(Task task : obj.getTasks()) {
                 desc.append(task.getName());
-                desc.append("  ");
+                desc.append(Constants.SEPARATOR);
                 desc.append(task.getTask());
-                desc.append("              ");
+                desc.append(Constants.SEPARATOR);
             }
             payload.put(FieldKeys.ES_DESCRIPTION, desc.toString());
         }

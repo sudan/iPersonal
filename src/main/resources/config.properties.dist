@@ -9,3 +9,10 @@ activemq.url=your-activemq-url
 activemq.destQueue=activemq-destname
 activemq.username=activemq-username
 activemq.password=activemq-password
+
+elasticsearch.url=your-es-url
+elasticsearch.port=your-es-port
+elasticsearch.index=your-es-index
+elasticsearch.type=your-es-type
+elasticsearch.clustername=your-es-clustername
+elasticsearch.nodename=your-es-nodename
