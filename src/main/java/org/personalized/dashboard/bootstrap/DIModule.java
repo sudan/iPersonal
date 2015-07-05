@@ -4,6 +4,7 @@ import com.google.inject.AbstractModule;
 import com.google.inject.name.Names;
 import org.personalized.dashboard.dao.api.*;
 import org.personalized.dashboard.dao.impl.*;
+import org.personalized.dashboard.elasticsearch.ElasticsearchClient;
 import org.personalized.dashboard.queue.*;
 import org.personalized.dashboard.service.api.*;
 import org.personalized.dashboard.service.impl.*;
@@ -57,5 +58,7 @@ public class DIModule extends AbstractModule {
         bind(ESIndexProducer.class).annotatedWith(Names.named("note")).to(NoteESIndexProducer.class);
         bind(ESIndexProducer.class).annotatedWith(Names.named("todo")).to(TodoESIndexProducer.class);
         bind(ESIndexProducer.class).annotatedWith(Names.named("pin")).to(PinESIndexProducer.class);
+
+        bind(ElasticsearchClient.class);
     }
 }

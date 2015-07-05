@@ -33,5 +33,6 @@ public class Constants {
 
     public static final String SET_OPERATION = "$set";
 
+    public static final String SEPARATOR = "     ";
 
 }

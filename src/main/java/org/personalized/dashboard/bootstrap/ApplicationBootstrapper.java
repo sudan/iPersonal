@@ -26,6 +26,7 @@ public class ApplicationBootstrapper extends GuiceServletContextListener {
             MongoBootstrap.init();
             MongoBootstrap.getMongoDatabase().runCommand(new Document("ping", 1));
             QueueBootstrap.init();
+            ESBootstrap.init();
 
             LOGGER.info("Application initialization has been successful");
         } catch (Exception e) {

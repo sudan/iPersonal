@@ -1,7 +1,5 @@
 curl -XPUT 'http://localhost:9200/entities/' -d '{
     "settings":{
-        "number_of_shards": 2,
-        "number_of_replicas": 2,
         "analysis": {
             "filter": {
                 "autocomplete_filter": {
