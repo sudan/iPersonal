@@ -46,7 +46,7 @@ public class ESIndexConsumer implements MessageListener {
                     esDocument.setTitle(payloadMap.get(FieldKeys.ES_TITLE));
                     esDocument.setDescription(payloadMap.get(FieldKeys.ES_DESCRIPTION));
                     esDocument.setEntityType(EntityType.valueOf(payloadMap.get(FieldKeys.ES_ENTITY_TYPE)));
-                    elasticsearchClient.insert(esDocument);
+                    elasticsearchClient.insertOrUpdate(esDocument);
                 }
 
             } catch (JMSException e) {
