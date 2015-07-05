@@ -3,6 +3,7 @@ package org.personalized.dashboard.elasticsearch;
 import com.google.common.collect.Maps;
 import com.google.gson.Gson;
 import org.apache.commons.lang3.StringUtils;
+import org.elasticsearch.action.delete.DeleteResponse;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.index.IndexResponse;
 import org.personalized.dashboard.bootstrap.ConfigManager;
@@ -33,5 +34,11 @@ public class ElasticsearchClient {
 
         indexRequest.source(new Gson().toJson(payload));
         return ESBootstrap.getClient().index(indexRequest).actionGet();
+    }
+
+    public DeleteResponse delete(String documentId) {
+
+        return  ESBootstrap.getClient().prepareDelete(ConfigManager.getValue("elasticsearch.index"),
+                ConfigManager.getValue("elasticsearch.type"), documentId).execute().actionGet();
     }
 }
