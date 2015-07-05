@@ -17,7 +17,7 @@ import java.util.Map;
  */
 public class ElasticsearchClient {
 
-    public IndexResponse insert(ESDocument esDocument) {
+    public IndexResponse insertOrUpdate(ESDocument esDocument) {
         esDocument.setCreatedAt(System.currentTimeMillis());
         IndexRequest indexRequest = new IndexRequest(
                 ConfigManager.getValue("elasticsearch.index"),
