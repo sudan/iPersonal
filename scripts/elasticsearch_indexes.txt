@@ -11,28 +11,33 @@ curl -XPUT 'http://localhost:9200/entities/' -d '{
             "analyzer":{
                 "stop_keywords":{
                     "type": "custom",
+                     "char_filter": ["html_strip"],
                     "tokenizer": "keyword",
-                    "filter": ["lowercase"]
+                    "filter": ["lowercase", "stop"]
                 },
                 "stop_keywords_whitespace":{
                     "type": "custom",
+                     "char_filter": ["html_strip"],
                     "tokenizer": "whitespace",
-                    "filter": ["lowercase"]
+                    "filter": ["lowercase", "stop"]
                 },
                 "autocomplete": {
                     "type": "custom",
+                     "char_filter": ["html_strip"],
                     "tokenizer": "keyword",
-                    "filter": ["lowercase", "autocomplete_filter"]
+                    "filter": ["lowercase", "autocomplete_filter", "stop"]
                 },
                 "autocomplete_whitespace": {
                     "type": "custom",
+                     "char_filter": ["html_strip"],
                     "tokenizer": "whitespace",
-                    "filter": ["lowercase", "autocomplete_filter"]
+                    "filter": ["lowercase", "autocomplete_filter", "stop"]
                 },
                 "standard": {
                     "type": "custom",
+                     "char_filter": ["html_strip"],
                     "tokenizer": "whitespace",
-                    "filter": ["lowercase"]
+                    "filter": ["lowercase", "stop"]
                 }
             }
         }
