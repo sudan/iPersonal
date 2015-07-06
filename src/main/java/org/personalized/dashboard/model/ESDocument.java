@@ -65,7 +65,7 @@ public class ESDocument {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return new ToStringBuilder(this)
                 .append("documentId", documentId)
                 .append("entityType", entityType)

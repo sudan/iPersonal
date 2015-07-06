@@ -36,7 +36,7 @@ public class TodoESIndexProducer implements ESIndexProducer<Todo> {
         if (operationType != OperationType.DELETE) {
             payload.put(FieldKeys.ES_TITLE, obj.getTitle());
             StringBuilder desc = new StringBuilder();
-            for(Task task : obj.getTasks()) {
+            for (Task task : obj.getTasks()) {
                 desc.append(task.getName());
                 desc.append(Constants.SEPARATOR);
                 desc.append(task.getTask());
