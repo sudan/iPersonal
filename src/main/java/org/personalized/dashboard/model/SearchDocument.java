@@ -2,10 +2,13 @@ package org.personalized.dashboard.model;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  * Created by sudan on 5/7/15.
  */
-public class ESDocument {
+@XmlRootElement
+public class SearchDocument {
 
     private String documentId;
     private EntityType entityType;
@@ -13,11 +16,11 @@ public class ESDocument {
     private String description;
     private Long createdAt;
 
-    public ESDocument() {
+    public SearchDocument() {
 
     }
 
-    public ESDocument(String documentId, EntityType entityType, String title, String description) {
+    public SearchDocument(String documentId, EntityType entityType, String title, String description) {
         this.documentId = documentId;
         this.entityType = entityType;
         this.title = title;
@@ -65,7 +68,7 @@ public class ESDocument {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return new ToStringBuilder(this)
                 .append("documentId", documentId)
                 .append("entityType", entityType)

@@ -28,6 +28,7 @@ public class DIModule extends AbstractModule {
         bind(TodoService.class).to(TodoServiceImpl.class);
         bind(ExpenseService.class).to(ExpenseServiceImpl.class);
         bind(ActivityService.class).to(ActivityServiceImpl.class);
+        bind(SearchService.class).to(SearchServiceImpl.class);
 
         bind(BookmarkDao.class).to(BookmarkDaoImpl.class);
         bind(DiaryDao.class).to(DiaryDaoImpl.class);
@@ -47,6 +48,8 @@ public class DIModule extends AbstractModule {
                 .class);
         bind(ValidationService.class).annotatedWith(Names.named("todo")).to(TodoValidationService
                 .class);
+        bind(ValidationService.class).annotatedWith(Names.named("search")).to(SearchValidationService
+                .class);
         bind(ConstraintValidationService.class);
 
         bind(IdGenerator.class).asEagerSingleton();
@@ -60,5 +63,6 @@ public class DIModule extends AbstractModule {
         bind(ESIndexProducer.class).annotatedWith(Names.named("pin")).to(PinESIndexProducer.class);
 
         bind(ElasticsearchClient.class);
+
     }
 }
