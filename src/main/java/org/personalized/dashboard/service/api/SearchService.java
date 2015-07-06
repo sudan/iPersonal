@@ -1,7 +1,7 @@
 package org.personalized.dashboard.service.api;
 
-import org.personalized.dashboard.model.ESDocument;
 import org.personalized.dashboard.model.SearchContext;
+import org.personalized.dashboard.model.SearchDocument;
 
 import java.util.List;
 
@@ -16,5 +16,5 @@ public interface SearchService {
      * @param searchContext
      * @return
      */
-    List<ESDocument> searchEntities(SearchContext searchContext);
+    List<SearchDocument> searchEntities(SearchContext searchContext);
 }
