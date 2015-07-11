@@ -11,6 +11,7 @@ import org.personalized.dashboard.dao.impl.TodoDaoImpl;
 import org.personalized.dashboard.model.Priority;
 import org.personalized.dashboard.model.Task;
 import org.personalized.dashboard.model.Todo;
+import org.personalized.dashboard.utils.ConfigKeys;
 import org.personalized.dashboard.utils.Constants;
 import org.personalized.dashboard.utils.generator.IdGenerator;
 import org.springframework.test.context.ActiveProfiles;
@@ -34,15 +35,12 @@ public class TodoDaoTest {
 
     @Test
     public void testTodoDao() {
-        Boolean isDebugMode = Boolean.valueOf(ConfigManager.getValue("mongo.isDebugMode"));
-        String testCollection = ConfigManager.getValue("mongo.dbName");
+        Boolean isDebugMode = Boolean.valueOf(ConfigKeys.MONGO_DEBUG_FLAG);
 
         /*
             To run these test cases enable isDebugMode in config.properties
-            and change the dbName to ipersonal-test and also enable authentication
-            for that database
          */
-        if (isDebugMode && testCollection.equalsIgnoreCase("ipersonal-test")) {
+        if (isDebugMode) {
             MongoBootstrap.init();
             MongoBootstrap.getMongoDatabase().getCollection(Constants.TODOS).drop();
 

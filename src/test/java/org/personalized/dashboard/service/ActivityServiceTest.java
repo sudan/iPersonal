@@ -3,13 +3,15 @@ package org.personalized.dashboard.service;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.personalized.dashboard.bootstrap.ConfigManager;
+import org.personalized.dashboard.bootstrap.ESBootstrap;
+import org.personalized.dashboard.bootstrap.QueueBootstrap;
 import org.personalized.dashboard.dao.api.*;
 import org.personalized.dashboard.dao.impl.*;
 import org.personalized.dashboard.model.*;
 import org.personalized.dashboard.queue.*;
 import org.personalized.dashboard.service.api.*;
 import org.personalized.dashboard.service.impl.*;
+import org.personalized.dashboard.utils.ConfigKeys;
 import org.personalized.dashboard.utils.auth.SessionManager;
 import org.personalized.dashboard.utils.generator.ActivityGenerator;
 import org.personalized.dashboard.utils.generator.IdGenerator;
@@ -30,7 +32,8 @@ public class ActivityServiceTest {
     private ActivityService activityService;
 
     @Before
-    public void initialize() {
+    public void initialize(){
+
         IdGenerator idGenerator = new IdGenerator();
         BookmarkDao bookmarkDao = new BookmarkDaoImpl(idGenerator);
         NoteDao noteDao = new NoteDaoImpl(idGenerator);
@@ -56,18 +59,19 @@ public class ActivityServiceTest {
     }
 
     @Test
-    public void testActivityService() {
+    public void testActivityService() throws Exception{
 
-        Boolean isDebugMode = Boolean.valueOf(ConfigManager.getValue("mongo.isDebugMode"));
-        String testCollection = ConfigManager.getValue("mongo.dbName");
+        Boolean isDebugMode = Boolean.valueOf(ConfigKeys.MONGO_DEBUG_FLAG);
 
         /*
             To run these test cases enable isDebugMode in config.properties
-            and change the dbName to ipersonal-test and also enable authentication
-            for that database
          */
 
-        if (isDebugMode && testCollection.equalsIgnoreCase("ipersonal-test")) {
+        if (isDebugMode) {
+
+            QueueBootstrap.init();
+            ESBootstrap.init();
+
             Bookmark bookmark = new Bookmark();
             bookmark.setName("name");
             bookmark.setDescription("desc");

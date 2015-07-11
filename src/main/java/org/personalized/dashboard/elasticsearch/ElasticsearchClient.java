@@ -45,7 +45,7 @@ public class ElasticsearchClient {
         payload.put(FieldKeys.ES_ID, searchDocument.getDocumentId());
         payload.put(FieldKeys.ES_TITLE, searchDocument.getTitle());
         if (StringUtils.isNotEmpty(searchDocument.getDescription()))
-            payload.put(FieldKeys.ES_DESCRIPTION, searchDocument.getDescription().substring(0, Math.min(searchDocument.getDescription().length(), 100)));
+            payload.put(FieldKeys.ES_DESCRIPTION, searchDocument.getDescription());
         payload.put(FieldKeys.ES_TIMESTAMP, String.valueOf(searchDocument.getCreatedAt()));
         payload.put(FieldKeys.ES_ENTITY_TYPE, searchDocument.getEntityType().name());
         payload.put(FieldKeys.USER_ID, sessionManager.getUserIdFromSession());
