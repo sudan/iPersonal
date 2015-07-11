@@ -22,19 +22,20 @@ public class TagDaoImpl implements TagDao {
 
         MongoCollection<Document> collection = getCollection(entity);
         if(collection != null) {
+
            Document document = new Document()
                    .append(FieldKeys.ENTITY_TAGS, tags)
                    .append(FieldKeys.MODIFIED_AT, System.currentTimeMillis());
 
-            UpdateResult updateResult = collection.updateOne(
+           UpdateResult updateResult = collection.updateOne(
                     and(
                         eq(FieldKeys.PRIMARY_KEY, entity.getEntityId()),
                         eq(FieldKeys.USER_ID, userId),
                         ne(FieldKeys.IS_DELETED, true)
                     ),
                     new Document(Constants.SET_OPERATION, document)
-            );
-            return updateResult.getModifiedCount();
+           );
+           return updateResult.getModifiedCount();
         }
         return 0L;
     }

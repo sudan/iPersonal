@@ -91,6 +91,10 @@ public class TodoDaoImpl implements TodoDao {
                 tasks.add(task);
             }
             todo.setTasks(tasks);
+            if(document.containsKey(FieldKeys.ENTITY_TAGS)) {
+                List<String> tags = (List<String>) document.get(FieldKeys.ENTITY_TAGS);
+                todo.setTags(tags);
+            }
             return todo;
 
         }
@@ -200,6 +204,10 @@ public class TodoDaoImpl implements TodoDao {
                     tasks.add(task);
                 }
                 todo.setTasks(tasks);
+                if(document.containsKey(FieldKeys.ENTITY_TAGS)) {
+                    List<String> tags = (List<String>) document.get(FieldKeys.ENTITY_TAGS);
+                    todo.setTags(tags);
+                }
                 todos.add(todo);
             }
         });

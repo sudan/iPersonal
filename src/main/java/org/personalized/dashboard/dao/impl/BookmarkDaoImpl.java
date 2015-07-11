@@ -68,6 +68,11 @@ public class BookmarkDaoImpl implements BookmarkDao {
             bookmark.setUrl(document.getString(FieldKeys.BOOKMARK_URL));
             bookmark.setCreatedOn(document.getLong(FieldKeys.CREATED_ON));
             bookmark.setModifiedAt(document.getLong(FieldKeys.MODIFIED_AT));
+
+            if(document.containsKey(FieldKeys.ENTITY_TAGS)) {
+                List<String> tags = (List<String>) document.get(FieldKeys.ENTITY_TAGS);
+                bookmark.setTags(tags);
+            }
             return bookmark;
         }
         return null;
@@ -150,6 +155,11 @@ public class BookmarkDaoImpl implements BookmarkDao {
                 bookmark.setUrl(document.getString(FieldKeys.BOOKMARK_URL));
                 bookmark.setCreatedOn(document.getLong(FieldKeys.CREATED_ON));
                 bookmark.setModifiedAt(document.getLong(FieldKeys.MODIFIED_AT));
+
+                if(document.containsKey(FieldKeys.ENTITY_TAGS)) {
+                    List<String> tags = (List<String>) document.get(FieldKeys.ENTITY_TAGS);
+                    bookmark.setTags(tags);
+                }
                 bookmarks.add(bookmark);
             }
         });

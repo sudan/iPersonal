@@ -29,6 +29,9 @@ public class Todo {
     @NotEmpty
     @FieldName(name = FieldKeys.TASK_LIST)
     private List<Task> tasks = Lists.newArrayList();
+
+    private List<String> tags = Lists.newArrayList();
+
     private Long createdOn;
     private Long modifiedAt;
 
@@ -66,12 +69,21 @@ public class Todo {
         this.tasks = tasks;
     }
 
+
     public Long getCreatedOn() {
         return createdOn;
     }
 
     public void setCreatedOn(Long createdOn) {
         this.createdOn = createdOn;
+    }
+
+    public List<String> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<String> tags) {
+        this.tags = tags;
     }
 
     public Long getModifiedAt() {
@@ -88,6 +100,7 @@ public class Todo {
                 .append("todoId", todoId)
                 .append("title", title)
                 .append("tasks", tasks)
+                .append("tags", tags)
                 .append("createdOn", createdOn)
                 .append("modifiedAt", modifiedAt)
                 .toString();
