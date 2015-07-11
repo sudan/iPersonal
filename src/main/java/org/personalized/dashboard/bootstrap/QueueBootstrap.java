@@ -3,6 +3,7 @@ package org.personalized.dashboard.bootstrap;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.personalized.dashboard.queue.ESIndexConsumer;
+import org.personalized.dashboard.utils.ConfigKeys;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,13 +41,13 @@ public class QueueBootstrap {
 
         ConnectionFactory connectionFactory = new ActiveMQConnectionFactory
                 (
-                        ConfigManager.getValue("activemq.username"),
-                        ConfigManager.getValue("activemq.password"),
-                        ConfigManager.getValue("activemq.url")
+                        ConfigKeys.QUEUE_USERNAME,
+                        ConfigKeys.QUEUE_PASSWORD,
+                        ConfigKeys.QUEUE_URL
                 );
         Connection connection = connectionFactory.createConnection();
         session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-        Destination destination = session.createQueue(ConfigManager.getValue("activemq.destQueue"));
+        Destination destination = session.createQueue(ConfigKeys.QUEUE_DEST);
         messageProducer = session.createProducer(destination);
         messageConsumer = session.createConsumer(destination);
         new ESIndexConsumer();

@@ -5,6 +5,7 @@ import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.ImmutableSettings;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
+import org.personalized.dashboard.utils.ConfigKeys;
 
 /**
  * Created by sudan on 5/7/15.
@@ -17,15 +18,15 @@ public class ESBootstrap {
     public static void init() {
 
         Settings settings = ImmutableSettings.settingsBuilder()
-                .put("cluster.name", ConfigManager.getValue("elasticsearch.clustername"))
-                .put("node.name", ConfigManager.getValue("elasticsearch.nodename")).build();
+                .put("cluster.name", ConfigKeys.ES_CLUSTERNAME)
+                .put("node.name", ConfigKeys.ES_NODENAME).build();
         if (!isInitialized) {
             elasticSearchClient = new TransportClient(settings)
                     .addTransportAddress(
                             new InetSocketTransportAddress
                                     (
-                                            ConfigManager.getValue("elasticsearch.url"),
-                                            Integer.parseInt(ConfigManager.getValue("elasticsearch.port"))
+                                            ConfigKeys.ES_URL,
+                                            Integer.parseInt(ConfigKeys.ES_PORT)
                                     )
                     );
             isInitialized = true;
