@@ -1,5 +1,6 @@
 package org.personalized.dashboard.model;
 
+import com.google.common.collect.Lists;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.personalized.dashboard.utils.Constants;
@@ -8,6 +9,7 @@ import org.personalized.dashboard.utils.validator.FieldName;
 
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.List;
 
 /**
  * Created by sudan on 3/4/15.
@@ -31,6 +33,8 @@ public class Pin {
     @Size(max = Constants.URL_MAX_LENGTH)
     @FieldName(name = FieldKeys.PIN_IMAGE_URL)
     private String imageUrl;
+
+    private List<String> tags = Lists.newArrayList();
 
     private Long createdOn;
     private Long modifiedAt;
@@ -78,6 +82,14 @@ public class Pin {
         this.imageUrl = imageUrl;
     }
 
+    public List<String> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<String> tags) {
+        this.tags = tags;
+    }
+
     public Long getCreatedOn() {
         return createdOn;
     }
@@ -101,6 +113,7 @@ public class Pin {
                 .append("name", name)
                 .append("description", description)
                 .append("imageUrl", imageUrl)
+                .append("tags", tags)
                 .append("createdOn", createdOn)
                 .append("modifiedAt", modifiedAt)
                 .toString();

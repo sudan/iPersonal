@@ -1,5 +1,6 @@
 package org.personalized.dashboard.model;
 
+import com.google.common.collect.Lists;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.personalized.dashboard.utils.Constants;
@@ -8,6 +9,7 @@ import org.personalized.dashboard.utils.validator.FieldName;
 
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.List;
 
 /**
  * Created by sudan on 3/4/15.
@@ -26,6 +28,8 @@ public class Note {
     @Size(max = Constants.CONTENT_MAX_LENGTH)
     @FieldName(name = FieldKeys.NOTE_DESCRIPTION)
     private String note;
+
+    private List<String> tags = Lists.newArrayList();
 
     private Long createdOn;
     private Long modifiedAt;
@@ -64,6 +68,14 @@ public class Note {
         this.note = note;
     }
 
+    public List<String> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<String> tags) {
+        this.tags = tags;
+    }
+
     public Long getCreatedOn() {
         return createdOn;
     }
@@ -88,6 +100,7 @@ public class Note {
                 .append("note", note)
                 .append("createdOn", createdOn)
                 .append("modifiedAt", modifiedAt)
+                .append("tags", tags)
                 .toString();
     }
 }
