@@ -5,7 +5,7 @@ curl -XPUT 'http://localhost:9200/entities/' -d '{
                 "autocomplete_filter": {
                     "type": "edgeNGram",
                     "min_gram": 1,
-                    "max_gram": 5
+                    "max_gram": 10
                 }
             },
             "analyzer":{

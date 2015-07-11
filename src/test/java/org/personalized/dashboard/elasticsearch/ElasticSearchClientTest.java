@@ -1,0 +1,188 @@
+package org.personalized.dashboard.elasticsearch;
+
+import com.google.common.collect.Lists;
+import org.junit.Assert;
+import org.junit.Test;
+import org.personalized.dashboard.bootstrap.ESBootstrap;
+import org.personalized.dashboard.model.EntityType;
+import org.personalized.dashboard.model.SearchContext;
+import org.personalized.dashboard.model.SearchDocument;
+import org.personalized.dashboard.utils.ConfigKeys;
+import org.personalized.dashboard.utils.auth.SessionManager;
+import org.springframework.test.context.ActiveProfiles;
+
+import java.util.List;
+
+/**
+ * Created by sudan on 11/7/15.
+ */
+@ActiveProfiles("test")
+public class ElasticSearchClientTest {
+
+    private  ElasticsearchClient elasticsearchClient= new ElasticsearchClient(new SessionManager());
+
+    @Test
+    public void testElasticSearchClient() throws Exception{
+
+        Boolean isDebugMode = Boolean.valueOf(ConfigKeys.ES_DEBUG_FLAG);
+
+        /**
+         * Use a different fresh type in debugMode by changing  elasticsearch.type in config.properties
+         */
+        if(isDebugMode) {
+
+            ESBootstrap.init();
+            insertSampleData();
+
+            /**
+             * This is to allow elasticsearch to index
+             */
+            Thread.sleep(1000L);
+
+            SearchContext searchContext = new SearchContext();
+            List<EntityType> entityTypes = Lists.newArrayList();
+            entityTypes.add(EntityType.BOOKMARK);
+            searchContext.setEntityTypes(entityTypes);
+            List<SearchDocument> searchDocuments = elasticsearchClient.search(searchContext);
+            Assert.assertEquals("Total bookmark count is 2", 2, searchDocuments.size());
+
+            searchContext = new SearchContext();
+            entityTypes = Lists.newArrayList();
+            entityTypes.add(EntityType.NOTE);
+            searchContext.setEntityTypes(entityTypes);
+            searchDocuments = elasticsearchClient.search(searchContext);
+            Assert.assertEquals("Total note count is 2", 2, searchDocuments.size());
+
+            searchContext = new SearchContext();
+            entityTypes = Lists.newArrayList();
+            entityTypes.add(EntityType.TODO);
+            searchContext.setEntityTypes(entityTypes);
+            searchDocuments = elasticsearchClient.search(searchContext);
+            Assert.assertEquals("Total todo count is 2", 2, searchDocuments.size());
+
+            searchContext = new SearchContext();
+            entityTypes = Lists.newArrayList();
+            entityTypes.add(EntityType.PIN);
+            searchContext.setEntityTypes(entityTypes);
+            searchDocuments = elasticsearchClient.search(searchContext);
+            Assert.assertEquals("Total pin count is 1", 1, searchDocuments.size());
+
+            searchContext = new SearchContext();
+            entityTypes = Lists.newArrayList();
+            entityTypes.add(EntityType.BOOKMARK);
+            searchContext.setEntityTypes(entityTypes);
+            List<String> keywords = Lists.newArrayList();
+            keywords.add("Microsoft");
+            searchContext.setKeywords(keywords);
+            searchDocuments = elasticsearchClient.search(searchContext);
+            Assert.assertEquals("Total search result count is 1", 1 , searchDocuments.size());
+
+            searchContext = new SearchContext();
+            keywords = Lists.newArrayList();
+            keywords.add("language");
+            keywords.add("engine");
+            searchContext.setKeywords(keywords);
+            searchDocuments = elasticsearchClient.search(searchContext);
+            Assert.assertEquals("Total search count is 4", 4, searchDocuments.size());
+
+            searchContext = new SearchContext();
+            keywords = Lists.newArrayList();
+            keywords.add("technology");
+            searchContext.setKeywords(keywords);
+            searchDocuments = elasticsearchClient.search(searchContext);
+            Assert.assertEquals("Total search count is 1", 1, searchDocuments.size());
+
+            searchContext = new SearchContext();
+            List<String> titles = Lists.newArrayList();
+            titles.add("bing");
+            titles.add("python");
+            searchContext.setTitles(titles);
+            searchDocuments = elasticsearchClient.search(searchContext);
+            Assert.assertEquals("Total search count is 2", 2 , searchDocuments.size());
+
+            searchContext = new SearchContext();
+            keywords = Lists.newArrayList();
+            keywords.add("language");
+            searchContext.setKeywords(keywords);
+            entityTypes = Lists.newArrayList();
+            entityTypes.add(EntityType.PIN);
+            searchContext.setEntityTypes(entityTypes);
+            searchDocuments = elasticsearchClient.search(searchContext);
+            Assert.assertEquals("Total search count is 0", 0 , searchDocuments.size());
+
+            searchContext = new SearchContext();
+            keywords = Lists.newArrayList();
+            keywords.add("language");
+            searchContext.setKeywords(keywords);
+            titles = Lists.newArrayList();
+            titles.add("python");
+            searchContext.setTitles(titles);
+            searchDocuments = elasticsearchClient.search(searchContext);
+            Assert.assertEquals("Total search count is 1", 1 , searchDocuments.size());
+
+            elasticsearchClient.delete("BOK123456789");
+            Thread.sleep(1000L);
+
+            searchContext = new SearchContext();
+            entityTypes = Lists.newArrayList();
+            entityTypes.add(EntityType.BOOKMARK);
+            searchContext.setEntityTypes(entityTypes);
+            searchDocuments = elasticsearchClient.search(searchContext);
+            Assert.assertEquals("Total bookmark count is 1", 1, searchDocuments.size());
+        }
+
+    }
+
+    public void insertSampleData() {
+
+        SearchDocument searchDocument = new SearchDocument();
+        searchDocument.setDocumentId("BOK123456789");
+        searchDocument.setTitle("BingSearch");
+        searchDocument.setEntityType(EntityType.BOOKMARK);
+        searchDocument.setDescription("Bing is Microsoft product. It is a very good search engine");
+        elasticsearchClient.insertOrUpdate(searchDocument);
+
+        searchDocument = new SearchDocument();
+        searchDocument.setDocumentId("BOK234567890");
+        searchDocument.setTitle("YahooSearch");
+        searchDocument.setEntityType(EntityType.BOOKMARK);
+        searchDocument.setDescription("Yahoo search engine ");
+        elasticsearchClient.insertOrUpdate(searchDocument);
+
+        searchDocument = new SearchDocument();
+        searchDocument.setDocumentId("TOD234567890");
+        searchDocument.setTitle("TodoList");
+        searchDocument.setEntityType(EntityType.TODO);
+        searchDocument.setDescription("My Todo List contains learning technologies");
+        elasticsearchClient.insertOrUpdate(searchDocument);
+
+        searchDocument = new SearchDocument();
+        searchDocument.setDocumentId("TOD134567890");
+        searchDocument.setTitle("SecondtodoList");
+        searchDocument.setEntityType(EntityType.TODO);
+        searchDocument.setDescription("Core Java is in backlog");
+        elasticsearchClient.insertOrUpdate(searchDocument);
+
+        searchDocument = new SearchDocument();
+        searchDocument.setDocumentId("NOT234567890");
+        searchDocument.setTitle("Java");
+        searchDocument.setEntityType(EntityType.NOTE);
+        searchDocument.setDescription("Java Virtual Machine. Java is a programming Language");
+        elasticsearchClient.insertOrUpdate(searchDocument);
+
+        searchDocument = new SearchDocument();
+        searchDocument.setDocumentId("NOT234567891");
+        searchDocument.setTitle("Python");
+        searchDocument.setEntityType(EntityType.NOTE);
+        searchDocument.setDescription("Python is an interpreted language");
+        elasticsearchClient.insertOrUpdate(searchDocument);
+
+
+        searchDocument = new SearchDocument();
+        searchDocument.setDocumentId("PIN234567890");
+        searchDocument.setTitle("Sample pin");
+        searchDocument.setEntityType(EntityType.PIN);
+        searchDocument.setDescription("Pin for testing users");
+        elasticsearchClient.insertOrUpdate(searchDocument);
+    }
+}
