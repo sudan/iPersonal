@@ -8,6 +8,7 @@ import org.personalized.dashboard.bootstrap.MongoBootstrap;
 import org.personalized.dashboard.dao.api.NoteDao;
 import org.personalized.dashboard.dao.impl.NoteDaoImpl;
 import org.personalized.dashboard.model.Note;
+import org.personalized.dashboard.utils.ConfigKeys;
 import org.personalized.dashboard.utils.Constants;
 import org.personalized.dashboard.utils.generator.IdGenerator;
 import org.springframework.test.context.ActiveProfiles;
@@ -33,15 +34,12 @@ public class NoteDaoTest {
     @Test
     public void testNoteDao() {
 
-        Boolean isDebugMode = Boolean.valueOf(ConfigManager.getValue("mongo.isDebugMode"));
-        String testCollection = ConfigManager.getValue("mongo.dbName");
+        Boolean isDebugMode = Boolean.valueOf(ConfigKeys.MONGO_DEBUG_FLAG);
 
         /*
             To run these test cases enable isDebugMode in config.properties
-            and change the dbName to ipersonal-test and also enable authentication
-            for that database
          */
-        if (isDebugMode && testCollection.equalsIgnoreCase("ipersonal-test")) {
+        if (isDebugMode) {
             MongoBootstrap.init();
             MongoBootstrap.getMongoDatabase().getCollection(Constants.NOTES).drop();
 

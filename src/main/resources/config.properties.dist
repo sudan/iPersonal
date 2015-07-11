@@ -16,3 +16,4 @@ elasticsearch.index=your-es-index
 elasticsearch.type=your-es-type
 elasticsearch.clustername=your-es-clustername
 elasticsearch.nodename=your-es-nodename
+elasticsearch.isDebugMode=false
