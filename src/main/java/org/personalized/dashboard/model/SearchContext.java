@@ -12,6 +12,7 @@ import java.util.List;
 public class SearchContext {
 
     private List<EntityType> entityTypes;
+    private List<String> titles;
     private List<String> tags;
     private List<String> keywords;
 
@@ -19,8 +20,9 @@ public class SearchContext {
 
     }
 
-    public SearchContext(List<EntityType> entityTypes, List<String> tags, List<String> keywords) {
+    public SearchContext(List<EntityType> entityTypes, List<String> titles, List<String> tags, List<String> keywords) {
         this.entityTypes = entityTypes;
+        this.titles = titles;
         this.tags = tags;
         this.keywords = keywords;
     }
@@ -31,6 +33,14 @@ public class SearchContext {
 
     public void setEntityTypes(List<EntityType> entityTypes) {
         this.entityTypes = entityTypes;
+    }
+
+    public List<String> getTitles() {
+        return titles;
+    }
+
+    public void setTitles(List<String> titles) {
+        this.titles = titles;
     }
 
     public List<String> getTags() {
@@ -53,6 +63,7 @@ public class SearchContext {
     public String toString() {
         return new ToStringBuilder(this)
                 .append("entityTypes", entityTypes)
+                .append("titles", titles)
                 .append("tags", tags)
                 .append("keywords", keywords)
                 .toString();

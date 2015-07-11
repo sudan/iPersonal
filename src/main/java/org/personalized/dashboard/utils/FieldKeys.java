@@ -42,4 +42,5 @@ public class FieldKeys {
     public static final String ES_OP_TYPE = "op_type";
     public static final String ES_EXT_URL = "url";
     public static final String ES_TIMESTAMP = "timestamp";
+    public static final String ES_TAG = "tag";
 }

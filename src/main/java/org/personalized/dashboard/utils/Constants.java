@@ -35,4 +35,6 @@ public class Constants {
 
     public static final String SEPARATOR = "     ";
 
+    public static final int ES_LIMIT = 25;
+    public static final int ES_OFFSET = 0;
 }

@@ -17,6 +17,7 @@ public class SearchValidationService implements ValidationService<SearchContext>
 
         List<ErrorEntity> errorEntities = Lists.newArrayList();
         if (CollectionUtils.isEmpty(searchContext.getEntityTypes()) &&
+                CollectionUtils.isEmpty(searchContext.getTitles()) &&
                 CollectionUtils.isEmpty(searchContext.getKeywords()) &&
                 CollectionUtils.isEmpty(searchContext.getTags())) {
             ErrorEntity errorEntity = new ErrorEntity(ErrorCodes.INVALID_SEARCH_CONTEXT.name(),
