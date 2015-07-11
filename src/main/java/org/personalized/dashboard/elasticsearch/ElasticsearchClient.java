@@ -9,8 +9,6 @@ import org.elasticsearch.action.delete.DeleteResponse;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.search.SearchResponse;
-import org.elasticsearch.index.query.BoolQueryBuilder;
-import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.sort.SortBuilders;
 import org.elasticsearch.search.sort.SortOrder;
@@ -65,11 +63,12 @@ public class ElasticsearchClient {
     public List<SearchDocument> search(SearchContext searchContext) {
 
         List<SearchDocument> searchDocuments = Lists.newArrayList();
+        ESQueryBuilder esQueryBuilder = new ESQueryBuilder();
 
         SearchResponse searchResponse = ESBootstrap.getClient()
                 .prepareSearch(ConfigKeys.ES_INDEX)
                 .setTypes(ConfigKeys.ES_TYPE)
-                .setQuery(getQueryBuilder(searchContext))
+                .setQuery(esQueryBuilder.getQueryBuilder(searchContext, sessionManager.getUserIdFromSession()))
                 .setFrom(Constants.ES_OFFSET)
                 .setSize(Constants.ES_LIMIT)
                 .addSort(SortBuilders.fieldSort(FieldKeys.ES_TIMESTAMP).order(SortOrder.DESC))
@@ -93,48 +92,5 @@ public class ElasticsearchClient {
         }
 
         return searchDocuments;
-    }
-
-    private BoolQueryBuilder getQueryBuilder(SearchContext searchContext) {
-
-        BoolQueryBuilder searchQueryBuilder = new BoolQueryBuilder();
-
-        BoolQueryBuilder userIdQueryBuilder = new BoolQueryBuilder();
-        userIdQueryBuilder.must(QueryBuilders.termQuery(FieldKeys.USER_ID, sessionManager.getUserIdFromSession()));
-        searchQueryBuilder.must(userIdQueryBuilder);
-
-        if (searchContext.getEntityTypes() != null && searchContext.getEntityTypes().size() > 0) {
-            BoolQueryBuilder entityTypeQueryBuilder = new BoolQueryBuilder();
-            for (EntityType entityType : searchContext.getEntityTypes()) {
-                entityTypeQueryBuilder.should(QueryBuilders.matchQuery(FieldKeys.ES_ENTITY_TYPE, entityType.name()));
-            }
-            searchQueryBuilder.must(entityTypeQueryBuilder);
-        }
-
-        if (searchContext.getTitles() != null && searchContext.getTitles().size() > 0) {
-            BoolQueryBuilder titleQueryBuilder = new BoolQueryBuilder();
-            for (String title : searchContext.getTitles()) {
-                titleQueryBuilder.should(QueryBuilders.fuzzyQuery(FieldKeys.ES_TITLE, title));
-            }
-            searchQueryBuilder.must(titleQueryBuilder);
-        }
-
-        if (searchContext.getKeywords() != null && searchContext.getKeywords().size() > 0) {
-            BoolQueryBuilder keywordQueryBuilder = new BoolQueryBuilder();
-            for (String keyword : searchContext.getKeywords()) {
-                keywordQueryBuilder.should(QueryBuilders.fuzzyQuery(FieldKeys.ES_DESCRIPTION, keyword));
-            }
-            searchQueryBuilder.must(keywordQueryBuilder);
-        }
-
-        if (searchContext.getTags() != null && searchContext.getTags().size() > 0) {
-            BoolQueryBuilder tagQueryBuilder = new BoolQueryBuilder();
-            for (String tag : searchContext.getTags()) {
-                tagQueryBuilder.should(QueryBuilders.termQuery(FieldKeys.ES_TAG, tag));
-            }
-            searchQueryBuilder.must(tagQueryBuilder);
-        }
-
-        return searchQueryBuilder;
     }
 }
