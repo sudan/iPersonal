@@ -6,5 +6,6 @@ package org.personalized.dashboard.model;
 public enum ActivityType {
     CREATED,
     UPDATED,
-    DELETED
+    DELETED,
+    TAG_ADDED,
 }

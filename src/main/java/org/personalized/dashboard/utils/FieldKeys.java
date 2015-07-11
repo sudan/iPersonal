@@ -32,8 +32,10 @@ public class FieldKeys {
 
     public static final String ACTIVITY_TYPE = "type";
     public static final String ACTIVITY_DESCRIPTION = "description";
+
     public static final String ENTITY_TYPE = "entity_type";
     public static final String ENTITY_ID = "entity_id";
+    public static final String ENTITY_NAME = "entity_name";
 
     public static final String ES_ID = "id";
     public static final String ES_TITLE = "title";
@@ -43,4 +45,7 @@ public class FieldKeys {
     public static final String ES_EXT_URL = "url";
     public static final String ES_TIMESTAMP = "timestamp";
     public static final String ES_TAG = "tag";
+
+    public static final String ENTITY_TAGS = "tags";
+
 }
