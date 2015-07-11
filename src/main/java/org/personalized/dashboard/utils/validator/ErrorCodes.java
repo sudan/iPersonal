@@ -13,7 +13,8 @@ public enum ErrorCodes {
     TASKS_LENGTH_EXCEEDED("Task list exceeded the limit {0}"),
     EMPTY_TASK_LIST("Task list cannot be empty"),
     INVALID_VALUE("Invalid value"),
-    INVALID_SEARCH_CONTEXT("Search context cannot be empty");
+    INVALID_SEARCH_CONTEXT("Search context cannot be empty"),
+    TAG_LENGTH_EXCEEDED("{0} cannot exceed {1} characters");
 
     private String description;
 

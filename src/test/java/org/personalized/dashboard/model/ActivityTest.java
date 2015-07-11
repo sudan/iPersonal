@@ -41,5 +41,31 @@ public class ActivityTest {
         Assert.assertEquals("Activity Type is UPDATED", ActivityType.UPDATED.name(), activity
                 .getActivityType().name());
         Assert.assertEquals("Activity desc is desc1", "desc1", activity.getDescription());
+
+        entity = new Entity(EntityType.BOOKMARK, "BOK133456789", "title");
+        activity = new Activity("ACT133456789", ActivityType.CREATED, entity, "desc");
+
+        Assert.assertEquals("activity ID is ACT133456789", "ACT133456789", activity.getActivityId
+                ());
+        Assert.assertEquals("Entity Type is Bookmark", EntityType.BOOKMARK.name(), entity
+                .getEntityType().name());
+        Assert.assertEquals("Entity ID is BOK133456789", "BOK133456789", entity.getEntityId());
+        Assert.assertEquals("Activity Type is CREATED", ActivityType.CREATED.name(), activity
+                .getActivityType().name());
+        Assert.assertEquals("Activity desc is desc", "desc", activity.getDescription());
+        Assert.assertEquals("Activity title is title", "title", activity.getEntity().getTitle());
+
+        entity.setTitle("title1");
+        activity = new Activity("ACT133456789", ActivityType.CREATED, entity, "desc");
+
+        Assert.assertEquals("activity ID is ACT133456789", "ACT133456789", activity.getActivityId
+                ());
+        Assert.assertEquals("Entity Type is Bookmark", EntityType.BOOKMARK.name(), entity
+                .getEntityType().name());
+        Assert.assertEquals("Entity ID is BOK133456789", "BOK133456789", entity.getEntityId());
+        Assert.assertEquals("Activity Type is CREATED", ActivityType.CREATED.name(), activity
+                .getActivityType().name());
+        Assert.assertEquals("Activity desc is desc", "desc", activity.getDescription());
+        Assert.assertEquals("Activity title is title1", "title1", activity.getEntity().getTitle());
     }
 }

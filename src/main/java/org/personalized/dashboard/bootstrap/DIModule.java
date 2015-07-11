@@ -29,6 +29,7 @@ public class DIModule extends AbstractModule {
         bind(ExpenseService.class).to(ExpenseServiceImpl.class);
         bind(ActivityService.class).to(ActivityServiceImpl.class);
         bind(SearchService.class).to(SearchServiceImpl.class);
+        bind(TagService.class).to(TagServiceImpl.class);
 
         bind(BookmarkDao.class).to(BookmarkDaoImpl.class);
         bind(DiaryDao.class).to(DiaryDaoImpl.class);
@@ -37,6 +38,7 @@ public class DIModule extends AbstractModule {
         bind(TodoDao.class).to(TodoDaoImpl.class);
         bind(ExpenseDao.class).to(ExpenseDaoImpl.class);
         bind(ActivityDao.class).to(ActivityDaoImpl.class);
+        bind(TagDao.class).to(TagDaoImpl.class);
 
         bind(ValidationService.class).annotatedWith(Names.named("bookmark")).to
                 (BookmarkValidationService.class);
@@ -49,6 +51,8 @@ public class DIModule extends AbstractModule {
         bind(ValidationService.class).annotatedWith(Names.named("todo")).to(TodoValidationService
                 .class);
         bind(ValidationService.class).annotatedWith(Names.named("search")).to(SearchValidationService
+                .class);
+        bind(ValidationService.class).annotatedWith(Names.named("tag")).to(TagValidationService
                 .class);
         bind(ConstraintValidationService.class);
 

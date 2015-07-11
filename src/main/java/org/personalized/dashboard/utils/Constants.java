@@ -8,6 +8,7 @@ public class Constants {
     public static final int URL_MAX_LENGTH = 300;
     public static final int TITLE_MAX_LENGTH = 50;
     public static final int CONTENT_MAX_LENGTH = 1000;
+    public static final int TAG_MAX_LENGTH = 25;
 
     public static final String BOOKMARKS = "bookmarks";
     public static final String BOOKMARK_PREFIX = "BOK";
@@ -37,4 +38,6 @@ public class Constants {
 
     public static final int ES_LIMIT = 25;
     public static final int ES_OFFSET = 0;
+
+    public static final int MAX_TAGS_LENGTH = 10;
 }
