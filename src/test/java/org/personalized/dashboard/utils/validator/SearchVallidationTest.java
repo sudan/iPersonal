@@ -42,6 +42,12 @@ public class SearchVallidationTest {
         errorEntities = searchValidationService.validate(searchContext);
         Assert.assertEquals("Error count is 0", 0, errorEntities.size());
 
+        searchContext = new SearchContext();
+        List<String> titles = Lists.newArrayList();
+        titles.add("title");
+        searchContext.setTitles(titles);
+        errorEntities = searchValidationService.validate(searchContext);
+        Assert.assertEquals("Error count is 0", 0, errorEntities.size());
 
         searchContext = new SearchContext();
         List<String> tags = Lists.newArrayList();
@@ -49,7 +55,6 @@ public class SearchVallidationTest {
         searchContext.setTags(tags);
         errorEntities = searchValidationService.validate(searchContext);
         Assert.assertEquals("Error count is 0", 0, errorEntities.size());
-
 
         searchContext = new SearchContext();
         List<String> keywords = Lists.newArrayList();
