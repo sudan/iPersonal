@@ -3,10 +3,7 @@ package org.personalized.dashboard.service.impl;
 import com.google.inject.Inject;
 import org.personalized.dashboard.dao.api.ActivityDao;
 import org.personalized.dashboard.dao.api.TagDao;
-import org.personalized.dashboard.model.Activity;
-import org.personalized.dashboard.model.ActivityType;
-import org.personalized.dashboard.model.Entity;
-import org.personalized.dashboard.model.Tag;
+import org.personalized.dashboard.model.*;
 import org.personalized.dashboard.service.api.TagService;
 import org.personalized.dashboard.utils.auth.SessionManager;
 import org.personalized.dashboard.utils.generator.ActivityGenerator;
@@ -36,7 +33,7 @@ public class TagServiceImpl implements TagService {
         Entity entity = tag.getEntity();
         Long modifiedCount = tagDao.update(tag.getTags(), entity, sessionManager.getUserIdFromSession());
         if(modifiedCount > 0) {
-            Activity activity = activityGenerator.generate(ActivityType.UPDATED, entity.getEntityType(),
+            Activity activity = activityGenerator.generate(ActivityType.TAG_ADDED, entity.getEntityType(),
                     entity.getEntityId(), entity.getTitle());
             activityDao.add(activity, sessionManager.getUserIdFromSession());
         }

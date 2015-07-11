@@ -40,7 +40,7 @@ public class TagDaoImpl implements TagDao {
     }
 
     private MongoCollection<Document> getCollection(Entity entity) {
-        
+
         switch (entity.getEntityType()) {
 
             case BOOKMARK:
