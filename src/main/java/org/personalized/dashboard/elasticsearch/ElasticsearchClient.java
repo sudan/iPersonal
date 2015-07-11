@@ -14,11 +14,11 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.sort.SortBuilders;
 import org.elasticsearch.search.sort.SortOrder;
-import org.personalized.dashboard.bootstrap.ConfigManager;
 import org.personalized.dashboard.bootstrap.ESBootstrap;
 import org.personalized.dashboard.model.EntityType;
 import org.personalized.dashboard.model.SearchContext;
 import org.personalized.dashboard.model.SearchDocument;
+import org.personalized.dashboard.utils.ConfigKeys;
 import org.personalized.dashboard.utils.Constants;
 import org.personalized.dashboard.utils.FieldKeys;
 import org.personalized.dashboard.utils.auth.SessionManager;
@@ -41,9 +41,7 @@ public class ElasticsearchClient {
     public IndexResponse insertOrUpdate(SearchDocument searchDocument) {
         searchDocument.setCreatedAt(System.currentTimeMillis());
         IndexRequest indexRequest = new IndexRequest(
-                ConfigManager.getValue("elasticsearch.index"),
-                ConfigManager.getValue("elasticsearch.type"),
-                searchDocument.getDocumentId()
+                ConfigKeys.ES_INDEX, ConfigKeys.ES_TYPE, searchDocument.getDocumentId()
         );
         Map<String, String> payload = Maps.newHashMap();
         payload.put(FieldKeys.ES_ID, searchDocument.getDocumentId());
@@ -60,8 +58,8 @@ public class ElasticsearchClient {
 
     public DeleteResponse delete(String documentId) {
 
-        return ESBootstrap.getClient().prepareDelete(ConfigManager.getValue("elasticsearch.index"),
-                ConfigManager.getValue("elasticsearch.type"), documentId).execute().actionGet();
+        return ESBootstrap.getClient().prepareDelete(ConfigKeys.ES_INDEX,
+                ConfigKeys.ES_TYPE, documentId).execute().actionGet();
     }
 
     public List<SearchDocument> search(SearchContext searchContext) {
@@ -69,9 +67,9 @@ public class ElasticsearchClient {
         List<SearchDocument> searchDocuments = Lists.newArrayList();
 
         SearchResponse searchResponse = ESBootstrap.getClient()
-                .prepareSearch(ConfigManager.getValue("elasticsearch.index"))
+                .prepareSearch(ConfigKeys.ES_INDEX)
+                .setTypes(ConfigKeys.ES_TYPE)
                 .setQuery(getQueryBuilder(searchContext))
-                .setTypes(ConfigManager.getValue("elasticsearch.type"))
                 .setFrom(Constants.ES_OFFSET)
                 .setSize(Constants.ES_LIMIT)
                 .addSort(SortBuilders.fieldSort(FieldKeys.ES_TIMESTAMP).order(SortOrder.DESC))
