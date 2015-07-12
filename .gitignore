@@ -2,3 +2,4 @@
 iPersonal.iml
 target/
 src/main/resources/config.properties
+*.class
