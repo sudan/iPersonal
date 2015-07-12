@@ -47,7 +47,7 @@ public class ESQueryBuilder {
         if (!CollectionUtils.isEmpty(searchContext.getTags())) {
             BoolQueryBuilder tagQueryBuilder = new BoolQueryBuilder();
             for (String tag : searchContext.getTags()) {
-                tagQueryBuilder.should(QueryBuilders.termQuery(FieldKeys.ES_TAG, tag));
+                tagQueryBuilder.should(QueryBuilders.fuzzyQuery(FieldKeys.ENTITY_TAGS, tag));
             }
             searchQueryBuilder.must(tagQueryBuilder);
         }

@@ -120,6 +120,35 @@ public class ElasticSearchClientTest {
             searchDocuments = elasticsearchClient.search(searchContext);
             Assert.assertEquals("Total search count is 1", 1 , searchDocuments.size());
 
+            searchContext = new SearchContext();
+            List<String> tags = Lists.newArrayList();
+            tags.add("language");
+            tags.add("java");
+            searchContext.setTags(tags);
+            searchDocuments = elasticsearchClient.search(searchContext);
+            Assert.assertEquals("Total search count is 3", 3, searchDocuments.size());
+
+            searchContext = new SearchContext();
+            tags = Lists.newArrayList();
+            tags.add("microsoft");
+            searchContext.setTags(tags);
+            entityTypes = Lists.newArrayList();
+            entityTypes.add(EntityType.DIARY);
+            searchContext.setEntityTypes(entityTypes);
+            searchDocuments = elasticsearchClient.search(searchContext);
+            Assert.assertEquals("Total search count is 0", 0, searchDocuments.size());
+
+            searchContext = new SearchContext();
+            tags = Lists.newArrayList();
+            tags.add("bookmark");
+            tags.add("note");
+            searchContext.setTags(tags);
+            entityTypes = Lists.newArrayList();
+            entityTypes.add(EntityType.NOTE);
+            searchContext.setEntityTypes(entityTypes);
+            searchDocuments = elasticsearchClient.search(searchContext);
+            Assert.assertEquals("Total search count is 2", 2, searchDocuments.size());
+
             elasticsearchClient.delete("BOK123456789");
             Thread.sleep(1000L);
 
@@ -184,5 +213,20 @@ public class ElasticSearchClientTest {
         searchDocument.setEntityType(EntityType.PIN);
         searchDocument.setDescription("Pin for testing users");
         elasticsearchClient.insertOrUpdate(searchDocument);
+
+        String tags = "bookmark microsoft product";
+        elasticsearchClient.addTags("BOK123456789", tags);
+
+        tags = "bookmark yahoo";
+        elasticsearchClient.addTags("BOK234567890", tags);
+
+        tags = "todo java";
+        elasticsearchClient.addTags("TOD134567890", tags);
+
+        tags = "note java language";
+        elasticsearchClient.addTags("NOT234567890", tags);
+
+        tags = "note python language";
+        elasticsearchClient.addTags("NOT234567891", tags);
     }
 }
