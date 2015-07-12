@@ -11,12 +11,14 @@ public interface TagService {
 
     /**
      * Update tags
+     *
      * @param tag
      */
     Long updateTags(Tag tag);
 
     /**
      * Get all tags for a user
+     *
      * @return
      */
     List<String> getTags();

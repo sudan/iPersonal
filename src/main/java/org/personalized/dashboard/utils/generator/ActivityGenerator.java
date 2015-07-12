@@ -14,11 +14,10 @@ public class ActivityGenerator<T> {
                              String entityName) {
 
         StringBuilder description = new StringBuilder();
-        if(activityType == ActivityType.TAG_ADDED) {
+        if (activityType == ActivityType.TAG_ADDED) {
             description.append("tags has been updated for ")
                     .append(entityType.name());
-        }
-        else {
+        } else {
             description.append(entityName)
                     .append(" has been ").append(activityType.name());
         }

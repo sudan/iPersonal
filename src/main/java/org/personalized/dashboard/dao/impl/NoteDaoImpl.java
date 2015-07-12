@@ -68,7 +68,7 @@ public class NoteDaoImpl implements NoteDao {
             note.setCreatedOn(document.getLong(FieldKeys.CREATED_ON));
             note.setModifiedAt(document.getLong(FieldKeys.MODIFIED_AT));
 
-            if(document.containsKey(FieldKeys.ENTITY_TAGS)) {
+            if (document.containsKey(FieldKeys.ENTITY_TAGS)) {
                 List<String> tags = (List<String>) document.get(FieldKeys.ENTITY_TAGS);
                 note.setTags(tags);
             }
@@ -156,7 +156,7 @@ public class NoteDaoImpl implements NoteDao {
                 note.setNote(document.getString(FieldKeys.NOTE_DESCRIPTION));
                 note.setCreatedOn(document.getLong(FieldKeys.CREATED_ON));
                 note.setModifiedAt(document.getLong(FieldKeys.MODIFIED_AT));
-                if(document.containsKey(FieldKeys.ENTITY_TAGS)) {
+                if (document.containsKey(FieldKeys.ENTITY_TAGS)) {
                     List<String> tags = (List<String>) document.get(FieldKeys.ENTITY_TAGS);
                     note.setTags(tags);
                 }

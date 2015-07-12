@@ -69,7 +69,7 @@ public class PinDaoImpl implements PinDao {
             pin.setImageUrl(document.getString(FieldKeys.PIN_IMAGE_URL));
             pin.setCreatedOn(document.getLong(FieldKeys.CREATED_ON));
             pin.setModifiedAt(document.getLong(FieldKeys.MODIFIED_AT));
-            if(document.containsKey(FieldKeys.ENTITY_TAGS)) {
+            if (document.containsKey(FieldKeys.ENTITY_TAGS)) {
                 List<String> tags = (List<String>) document.get(FieldKeys.ENTITY_TAGS);
                 pin.setTags(tags);
             }
@@ -160,7 +160,7 @@ public class PinDaoImpl implements PinDao {
                 pin.setImageUrl(document.getString(FieldKeys.PIN_IMAGE_URL));
                 pin.setCreatedOn(document.getLong(FieldKeys.CREATED_ON));
                 pin.setModifiedAt(document.getLong(FieldKeys.MODIFIED_AT));
-                if(document.containsKey(FieldKeys.ENTITY_TAGS)) {
+                if (document.containsKey(FieldKeys.ENTITY_TAGS)) {
                     List<String> tags = (List<String>) document.get(FieldKeys.ENTITY_TAGS);
                     pin.setTags(tags);
                 }

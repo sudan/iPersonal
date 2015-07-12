@@ -35,15 +35,14 @@ public class TagESIndexProducer implements ESIndexProducer<Tag> {
         payload.put(FieldKeys.ES_ENTITY_TYPE, entityType.name());
         payload.put(FieldKeys.ES_OP_TYPE, operationType.name());
 
-        if(!CollectionUtils.isEmpty(obj.getTags())) {
+        if (!CollectionUtils.isEmpty(obj.getTags())) {
             StringBuilder tagString = new StringBuilder();
-            for(String tag : obj.getTags()) {
+            for (String tag : obj.getTags()) {
                 tagString.append(tag);
                 tagString.append(Constants.SEPARATOR);
             }
             payload.put(FieldKeys.ENTITY_TAGS, tagString.toString());
-        }
-        else {
+        } else {
             payload.put(FieldKeys.ENTITY_TAGS, StringUtils.EMPTY);
         }
 

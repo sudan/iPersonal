@@ -14,6 +14,7 @@ import org.personalized.dashboard.utils.FieldKeys;
 import java.util.List;
 
 import static com.mongodb.client.model.Filters.*;
+
 /**
  * Created by sudan on 11/7/15.
  */
@@ -23,22 +24,22 @@ public class TagDaoImpl implements TagDao {
     public Long update(List<String> tags, Entity entity, String userId) {
 
         MongoCollection<Document> collection = getCollection(entity);
-        if(collection != null) {
+        if (collection != null) {
 
-           Document document = new Document()
-                   .append(FieldKeys.ENTITY_TAGS, tags)
-                   .append(FieldKeys.MODIFIED_AT, System.currentTimeMillis());
+            Document document = new Document()
+                    .append(FieldKeys.ENTITY_TAGS, tags)
+                    .append(FieldKeys.MODIFIED_AT, System.currentTimeMillis());
 
-           UpdateResult updateResult = collection.updateOne(
+            UpdateResult updateResult = collection.updateOne(
                     and(
-                        eq(FieldKeys.PRIMARY_KEY, entity.getEntityId()),
-                        eq(FieldKeys.USER_ID, userId),
-                        ne(FieldKeys.IS_DELETED, true)
+                            eq(FieldKeys.PRIMARY_KEY, entity.getEntityId()),
+                            eq(FieldKeys.USER_ID, userId),
+                            ne(FieldKeys.IS_DELETED, true)
                     ),
                     new Document(Constants.SET_OPERATION, document)
-           );
-           addToUserTags(userId, tags);
-           return updateResult.getModifiedCount();
+            );
+            addToUserTags(userId, tags);
+            return updateResult.getModifiedCount();
         }
         return 0L;
     }
@@ -50,10 +51,9 @@ public class TagDaoImpl implements TagDao {
                 eq(FieldKeys.PRIMARY_KEY, userId)
         )).first();
 
-        if(document == null) {
+        if (document == null) {
             return Lists.newArrayList();
-        }
-        else {
+        } else {
             return (List<String>) document.get(FieldKeys.ENTITY_TAGS);
         }
     }

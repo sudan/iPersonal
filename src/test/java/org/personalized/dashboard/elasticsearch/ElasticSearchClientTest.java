@@ -19,17 +19,17 @@ import java.util.List;
 @ActiveProfiles("test")
 public class ElasticSearchClientTest {
 
-    private  ElasticsearchClient elasticsearchClient= new ElasticsearchClient(new SessionManager());
+    private ElasticsearchClient elasticsearchClient = new ElasticsearchClient(new SessionManager());
 
     @Test
-    public void testElasticSearchClient() throws Exception{
+    public void testElasticSearchClient() throws Exception {
 
         Boolean isDebugMode = Boolean.valueOf(ConfigKeys.ES_DEBUG_FLAG);
 
         /**
          * Use a different fresh type in debugMode by changing  elasticsearch.type in config.properties
          */
-        if(isDebugMode) {
+        if (isDebugMode) {
 
             ESBootstrap.init();
             insertSampleData();
@@ -75,7 +75,7 @@ public class ElasticSearchClientTest {
             keywords.add("Microsoft");
             searchContext.setKeywords(keywords);
             searchDocuments = elasticsearchClient.search(searchContext);
-            Assert.assertEquals("Total search result count is 1", 1 , searchDocuments.size());
+            Assert.assertEquals("Total search result count is 1", 1, searchDocuments.size());
 
             searchContext = new SearchContext();
             keywords = Lists.newArrayList();
@@ -98,7 +98,7 @@ public class ElasticSearchClientTest {
             titles.add("python");
             searchContext.setTitles(titles);
             searchDocuments = elasticsearchClient.search(searchContext);
-            Assert.assertEquals("Total search count is 2", 2 , searchDocuments.size());
+            Assert.assertEquals("Total search count is 2", 2, searchDocuments.size());
 
             searchContext = new SearchContext();
             keywords = Lists.newArrayList();
@@ -108,7 +108,7 @@ public class ElasticSearchClientTest {
             entityTypes.add(EntityType.PIN);
             searchContext.setEntityTypes(entityTypes);
             searchDocuments = elasticsearchClient.search(searchContext);
-            Assert.assertEquals("Total search count is 0", 0 , searchDocuments.size());
+            Assert.assertEquals("Total search count is 0", 0, searchDocuments.size());
 
             searchContext = new SearchContext();
             keywords = Lists.newArrayList();
@@ -118,7 +118,7 @@ public class ElasticSearchClientTest {
             titles.add("python");
             searchContext.setTitles(titles);
             searchDocuments = elasticsearchClient.search(searchContext);
-            Assert.assertEquals("Total search count is 1", 1 , searchDocuments.size());
+            Assert.assertEquals("Total search count is 1", 1, searchDocuments.size());
 
             searchContext = new SearchContext();
             List<String> tags = Lists.newArrayList();

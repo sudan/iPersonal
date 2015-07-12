@@ -69,7 +69,7 @@ public class BookmarkDaoImpl implements BookmarkDao {
             bookmark.setCreatedOn(document.getLong(FieldKeys.CREATED_ON));
             bookmark.setModifiedAt(document.getLong(FieldKeys.MODIFIED_AT));
 
-            if(document.containsKey(FieldKeys.ENTITY_TAGS)) {
+            if (document.containsKey(FieldKeys.ENTITY_TAGS)) {
                 List<String> tags = (List<String>) document.get(FieldKeys.ENTITY_TAGS);
                 bookmark.setTags(tags);
             }
@@ -156,7 +156,7 @@ public class BookmarkDaoImpl implements BookmarkDao {
                 bookmark.setCreatedOn(document.getLong(FieldKeys.CREATED_ON));
                 bookmark.setModifiedAt(document.getLong(FieldKeys.MODIFIED_AT));
 
-                if(document.containsKey(FieldKeys.ENTITY_TAGS)) {
+                if (document.containsKey(FieldKeys.ENTITY_TAGS)) {
                     List<String> tags = (List<String>) document.get(FieldKeys.ENTITY_TAGS);
                     bookmark.setTags(tags);
                 }

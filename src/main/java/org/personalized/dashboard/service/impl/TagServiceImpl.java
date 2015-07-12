@@ -39,7 +39,7 @@ public class TagServiceImpl implements TagService {
     public Long updateTags(Tag tag) {
         Entity entity = tag.getEntity();
         Long modifiedCount = tagDao.update(tag.getTags(), entity, sessionManager.getUserIdFromSession());
-        if(modifiedCount > 0) {
+        if (modifiedCount > 0) {
             Activity activity = activityGenerator.generate(ActivityType.TAG_ADDED, entity.getEntityType(),
                     entity.getEntityId(), entity.getTitle());
             activityDao.add(activity, sessionManager.getUserIdFromSession());

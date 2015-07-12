@@ -35,23 +35,23 @@ public class TagValidationService implements ValidationService<Tag> {
         List<ErrorEntity> errorEntities = Lists.newArrayList();
         validateConstraints(tag, errorEntities);
         validateTags(tag, errorEntities);
-        return  errorEntities;
+        return errorEntities;
     }
 
     public void validateTags(Tag tag, List<ErrorEntity> errorEntities) {
 
-        if(CollectionUtils.isEmpty(tag.getTags()))
+        if (CollectionUtils.isEmpty(tag.getTags()))
             return;
 
-        if(tag.getTags().size() > Constants.MAX_TAGS_LENGTH) {
+        if (tag.getTags().size() > Constants.MAX_TAGS_LENGTH) {
             ErrorEntity errorEntity = new ErrorEntity(ErrorCodes.TAG_LENGTH_EXCEEDED.name(),
                     MessageFormat.format(ErrorCodes.TAG_LENGTH_EXCEEDED.getDescription(),
                             Constants.MAX_TAGS_LENGTH), FieldKeys.ENTITY_TAGS);
             errorEntities.add(errorEntity);
         }
 
-        for(String tagName : tag.getTags()) {
-            if(tagName.length() > Constants.TAG_MAX_LENGTH) {
+        for (String tagName : tag.getTags()) {
+            if (tagName.length() > Constants.TAG_MAX_LENGTH) {
                 ErrorEntity errorEntity = new ErrorEntity(ErrorCodes.LENGTH_EXCEEDED.name(),
                         MessageFormat.format(ErrorCodes.LENGTH_EXCEEDED.getDescription(),
                                 Constants.TAG_MAX_LENGTH), FieldKeys.ENTITY_TAGS);
