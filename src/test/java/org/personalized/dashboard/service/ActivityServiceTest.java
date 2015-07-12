@@ -32,7 +32,7 @@ public class ActivityServiceTest {
     private ActivityService activityService;
 
     @Before
-    public void initialize(){
+    public void initialize() {
 
         IdGenerator idGenerator = new IdGenerator();
         BookmarkDao bookmarkDao = new BookmarkDaoImpl(idGenerator);
@@ -59,7 +59,7 @@ public class ActivityServiceTest {
     }
 
     @Test
-    public void testActivityService() throws Exception{
+    public void testActivityService() throws Exception {
 
         Boolean isDebugMode = Boolean.valueOf(ConfigKeys.MONGO_DEBUG_FLAG);
 

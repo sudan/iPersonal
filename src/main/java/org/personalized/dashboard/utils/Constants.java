@@ -36,7 +36,7 @@ public class Constants {
 
     public static final String SET_OPERATION = "$set";
     public static final String ADD_TO_SET_OPERATION = "$addToSet";
-    public static final String  EACH = "$each";
+    public static final String EACH = "$each";
 
     public static final String SEPARATOR = "     ";
 

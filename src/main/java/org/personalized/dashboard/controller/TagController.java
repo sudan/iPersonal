@@ -39,9 +39,9 @@ public class TagController {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updateTags(Tag tag) {
         List<ErrorEntity> errorEntities = tagValidationService.validate(tag);
-        if(CollectionUtils.isEmpty(errorEntities)) {
+        if (CollectionUtils.isEmpty(errorEntities)) {
             Long modifiedCount = tagService.updateTags(tag);
-            if(modifiedCount > 0) {
+            if (modifiedCount > 0) {
                 return Response.status(Response.Status.OK).entity(tag).build();
             } else {
                 return Response.status(Response.Status.BAD_REQUEST).build();

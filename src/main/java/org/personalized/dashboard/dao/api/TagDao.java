@@ -11,6 +11,7 @@ public interface TagDao {
 
     /**
      * update tags to a given entity and userId
+     *
      * @param tags
      * @param entity
      * @param userId
@@ -19,6 +20,7 @@ public interface TagDao {
 
     /**
      * Get all tags for a userId
+     *
      * @param userId
      * @return
      */

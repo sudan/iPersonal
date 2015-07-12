@@ -32,7 +32,7 @@ public class SearchContextTest {
         tags.add("tag1");
         tags.add("tag2");
 
-        SearchContext searchContext = new SearchContext(entityTypes,titles,tags,keywords);
+        SearchContext searchContext = new SearchContext(entityTypes, titles, tags, keywords);
 
         Assert.assertEquals("Entity one match", EntityType.NOTE.name(), searchContext.getEntityTypes().get(0).name());
         Assert.assertEquals("Entity two match", EntityType.BOOKMARK.name(), searchContext.getEntityTypes().get(1).name());
@@ -51,7 +51,7 @@ public class SearchContextTest {
         titles.add("title3");
         tags.add("tag3");
 
-        searchContext = new SearchContext(entityTypes,titles,tags,keywords);
+        searchContext = new SearchContext(entityTypes, titles, tags, keywords);
 
         Assert.assertEquals("Entity one match", EntityType.NOTE.name(), searchContext.getEntityTypes().get(0).name());
         Assert.assertEquals("Entity two match", EntityType.BOOKMARK.name(), searchContext.getEntityTypes().get(1).name());
