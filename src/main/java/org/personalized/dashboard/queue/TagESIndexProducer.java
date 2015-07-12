@@ -3,6 +3,7 @@ package org.personalized.dashboard.queue;
 import com.google.common.collect.Maps;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import org.apache.commons.lang3.StringUtils;
 import org.personalized.dashboard.bootstrap.QueueBootstrap;
 import org.personalized.dashboard.model.EntityType;
 import org.personalized.dashboard.model.OperationType;
@@ -41,6 +42,9 @@ public class TagESIndexProducer implements ESIndexProducer<Tag> {
                 tagString.append(Constants.SEPARATOR);
             }
             payload.put(FieldKeys.ENTITY_TAGS, tagString.toString());
+        }
+        else {
+            payload.put(FieldKeys.ENTITY_TAGS, StringUtils.EMPTY);
         }
 
         String text = gson.toJson(payload);
