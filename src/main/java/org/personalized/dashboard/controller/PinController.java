@@ -8,6 +8,8 @@ import org.personalized.dashboard.model.Pin;
 import org.personalized.dashboard.service.api.PinService;
 import org.personalized.dashboard.utils.validator.ErrorEntity;
 import org.personalized.dashboard.utils.validator.ValidationService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
@@ -27,6 +29,8 @@ import java.util.List;
 @Path("/pins")
 public class PinController {
 
+    private final Logger LOGGER = LoggerFactory.getLogger(PinController.class);
+
     private final PinService pinService;
     private final ValidationService batchSizeValidationService;
     private final ValidationService pinValidationService;
@@ -44,15 +48,21 @@ public class PinController {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response createPin(Pin pin) {
-        List<ErrorEntity> errorEntities = pinValidationService.validate(pin);
-        if (CollectionUtils.isEmpty(errorEntities)) {
-            String pinId = pinService.createPin(pin);
-            return Response.status(Response.Status.CREATED).entity(pinId).build();
-        } else {
-            GenericEntity<List<ErrorEntity>> errorObj = new GenericEntity<List<ErrorEntity>>
-                    (errorEntities) {
-            };
-            return Response.status(Response.Status.BAD_REQUEST).entity(errorObj).build();
+
+        try {
+            List<ErrorEntity> errorEntities = pinValidationService.validate(pin);
+            if (CollectionUtils.isEmpty(errorEntities)) {
+                String pinId = pinService.createPin(pin);
+                return Response.status(Response.Status.CREATED).entity(pinId).build();
+            } else {
+                GenericEntity<List<ErrorEntity>> errorObj = new GenericEntity<List<ErrorEntity>>
+                        (errorEntities) {
+                };
+                return Response.status(Response.Status.BAD_REQUEST).entity(errorObj).build();
+            }
+        } catch (Exception e) {
+            LOGGER.error("PinController encountered an error", e);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
 
@@ -60,15 +70,21 @@ public class PinController {
     @Path("{pinId}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getPin(@PathParam("pinId") String pinId) {
-        if (StringUtils.isEmpty(pinId)) {
-            return Response.status(Response.Status.BAD_REQUEST).build();
-        } else {
-            Pin pin = pinService.getPin(pinId);
-            if (pin == null) {
-                return Response.status(Response.Status.NOT_FOUND).build();
+
+        try {
+            if (StringUtils.isEmpty(pinId)) {
+                return Response.status(Response.Status.BAD_REQUEST).build();
             } else {
-                return Response.status(Response.Status.OK).entity(pin).build();
+                Pin pin = pinService.getPin(pinId);
+                if (pin == null) {
+                    return Response.status(Response.Status.NOT_FOUND).build();
+                } else {
+                    return Response.status(Response.Status.OK).entity(pin).build();
+                }
             }
+        } catch (Exception e) {
+            LOGGER.error("PinController encountered an error", e);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
 
@@ -76,30 +92,42 @@ public class PinController {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updatePin(Pin pin) {
-        List<ErrorEntity> errorEntities = pinValidationService.validate(pin);
-        if (CollectionUtils.isEmpty(errorEntities)) {
-            Long modifiedCount = pinService.updatePin(pin);
-            if (modifiedCount > 0) {
-                return Response.status(Response.Status.OK).entity(pin).build();
+
+        try {
+            List<ErrorEntity> errorEntities = pinValidationService.validate(pin);
+            if (CollectionUtils.isEmpty(errorEntities)) {
+                Long modifiedCount = pinService.updatePin(pin);
+                if (modifiedCount > 0) {
+                    return Response.status(Response.Status.OK).entity(pin).build();
+                } else {
+                    return Response.status(Response.Status.BAD_REQUEST).build();
+                }
             } else {
-                return Response.status(Response.Status.BAD_REQUEST).build();
+                GenericEntity<List<ErrorEntity>> errorObj = new GenericEntity<List<ErrorEntity>>
+                        (errorEntities) {
+                };
+                return Response.status(Response.Status.BAD_REQUEST).entity(errorObj).build();
             }
-        } else {
-            GenericEntity<List<ErrorEntity>> errorObj = new GenericEntity<List<ErrorEntity>>
-                    (errorEntities) {
-            };
-            return Response.status(Response.Status.BAD_REQUEST).entity(errorObj).build();
+        } catch (Exception e) {
+            LOGGER.error("PinController encountered an error", e);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
 
     @DELETE
     @Path("{pinId}")
     public Response deletePin(@PathParam("pinId") String pinId) {
-        if (StringUtils.isEmpty(pinId)) {
-            return Response.status(Response.Status.BAD_REQUEST).build();
-        } else {
-            pinService.deletePin(pinId);
-            return Response.status(Response.Status.OK).build();
+
+        try {
+            if (StringUtils.isEmpty(pinId)) {
+                return Response.status(Response.Status.BAD_REQUEST).build();
+            } else {
+                pinService.deletePin(pinId);
+                return Response.status(Response.Status.OK).build();
+            }
+        } catch (Exception e) {
+            LOGGER.error("PinController encountered an error", e);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
 
@@ -107,25 +135,37 @@ public class PinController {
     @Path("count")
     @Produces(MediaType.APPLICATION_JSON)
     public Response countPins() {
-        Long count = pinService.countPins();
-        return Response.status(Response.Status.OK).entity(String.valueOf(count)).build();
+
+        try {
+            Long count = pinService.countPins();
+            return Response.status(Response.Status.OK).entity(String.valueOf(count)).build();
+        } catch (Exception e) {
+            LOGGER.error("PinController encountered an error", e);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response fetchPins(@QueryParam("limit") int limit, @QueryParam("offset") int offset) {
-        BatchSize batchSize = new BatchSize(limit, offset);
-        List<ErrorEntity> errorEntities = batchSizeValidationService.validate(batchSize);
-        if (CollectionUtils.isEmpty(errorEntities)) {
-            List<Pin> pins = pinService.fetchPins(batchSize.getLimit(), batchSize.getOffset());
-            GenericEntity<List<Pin>> pinListObj = new GenericEntity<List<Pin>>(pins) {
-            };
-            return Response.status(Response.Status.OK).entity(pinListObj).build();
-        } else {
-            GenericEntity<List<ErrorEntity>> errorObj = new GenericEntity<List<ErrorEntity>>
-                    (errorEntities) {
-            };
-            return Response.status(Response.Status.BAD_REQUEST).entity(errorObj).build();
+
+        try {
+            BatchSize batchSize = new BatchSize(limit, offset);
+            List<ErrorEntity> errorEntities = batchSizeValidationService.validate(batchSize);
+            if (CollectionUtils.isEmpty(errorEntities)) {
+                List<Pin> pins = pinService.fetchPins(batchSize.getLimit(), batchSize.getOffset());
+                GenericEntity<List<Pin>> pinListObj = new GenericEntity<List<Pin>>(pins) {
+                };
+                return Response.status(Response.Status.OK).entity(pinListObj).build();
+            } else {
+                GenericEntity<List<ErrorEntity>> errorObj = new GenericEntity<List<ErrorEntity>>
+                        (errorEntities) {
+                };
+                return Response.status(Response.Status.BAD_REQUEST).entity(errorObj).build();
+            }
+        } catch (Exception e) {
+            LOGGER.error("PinController encountered an error", e);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
 }
