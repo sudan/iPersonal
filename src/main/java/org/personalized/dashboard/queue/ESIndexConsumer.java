@@ -41,6 +41,8 @@ public class ESIndexConsumer implements MessageListener {
 
                 if (OperationType.valueOf(payloadMap.get(FieldKeys.ES_OP_TYPE)) == OperationType.DELETE) {
                     elasticsearchClient.delete(payloadMap.get(FieldKeys.ES_ID));
+                } else if(OperationType.valueOf(payloadMap.get(FieldKeys.ES_OP_TYPE)) == OperationType.PATCH) {
+                    elasticsearchClient.addTags(payloadMap.get(FieldKeys.ES_ID), payloadMap.get(FieldKeys.ENTITY_TAGS));
                 } else {
                     SearchDocument searchDocument = new SearchDocument();
                     searchDocument.setDocumentId(payloadMap.get(FieldKeys.ES_ID));
