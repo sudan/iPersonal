@@ -17,4 +17,10 @@ public interface TagDao {
      */
     Long update(List<String> tags, Entity entity, String userId);
 
+    /**
+     * Get all tags for a userId
+     * @param userId
+     * @return
+     */
+    List<String> get(String userId);
 }
