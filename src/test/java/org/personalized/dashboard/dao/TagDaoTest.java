@@ -94,6 +94,8 @@ public class TagDaoTest {
             Assert.assertEquals("Todo2 tag 0", "todo1", todos.get(0).getTags().get(0));
             Assert.assertEquals("Todo2 tag 1", "todo2", todos.get(0).getTags().get(1));
 
+            List<String> tags = tagDao.get("1");
+            Assert.assertEquals("Tag count is 8", 8, tags.size());
         }
     }
 
@@ -104,6 +106,7 @@ public class TagDaoTest {
         MongoBootstrap.getMongoDatabase().getCollection(Constants.NOTES).drop();
         MongoBootstrap.getMongoDatabase().getCollection(Constants.PINS).drop();
         MongoBootstrap.getMongoDatabase().getCollection(Constants.TODOS).drop();
+        MongoBootstrap.getMongoDatabase().getCollection(Constants.USER_TAGS).drop();
 
         bookmark1 = new Bookmark();
         bookmark1.setName("name1");
