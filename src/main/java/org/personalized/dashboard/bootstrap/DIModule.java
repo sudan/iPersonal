@@ -54,6 +54,8 @@ public class DIModule extends AbstractModule {
                 .class);
         bind(ValidationService.class).annotatedWith(Names.named("tag")).to(TagValidationService
                 .class);
+        bind(ValidationService.class).annotatedWith(Names.named("expense")).to(ExpenseValidationService
+                .class);
         bind(ConstraintValidationService.class);
 
         bind(IdGenerator.class).asEagerSingleton();
