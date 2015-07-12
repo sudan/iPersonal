@@ -53,5 +53,4 @@ public class FieldKeys {
     public static final String ES_TIMESTAMP = "timestamp";
 
     public static final String ENTITY_TAGS = "tags";
-
 }

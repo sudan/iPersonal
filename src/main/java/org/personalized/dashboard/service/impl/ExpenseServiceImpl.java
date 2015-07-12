@@ -1,10 +1,12 @@
 package org.personalized.dashboard.service.impl;
 
 import com.google.inject.Inject;
+import com.google.inject.name.Named;
 import org.apache.commons.lang3.StringUtils;
 import org.personalized.dashboard.dao.api.ActivityDao;
 import org.personalized.dashboard.dao.api.ExpenseDao;
 import org.personalized.dashboard.model.*;
+import org.personalized.dashboard.queue.ESIndexProducer;
 import org.personalized.dashboard.service.api.ExpenseService;
 import org.personalized.dashboard.utils.auth.SessionManager;
 import org.personalized.dashboard.utils.generator.ActivityGenerator;
@@ -20,14 +22,17 @@ public class ExpenseServiceImpl implements ExpenseService {
     private final SessionManager sessionManager;
     private final ActivityGenerator activityGenerator;
     private final ActivityDao activityDao;
+    private final ESIndexProducer esIndexProducer;
 
     @Inject
     public ExpenseServiceImpl(ExpenseDao expenseDao, SessionManager sessionManager,
-                              ActivityGenerator activityGenerator, ActivityDao activityDao) {
+                              ActivityGenerator activityGenerator, ActivityDao activityDao,
+                              @Named("expense") ESIndexProducer esIndexProducer) {
         this.expenseDao = expenseDao;
         this.sessionManager = sessionManager;
         this.activityGenerator = activityGenerator;
         this.activityDao = activityDao;
+        this.esIndexProducer = esIndexProducer;
     }
 
     @Override
@@ -36,6 +41,7 @@ public class ExpenseServiceImpl implements ExpenseService {
         Activity activity = activityGenerator.generate(ActivityType.CREATED, EntityType.EXPENSE,
                 expenseId, expense.getTitle());
         activityDao.add(activity, sessionManager.getUserIdFromSession());
+        esIndexProducer.enqueue(expense, EntityType.EXPENSE, OperationType.CREATE, expenseId);
         return expenseId;
     }
 
@@ -51,6 +57,7 @@ public class ExpenseServiceImpl implements ExpenseService {
             Activity activity = activityGenerator.generate(ActivityType.UPDATED, EntityType.EXPENSE,
                     expense.getExpenseId(), expense.getTitle());
             activityDao.add(activity, sessionManager.getUserIdFromSession());
+            esIndexProducer.enqueue(expense, EntityType.EXPENSE, OperationType.UPDATE, expense.getExpenseId());
         }
         return modifiedCount;
     }
@@ -62,6 +69,7 @@ public class ExpenseServiceImpl implements ExpenseService {
             Activity activity = activityGenerator.generate(ActivityType.DELETED, EntityType.EXPENSE,
                     expenseId, StringUtils.EMPTY);
             activityDao.add(activity, sessionManager.getUserIdFromSession());
+            esIndexProducer.enqueue(null, EntityType.EXPENSE, OperationType.DELETE, expenseId);
         }
     }
 

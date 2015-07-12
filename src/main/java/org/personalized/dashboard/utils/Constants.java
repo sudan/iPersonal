@@ -51,4 +51,6 @@ public class Constants {
     public static final int ES_OFFSET = 0;
 
     public static final int MAX_TAGS_LENGTH = 10;
+
+    public static final String SECONDARY_SEPARATOR = "###";
 }
