@@ -65,6 +65,7 @@ public class DIModule extends AbstractModule {
         bind(ESIndexProducer.class).annotatedWith(Names.named("note")).to(NoteESIndexProducer.class);
         bind(ESIndexProducer.class).annotatedWith(Names.named("todo")).to(TodoESIndexProducer.class);
         bind(ESIndexProducer.class).annotatedWith(Names.named("pin")).to(PinESIndexProducer.class);
+        bind(ESIndexProducer.class).annotatedWith(Names.named("tag")).to(TagESIndexProducer.class);
 
         bind(ElasticsearchClient.class);
 

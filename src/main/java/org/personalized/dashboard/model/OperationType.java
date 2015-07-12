@@ -6,5 +6,6 @@ package org.personalized.dashboard.model;
 public enum OperationType {
     CREATE,
     UPDATE,
-    DELETE
+    DELETE,
+    PATCH
 }

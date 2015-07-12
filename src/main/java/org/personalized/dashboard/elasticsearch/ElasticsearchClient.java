@@ -9,6 +9,8 @@ import org.elasticsearch.action.delete.DeleteResponse;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.action.update.UpdateRequest;
+import org.elasticsearch.action.update.UpdateResponse;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.sort.SortBuilders;
 import org.elasticsearch.search.sort.SortOrder;
@@ -92,5 +94,25 @@ public class ElasticsearchClient {
         }
 
         return searchDocuments;
+    }
+
+    public UpdateResponse addTags(String entityId, String tags) {
+
+        UpdateRequest updateRequest = new UpdateRequest();
+        updateRequest.index(ConfigKeys.ES_INDEX);
+        updateRequest.type(ConfigKeys.ES_TYPE);
+        updateRequest.id(entityId);
+
+        IndexRequest indexRequest = new IndexRequest(
+                ConfigKeys.ES_INDEX, ConfigKeys.ES_TYPE, entityId
+        );
+        Map<String, String> payload = Maps.newHashMap();
+        payload.put(FieldKeys.ES_ID, entityId);
+        payload.put(FieldKeys.ENTITY_TAGS, tags);
+        payload.put(FieldKeys.ES_TIMESTAMP, String.valueOf(System.currentTimeMillis()));
+        updateRequest.doc(indexRequest);
+
+        indexRequest.source(new Gson().toJson(payload));
+        return ESBootstrap.getClient().update(updateRequest).actionGet();
     }
 }
