@@ -32,7 +32,11 @@ public class Constants {
     public static final String ACTIVITIES_PREFIX = "ACT";
     public static final int ACTIVITIES_LIMIT = 30;
 
+    public static final String USER_TAGS = "user_tags";
+
     public static final String SET_OPERATION = "$set";
+    public static final String ADD_TO_SET_OPERATION = "$addToSet";
+    public static final String  EACH = "$each";
 
     public static final String SEPARATOR = "     ";
 

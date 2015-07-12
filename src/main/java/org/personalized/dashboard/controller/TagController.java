@@ -10,10 +10,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -55,5 +52,16 @@ public class TagController {
             };
             return Response.status(Response.Status.BAD_REQUEST).entity(errorObj).build();
         }
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getTags() {
+        List<String> tags = tagService.getTags();
+        Tag tag = new Tag();
+        tag.setTags(tags);
+        GenericEntity<Tag> tagsObj = new GenericEntity<Tag>(tag) {
+        };
+        return Response.status(Response.Status.OK).entity(tagsObj).build();
     }
 }
