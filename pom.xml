@@ -33,6 +33,7 @@
         <activemq.version>5.10.0</activemq.version>
         <gson.version>2.3.1</gson.version>
         <elasticsearch.version>1.6.0</elasticsearch.version>
+        <jtidy.version>r938</jtidy.version>
     </properties>
 
     <dependencies>
@@ -260,6 +261,12 @@
             <groupId>org.elasticsearch</groupId>
             <artifactId>elasticsearch</artifactId>
             <version>${elasticsearch.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>net.sf.jtidy</groupId>
+            <artifactId>jtidy</artifactId>
+            <version>${jtidy.version}</version>
         </dependency>
 
 
