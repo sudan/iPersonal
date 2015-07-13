@@ -20,13 +20,6 @@ public class SearchDocument {
 
     }
 
-    public SearchDocument(String documentId, EntityType entityType, String title, String description) {
-        this.documentId = documentId;
-        this.entityType = entityType;
-        this.title = title;
-        this.description = description;
-    }
-
     public String getDocumentId() {
         return documentId;
     }
