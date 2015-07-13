@@ -20,12 +20,6 @@ public class Diary {
 
     }
 
-    public Diary(String diaryId, List<Page> pages, int year) {
-        this.diaryId = diaryId;
-        this.pages = pages;
-        this.year = year;
-    }
-
     public String getDiaryId() {
         return diaryId;
     }
