@@ -38,12 +38,6 @@ public class Note {
 
     }
 
-    public Note(String noteId, String title, String note) {
-        this.noteId = noteId;
-        this.title = title;
-        this.note = note;
-    }
-
     public String getNoteId() {
         return noteId;
     }
