@@ -49,21 +49,6 @@ public class Expense {
 
     }
 
-    public Expense(String title, String description, double amount, Long date) {
-        this.title = title;
-        this.description = description;
-        this.amount = amount;
-        this.date = date;
-    }
-
-    public Expense(String title, String description, double amount,CurrencyType currencyType, Long date) {
-        this.title = title;
-        this.description = description;
-        this.amount = amount;
-        this.currencyType = currencyType;
-        this.date = date;
-    }
-
     public String getExpenseId() {
         return expenseId;
     }
