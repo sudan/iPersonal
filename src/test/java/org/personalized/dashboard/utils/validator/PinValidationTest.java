@@ -25,7 +25,12 @@ public class PinValidationTest {
 
     @Test
     public void testPinValidation() {
-        Pin pin = new Pin("PIN123456789", "", "", "");
+
+        Pin pin = new Pin();
+        pin.setPinId("PIN123456789");
+        pin.setName("");
+        pin.setDescription("");
+        pin.setImageUrl("");
         List<ErrorEntity> errorEntities = pinValidationService.validate(pin);
         Assert.assertEquals("Error count is 4", 4, errorEntities.size());
 
@@ -54,7 +59,11 @@ public class PinValidationTest {
                 .get(3).getDescription());
         Assert.assertEquals("Error 4 field matches", "image_url", errorEntities.get(3).getField());
 
-        pin = new Pin("PIN123456789", "name", "desc", "http://www.google.com");
+        pin = new Pin();
+        pin.setPinId("PIN123456789");
+        pin.setName("name");
+        pin.setDescription("desc");
+        pin.setImageUrl("http://www.google.com");
         errorEntities = pinValidationService.validate(pin);
         Assert.assertEquals("Error count is 0", 0, errorEntities.size());
 
@@ -73,8 +82,11 @@ public class PinValidationTest {
             invalidDescription.append("c");
         }
 
-        pin = new Pin("PIN123456789", invalidName.toString(), invalidDescription.toString(),
-                invalidImageUrl.toString());
+        pin = new Pin();
+        pin.setPinId("PIN123456789");
+        pin.setName(invalidName.toString());
+        pin.setDescription(invalidDescription.toString());
+        pin.setImageUrl(invalidImageUrl.toString());
         errorEntities = pinValidationService.validate(pin);
         Assert.assertEquals("Error count is 4", 4, errorEntities.size());
 
