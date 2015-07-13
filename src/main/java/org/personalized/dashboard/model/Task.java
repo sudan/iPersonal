@@ -35,22 +35,6 @@ public class Task {
 
     }
 
-    public Task(String taskId, Priority priority, String name, String task) {
-        this.taskId = taskId;
-        this.priority = priority;
-        this.name = name;
-        this.task = task;
-
-    }
-
-    public Task(String taskId, Priority priority, String name, String task, int percentCompletion) {
-        this.taskId = taskId;
-        this.priority = priority;
-        this.name = name;
-        this.task = task;
-        this.percentCompletion = percentCompletion;
-    }
-
     public String getTaskId() {
         return taskId;
     }

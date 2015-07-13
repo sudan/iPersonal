@@ -30,7 +30,10 @@ public class TodoValidationTest {
     @Test
     public void testTodoValidation() {
 
-        Todo todo = new Todo("TOD123456789", "", new ArrayList<Task>());
+        Todo todo = new Todo();
+        todo.setTodoId("TOD123456789");
+        todo.setTitle("");
+        todo.setTasks(new ArrayList<Task>());
         List<ErrorEntity> errorEntities = todoValidationService.validate(todo);
 
         Assert.assertEquals("Error count is 2", 2, errorEntities.size());
@@ -47,23 +50,45 @@ public class TodoValidationTest {
                 .get(1).getDescription());
         Assert.assertEquals("Error 2 field matches", "tasks", errorEntities.get(1).getField());
 
-        Task task = new Task("TAS123456789", Priority.MEDIUM, "name", "task", 2);
+        Task task = new Task();
+        task.setTaskId("TAS123456789");
+        task.setPriority(Priority.MEDIUM);
+        task.setName("name");
+        task.setTask("task");
+        task.setPercentCompletion(2);
         List<Task> tasks = Lists.newArrayList();
         tasks.add(task);
-        todo = new Todo("TOD123456789", "title", tasks);
+        todo = new Todo();
+        todo.setTodoId("TOD123456789");
+        todo.setTitle("title");
+        todo.setTasks(tasks);
         errorEntities = todoValidationService.validate(todo);
 
         Assert.assertEquals("Error count is 0", 0, errorEntities.size());
 
-        Task task1 = new Task("TAS123456789", Priority.MEDIUM, "", "", 101);
-        Task task2 = new Task("TAS123456789", Priority.HIGH, "name", "Desc", -1);
+        Task task1 = new Task();
+        task1.setTaskId("TAS123456789");
+        task1.setPriority(Priority.MEDIUM);
+        task1.setName("");
+        task1.setTask("");
+        task1.setPercentCompletion(101);
+        Task task2 = new Task();
+        task2.setTaskId("TAS123456789");
+        task2.setPriority(Priority.HIGH);
+        task2.setName("name");
+        task2.setTask("Desc");
+        task2.setPercentCompletion(-1);
         tasks = Lists.newArrayList();
         tasks.add(task1);
         tasks.add(task2);
 
-        todo = new Todo("TOD123456789", "ss", tasks);
+        todo = new Todo();
+        todo.setTodoId("TOD123456789");
+        todo.setTitle("ss");
+        todo.setTasks(tasks);
         errorEntities = todoValidationService.validate(todo);
 
+        System.out.println(errorEntities);
         Assert.assertEquals("Error count is 4", 4, errorEntities.size());
 
         Assert.assertEquals("Error 1 name matches", ErrorCodes.INVALID_VALUE.name(),
@@ -103,12 +128,19 @@ public class TodoValidationTest {
             invalidDescription.append("c");
         }
 
-        task = new Task("TAS123456789", Priority.HIGH, invalidName.toString(), invalidDescription
-                .toString(), 10);
+        task = new Task();
+        task.setTaskId("TAS123456789");
+        task.setPriority(Priority.HIGH);
+        task.setName(invalidName.toString());
+        task.setTask(invalidDescription.toString());
+        task.setPercentCompletion(10);
         tasks = Lists.newArrayList();
         tasks.add(task);
 
-        todo = new Todo("TOD123456789", invalidName.toString(), tasks);
+        todo = new Todo();
+        todo.setTodoId("TOD123456789");
+        todo.setTitle(invalidName.toString());
+        todo.setTasks(tasks);
         errorEntities = todoValidationService.validate(todo);
 
         Assert.assertEquals("Error count is 3", 3, errorEntities.size());
@@ -131,12 +163,20 @@ public class TodoValidationTest {
                 errorEntities.get(2).getDescription());
         Assert.assertEquals("Error 3 field matches", "task", errorEntities.get(2).getField());
 
-        task = new Task("TAS123456789", Priority.HIGH, "name", "Desc", 10);
+        task = new Task();
+        task.setTaskId("TAS123456789");
+        task.setPriority(Priority.HIGH);
+        task.setName("name");
+        task.setTask("Desc");
+        task.setPercentCompletion(10);
         tasks = Lists.newArrayList();
         for (int i = 0; i < 12; i++)
             tasks.add(task);
 
-        todo = new Todo("TOD123456789", "name", tasks);
+        todo = new Todo();
+        todo.setTodoId("TOD123456789");
+        todo.setTitle("name");
+        todo.setTasks(tasks);
         errorEntities = todoValidationService.validate(todo);
         Assert.assertEquals("Error count is 1", 1, errorEntities.size());
 
