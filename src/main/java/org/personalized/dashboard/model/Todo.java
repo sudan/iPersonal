@@ -39,12 +39,6 @@ public class Todo {
 
     }
 
-    public Todo(String todoId, String title, List<Task> tasks) {
-        this.todoId = todoId;
-        this.title = title;
-        this.tasks = tasks;
-    }
-
     public String getTodoId() {
         return todoId;
     }

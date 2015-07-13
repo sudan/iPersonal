@@ -54,6 +54,8 @@ public class DIModule extends AbstractModule {
                 .class);
         bind(ValidationService.class).annotatedWith(Names.named("tag")).to(TagValidationService
                 .class);
+        bind(ValidationService.class).annotatedWith(Names.named("expense")).to(ExpenseValidationService
+                .class);
         bind(ConstraintValidationService.class);
 
         bind(IdGenerator.class).asEagerSingleton();
@@ -66,6 +68,7 @@ public class DIModule extends AbstractModule {
         bind(ESIndexProducer.class).annotatedWith(Names.named("todo")).to(TodoESIndexProducer.class);
         bind(ESIndexProducer.class).annotatedWith(Names.named("pin")).to(PinESIndexProducer.class);
         bind(ESIndexProducer.class).annotatedWith(Names.named("tag")).to(TagESIndexProducer.class);
+        bind(ESIndexProducer.class).annotatedWith(Names.named("expense")).to(ExpenseESIndexProducer.class);
 
         bind(ElasticsearchClient.class);
 

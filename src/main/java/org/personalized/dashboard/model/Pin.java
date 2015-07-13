@@ -43,13 +43,6 @@ public class Pin {
 
     }
 
-    public Pin(String pinId, String name, String description, String imageUrl) {
-        this.pinId = pinId;
-        this.name = name;
-        this.description = description;
-        this.imageUrl = imageUrl;
-    }
-
     public String getPinId() {
         return pinId;
     }

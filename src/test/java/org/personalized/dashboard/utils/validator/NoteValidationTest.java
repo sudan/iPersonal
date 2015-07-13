@@ -25,7 +25,10 @@ public class NoteValidationTest {
 
     @Test
     public void testNoteValidation() {
-        Note note = new Note("NOT123456789", "", "");
+        Note note = new Note();
+        note.setNoteId("NOT123456789");
+        note.setTitle("");
+        note.setNote("");
         List<ErrorEntity> errorEntities = noteValidationService.validate(note);
         Assert.assertEquals("Error count is 2", 2, errorEntities.size());
 
@@ -42,7 +45,10 @@ public class NoteValidationTest {
         Assert.assertEquals("Error 2 field matches", "note", errorEntities.get(1).getField());
 
 
-        note = new Note("NOT123456789", "title", "desc");
+        note = new Note();
+        note.setNoteId("NOT123456789");
+        note.setTitle("title");
+        note.setNote("desc");
         errorEntities = noteValidationService.validate(note);
         Assert.assertEquals("Error count is 0", 0, errorEntities.size());
 
@@ -57,7 +63,10 @@ public class NoteValidationTest {
             invalidNote.append("c");
         }
 
-        note = new Note("NOT123456789", invalidTitle.toString(), invalidNote.toString());
+        note = new Note();
+        note.setNoteId("NOT123456789");
+        note.setTitle(invalidTitle.toString());
+        note.setNote(invalidNote.toString());
         errorEntities = noteValidationService.validate(note);
         Assert.assertEquals("Error count is 2", 2, errorEntities.size());
 

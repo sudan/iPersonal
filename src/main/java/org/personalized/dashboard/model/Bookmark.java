@@ -43,13 +43,6 @@ public class Bookmark {
 
     }
 
-    public Bookmark(String bookmarkId, String name, String description, String url) {
-        this.bookmarkId = bookmarkId;
-        this.name = name;
-        this.description = description;
-        this.url = url;
-    }
-
     public String getBookmarkId() {
         return bookmarkId;
     }

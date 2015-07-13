@@ -30,6 +30,13 @@ public class FieldKeys {
     public static final String TASK_PRIORITY = "priority";
     public static final String TASK_PERCENT_COMPLETION = "percent_completed";
 
+    public static final String EXPENSE_TITLE = "title";
+    public static final String EXPENSE_DESCRIPTION = "description";
+    public static final String EXPENSE_DATE = "date";
+    public static final String EXPENSE_AMOUNT = "amount";
+    public static final String EXPENSE_CATEGORIES = "categories";
+    public static final String EXPENSE_CURRENCY_TYPE = "currency_type";
+
     public static final String ACTIVITY_TYPE = "type";
     public static final String ACTIVITY_DESCRIPTION = "description";
 
@@ -46,5 +53,4 @@ public class FieldKeys {
     public static final String ES_TIMESTAMP = "timestamp";
 
     public static final String ENTITY_TAGS = "tags";
-
 }

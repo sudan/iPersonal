@@ -25,7 +25,11 @@ public class BookmarkValidationTest {
 
     @Test
     public void testBookmarkValidation() {
-        Bookmark bookmark = new Bookmark("BOK123456789", "", "", "");
+        Bookmark bookmark = new Bookmark();
+        bookmark.setBookmarkId("BOK123456789");
+        bookmark.setName("");
+        bookmark.setDescription("");
+        bookmark.setUrl("");
         List<ErrorEntity> errorEntities = bookmarkValidationService.validate(bookmark);
         Assert.assertEquals("Error count is 4", 4, errorEntities.size());
 
@@ -54,7 +58,11 @@ public class BookmarkValidationTest {
                 .get(3).getDescription());
         Assert.assertEquals("Error 4 field matches", "url", errorEntities.get(3).getField());
 
-        bookmark = new Bookmark("BOK123456789", "sudan", "desc", "http://www.google.com");
+        bookmark = new Bookmark();
+        bookmark.setBookmarkId("BOK123456789");
+        bookmark.setName("sudan");
+        bookmark.setDescription("desc");
+        bookmark.setUrl("http://www.google.com");
         errorEntities = bookmarkValidationService.validate(bookmark);
         Assert.assertEquals("Error count is 0", 0, errorEntities.size());
 
@@ -73,8 +81,11 @@ public class BookmarkValidationTest {
             invalidDescription.append("c");
         }
 
-        bookmark = new Bookmark("BOK123456789", invalidName.toString(), invalidDescription
-                .toString(), invalidUrl.toString());
+        bookmark = new Bookmark();
+        bookmark.setBookmarkId("BOK123456789");
+        bookmark.setName(invalidName.toString());
+        bookmark.setDescription(invalidDescription.toString());
+        bookmark.setUrl(invalidUrl.toString());
         errorEntities = bookmarkValidationService.validate(bookmark);
         Assert.assertEquals("Error count is 4", 4, errorEntities.size());
 
