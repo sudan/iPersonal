@@ -26,6 +26,7 @@ public class TagDaoTest {
     private PinDao pinDao;
     private TodoDao todoDao;
     private TagDao tagDao;
+    private ExpenseDao expenseDao;
 
     private Bookmark bookmark1;
     private Bookmark bookmark2;
@@ -35,6 +36,8 @@ public class TagDaoTest {
     private Pin pin2;
     private Todo todo1;
     private Todo todo2;
+    private Expense expense1;
+    private Expense expense2;
 
     @Before
     public void initialize() {
@@ -42,6 +45,7 @@ public class TagDaoTest {
         this.noteDao = new NoteDaoImpl(new IdGenerator());
         this.pinDao = new PinDaoImpl(new IdGenerator());
         this.todoDao = new TodoDaoImpl(new IdGenerator());
+        this.expenseDao = new ExpenseDaoImpl(new IdGenerator());
         this.tagDao = new TagDaoImpl();
     }
 
@@ -77,6 +81,7 @@ public class TagDaoTest {
             List<Note> notes = noteDao.get(5, 0, "1");
             List<Pin> pins = pinDao.get(5, 0, "1");
             List<Todo> todos = todoDao.get(5, 0, "1");
+            List<Expense> expenses = expenseDao.get(new ExpenseFilter(), 5, 0 , "1");
 
             Assert.assertEquals("Bookmark1 tag 0", "bookmark1", bookmarks.get(1).getTags().get(0));
             Assert.assertEquals("Bookmark2 tag 0", "bookmark1", bookmarks.get(0).getTags().get(0));
@@ -94,8 +99,12 @@ public class TagDaoTest {
             Assert.assertEquals("Todo2 tag 0", "todo1", todos.get(0).getTags().get(0));
             Assert.assertEquals("Todo2 tag 1", "todo2", todos.get(0).getTags().get(1));
 
+            Assert.assertEquals("Expense1 tag 0", "expense1", expenses.get(1).getTags().get(0));
+            Assert.assertEquals("Expense2 tag 0", "expense1", expenses.get(0).getTags().get(0));
+            Assert.assertEquals("Expense2 tag 1", "expense2", expenses.get(0).getTags().get(1));
+
             List<String> tags = tagDao.get("1");
-            Assert.assertEquals("Tag count is 8", 8, tags.size());
+            Assert.assertEquals("Tag count is 10", 10, tags.size());
         }
     }
 
@@ -106,6 +115,7 @@ public class TagDaoTest {
         MongoBootstrap.getMongoDatabase().getCollection(Constants.NOTES).drop();
         MongoBootstrap.getMongoDatabase().getCollection(Constants.PINS).drop();
         MongoBootstrap.getMongoDatabase().getCollection(Constants.TODOS).drop();
+        MongoBootstrap.getMongoDatabase().getCollection(Constants.EXPENSES).drop();
         MongoBootstrap.getMongoDatabase().getCollection(Constants.USER_TAGS).drop();
 
         bookmark1 = new Bookmark();
@@ -159,6 +169,21 @@ public class TagDaoTest {
         todo2.setTasks(tasks);
         String todoId2 = todoDao.create(todo2, "1");
 
+        expense1 = new Expense();
+        expense1.setTitle("expense1");
+        expense1.setDescription("descexpense1");
+        expense1.setAmount(200);
+        expense1.setDate(System.currentTimeMillis());
+        String expenseId1 = expenseDao.create(expense1, "1");
+
+
+        expense2 = new Expense();
+        expense2.setTitle("expense2");
+        expense2.setDescription("descexpense2");
+        expense2.setAmount(200);
+        expense2.setDate(System.currentTimeMillis());
+        String expenseId2 = expenseDao.create(expense2, "1");
+
         Entity entity1 = new Entity(EntityType.BOOKMARK, bookmarkId1, "name1");
         Entity entity2 = new Entity(EntityType.BOOKMARK, bookmarkId2, "name2");
         Entity entity3 = new Entity(EntityType.NOTE, noteId1, "title1");
@@ -167,6 +192,8 @@ public class TagDaoTest {
         Entity entity6 = new Entity(EntityType.PIN, pinId2, "pin2");
         Entity entity7 = new Entity(EntityType.TODO, todoId1, "name1");
         Entity entity8 = new Entity(EntityType.TODO, todoId2, "name2");
+        Entity entity9 = new Entity(EntityType.EXPENSE, expenseId1, "expense1");
+        Entity entity10 = new Entity(EntityType.EXPENSE, expenseId2, "expense2");
 
         List<String> tag1 = Lists.newArrayList();
         tag1.add("bookmark1");
@@ -196,6 +223,13 @@ public class TagDaoTest {
         tag8.add("todo1");
         tag8.add("todo2");
 
+        List<String> tag9 = Lists.newArrayList();
+        tag9.add("expense1");
+
+        List<String> tag10 = Lists.newArrayList();
+        tag10.add("expense1");
+        tag10.add("expense2");
+
         tagDao.update(tag1, entity1, "1");
         tagDao.update(tag2, entity2, "1");
         tagDao.update(tag3, entity3, "1");
@@ -204,6 +238,8 @@ public class TagDaoTest {
         tagDao.update(tag6, entity6, "1");
         tagDao.update(tag7, entity7, "1");
         tagDao.update(tag8, entity8, "1");
+        tagDao.update(tag9, entity9, "1");
+        tagDao.update(tag10, entity10, "1");
 
         bookmark1 = bookmarkDao.get(bookmarkId1, "1");
         bookmark2 = bookmarkDao.get(bookmarkId2, "1");
@@ -213,5 +249,7 @@ public class TagDaoTest {
         pin2 = pinDao.get(pinId2, "1");
         todo1 = todoDao.get(todoId1, "1");
         todo2 = todoDao.get(todoId2, "1");
+        expense1 = expenseDao.get(expenseId1, "1");
+        expense2 = expenseDao.get(expenseId2, "1");
     }
 }
