@@ -149,6 +149,24 @@ public class ElasticSearchClientTest {
             searchDocuments = elasticsearchClient.search(searchContext);
             Assert.assertEquals("Total search count is 2", 2, searchDocuments.size());
 
+            searchContext = new SearchContext();
+            tags = Lists.newArrayList();
+            tags.add("python");
+            searchContext.setTags(tags);
+            searchDocuments = elasticsearchClient.search(searchContext);
+            Assert.assertEquals("Total search count is 2", 2, searchDocuments.size());
+
+            searchContext = new SearchContext();
+            tags = Lists.newArrayList();
+            tags.add("python");
+            searchContext.setTags(tags);
+            entityTypes = Lists.newArrayList();
+            entityTypes.add(EntityType.EXPENSE);
+            searchContext.setEntityTypes(entityTypes);
+            searchDocuments = elasticsearchClient.search(searchContext);
+            Assert.assertEquals("Total search count is 1", 1, searchDocuments.size());
+
+
             elasticsearchClient.delete("BOK123456789");
             Thread.sleep(1000L);
 
@@ -214,6 +232,13 @@ public class ElasticSearchClientTest {
         searchDocument.setDescription("Pin for testing users");
         elasticsearchClient.insertOrUpdate(searchDocument);
 
+        searchDocument = new SearchDocument();
+        searchDocument.setDocumentId("EXP123456789");
+        searchDocument.setTitle("sample expense");
+        searchDocument.setDescription("marriage bought ##python");
+        searchDocument.setEntityType(EntityType.EXPENSE);
+        elasticsearchClient.insertOrUpdate(searchDocument);
+
         String tags = "bookmark microsoft product";
         elasticsearchClient.addTags("BOK123456789", tags);
 
@@ -228,5 +253,8 @@ public class ElasticSearchClientTest {
 
         tags = "note python language";
         elasticsearchClient.addTags("NOT234567891", tags);
+
+        tags = "python marriage";
+        elasticsearchClient.addTags("EXP123456789", tags);
     }
 }
