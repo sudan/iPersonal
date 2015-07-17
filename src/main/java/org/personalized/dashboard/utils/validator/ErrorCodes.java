@@ -14,7 +14,8 @@ public enum ErrorCodes {
     EMPTY_TASK_LIST("Task list cannot be empty"),
     INVALID_VALUE("Invalid value"),
     INVALID_SEARCH_CONTEXT("Search context cannot be empty"),
-    TAG_LENGTH_EXCEEDED("{0} cannot exceed {1} characters");
+    TAG_LENGTH_EXCEEDED("{0} cannot exceed {1} characters"),
+    BULK_SUBMIT_NOT_ALLOWED("Bulk submit not allowed");
 
     private String description;
 

@@ -8,6 +8,7 @@ public class Constants {
     public static final int URL_MAX_LENGTH = 300;
     public static final int TITLE_MAX_LENGTH = 50;
     public static final int CONTENT_MAX_LENGTH = 1000;
+    public static final int TEXT_MAX_LENGTH = 3000;
     public static final int TAG_MAX_LENGTH = 25;
 
     public static final String BOOKMARKS = "bookmarks";
@@ -27,6 +28,9 @@ public class Constants {
 
     public static final String EXPENSES = "expenses";
     public static final String EXPENSE_PREFIX = "EXP";
+
+    public static final String DIARIES = "diaries";
+    public static final String PAGE_PREFIX = "PAG";
 
     public static final int ID_LENGTH = 16;
     public static final int MAX_BATCH_SIZE = 20;

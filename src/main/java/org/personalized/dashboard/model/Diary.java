@@ -2,30 +2,26 @@ package org.personalized.dashboard.model;
 
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.personalized.dashboard.utils.FieldKeys;
+import org.personalized.dashboard.utils.validator.FieldName;
 
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 
 /**
  * Created by sudan on 3/4/15.
  */
+@XmlRootElement
 public class Diary {
 
-    private String diaryId;
-    private List<Page> pages = Lists.newArrayList();
+    @FieldName(name = FieldKeys.DIARY_YEAR)
     private int year;
-    private Long createdOn;
-    private Long modifiedAt;
+
+    @FieldName(name = FieldKeys.DIARY_PAGES)
+    private List<Page> pages = Lists.newArrayList();
 
     public Diary() {
 
-    }
-
-    public String getDiaryId() {
-        return diaryId;
-    }
-
-    public void setDiaryId(String diaryId) {
-        this.diaryId = diaryId;
     }
 
     public List<Page> getPages() {
@@ -44,22 +40,11 @@ public class Diary {
         this.year = year;
     }
 
-    public Long getCreatedOn() {
-        return createdOn;
-    }
-
-    public Long getModifiedAt() {
-        return modifiedAt;
-    }
-
     @Override
     public String toString() {
         return new ToStringBuilder(this)
-                .append("diaryId", diaryId)
                 .append("pages", pages)
                 .append("year", year)
-                .append("createdOn", createdOn)
-                .append("modifiedAt", modifiedAt)
                 .toString();
     }
 }

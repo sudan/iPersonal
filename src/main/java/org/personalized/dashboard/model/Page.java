@@ -1,36 +1,47 @@
 package org.personalized.dashboard.model;
 
-import com.google.common.collect.Maps;
+import com.google.common.collect.Lists;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.hibernate.validator.constraints.NotEmpty;
+import org.personalized.dashboard.utils.Constants;
+import org.personalized.dashboard.utils.FieldKeys;
+import org.personalized.dashboard.utils.validator.FieldName;
 
-import java.util.Map;
+import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+import java.util.List;
 
 /**
  * Created by sudan on 27/4/15.
  */
+@XmlRootElement
 public class Page {
 
     private String pageId;
+
+    @NotEmpty
+    @Size(max = Constants.TITLE_MAX_LENGTH)
+    @FieldName(name = FieldKeys.PAGE_TITLE)
     private String title;
-    private String template;
-    private Map<String, String> placeholders = Maps.newHashMap();
+
+    @NotEmpty
+    @Size(max = Constants.TEXT_MAX_LENGTH)
+    @FieldName(name = FieldKeys.PAGE_DESCRIPTION)
+    private String content;
+
+    @FieldName(name = FieldKeys.PAGE_MONTH)
     private int month;
+
+    @FieldName(name = FieldKeys.PAGE_DATE)
     private int date;
+
     private Long createdOn;
     private Long modifiedAt;
 
+    private List<String> tags = Lists.newArrayList();
+
     public Page() {
 
-    }
-
-    public Page(String pageId, String title, String template, Map<String, String> placeholders,
-                int month, int date) {
-        this.pageId = pageId;
-        this.title = title;
-        this.template = template;
-        this.placeholders = placeholders;
-        this.month = month;
-        this.date = date;
     }
 
     public String getPageId() {
@@ -49,20 +60,12 @@ public class Page {
         this.title = title;
     }
 
-    public String getTemplate() {
-        return template;
+    public String getContent() {
+        return content;
     }
 
-    public void setTemplate(String template) {
-        this.template = template;
-    }
-
-    public Map<String, String> getPlaceholders() {
-        return placeholders;
-    }
-
-    public void setPlaceholders(Map<String, String> placeholders) {
-        this.placeholders = placeholders;
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public int getMonth() {
@@ -81,22 +84,39 @@ public class Page {
         this.date = date;
     }
 
+    public List<String> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<String> tags) {
+        this.tags = tags;
+    }
+
     public Long getCreatedOn() {
         return createdOn;
+    }
+
+    public void setCreatedOn(Long createdOn) {
+        this.createdOn = createdOn;
     }
 
     public Long getModifiedAt() {
         return modifiedAt;
     }
 
+    public void setModifiedAt(Long modifiedAt) {
+        this.modifiedAt = modifiedAt;
+    }
+
     @Override
+
     public String toString() {
         return new ToStringBuilder(this)
                 .append("pageId", pageId)
                 .append("title", title)
-                .append("template", template)
-                .append("placeholders", placeholders)
+                .append("content", content)
                 .append("date", date)
+                .append("tags", tags)
                 .append("createdOn", createdOn)
                 .append("modifiedAt", modifiedAt)
                 .toString();
