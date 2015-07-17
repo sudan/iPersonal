@@ -40,7 +40,7 @@ public class Constants {
     public static final String SET_OPERATION = "$set";
     public static final String ADD_TO_SET_OPERATION = "$addToSet";
     public static final String EACH = "$each";
-    public static final String GREATER_THAN = "$gt";
+    public static final String GREATER_THAN_EQUAL = "$gte";
     public static final String LESS_THAN_EQUAL = "$lte";
     public static final String NOT_EQUAL_TO = "$ne";
     public static final String IN = "$in";
