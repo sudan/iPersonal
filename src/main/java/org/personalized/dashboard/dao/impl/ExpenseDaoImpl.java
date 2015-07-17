@@ -132,94 +132,14 @@ public class ExpenseDaoImpl implements ExpenseDao {
     @Override
     public Long count(ExpenseFilter expenseFilter, String userId) {
         MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection(Constants.EXPENSES);
-
-
-        Document document = new Document(FieldKeys.USER_ID, userId);
-
-        if(expenseFilter.getLowerRange() >= 0 && expenseFilter.getUpperRange() >= 0) {
-            Document rangeDocument = new Document(Constants.GREATER_THAN, expenseFilter.getLowerRange())
-                    .append(Constants.LESS_THAN_EQUAL, expenseFilter.getUpperRange());
-            document.append(FieldKeys.EXPENSE_AMOUNT, rangeDocument);
-
-        }
-        else if (expenseFilter.getLowerRange() >= 0) {
-            document.append(FieldKeys.EXPENSE_AMOUNT,
-                    new Document(Constants.GREATER_THAN, expenseFilter.getLowerRange()));
-        }
-        else if (expenseFilter.getUpperRange() >= 0) {
-            document.append(FieldKeys.EXPENSE_AMOUNT,
-                    new Document(Constants.LESS_THAN_EQUAL, expenseFilter.getUpperRange()));
-        }
-
-        if (expenseFilter.getStartDate() >= 0 && expenseFilter.getEndDate() >= 0) {
-            Document rangeDocument = new Document(Constants.GREATER_THAN, expenseFilter.getStartDate())
-                    .append(Constants.LESS_THAN_EQUAL, expenseFilter.getEndDate());
-            document.append(FieldKeys.EXPENSE_DATE, rangeDocument);
-        }
-        else if (expenseFilter.getStartDate() >= 0) {
-            document.append(FieldKeys.EXPENSE_DATE,
-                    new Document(Constants.GREATER_THAN, expenseFilter.getStartDate()));
-        }
-        else if (expenseFilter.getEndDate() >= 0) {
-            document.append(FieldKeys.EXPENSE_DATE,
-                    new Document(Constants.LESS_THAN_EQUAL, expenseFilter.getEndDate()));
-        }
-
-        if (!CollectionUtils.isEmpty(expenseFilter.getCategories())) {
-            document.append(FieldKeys.EXPENSE_CATEGORIES,
-                    new Document(Constants.IN, expenseFilter.getCategories()));
-        }
-
-        document.append(FieldKeys.IS_DELETED,
-                new Document(Constants.NOT_EQUAL_TO, true));
-
-        return collection.count(document);
+        return collection.count(getFilterDocument(expenseFilter, userId));
     }
 
     @Override
     public List<Expense> get(ExpenseFilter expenseFilter, int limit, int offset, String userId) {
         MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection(Constants.EXPENSES);
 
-        Document document = new Document(FieldKeys.USER_ID, userId);
-
-        if(expenseFilter.getLowerRange() >= 0 && expenseFilter.getUpperRange() >= 0) {
-            Document rangeDocument = new Document(Constants.GREATER_THAN, expenseFilter.getLowerRange())
-                                        .append(Constants.LESS_THAN_EQUAL, expenseFilter.getUpperRange());
-            document.append(FieldKeys.EXPENSE_AMOUNT, rangeDocument);
-
-        }
-        else if (expenseFilter.getLowerRange() >= 0) {
-            document.append(FieldKeys.EXPENSE_AMOUNT,
-                    new Document(Constants.GREATER_THAN, expenseFilter.getLowerRange()));
-        }
-        else if (expenseFilter.getUpperRange() >= 0) {
-            document.append(FieldKeys.EXPENSE_AMOUNT,
-                    new Document(Constants.LESS_THAN_EQUAL, expenseFilter.getUpperRange()));
-        }
-
-        if (expenseFilter.getStartDate() >= 0 && expenseFilter.getEndDate() >= 0) {
-            Document rangeDocument = new Document(Constants.GREATER_THAN, expenseFilter.getStartDate())
-                                        .append(Constants.LESS_THAN_EQUAL, expenseFilter.getEndDate());
-            document.append(FieldKeys.EXPENSE_DATE, rangeDocument);
-        }
-        else if (expenseFilter.getStartDate() >= 0) {
-            document.append(FieldKeys.EXPENSE_DATE,
-                    new Document(Constants.GREATER_THAN, expenseFilter.getStartDate()));
-        }
-        else if (expenseFilter.getEndDate() >= 0) {
-            document.append(FieldKeys.EXPENSE_DATE,
-                    new Document(Constants.LESS_THAN_EQUAL, expenseFilter.getEndDate()));
-        }
-
-        if (!CollectionUtils.isEmpty(expenseFilter.getCategories())) {
-            document.append(FieldKeys.EXPENSE_CATEGORIES,
-                    new Document(Constants.IN, expenseFilter.getCategories()));
-        }
-
-        document.append(FieldKeys.IS_DELETED,
-                new Document(Constants.NOT_EQUAL_TO, true));
-
-        FindIterable<Document> iterator = collection.find(document)
+        FindIterable<Document> iterator = collection.find(getFilterDocument(expenseFilter, userId))
                 .skip(offset).limit(limit)
                 .sort(new Document(FieldKeys.MODIFIED_AT, -1)
                 );
@@ -248,5 +168,48 @@ public class ExpenseDaoImpl implements ExpenseDao {
             }
         });
         return expenses;
+    }
+
+    private Document getFilterDocument(ExpenseFilter expenseFilter, String userId) {
+        Document document = new Document(FieldKeys.USER_ID, userId);
+
+        if(expenseFilter.getLowerRange() >= 0 && expenseFilter.getUpperRange() >= 0) {
+            Document rangeDocument = new Document(Constants.GREATER_THAN_EQUAL, expenseFilter.getLowerRange())
+                    .append(Constants.LESS_THAN_EQUAL, expenseFilter.getUpperRange());
+            document.append(FieldKeys.EXPENSE_AMOUNT, rangeDocument);
+
+        }
+        else if (expenseFilter.getLowerRange() >= 0) {
+            document.append(FieldKeys.EXPENSE_AMOUNT,
+                    new Document(Constants.GREATER_THAN_EQUAL, expenseFilter.getLowerRange()));
+        }
+        else if (expenseFilter.getUpperRange() >= 0) {
+            document.append(FieldKeys.EXPENSE_AMOUNT,
+                    new Document(Constants.LESS_THAN_EQUAL, expenseFilter.getUpperRange()));
+        }
+
+        if (expenseFilter.getStartDate() >= 0 && expenseFilter.getEndDate() >= 0) {
+            Document rangeDocument = new Document(Constants.GREATER_THAN_EQUAL, expenseFilter.getStartDate())
+                    .append(Constants.LESS_THAN_EQUAL, expenseFilter.getEndDate());
+            document.append(FieldKeys.EXPENSE_DATE, rangeDocument);
+        }
+        else if (expenseFilter.getStartDate() >= 0) {
+            document.append(FieldKeys.EXPENSE_DATE,
+                    new Document(Constants.GREATER_THAN_EQUAL, expenseFilter.getStartDate()));
+        }
+        else if (expenseFilter.getEndDate() >= 0) {
+            document.append(FieldKeys.EXPENSE_DATE,
+                    new Document(Constants.LESS_THAN_EQUAL, expenseFilter.getEndDate()));
+        }
+
+        if (!CollectionUtils.isEmpty(expenseFilter.getCategories())) {
+            document.append(FieldKeys.EXPENSE_CATEGORIES,
+                    new Document(Constants.IN, expenseFilter.getCategories()));
+        }
+
+        document.append(FieldKeys.IS_DELETED,
+                new Document(Constants.NOT_EQUAL_TO, true));
+
+        return document;
     }
 }
