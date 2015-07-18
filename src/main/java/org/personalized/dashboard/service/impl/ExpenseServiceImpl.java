@@ -53,7 +53,7 @@ public class ExpenseServiceImpl implements ExpenseService {
     @Override
     public Long updateExpense(Expense expense) {
         Long modifiedCount = expenseDao.update(expense, sessionManager.getUserIdFromSession());
-        if(modifiedCount > 0) {
+        if (modifiedCount > 0) {
             Activity activity = activityGenerator.generate(ActivityType.UPDATED, EntityType.EXPENSE,
                     expense.getExpenseId(), expense.getTitle());
             activityDao.add(activity, sessionManager.getUserIdFromSession());
@@ -65,7 +65,7 @@ public class ExpenseServiceImpl implements ExpenseService {
     @Override
     public void deleteExpense(String expenseId) {
         Long deletedCount = expenseDao.delete(expenseId, sessionManager.getUserIdFromSession());
-        if(deletedCount > 0) {
+        if (deletedCount > 0) {
             Activity activity = activityGenerator.generate(ActivityType.DELETED, EntityType.EXPENSE,
                     expenseId, StringUtils.EMPTY);
             activityDao.add(activity, sessionManager.getUserIdFromSession());

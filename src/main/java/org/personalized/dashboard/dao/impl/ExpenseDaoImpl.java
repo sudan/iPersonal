@@ -66,7 +66,7 @@ public class ExpenseDaoImpl implements ExpenseDao {
                 )
         ).first();
 
-        if(document != null) {
+        if (document != null) {
             Expense expense = new Expense();
             expense.setExpenseId(document.getString(FieldKeys.PRIMARY_KEY));
             expense.setTitle(document.getString(FieldKeys.EXPENSE_TITLE));
@@ -173,17 +173,15 @@ public class ExpenseDaoImpl implements ExpenseDao {
     private Document getFilterDocument(ExpenseFilter expenseFilter, String userId) {
         Document document = new Document(FieldKeys.USER_ID, userId);
 
-        if(expenseFilter.getLowerRange() >= 0 && expenseFilter.getUpperRange() >= 0) {
+        if (expenseFilter.getLowerRange() >= 0 && expenseFilter.getUpperRange() >= 0) {
             Document rangeDocument = new Document(Constants.GREATER_THAN_EQUAL, expenseFilter.getLowerRange())
                     .append(Constants.LESS_THAN_EQUAL, expenseFilter.getUpperRange());
             document.append(FieldKeys.EXPENSE_AMOUNT, rangeDocument);
 
-        }
-        else if (expenseFilter.getLowerRange() >= 0) {
+        } else if (expenseFilter.getLowerRange() >= 0) {
             document.append(FieldKeys.EXPENSE_AMOUNT,
                     new Document(Constants.GREATER_THAN_EQUAL, expenseFilter.getLowerRange()));
-        }
-        else if (expenseFilter.getUpperRange() >= 0) {
+        } else if (expenseFilter.getUpperRange() >= 0) {
             document.append(FieldKeys.EXPENSE_AMOUNT,
                     new Document(Constants.LESS_THAN_EQUAL, expenseFilter.getUpperRange()));
         }
@@ -192,12 +190,10 @@ public class ExpenseDaoImpl implements ExpenseDao {
             Document rangeDocument = new Document(Constants.GREATER_THAN_EQUAL, expenseFilter.getStartDate())
                     .append(Constants.LESS_THAN_EQUAL, expenseFilter.getEndDate());
             document.append(FieldKeys.EXPENSE_DATE, rangeDocument);
-        }
-        else if (expenseFilter.getStartDate() >= 0) {
+        } else if (expenseFilter.getStartDate() >= 0) {
             document.append(FieldKeys.EXPENSE_DATE,
                     new Document(Constants.GREATER_THAN_EQUAL, expenseFilter.getStartDate()));
-        }
-        else if (expenseFilter.getEndDate() >= 0) {
+        } else if (expenseFilter.getEndDate() >= 0) {
             document.append(FieldKeys.EXPENSE_DATE,
                     new Document(Constants.LESS_THAN_EQUAL, expenseFilter.getEndDate()));
         }

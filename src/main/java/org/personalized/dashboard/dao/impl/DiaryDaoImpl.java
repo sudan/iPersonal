@@ -65,7 +65,7 @@ public class DiaryDaoImpl implements DiaryDao {
 
         ).first();
 
-        if(document != null) {
+        if (document != null) {
             Page page = new Page();
             page.setPageId(pageId);
             page.setTitle(document.getString(FieldKeys.PAGE_TITLE));
@@ -168,8 +168,8 @@ public class DiaryDaoImpl implements DiaryDao {
                 }
 
                 Integer year = document.getInteger(FieldKeys.DIARY_YEAR);
-                if(yearToPagesMap.containsKey(year)) {
-                   yearToPagesMap.get(year).add(page);
+                if (yearToPagesMap.containsKey(year)) {
+                    yearToPagesMap.get(year).add(page);
                 } else {
                     List<Page> pages = Lists.newArrayList();
                     pages.add(page);

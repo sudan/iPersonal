@@ -428,7 +428,7 @@ public class StopwordsRemover {
     public static Set<String> init() {
 
         stopWordsSet = Sets.newHashSet();
-        for(String stopWord : stopWords) {
+        for (String stopWord : stopWords) {
             stopWordsSet.add(stopWord.toLowerCase());
         }
         return stopWordsSet;
@@ -439,14 +439,14 @@ public class StopwordsRemover {
         StringBuilder nonStopWords = new StringBuilder();
 
         if (content.contains(Constants.SECONDARY_SEPARATOR)) {
-                content = content.split(Constants.SECONDARY_SEPARATOR)[1];
+            content = content.split(Constants.SECONDARY_SEPARATOR)[1];
         }
 
         content = content.trim().replaceAll("\\\\s+", " ");
         String contentWords[] = content.split(" ");
 
-        for(String contentWord : contentWords) {
-            if(!stopWordsSet.contains(contentWord.toLowerCase())) {
+        for (String contentWord : contentWords) {
+            if (!stopWordsSet.contains(contentWord.toLowerCase())) {
                 nonStopWords.append(contentWord);
                 nonStopWords.append(Constants.SEPARATOR);
             }

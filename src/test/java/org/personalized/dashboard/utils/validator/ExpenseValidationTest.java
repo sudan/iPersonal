@@ -35,7 +35,7 @@ public class ExpenseValidationTest {
         expense.setDate(1437066887L);
 
         List<ErrorEntity> errorEntities = expenseValidationService.validate(expense);
-        Assert.assertEquals("Error count is 0", 0 , errorEntities.size());
+        Assert.assertEquals("Error count is 0", 0, errorEntities.size());
 
         expense = new Expense();
         expense.setExpenseId("EXP123456789");
@@ -43,7 +43,7 @@ public class ExpenseValidationTest {
         expense.setDescription("");
 
         errorEntities = expenseValidationService.validate(expense);
-        Assert.assertEquals("Error count is 4", 4 , errorEntities.size());
+        Assert.assertEquals("Error count is 4", 4, errorEntities.size());
 
         Assert.assertEquals("Error 1 name matches", ErrorCodes.EMPTY_FIELD.name(), errorEntities
                 .get(0).getName());
@@ -77,7 +77,7 @@ public class ExpenseValidationTest {
         expense.setDate(-1L);
 
         errorEntities = expenseValidationService.validate(expense);
-        Assert.assertEquals("Error count is 2", 2 , errorEntities.size());
+        Assert.assertEquals("Error count is 2", 2, errorEntities.size());
 
         Assert.assertEquals("Error 1 name matches", ErrorCodes.INVALID_VALUE.name(), errorEntities
                 .get(0).getName());
@@ -109,7 +109,7 @@ public class ExpenseValidationTest {
         expense.setDate(1437066887L);
 
         errorEntities = expenseValidationService.validate(expense);
-        Assert.assertEquals("Error count is 2", 2 , errorEntities.size());
+        Assert.assertEquals("Error count is 2", 2, errorEntities.size());
 
 
         Assert.assertEquals("Error 1 name matches", ErrorCodes.LENGTH_EXCEEDED.name(),
@@ -133,7 +133,7 @@ public class ExpenseValidationTest {
         expense.setAmount(200);
 
         errorEntities = expenseValidationService.validate(expense);
-        Assert.assertEquals("Error count is 2", 1 , errorEntities.size());
+        Assert.assertEquals("Error count is 2", 1, errorEntities.size());
 
         Assert.assertEquals("Error 1 name matches", ErrorCodes.INVALID_VALUE
                         .name(),

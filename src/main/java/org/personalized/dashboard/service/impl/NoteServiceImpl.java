@@ -31,7 +31,7 @@ public class NoteServiceImpl implements NoteService {
     @Inject
     public NoteServiceImpl(NoteDao noteDao, SessionManager sessionManager, ActivityGenerator
             activityGenerator, ActivityDao activityDao,
-            DOMParser domParser, @Named("note") ESIndexProducer esIndexProducer) {
+                           DOMParser domParser, @Named("note") ESIndexProducer esIndexProducer) {
         this.noteDao = noteDao;
         this.sessionManager = sessionManager;
         this.activityGenerator = activityGenerator;

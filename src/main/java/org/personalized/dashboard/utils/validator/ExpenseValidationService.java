@@ -33,7 +33,7 @@ public class ExpenseValidationService implements ValidationService<Expense> {
         List<ErrorEntity> errorEntities = Lists.newArrayList();
         validateConstraints(expense, errorEntities);
         validateAmount(expense, errorEntities);
-        validateDate(expense , errorEntities);
+        validateDate(expense, errorEntities);
         return errorEntities;
     }
 
@@ -51,7 +51,7 @@ public class ExpenseValidationService implements ValidationService<Expense> {
 
     private void validateAmount(Expense expense, List<ErrorEntity> errorEntities) {
 
-        if(expense.getAmount() <= 0) {
+        if (expense.getAmount() <= 0) {
             ErrorEntity errorEntity = new ErrorEntity(ErrorCodes.INVALID_VALUE.name(),
                     ErrorCodes.INVALID_VALUE.getDescription(), FieldKeys.EXPENSE_AMOUNT);
             errorEntities.add(errorEntity);
@@ -63,13 +63,12 @@ public class ExpenseValidationService implements ValidationService<Expense> {
         try {
             new Date(expense.getDate());
 
-            if(expense.getDate() > System.currentTimeMillis() || expense.getDate() <= 0) {
+            if (expense.getDate() > System.currentTimeMillis() || expense.getDate() <= 0) {
                 ErrorEntity errorEntity = new ErrorEntity(ErrorCodes.INVALID_VALUE.name(),
                         ErrorCodes.INVALID_VALUE.getDescription(), FieldKeys.EXPENSE_DATE);
                 errorEntities.add(errorEntity);
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
 
             ErrorEntity errorEntity = new ErrorEntity(ErrorCodes.INVALID_VALUE.name(),
                     ErrorCodes.INVALID_VALUE.getDescription(), FieldKeys.EXPENSE_DATE);

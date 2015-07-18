@@ -12,6 +12,7 @@ public interface DiaryService {
 
     /**
      * Create a new page for the user
+     *
      * @param page
      * @param year
      * @return
@@ -20,6 +21,7 @@ public interface DiaryService {
 
     /**
      * Get page for the given pageId
+     *
      * @param pageId
      * @param year
      * @return
@@ -28,6 +30,7 @@ public interface DiaryService {
 
     /**
      * Update page for the user
+     *
      * @param page
      * @param year
      * @return
@@ -36,6 +39,7 @@ public interface DiaryService {
 
     /**
      * Delete the page given the pageId
+     *
      * @param pageId
      * @param year
      * @return
@@ -44,12 +48,14 @@ public interface DiaryService {
 
     /**
      * Count the pages for the given year
+     *
      * @return
      */
     Long countPages();
 
     /**
      * Get all pages based on limit and offset
+     *
      * @param limit
      * @param offset
      * @return

@@ -12,6 +12,7 @@ public interface ExpenseService {
 
     /**
      * Create a new expense for the user
+     *
      * @param expense
      * @return
      */
@@ -19,6 +20,7 @@ public interface ExpenseService {
 
     /**
      * Get the expense given the id
+     *
      * @param expenseId
      * @return
      */
@@ -26,6 +28,7 @@ public interface ExpenseService {
 
     /**
      * Update the expense
+     *
      * @param expense
      * @return
      */
@@ -33,18 +36,21 @@ public interface ExpenseService {
 
     /**
      * Delete the expense for the expenseId
+     *
      * @param expenseId
      */
     void deleteExpense(String expenseId);
 
     /**
      * Count the expenses for the user with expenseFilter
+     *
      * @return
      */
     Long countExpense(ExpenseFilter expenseFilter);
 
     /**
      * Fetch the expenses with given limit and offset and ExpenseFilter
+     *
      * @param expenseFilter
      * @param limit
      * @param offset

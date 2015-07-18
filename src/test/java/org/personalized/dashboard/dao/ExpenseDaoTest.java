@@ -34,6 +34,7 @@ public class ExpenseDaoTest {
         ConfigManager.init();
         this.expenseDao = new ExpenseDaoImpl(new IdGenerator());
     }
+
     @Test
     public void testExpenseDao() throws ParseException {
 
@@ -94,22 +95,22 @@ public class ExpenseDaoTest {
             Assert.assertEquals("ExpenseIds match", expenseId1, expenseRead1.getExpenseId());
             Assert.assertEquals("Title match", "title1", expenseRead1.getTitle());
             Assert.assertEquals("Description match", "desc1", expenseRead1.getDescription());
-            Assert.assertEquals("Amount match", 200, (int)(expenseRead1.getAmount()));
+            Assert.assertEquals("Amount match", 200, (int) (expenseRead1.getAmount()));
             Assert.assertEquals("CurrencyType match", CurrencyType.INR.name(), expenseRead1.getCurrencyType().name());
-            Assert.assertEquals("Date match", (long)dateFormat.parse("2015-05-01").getTime(), (long)expenseRead1.getDate());
+            Assert.assertEquals("Date match", (long) dateFormat.parse("2015-05-01").getTime(), (long) expenseRead1.getDate());
             Assert.assertNotNull("Createdon is not null", expenseRead1.getCreatedOn());
             Assert.assertNotNull("modifiedAt is not null", expenseRead1.getModifiedAt());
-            Assert.assertEquals("Categories count match",0, expenseRead1.getCategories().size() );
+            Assert.assertEquals("Categories count match", 0, expenseRead1.getCategories().size());
 
             Assert.assertEquals("ExpenseIds match", expenseId2, expenseRead2.getExpenseId());
             Assert.assertEquals("Title match", "title2", expenseRead2.getTitle());
             Assert.assertEquals("Description match", "desc2", expenseRead2.getDescription());
-            Assert.assertEquals("Amount match", 400, (int)(expenseRead2.getAmount()));
+            Assert.assertEquals("Amount match", 400, (int) (expenseRead2.getAmount()));
             Assert.assertEquals("CurrencyType match", CurrencyType.INR.name(), expenseRead2.getCurrencyType().name());
-            Assert.assertEquals("Date match", (long)dateFormat.parse("2015-06-01").getTime(), (long)expenseRead2.getDate());
+            Assert.assertEquals("Date match", (long) dateFormat.parse("2015-06-01").getTime(), (long) expenseRead2.getDate());
             Assert.assertNotNull("Createdon is not null", expenseRead2.getCreatedOn());
             Assert.assertNotNull("modifiedAt is not null", expenseRead2.getModifiedAt());
-            Assert.assertEquals("Categories count match",2, expenseRead2.getCategories().size() );
+            Assert.assertEquals("Categories count match", 2, expenseRead2.getCategories().size());
             Assert.assertEquals("Category 1 match", "cat1", expenseRead2.getCategories().get(0));
             Assert.assertEquals("Category 2 match", "cat2", expenseRead2.getCategories().get(1));
 
@@ -126,9 +127,9 @@ public class ExpenseDaoTest {
             Assert.assertEquals("ExpenseIds match", expenseId1, expenseRead1.getExpenseId());
             Assert.assertEquals("Title match", "titlemod1", expenseRead1.getTitle());
             Assert.assertEquals("Description match", "descmod1", expenseRead1.getDescription());
-            Assert.assertEquals("Amount match", 250, (int)(expenseRead1.getAmount()));
+            Assert.assertEquals("Amount match", 250, (int) (expenseRead1.getAmount()));
             Assert.assertEquals("CurrencyType match", CurrencyType.INR.name(), expenseRead1.getCurrencyType().name());
-            Assert.assertEquals("Date match", (long)dateFormat.parse("2015-05-03").getTime(), (long)expenseRead1.getDate());
+            Assert.assertEquals("Date match", (long) dateFormat.parse("2015-05-03").getTime(), (long) expenseRead1.getDate());
             Assert.assertNotNull("Createdon is not null", expenseRead1.getCreatedOn());
             Assert.assertNotNull("modifiedAt is not null", expenseRead1.getModifiedAt());
             Assert.assertEquals("Categories count match", 2, expenseRead1.getCategories().size());
@@ -138,24 +139,24 @@ public class ExpenseDaoTest {
             ExpenseFilter expenseFilter = new ExpenseFilter();
             expenseFilter.setLowerRange(300);
             Long count = expenseDao.count(expenseFilter, "1");
-            Assert.assertEquals("Count match", 3L , (long)count);
+            Assert.assertEquals("Count match", 3L, (long) count);
 
             expenseFilter = new ExpenseFilter();
             expenseFilter.setLowerRange(300);
             expenseFilter.setUpperRange(500);
             count = expenseDao.count(expenseFilter, "1");
-            Assert.assertEquals("Count match", 2L , (long)count);
+            Assert.assertEquals("Count match", 2L, (long) count);
 
             expenseFilter = new ExpenseFilter();
             expenseFilter.setStartDate(dateFormat.parse("2015-06-01").getTime());
             count = expenseDao.count(expenseFilter, "1");
-            Assert.assertEquals("Count match", 3L , (long)count);
+            Assert.assertEquals("Count match", 3L, (long) count);
 
             expenseFilter = new ExpenseFilter();
             expenseFilter.setStartDate(dateFormat.parse("2015-06-01").getTime());
             expenseFilter.setEndDate(dateFormat.parse("2015-07-30").getTime());
             count = expenseDao.count(expenseFilter, "1");
-            Assert.assertEquals("Count match", 2L , (long)count);
+            Assert.assertEquals("Count match", 2L, (long) count);
 
             expenseFilter = new ExpenseFilter();
             categories = Lists.newArrayList();
@@ -163,14 +164,14 @@ public class ExpenseDaoTest {
             categories.add("cat3");
             expenseFilter.setCategories(categories);
             count = expenseDao.count(expenseFilter, "1");
-            Assert.assertEquals("Count match", 2L , (long)count);
+            Assert.assertEquals("Count match", 2L, (long) count);
 
             expenseFilter = new ExpenseFilter();
             expenseFilter.setLowerRange(400);
             expenseFilter.setUpperRange(500);
             expenseFilter.setStartDate(dateFormat.parse("2015-07-01").getTime());
             count = expenseDao.count(expenseFilter, "1");
-            Assert.assertEquals("Count match", 1L , (long)count);
+            Assert.assertEquals("Count match", 1L, (long) count);
 
             expenseFilter = new ExpenseFilter();
             expenseFilter.setLowerRange(300);
@@ -181,29 +182,29 @@ public class ExpenseDaoTest {
             Assert.assertEquals("ExpenseId match 1", expenseId5, expenses.get(0).getExpenseId());
             Assert.assertEquals("Title match 1", "title5", expenses.get(0).getTitle());
             Assert.assertEquals("Desc match 1", "desc5", expenses.get(0).getDescription());
-            Assert.assertEquals("Amount match 1", 700, (int)expenses.get(0).getAmount());
+            Assert.assertEquals("Amount match 1", 700, (int) expenses.get(0).getAmount());
             Assert.assertEquals("CurrencyType match", CurrencyType.INR.name(),
                     expenses.get(0).getCurrencyType().name());
             Assert.assertEquals("Date match 1", dateFormat.parse("2015-03-01").getTime(),
-                    (long)expenses.get(0).getDate());
+                    (long) expenses.get(0).getDate());
 
             Assert.assertEquals("ExpenseId match 2", expenseId3, expenses.get(1).getExpenseId());
             Assert.assertEquals("Title match 2", "title3", expenses.get(1).getTitle());
             Assert.assertEquals("Desc match 2", "desc3", expenses.get(1).getDescription());
-            Assert.assertEquals("Amount match 2", 500, (int)expenses.get(1).getAmount());
+            Assert.assertEquals("Amount match 2", 500, (int) expenses.get(1).getAmount());
             Assert.assertEquals("CurrencyType match", CurrencyType.INR.name(),
                     expenses.get(1).getCurrencyType().name());
             Assert.assertEquals("Date match 2", dateFormat.parse("2015-07-01").getTime(),
-                    (long)expenses.get(1).getDate());
+                    (long) expenses.get(1).getDate());
 
             Assert.assertEquals("ExpenseId match 3", expenseId2, expenses.get(2).getExpenseId());
             Assert.assertEquals("Title match 3", "title2", expenses.get(2).getTitle());
             Assert.assertEquals("Desc match 3", "desc2", expenses.get(2).getDescription());
-            Assert.assertEquals("Amount match 3", 400, (int)expenses.get(2).getAmount());
+            Assert.assertEquals("Amount match 3", 400, (int) expenses.get(2).getAmount());
             Assert.assertEquals("CurrencyType match", CurrencyType.INR.name(),
                     expenses.get(2).getCurrencyType().name());
             Assert.assertEquals("Date match 3", dateFormat.parse("2015-06-01").getTime(),
-                    (long)expenses.get(2).getDate());
+                    (long) expenses.get(2).getDate());
             Assert.assertEquals("Category match 1", "cat1", expenses.get(2).getCategories().get(0));
             Assert.assertEquals("Category match 1", "cat2", expenses.get(2).getCategories().get(1));
 

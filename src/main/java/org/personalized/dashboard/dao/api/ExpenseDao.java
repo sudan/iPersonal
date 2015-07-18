@@ -12,6 +12,7 @@ public interface ExpenseDao {
 
     /**
      * Create a new expense for the user
+     *
      * @param expense
      * @return
      */
@@ -19,6 +20,7 @@ public interface ExpenseDao {
 
     /**
      * Get the expense for the expenseId and userId
+     *
      * @param expenseId
      * @return
      */
@@ -26,6 +28,7 @@ public interface ExpenseDao {
 
     /**
      * Update the expense for the userId
+     *
      * @param expense
      * @param userId
      * @return
@@ -34,6 +37,7 @@ public interface ExpenseDao {
 
     /**
      * Delete the expense for the expenseId and userId
+     *
      * @param expenseId
      * @param userId
      * @return
@@ -42,6 +46,7 @@ public interface ExpenseDao {
 
     /**
      * Count the expenses for the user and expenseFilter
+     *
      * @param userId
      * @return
      */
@@ -49,6 +54,7 @@ public interface ExpenseDao {
 
     /**
      * Get the expenses for limit , offset and expenseFilter for the user
+     *
      * @param expenseFilter
      * @param limit
      * @param offset
