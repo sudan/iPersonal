@@ -75,16 +75,16 @@ public class Page {
         return month;
     }
 
+    public void setMonth(int month) {
+        this.month = month;
+    }
+
     public String getSummary() {
         return summary;
     }
 
     public void setSummary(String summary) {
         this.summary = summary;
-    }
-
-    public void setMonth(int month) {
-        this.month = month;
     }
 
     public int getDate() {
