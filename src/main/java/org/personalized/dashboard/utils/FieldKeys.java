@@ -17,6 +17,7 @@ public class FieldKeys {
 
     public static final String NOTE_TITLE = "title";
     public static final String NOTE_DESCRIPTION = "note";
+    public static final String NOTE_SUMMARY = "summary";
 
     public static final String PIN_NAME = "name";
     public static final String PIN_DESCRIPTION = "description";
@@ -38,6 +39,7 @@ public class FieldKeys {
     public static final String EXPENSE_CURRENCY_TYPE = "currency_type";
 
     public static final String PAGE_TITLE = "title";
+    public static final String PAGE_SUMMARY = "summary";
     public static final String PAGE_DESCRIPTION = "description";
     public static final String DIARY_YEAR = "year";
     public static final String PAGE_MONTH = "month";

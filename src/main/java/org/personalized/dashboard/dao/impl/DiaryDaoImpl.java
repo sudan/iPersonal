@@ -40,6 +40,7 @@ public class DiaryDaoImpl implements DiaryDao {
         Document document = new Document()
                 .append(FieldKeys.PRIMARY_KEY, pageId)
                 .append(FieldKeys.PAGE_TITLE, page.getTitle())
+                .append(FieldKeys.PAGE_SUMMARY, page.getSummary())
                 .append(FieldKeys.PAGE_DESCRIPTION, page.getContent())
                 .append(FieldKeys.DIARY_YEAR, year)
                 .append(FieldKeys.PAGE_MONTH, page.getMonth())
@@ -69,6 +70,7 @@ public class DiaryDaoImpl implements DiaryDao {
             Page page = new Page();
             page.setPageId(pageId);
             page.setTitle(document.getString(FieldKeys.PAGE_TITLE));
+            page.setSummary(document.getString(FieldKeys.PAGE_SUMMARY));
             page.setContent(document.getString(FieldKeys.PAGE_DESCRIPTION));
             page.setDate(document.getInteger(FieldKeys.PAGE_DATE));
             page.setMonth(document.getInteger(FieldKeys.PAGE_MONTH));
@@ -89,6 +91,7 @@ public class DiaryDaoImpl implements DiaryDao {
         MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection(Constants.DIARIES);
         Document document = new Document()
                 .append(FieldKeys.PAGE_TITLE, page.getTitle())
+                .append(FieldKeys.PAGE_SUMMARY, page.getSummary())
                 .append(FieldKeys.PAGE_DESCRIPTION, page.getContent())
                 .append(FieldKeys.DIARY_YEAR, year)
                 .append(FieldKeys.PAGE_MONTH, page.getMonth())
@@ -157,6 +160,7 @@ public class DiaryDaoImpl implements DiaryDao {
                 Page page = new Page();
                 page.setPageId(document.getString(FieldKeys.PRIMARY_KEY));
                 page.setTitle(document.getString(FieldKeys.PAGE_TITLE));
+                page.setSummary(document.getString(FieldKeys.PAGE_SUMMARY));
                 page.setDate(document.getInteger(FieldKeys.PAGE_DATE));
                 page.setMonth(document.getInteger(FieldKeys.PAGE_MONTH));
                 page.setCreatedOn(document.getLong(FieldKeys.CREATED_ON));

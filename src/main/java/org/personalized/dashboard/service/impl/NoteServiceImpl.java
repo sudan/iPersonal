@@ -43,6 +43,7 @@ public class NoteServiceImpl implements NoteService {
     @Override
     public String createNote(Note note) {
         note.setNote(domParser.removeMalformedTags(note.getNote()));
+        note.setSummary(domParser.extractSummary(note.getNote()));
         String noteId = noteDao.create(note, sessionManager.getUserIdFromSession());
         Activity activity = activityGenerator.generate(ActivityType.CREATED, EntityType.NOTE,
                 noteId, note.getTitle());
@@ -59,6 +60,7 @@ public class NoteServiceImpl implements NoteService {
     @Override
     public Long updateNote(Note note) {
         note.setNote(domParser.removeMalformedTags(note.getNote()));
+        note.setSummary(domParser.extractSummary(note.getNote()));
         Long modifiedCount = noteDao.update(note, sessionManager.getUserIdFromSession());
         if (modifiedCount > 0) {
             Activity activity = activityGenerator.generate(ActivityType.UPDATED, EntityType.NOTE,

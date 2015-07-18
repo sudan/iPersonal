@@ -46,6 +46,7 @@ public class DiaryServiceImpl implements DiaryService {
     @Override
     public String createPage(Page page, int year) {
         page.setContent(domParser.removeMalformedTags(page.getContent()));
+        page.setSummary(domParser.extractSummary(page.getContent()));
         String pageId = diaryDao.create(page, year, sessionManager.getUserIdFromSession());
         Activity activity = activityGenerator.generate(ActivityType.CREATED, EntityType.DIARY,
                 pageId, page.getTitle());
@@ -62,6 +63,7 @@ public class DiaryServiceImpl implements DiaryService {
     @Override
     public Long updatePage(Page page, int year) {
         page.setContent(domParser.removeMalformedTags(page.getContent()));
+        page.setSummary(domParser.extractSummary(page.getContent()));
         Long modifiedCount = diaryDao.update(page, year, sessionManager.getUserIdFromSession());
         if (modifiedCount > 0) {
             Activity activity = activityGenerator.generate(ActivityType.UPDATED, EntityType.DIARY,
