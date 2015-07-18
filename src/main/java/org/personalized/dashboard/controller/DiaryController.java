@@ -141,7 +141,7 @@ public class DiaryController {
     }
 
     @GET
-    @Path("count/")
+    @Path("count")
     @Produces(MediaType.APPLICATION_JSON)
     public Response countPages() {
 
