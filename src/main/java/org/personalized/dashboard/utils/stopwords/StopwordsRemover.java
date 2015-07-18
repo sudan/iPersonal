@@ -75,6 +75,7 @@ public class StopwordsRemover {
             "both",
             "but",
             "by",
+            "my",
             "can't",
             "cannot",
             "could",

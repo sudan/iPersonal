@@ -8,6 +8,7 @@ import org.personalized.dashboard.model.OperationType;
 import org.personalized.dashboard.model.SearchDocument;
 import org.personalized.dashboard.utils.FieldKeys;
 import org.personalized.dashboard.utils.auth.SessionManager;
+import org.personalized.dashboard.utils.htmltidy.DOMParser;
 import org.personalized.dashboard.utils.stopwords.StopwordsRemover;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,10 +49,13 @@ public class ESIndexConsumer implements MessageListener {
                     SearchDocument searchDocument = new SearchDocument();
                     searchDocument.setDocumentId(payloadMap.get(FieldKeys.ES_ID));
                     searchDocument.setTitle(payloadMap.get(FieldKeys.ES_TITLE));
-                    String summary = payloadMap.get(FieldKeys.ES_DESCRIPTION);
+                    DOMParser domParser = new DOMParser();
+                    String summary = domParser.extractSummary(payloadMap.get(FieldKeys.ES_DESCRIPTION));
                     searchDocument.setSummary(summary.substring(0, Math.min(summary.length(), 50)));
                     searchDocument.setDescription(
-                            StopwordsRemover.removeStopWords(payloadMap.get(FieldKeys.ES_DESCRIPTION))
+                            domParser.removeHtmlTags(
+                                StopwordsRemover.removeStopWords(payloadMap.get(FieldKeys.ES_DESCRIPTION))
+                            )
                     );
                     searchDocument.setEntityType(EntityType.valueOf(payloadMap.get(FieldKeys.ES_ENTITY_TYPE)));
                     elasticsearchClient.insertOrUpdate(searchDocument);
