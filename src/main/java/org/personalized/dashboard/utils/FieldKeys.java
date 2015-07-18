@@ -53,6 +53,7 @@ public class FieldKeys {
 
     public static final String ES_ID = "id";
     public static final String ES_TITLE = "title";
+    public static final String ES_SUMMARY = "summary";
     public static final String ES_DESCRIPTION = "description";
     public static final String ES_ENTITY_TYPE = "entity_type";
     public static final String ES_OP_TYPE = "op_type";

@@ -8,6 +8,7 @@ import com.sun.jersey.api.core.PackagesResourceConfig;
 import com.sun.jersey.api.core.ResourceConfig;
 import com.sun.jersey.guice.spi.container.servlet.GuiceContainer;
 import org.bson.Document;
+import org.personalized.dashboard.utils.stopwords.StopwordsRemover;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,6 +28,7 @@ public class ApplicationBootstrapper extends GuiceServletContextListener {
             MongoBootstrap.getMongoDatabase().runCommand(new Document("ping", 1));
             QueueBootstrap.init();
             ESBootstrap.init();
+            StopwordsRemover.init();
 
             LOGGER.info("Application initialization has been successful");
         } catch (Exception e) {

@@ -12,6 +12,7 @@ import org.personalized.dashboard.utils.auth.SessionManager;
 import org.personalized.dashboard.utils.generator.ActivityGenerator;
 import org.personalized.dashboard.utils.generator.IdGenerator;
 import org.personalized.dashboard.utils.htmltidy.DOMParser;
+import org.personalized.dashboard.utils.stopwords.StopwordsRemover;
 import org.personalized.dashboard.utils.validator.*;
 
 /**
@@ -79,5 +80,6 @@ public class DIModule extends AbstractModule {
         bind(ElasticsearchClient.class);
 
         bind(DOMParser.class);
+        bind(StopwordsRemover.class);
     }
 }

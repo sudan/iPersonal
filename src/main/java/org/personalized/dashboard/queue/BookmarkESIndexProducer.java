@@ -37,7 +37,7 @@ public class BookmarkESIndexProducer implements ESIndexProducer<Bookmark> {
             payload.put(FieldKeys.ES_EXT_URL, obj.getUrl());
             StringBuilder desc = new StringBuilder();
             desc.append(obj.getUrl());
-            desc.append(Constants.SEPARATOR);
+            desc.append(Constants.SECONDARY_SEPARATOR);
             desc.append(obj.getDescription());
             payload.put(FieldKeys.ES_DESCRIPTION, desc.toString());
         }

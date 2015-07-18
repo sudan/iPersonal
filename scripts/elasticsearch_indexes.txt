@@ -54,6 +54,10 @@ curl -XPUT 'http://localhost:9200/entities/' -d '{
                     "index_analyzer": "autocomplete_whitespace",
                     "search_analyzer": "stop_keywords_whitespace"
                 },
+                "summary": {
+                    "type": "string",
+                    "index": "no"
+                },
                 "description": {
                     "type": "string",
                     "index_analyzer": "autocomplete_whitespace",

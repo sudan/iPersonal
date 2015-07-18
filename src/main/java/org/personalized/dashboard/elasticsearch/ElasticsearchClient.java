@@ -46,8 +46,10 @@ public class ElasticsearchClient {
         Map<String, String> payload = Maps.newHashMap();
         payload.put(FieldKeys.ES_ID, searchDocument.getDocumentId());
         payload.put(FieldKeys.ES_TITLE, searchDocument.getTitle());
-        if (StringUtils.isNotEmpty(searchDocument.getDescription()))
+        if (StringUtils.isNotEmpty(searchDocument.getDescription())) {
             payload.put(FieldKeys.ES_DESCRIPTION, searchDocument.getDescription());
+            payload.put(FieldKeys.ES_SUMMARY, searchDocument.getSummary());
+        }
         payload.put(FieldKeys.ES_TIMESTAMP, String.valueOf(searchDocument.getCreatedAt()));
         payload.put(FieldKeys.ES_ENTITY_TYPE, searchDocument.getEntityType().name());
         payload.put(FieldKeys.USER_ID, sessionManager.getUserIdFromSession());
@@ -82,11 +84,12 @@ public class ElasticsearchClient {
                 SearchDocument searchDocument = new SearchDocument();
                 searchDocument.setDocumentId(searchHit.getId());
                 searchDocument.setTitle(searchHit.getSource().get(FieldKeys.ES_TITLE).toString());
+
                 searchDocument.setEntityType(EntityType.valueOf(
                         searchHit.getSource().get(FieldKeys.ES_ENTITY_TYPE).toString()
                 ));
-                if (searchHit.getSource().containsKey(FieldKeys.ES_DESCRIPTION)) {
-                    searchDocument.setDescription(searchHit.getSource().get(FieldKeys.ES_DESCRIPTION).toString());
+                if (searchHit.getSource().containsKey(FieldKeys.ES_SUMMARY)) {
+                    searchDocument.setSummary(searchHit.getSource().get(FieldKeys.ES_SUMMARY).toString());
                 }
                 searchDocument.setCreatedAt(Long.valueOf(searchHit.getSource().get(FieldKeys.ES_TIMESTAMP).toString()));
                 searchDocuments.add(searchDocument);
