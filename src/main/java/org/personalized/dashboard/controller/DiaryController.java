@@ -141,12 +141,12 @@ public class DiaryController {
     }
 
     @GET
-    @Path("count/{year}")
+    @Path("count/")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response countPages(@PathParam("year") int year) {
+    public Response countPages() {
 
         try {
-            Long count = diaryService.countPages(year);
+            Long count = diaryService.countPages();
             return Response.status(Response.Status.OK).entity(String.valueOf(count)).build();
         } catch (Exception e) {
             LOGGER.error("DiaryController encountered an error", e);

@@ -126,12 +126,11 @@ public class DiaryDaoImpl implements DiaryDao {
     }
 
     @Override
-    public Long count(int year, String userId) {
+    public Long count(String userId) {
         MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection(Constants.DIARIES);
         return collection.count(
                 and(
                         eq(FieldKeys.USER_ID, userId),
-                        eq(FieldKeys.DIARY_YEAR, year),
                         ne(FieldKeys.IS_DELETED, true)
                 )
         );

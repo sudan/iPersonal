@@ -44,10 +44,9 @@ public interface DiaryService {
 
     /**
      * Count the pages for the given year
-     * @param year
      * @return
      */
-    Long countPages(int year);
+    Long countPages();
 
     /**
      * Get all pages based on limit and offset

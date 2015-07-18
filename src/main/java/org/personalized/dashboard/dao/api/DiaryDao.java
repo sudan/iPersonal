@@ -48,11 +48,10 @@ public interface DiaryDao {
 
     /**
      * Count the number of pages for the year
-     * @param year
      * @param userId
      * @return
      */
-    Long count(int year, String userId);
+    Long count(String userId);
 
     /**
      * Get all pages mapped to year for the user
