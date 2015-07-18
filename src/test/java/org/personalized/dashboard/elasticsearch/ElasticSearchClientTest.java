@@ -9,6 +9,7 @@ import org.personalized.dashboard.model.SearchContext;
 import org.personalized.dashboard.model.SearchDocument;
 import org.personalized.dashboard.utils.ConfigKeys;
 import org.personalized.dashboard.utils.auth.SessionManager;
+import org.personalized.dashboard.utils.htmltidy.DOMParser;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
@@ -166,6 +167,34 @@ public class ElasticSearchClientTest {
             searchDocuments = elasticsearchClient.search(searchContext);
             Assert.assertEquals("Total search count is 1", 1, searchDocuments.size());
 
+            searchContext = new SearchContext();
+            entityTypes = Lists.newArrayList();
+            entityTypes.add(EntityType.DIARY);
+            searchContext.setEntityTypes(entityTypes);
+            searchDocuments = elasticsearchClient.search(searchContext);
+            Assert.assertEquals("Total search count is 2", 2, searchDocuments.size());
+
+            searchContext = new SearchContext();
+            tags = Lists.newArrayList();
+            tags.add("cleopatra");
+            searchContext.setTags(tags);
+            entityTypes = Lists.newArrayList();
+            entityTypes.add(EntityType.DIARY);
+            searchContext.setEntityTypes(entityTypes);
+            searchDocuments = elasticsearchClient.search(searchContext);
+            Assert.assertEquals("Total search count is 1", 1, searchDocuments.size());
+
+
+            searchContext = new SearchContext();
+            tags = Lists.newArrayList();
+            tags.add("sanjee");
+            searchContext.setTags(tags);
+            entityTypes = Lists.newArrayList();
+            entityTypes.add(EntityType.DIARY);
+            searchContext.setEntityTypes(entityTypes);
+            searchDocuments = elasticsearchClient.search(searchContext);
+            Assert.assertEquals("Total search count is 0", 0, searchDocuments.size());
+
 
             elasticsearchClient.delete("BOK123456789");
             Thread.sleep(1000L);
@@ -239,6 +268,24 @@ public class ElasticSearchClientTest {
         searchDocument.setEntityType(EntityType.EXPENSE);
         elasticsearchClient.insertOrUpdate(searchDocument);
 
+        String description = "<html><body><li>sudan</li><li>personal diary</li></body></html>";
+        searchDocument = new SearchDocument();
+        searchDocument.setDocumentId("PAG123456789");
+        searchDocument.setTitle("sample page");
+        DOMParser domParser = new DOMParser();
+        searchDocument.setDescription(domParser.removeHtmlTags(description));
+        searchDocument.setEntityType(EntityType.DIARY);
+        elasticsearchClient.insertOrUpdate(searchDocument);
+
+        description = "<html><body><li>sudan</li><li>cleopatra diary</li></body></html>";
+        searchDocument = new SearchDocument();
+        searchDocument.setDocumentId("PAG123456749");
+        searchDocument.setTitle("sample page");
+        domParser = new DOMParser();
+        searchDocument.setDescription(domParser.removeHtmlTags(description));
+        searchDocument.setEntityType(EntityType.DIARY);
+        elasticsearchClient.insertOrUpdate(searchDocument);
+
         String tags = "bookmark microsoft product";
         elasticsearchClient.addTags("BOK123456789", tags);
 
@@ -256,5 +303,11 @@ public class ElasticSearchClientTest {
 
         tags = "python marriage";
         elasticsearchClient.addTags("EXP123456789", tags);
+
+        tags = "diary personal";
+        elasticsearchClient.addTags("PAG123456789", tags);
+
+        tags = "cleopatra";
+        elasticsearchClient.addTags("PAG123456749", tags);
     }
 }
