@@ -52,6 +52,7 @@ public class DiaryDaoTest {
             page1.setContent(domParser.removeMalformedTags(content1));
             page1.setMonth(11);
             page1.setDate(12);
+            page1.setSummary(domParser.removeHtmlTags(content1));
             String pageId1 = diaryDao.create(page1, 2015, "1");
 
 
@@ -61,6 +62,7 @@ public class DiaryDaoTest {
             page2.setContent(domParser.removeMalformedTags(content2));
             page2.setMonth(10);
             page2.setDate(21);
+            page2.setSummary(domParser.removeHtmlTags(content2));
             String pageId2 = diaryDao.create(page2, 2016, "1");
 
             Page pageRead1 = diaryDao.get(pageId1, 2015, "1");
@@ -70,6 +72,7 @@ public class DiaryDaoTest {
             Assert.assertEquals("PageId match", pageId1, pageRead1.getPageId());
             Assert.assertEquals("Title match", "title1", pageRead1.getTitle());
             Assert.assertEquals("Desc match", "<ul><li>Hello</li></ul>", pageRead1.getContent());
+            Assert.assertEquals("Summary match", "Hello", pageRead1.getSummary());
             Assert.assertEquals("Month match" , 11, pageRead1.getMonth());
             Assert.assertEquals("Date match", 12, pageRead1.getDate());
             Assert.assertNotNull("CreatedOn match", pageRead1.getCreatedOn());
@@ -78,6 +81,7 @@ public class DiaryDaoTest {
             Assert.assertEquals("PageId match", pageId2, pageRead2.getPageId());
             Assert.assertEquals("Title match", "title2", pageRead2.getTitle());
             Assert.assertEquals("Desc match", "<div><p>Halo</p></div>", pageRead2.getContent());
+            Assert.assertEquals("Summary match", "Halo", pageRead2.getSummary());
             Assert.assertEquals("Month match" , 10, pageRead2.getMonth());
             Assert.assertEquals("Date match", 21, pageRead2.getDate());
             Assert.assertNotNull("CreatedOn match", pageRead2.getCreatedOn());
@@ -89,6 +93,7 @@ public class DiaryDaoTest {
             page2.setTitle("titlechanged");
             content2 = "<html><head><script></script></head><body><div><p>Halo good boy</p></div></body></html>";
             page2.setContent(domParser.removeMalformedTags(content2));
+            page2.setSummary(domParser.removeHtmlTags(content2));
             page2.setMonth(11);
             page2.setDate(30);
             diaryDao.update(page2, 2017, "1");
@@ -101,6 +106,7 @@ public class DiaryDaoTest {
             Assert.assertEquals("PageId match", pageId2, pageRead5.getPageId());
             Assert.assertEquals("Title match", "titlechanged", pageRead5.getTitle());
             Assert.assertEquals("Desc match", "<div><p>Halo good boy</p></div>", pageRead5.getContent());
+            Assert.assertEquals("Summary match", "Halo good boy", pageRead5.getSummary());
             Assert.assertEquals("Month match" , 11, pageRead5.getMonth());
             Assert.assertEquals("Date match", 30, pageRead5.getDate());
             Assert.assertNotNull("CreatedOn match", pageRead5.getCreatedOn());
@@ -122,12 +128,14 @@ public class DiaryDaoTest {
             Assert.assertEquals("PageId match", pageId1, pageList1.get(0).getPageId());
             Assert.assertEquals("Title match", "title1", pageList1.get(0).getTitle());
             Assert.assertNull("Desc match", pageList1.get(0).getContent());
+            Assert.assertEquals("Summary match", "Hello", pageList1.get(0).getSummary());
             Assert.assertEquals("Month match" , 11, pageList1.get(0).getMonth());
             Assert.assertEquals("Date match", 12, pageList1.get(0).getDate());
 
             Assert.assertEquals("PageId match", pageId2, pageList2.get(0).getPageId());
             Assert.assertEquals("Title match", "titlechanged", pageList2.get(0).getTitle());
             Assert.assertNull("Desc match", pageList2.get(0).getContent());
+            Assert.assertEquals("Summary match", "Halo good boy", pageList2.get(0).getSummary());
             Assert.assertEquals("Month match" , 11, pageList2.get(0).getMonth());
             Assert.assertEquals("Date match", 30, pageList2.get(0).getDate());
 
