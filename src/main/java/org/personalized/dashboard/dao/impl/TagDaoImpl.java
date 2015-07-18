@@ -72,6 +72,8 @@ public class TagDaoImpl implements TagDao {
                 return MongoBootstrap.getMongoDatabase().getCollection(Constants.TODOS);
             case EXPENSE:
                 return MongoBootstrap.getMongoDatabase().getCollection(Constants.EXPENSES);
+            case DIARY:
+                return MongoBootstrap.getMongoDatabase().getCollection(Constants.DIARIES);
         }
         return null;
     }
