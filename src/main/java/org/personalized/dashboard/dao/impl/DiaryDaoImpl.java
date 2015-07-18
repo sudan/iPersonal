@@ -149,7 +149,7 @@ public class DiaryDaoImpl implements DiaryDao {
                 new Document(FieldKeys.MODIFIED_AT, -1)
         );
 
-        final Map<Integer, List<Page>> yearToPagesMap = Maps.newHashMap();
+        final Map<Integer, List<Page>> yearToPagesMap = Maps.newLinkedHashMap();
         iterator.forEach(new Block<Document>() {
             @Override
             public void apply(Document document) {
