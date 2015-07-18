@@ -81,7 +81,7 @@ public class TagDaoTest {
             List<Note> notes = noteDao.get(5, 0, "1");
             List<Pin> pins = pinDao.get(5, 0, "1");
             List<Todo> todos = todoDao.get(5, 0, "1");
-            List<Expense> expenses = expenseDao.get(new ExpenseFilter(), 5, 0 , "1");
+            List<Expense> expenses = expenseDao.get(new ExpenseFilter(), 5, 0, "1");
 
             Assert.assertEquals("Bookmark1 tag 0", "bookmark1", bookmarks.get(1).getTags().get(0));
             Assert.assertEquals("Bookmark2 tag 0", "bookmark1", bookmarks.get(0).getTags().get(0));

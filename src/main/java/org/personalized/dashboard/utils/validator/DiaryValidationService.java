@@ -30,6 +30,7 @@ public class DiaryValidationService implements ValidationService<Diary> {
     public DiaryValidationService(ConstraintValidationService constraintValidationService) {
         this.constraintValidationService = constraintValidationService;
     }
+
     @Override
     public List<ErrorEntity> validate(Diary diary) {
         List<ErrorEntity> errorEntities = Lists.newArrayList();
@@ -55,11 +56,11 @@ public class DiaryValidationService implements ValidationService<Diary> {
 
     private void validatePage(Diary diary, List<ErrorEntity> errorEntities) {
 
-        if(CollectionUtils.isEmpty(diary.getPages())) {
+        if (CollectionUtils.isEmpty(diary.getPages())) {
             ErrorEntity errorEntity = new ErrorEntity(ErrorCodes.EMPTY_FIELD.name(),
                     ErrorCodes.EMPTY_FIELD.getDescription(), FieldKeys.DIARY_PAGES);
             errorEntities.add(errorEntity);
-        } else if(diary.getPages().size() > 1) {
+        } else if (diary.getPages().size() > 1) {
             ErrorEntity errorEntity = new ErrorEntity(ErrorCodes.BULK_SUBMIT_NOT_ALLOWED.name(),
                     ErrorCodes.BULK_SUBMIT_NOT_ALLOWED.getDescription(), FieldKeys.DIARY_PAGES);
             errorEntities.add(errorEntity);
@@ -72,12 +73,11 @@ public class DiaryValidationService implements ValidationService<Diary> {
             DateFormat dateFormat = new SimpleDateFormat("YYYY-mm-dd");
             dateFormat.setLenient(false);
 
-            if(!CollectionUtils.isEmpty(diary.getPages())) {
+            if (!CollectionUtils.isEmpty(diary.getPages())) {
                 dateFormat.parse(diary.getYear() + "-" + diary.getPages().get(0).getMonth() + "-" +
-                                diary.getPages().get(0).getDate());
+                        diary.getPages().get(0).getDate());
             }
-        }
-        catch (ParseException e) {
+        } catch (ParseException e) {
             ErrorEntity errorEntity = new ErrorEntity(ErrorCodes.INVALID_VALUE.name(),
                     ErrorCodes.INVALID_VALUE.getDescription(), FieldKeys.PAGE_DATE);
             errorEntities.add(errorEntity);

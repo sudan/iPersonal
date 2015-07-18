@@ -44,7 +44,7 @@ public class DiaryServiceImpl implements DiaryService {
     }
 
     @Override
-    public String createPage(Page page, int year){
+    public String createPage(Page page, int year) {
         page.setContent(domParser.removeMalformedTags(page.getContent()));
         String pageId = diaryDao.create(page, year, sessionManager.getUserIdFromSession());
         Activity activity = activityGenerator.generate(ActivityType.CREATED, EntityType.DIARY,
@@ -60,12 +60,12 @@ public class DiaryServiceImpl implements DiaryService {
     }
 
     @Override
-    public Long updatePage(Page page, int year){
+    public Long updatePage(Page page, int year) {
         page.setContent(domParser.removeMalformedTags(page.getContent()));
         Long modifiedCount = diaryDao.update(page, year, sessionManager.getUserIdFromSession());
         if (modifiedCount > 0) {
             Activity activity = activityGenerator.generate(ActivityType.UPDATED, EntityType.DIARY,
-                                page.getPageId(), page.getTitle());
+                    page.getPageId(), page.getTitle());
             activityDao.add(activity, sessionManager.getUserIdFromSession());
             esIndexProducer.enqueue(page, EntityType.DIARY, OperationType.UPDATE, page.getPageId());
         }
@@ -77,7 +77,7 @@ public class DiaryServiceImpl implements DiaryService {
         Long deletedCount = diaryDao.delete(pageId, year, sessionManager.getUserIdFromSession());
         if (deletedCount > 0) {
             Activity activity = activityGenerator.generate(ActivityType.DELETED, EntityType.DIARY,
-                                pageId, StringUtils.EMPTY);
+                    pageId, StringUtils.EMPTY);
             activityDao.add(activity, sessionManager.getUserIdFromSession());
             esIndexProducer.enqueue(null, EntityType.DIARY, OperationType.DELETE, pageId);
         }

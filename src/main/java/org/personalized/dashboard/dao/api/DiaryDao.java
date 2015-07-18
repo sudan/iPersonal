@@ -12,6 +12,7 @@ public interface DiaryDao {
 
     /**
      * Create a new page for the year and user
+     *
      * @param page
      * @param year
      * @param userId
@@ -21,6 +22,7 @@ public interface DiaryDao {
 
     /**
      * Get the page for the year and user
+     *
      * @param pageId
      * @param year
      * @param userId
@@ -30,6 +32,7 @@ public interface DiaryDao {
 
     /**
      * Update the page for the year and user
+     *
      * @param page
      * @param year
      * @param userId
@@ -39,6 +42,7 @@ public interface DiaryDao {
 
     /**
      * Delete the page for the year and userId
+     *
      * @param pageId
      * @param year
      * @param userId
@@ -48,6 +52,7 @@ public interface DiaryDao {
 
     /**
      * Count the number of pages for the year
+     *
      * @param userId
      * @return
      */
@@ -55,6 +60,7 @@ public interface DiaryDao {
 
     /**
      * Get all pages mapped to year for the user
+     *
      * @param limit
      * @param offset
      * @param userId

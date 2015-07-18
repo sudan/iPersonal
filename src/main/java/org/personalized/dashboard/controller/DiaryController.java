@@ -75,7 +75,7 @@ public class DiaryController {
     @Path("{year}/{pageId}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getPage(@PathParam("year") int year,
-                        @PathParam("pageId") String pageId) {
+                            @PathParam("pageId") String pageId) {
 
         try {
             if (StringUtils.isEmpty(pageId)) {
@@ -99,7 +99,7 @@ public class DiaryController {
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("{year}")
     public Response updatePage(@PathParam("year") int year,
-                                   Diary diary) {
+                               Diary diary) {
 
         try {
             List<ErrorEntity> errorEntities = diaryValidationService.validate(diary);
@@ -125,7 +125,7 @@ public class DiaryController {
     @DELETE
     @Path("{year}/{pageId}")
     public Response deletePage(@PathParam("year") int year,
-                                   @PathParam("pageId") String pageId) {
+                               @PathParam("pageId") String pageId) {
 
         try {
             if (StringUtils.isEmpty(pageId)) {
@@ -163,14 +163,14 @@ public class DiaryController {
             BatchSize batchSize = new BatchSize(limit, offset);
             List<ErrorEntity> errorEntities = batchSizeValidationService.validate(batchSize);
             if (CollectionUtils.isEmpty(errorEntities)) {
-                  List<Diary> diaries = Lists.newArrayList();
-                  Map<Integer, List<Page>> yearToPagesMap = diaryService.getPages(limit, offset);
-                  for(Map.Entry<Integer, List<Page>> entry : yearToPagesMap.entrySet()) {
-                      Diary diary = new Diary();
-                      diary.setYear(entry.getKey());
-                      diary.setPages(entry.getValue());
-                      diaries.add(diary);
-                  }
+                List<Diary> diaries = Lists.newArrayList();
+                Map<Integer, List<Page>> yearToPagesMap = diaryService.getPages(limit, offset);
+                for (Map.Entry<Integer, List<Page>> entry : yearToPagesMap.entrySet()) {
+                    Diary diary = new Diary();
+                    diary.setYear(entry.getKey());
+                    diary.setPages(entry.getValue());
+                    diaries.add(diary);
+                }
                 GenericEntity<List<Diary>> diaryListObj = new GenericEntity<List<Diary>>
                         (diaries) {
                 };

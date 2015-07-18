@@ -21,7 +21,7 @@ import java.util.Map;
 /**
  * Created by sudan on 12/7/15.
  */
-public class ExpenseESIndexProducer implements ESIndexProducer<Expense>{
+public class ExpenseESIndexProducer implements ESIndexProducer<Expense> {
 
     private final Logger LOGGER = LoggerFactory.getLogger(ExpenseESIndexProducer.class);
 
@@ -38,9 +38,9 @@ public class ExpenseESIndexProducer implements ESIndexProducer<Expense>{
             StringBuilder description = new StringBuilder();
             description.append(obj.getDescription());
 
-            if(!CollectionUtils.isEmpty(obj.getCategories())) {
+            if (!CollectionUtils.isEmpty(obj.getCategories())) {
                 description.append(Constants.SECONDARY_SEPARATOR);
-                for(String category : obj.getCategories()) {
+                for (String category : obj.getCategories()) {
                     description.append(category);
                     description.append(Constants.SEPARATOR);
                 }
