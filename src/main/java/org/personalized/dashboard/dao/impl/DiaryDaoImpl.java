@@ -101,7 +101,6 @@ public class DiaryDaoImpl implements DiaryDao {
         UpdateResult updateResult = collection.updateOne(
                 and(
                         eq(FieldKeys.PRIMARY_KEY, page.getPageId()),
-                        eq(FieldKeys.DIARY_YEAR, year),
                         eq(FieldKeys.USER_ID, userId),
                         ne(FieldKeys.IS_DELETED, true)
                 ),
