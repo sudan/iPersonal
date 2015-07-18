@@ -68,16 +68,16 @@ public class Note {
         return tags;
     }
 
+    public void setTags(List<String> tags) {
+        this.tags = tags;
+    }
+
     public String getSummary() {
         return summary;
     }
 
     public void setSummary(String summary) {
         this.summary = summary;
-    }
-
-    public void setTags(List<String> tags) {
-        this.tags = tags;
     }
 
     public Long getCreatedOn() {

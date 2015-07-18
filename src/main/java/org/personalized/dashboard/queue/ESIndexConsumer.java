@@ -54,7 +54,7 @@ public class ESIndexConsumer implements MessageListener {
                     searchDocument.setSummary(summary.substring(0, Math.min(summary.length(), 50)));
                     searchDocument.setDescription(
                             domParser.removeHtmlTags(
-                                StopwordsRemover.removeStopWords(payloadMap.get(FieldKeys.ES_DESCRIPTION))
+                                    StopwordsRemover.removeStopWords(payloadMap.get(FieldKeys.ES_DESCRIPTION))
                             )
                     );
                     searchDocument.setEntityType(EntityType.valueOf(payloadMap.get(FieldKeys.ES_ENTITY_TYPE)));

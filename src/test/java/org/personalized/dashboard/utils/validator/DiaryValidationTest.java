@@ -36,7 +36,7 @@ public class DiaryValidationTest {
         diary.setPages(new ArrayList<Page>());
         List<ErrorEntity> errorEntities = diaryValidationService.validate(diary);
 
-        Assert.assertEquals("Error count is 1", 1 , errorEntities.size());
+        Assert.assertEquals("Error count is 1", 1, errorEntities.size());
 
         Assert.assertEquals("Error name match", ErrorCodes.EMPTY_FIELD.name(), errorEntities.get(0).getName());
         Assert.assertEquals("Error desc match", "pages cannot be empty", errorEntities.get(0).getDescription());
@@ -61,7 +61,7 @@ public class DiaryValidationTest {
 
         errorEntities = diaryValidationService.validate(diary);
 
-        Assert.assertEquals("Error count is 1", 1 , errorEntities.size());
+        Assert.assertEquals("Error count is 1", 1, errorEntities.size());
 
         Assert.assertEquals("Error name match", ErrorCodes.BULK_SUBMIT_NOT_ALLOWED.name(),
                 errorEntities.get(0).getName());
@@ -108,7 +108,7 @@ public class DiaryValidationTest {
 
         errorEntities = diaryValidationService.validate(diary);
 
-        Assert.assertEquals("Error count is 2", 2 , errorEntities.size());
+        Assert.assertEquals("Error count is 2", 2, errorEntities.size());
 
 
         Assert.assertEquals("Error name match", ErrorCodes.LENGTH_EXCEEDED.name(), errorEntities.get(0).getName());
