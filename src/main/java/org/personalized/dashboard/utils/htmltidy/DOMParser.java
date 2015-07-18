@@ -15,7 +15,11 @@ public class DOMParser {
     }
 
     public String extractSummary(String html) {
-        html = Jsoup.parse(html).text();
-        return html.substring(0, Math.min(html.length(), 50));
+        String content = this.removeHtmlTags(html);
+        return content.substring(0, Math.min(content.length(), 50));
+    }
+
+    public String removeHtmlTags(String html) {
+        return Jsoup.parse(html).text();
     }
 }
