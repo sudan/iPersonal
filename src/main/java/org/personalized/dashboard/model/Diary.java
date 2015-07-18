@@ -2,9 +2,11 @@ package org.personalized.dashboard.model;
 
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.personalized.dashboard.utils.FieldKeys;
 import org.personalized.dashboard.utils.validator.FieldName;
 
+import javax.validation.Valid;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 
@@ -17,6 +19,8 @@ public class Diary {
     @FieldName(name = FieldKeys.DIARY_YEAR)
     private int year;
 
+    @Valid
+    @NotEmpty
     @FieldName(name = FieldKeys.DIARY_PAGES)
     private List<Page> pages = Lists.newArrayList();
 
