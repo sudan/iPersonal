@@ -33,7 +33,7 @@
         <activemq.version>5.10.0</activemq.version>
         <gson.version>2.3.1</gson.version>
         <elasticsearch.version>1.6.0</elasticsearch.version>
-        <jtidy.version>r938</jtidy.version>
+        <html-sanitizer.version>r239</html-sanitizer.version>
     </properties>
 
     <dependencies>
@@ -264,10 +264,11 @@
         </dependency>
 
         <dependency>
-            <groupId>net.sf.jtidy</groupId>
-            <artifactId>jtidy</artifactId>
-            <version>${jtidy.version}</version>
+            <groupId>com.googlecode.owasp-java-html-sanitizer</groupId>
+            <artifactId>owasp-java-html-sanitizer</artifactId>
+            <version>${html-sanitizer.version}</version>
         </dependency>
+
 
 
     </dependencies>

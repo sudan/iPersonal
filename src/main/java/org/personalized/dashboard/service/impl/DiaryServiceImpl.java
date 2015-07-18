@@ -14,7 +14,6 @@ import org.personalized.dashboard.utils.generator.ActivityGenerator;
 import org.personalized.dashboard.utils.htmltidy.DOMParser;
 import org.springframework.stereotype.Repository;
 
-import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Map;
 
@@ -42,7 +41,7 @@ public class DiaryServiceImpl implements DiaryService {
     }
 
     @Override
-    public String createPage(Page page, int year) throws UnsupportedEncodingException {
+    public String createPage(Page page, int year){
         page.setContent(domParser.removeMalformedTags(page.getContent()));
         String pageId = diaryDao.create(page, year, sessionManager.getUserIdFromSession());
         Activity activity = activityGenerator.generate(ActivityType.CREATED, EntityType.DIARY,
@@ -57,7 +56,7 @@ public class DiaryServiceImpl implements DiaryService {
     }
 
     @Override
-    public Long updatePage(Page page, int year) throws UnsupportedEncodingException {
+    public Long updatePage(Page page, int year){
         page.setContent(domParser.removeMalformedTags(page.getContent()));
         Long modifiedCount = diaryDao.update(page, year, sessionManager.getUserIdFromSession());
         if (modifiedCount > 0) {

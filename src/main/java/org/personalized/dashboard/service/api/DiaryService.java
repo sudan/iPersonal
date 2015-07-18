@@ -2,7 +2,6 @@ package org.personalized.dashboard.service.api;
 
 import org.personalized.dashboard.model.Page;
 
-import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Map;
 
@@ -17,7 +16,7 @@ public interface DiaryService {
      * @param year
      * @return
      */
-    String createPage(Page page, int year) throws UnsupportedEncodingException;
+    String createPage(Page page, int year);
 
     /**
      * Get page for the given pageId
@@ -33,7 +32,7 @@ public interface DiaryService {
      * @param year
      * @return
      */
-    Long updatePage(Page page, int year) throws UnsupportedEncodingException;
+    Long updatePage(Page page, int year);
 
     /**
      * Delete the page given the pageId
