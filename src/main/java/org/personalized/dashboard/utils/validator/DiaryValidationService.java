@@ -3,6 +3,7 @@ package org.personalized.dashboard.utils.validator;
 import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 import org.personalized.dashboard.model.Diary;
+import org.personalized.dashboard.model.Page;
 import org.personalized.dashboard.utils.FieldKeys;
 import org.springframework.util.CollectionUtils;
 
@@ -52,15 +53,23 @@ public class DiaryValidationService implements ValidationService<Diary> {
                         errorEntities);
             }
         }
+
+        for (Page page : diary.getPages()) {
+            Field pageFields[] = Page.class.getDeclaredFields();
+            for (Field pageField : pageFields) {
+                Set<ConstraintViolation<Page>> constraintViolations = validator.validateProperty
+                        (page, pageField.getName());
+                for (ConstraintViolation<Page> constraintViolation : constraintViolations) {
+                    constraintValidationService.validateConstraints(pageField,
+                            constraintViolation, errorEntities);
+                }
+            }
+        }
     }
 
     private void validatePage(Diary diary, List<ErrorEntity> errorEntities) {
 
-        if (CollectionUtils.isEmpty(diary.getPages())) {
-            ErrorEntity errorEntity = new ErrorEntity(ErrorCodes.EMPTY_FIELD.name(),
-                    ErrorCodes.EMPTY_FIELD.getDescription(), FieldKeys.DIARY_PAGES);
-            errorEntities.add(errorEntity);
-        } else if (diary.getPages().size() > 1) {
+        if (diary.getPages().size() > 1) {
             ErrorEntity errorEntity = new ErrorEntity(ErrorCodes.BULK_SUBMIT_NOT_ALLOWED.name(),
                     ErrorCodes.BULK_SUBMIT_NOT_ALLOWED.getDescription(), FieldKeys.DIARY_PAGES);
             errorEntities.add(errorEntity);
@@ -70,12 +79,13 @@ public class DiaryValidationService implements ValidationService<Diary> {
     private void validateDate(Diary diary, List<ErrorEntity> errorEntities) {
 
         try {
-            DateFormat dateFormat = new SimpleDateFormat("YYYY-mm-dd");
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             dateFormat.setLenient(false);
 
             if (!CollectionUtils.isEmpty(diary.getPages())) {
-                dateFormat.parse(diary.getYear() + "-" + diary.getPages().get(0).getMonth() + "-" +
-                        diary.getPages().get(0).getDate());
+                String date = diary.getYear() + "-" + diary.getPages().get(0).getMonth() + "-" +
+                        diary.getPages().get(0).getDate();
+                dateFormat.parse(date);
             }
         } catch (ParseException e) {
             ErrorEntity errorEntity = new ErrorEntity(ErrorCodes.INVALID_VALUE.name(),
