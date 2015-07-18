@@ -13,6 +13,7 @@ public class SearchDocument {
     private String documentId;
     private EntityType entityType;
     private String title;
+    private String summary;
     private String description;
     private Long createdAt;
 
@@ -44,8 +45,17 @@ public class SearchDocument {
         this.title = title;
     }
 
+
     public String getDescription() {
         return description;
+    }
+
+    public String getSummary() {
+        return summary;
+    }
+
+    public void setSummary(String summary) {
+        this.summary = summary;
     }
 
     public void setDescription(String description) {
@@ -66,6 +76,7 @@ public class SearchDocument {
                 .append("documentId", documentId)
                 .append("entityType", entityType)
                 .append("title", title)
+                .append("summary", summary)
                 .append("description", description)
                 .append("createdAt", createdAt)
                 .toString();

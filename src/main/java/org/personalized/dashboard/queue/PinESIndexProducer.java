@@ -37,7 +37,7 @@ public class PinESIndexProducer implements ESIndexProducer<Pin> {
             payload.put(FieldKeys.ES_TITLE, obj.getName());
             StringBuilder desc = new StringBuilder();
             desc.append(obj.getImageUrl());
-            desc.append(Constants.SEPARATOR);
+            desc.append(Constants.SECONDARY_SEPARATOR);
             desc.append(obj.getDescription());
             payload.put(FieldKeys.ES_DESCRIPTION, desc.toString());
         }
