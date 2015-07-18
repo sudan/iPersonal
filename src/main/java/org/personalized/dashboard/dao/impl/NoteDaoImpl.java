@@ -39,6 +39,7 @@ public class NoteDaoImpl implements NoteDao {
         Document document = new Document()
                 .append(FieldKeys.PRIMARY_KEY, noteId)
                 .append(FieldKeys.NOTE_TITLE, note.getTitle())
+                .append(FieldKeys.NOTE_SUMMARY, note.getSummary())
                 .append(FieldKeys.NOTE_DESCRIPTION, note.getNote())
                 .append(FieldKeys.USER_ID, userId)
                 .append(FieldKeys.CREATED_ON, System.currentTimeMillis())
@@ -64,6 +65,7 @@ public class NoteDaoImpl implements NoteDao {
             Note note = new Note();
             note.setNoteId(document.getString(FieldKeys.PRIMARY_KEY));
             note.setTitle(document.getString(FieldKeys.NOTE_TITLE));
+            note.setSummary(document.getString(FieldKeys.NOTE_SUMMARY));
             note.setNote(document.getString(FieldKeys.NOTE_DESCRIPTION));
             note.setCreatedOn(document.getLong(FieldKeys.CREATED_ON));
             note.setModifiedAt(document.getLong(FieldKeys.MODIFIED_AT));
@@ -84,6 +86,7 @@ public class NoteDaoImpl implements NoteDao {
                 (Constants.NOTES);
         Document document = new Document()
                 .append(FieldKeys.NOTE_TITLE, note.getTitle())
+                .append(FieldKeys.NOTE_SUMMARY, note.getSummary())
                 .append(FieldKeys.NOTE_DESCRIPTION, note.getNote())
                 .append(FieldKeys.MODIFIED_AT, System.currentTimeMillis());
 
@@ -153,7 +156,7 @@ public class NoteDaoImpl implements NoteDao {
                 Note note = new Note();
                 note.setNoteId(document.getString(FieldKeys.PRIMARY_KEY));
                 note.setTitle(document.getString(FieldKeys.NOTE_TITLE));
-                note.setNote(document.getString(FieldKeys.NOTE_DESCRIPTION));
+                note.setSummary(document.getString(FieldKeys.NOTE_SUMMARY));
                 note.setCreatedOn(document.getLong(FieldKeys.CREATED_ON));
                 note.setModifiedAt(document.getLong(FieldKeys.MODIFIED_AT));
                 if (document.containsKey(FieldKeys.ENTITY_TAGS)) {

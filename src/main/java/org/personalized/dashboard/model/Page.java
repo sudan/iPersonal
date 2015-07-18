@@ -29,6 +29,8 @@ public class Page {
     @FieldName(name = FieldKeys.PAGE_DESCRIPTION)
     private String content;
 
+    private String summary;
+
     @FieldName(name = FieldKeys.PAGE_MONTH)
     private int month;
 
@@ -68,8 +70,17 @@ public class Page {
         this.content = content;
     }
 
+
     public int getMonth() {
         return month;
+    }
+
+    public String getSummary() {
+        return summary;
+    }
+
+    public void setSummary(String summary) {
+        this.summary = summary;
     }
 
     public void setMonth(int month) {
@@ -114,6 +125,7 @@ public class Page {
         return new ToStringBuilder(this)
                 .append("pageId", pageId)
                 .append("title", title)
+                .append("summary", summary)
                 .append("content", content)
                 .append("date", date)
                 .append("tags", tags)

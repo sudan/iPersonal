@@ -11,6 +11,7 @@ import org.personalized.dashboard.model.Note;
 import org.personalized.dashboard.utils.ConfigKeys;
 import org.personalized.dashboard.utils.Constants;
 import org.personalized.dashboard.utils.generator.IdGenerator;
+import org.personalized.dashboard.utils.htmltidy.DOMParser;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.io.IOException;
@@ -24,10 +25,12 @@ public class NoteDaoTest {
 
 
     private NoteDao noteDao;
+    private DOMParser domParser;
 
     @Before
     public void initialize() throws IOException {
         ConfigManager.init();
+        this.domParser = new DOMParser();
         this.noteDao = new NoteDaoImpl(new IdGenerator());
     }
 
@@ -45,11 +48,13 @@ public class NoteDaoTest {
 
             Note note1 = new Note();
             note1.setTitle("title1");
-            note1.setNote("note1");
+            note1.setNote(domParser.removeMalformedTags("note1"));
+            note1.setSummary(domParser.extractSummary("note1"));
 
             Note note2 = new Note();
             note2.setTitle("title2");
-            note2.setNote("note2");
+            note2.setNote(domParser.removeMalformedTags("note2"));
+            note2.setSummary(domParser.extractSummary("note2"));
 
             // Create two notes
             String noteid1 = noteDao.create(note1, "1");
@@ -74,7 +79,8 @@ public class NoteDaoTest {
             // Update and verify the updated values
 
             noteRead2.setTitle("google_advanced");
-            noteRead2.setNote("desc_advanced");
+            noteRead2.setNote(domParser.removeMalformedTags("desc_advanced"));
+            noteRead2.setSummary(domParser.extractSummary("desc_advanced"));
             noteDao.update(noteRead2, "1");
 
             noteRead2 = noteDao.get(noteid2, "1");
@@ -96,13 +102,15 @@ public class NoteDaoTest {
 
             Assert.assertEquals("NoteIds match", noteid2, notes.get(0).getNoteId());
             Assert.assertEquals("title match", "google_advanced", notes.get(0).getTitle());
-            Assert.assertEquals("note match", "desc_advanced", notes.get(0).getNote());
+            Assert.assertNull("note match", notes.get(0).getNote());
+            Assert.assertEquals("summary match", "desc_advanced", notes.get(0).getSummary());
             Assert.assertNotNull("Createdon is not null", notes.get(0).getCreatedOn());
             Assert.assertNotNull("modifiedAt is not null", notes.get(0).getModifiedAt());
 
             Assert.assertEquals("NoteIds match", noteid1, notes.get(1).getNoteId());
             Assert.assertEquals("title match", "title1", notes.get(1).getTitle());
-            Assert.assertEquals("note match", "note1", notes.get(1).getNote());
+            Assert.assertNull("note match", notes.get(0).getNote());
+            Assert.assertEquals("summary match", "note1", notes.get(1).getSummary());
             Assert.assertNotNull("Createdon is not null", notes.get(1).getCreatedOn());
             Assert.assertNotNull("modifiedAt is not null", notes.get(1).getModifiedAt());
 
@@ -118,9 +126,30 @@ public class NoteDaoTest {
 
             Assert.assertEquals("NoteIds match", noteid1, notes.get(0).getNoteId());
             Assert.assertEquals("title match", "title1", notes.get(0).getTitle());
-            Assert.assertEquals("note match", "note1", notes.get(0).getNote());
+            Assert.assertNull("note match", notes.get(0).getNote());
+            Assert.assertEquals("summary match", "note1", notes.get(0).getSummary());
             Assert.assertNotNull("Createdon is not null", notes.get(0).getCreatedOn());
             Assert.assertNotNull("modifiedAt is not null", notes.get(0).getModifiedAt());
+
+            Note note3 = new Note();
+            note3.setTitle("title3");
+            String text = "<html><body><head><script type='text/javascript' src='hello.js'></script>" +
+                    "<div>hello<ul><li>one</li><li>2</li></ul></div>" +
+                    "<p><img src='https://github.com'/></p></body></html>";
+
+            note3.setNote(domParser.removeMalformedTags(text));
+            note3.setSummary(domParser.extractSummary(text));
+            String noteId3 = noteDao.create(note3, "1");
+
+            Note noteRead3 = noteDao.get(noteId3, "1");
+
+            Assert.assertEquals("NoteIds match", noteId3, noteRead3.getNoteId());
+            Assert.assertEquals("title match", "title3", noteRead3.getTitle());
+            Assert.assertEquals("note match", "<div>hello<ul><li>one</li><li>2</li></ul></div>" +
+                    "<p><img src=\"https://github.com\" /></p>", noteRead3.getNote());
+            Assert.assertEquals("summary match", "hello one 2", noteRead3.getSummary());
+            Assert.assertNotNull("Createdon is not null", noteRead3.getCreatedOn());
+            Assert.assertNotNull("modifiedAt is not null", noteRead3.getModifiedAt());
 
             MongoBootstrap.getMongoDatabase().getCollection(Constants.NOTES).drop();
 

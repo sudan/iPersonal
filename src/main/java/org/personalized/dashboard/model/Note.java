@@ -29,6 +29,8 @@ public class Note {
     @FieldName(name = FieldKeys.NOTE_DESCRIPTION)
     private String note;
 
+    private String summary;
+
     private List<String> tags = Lists.newArrayList();
 
     private Long createdOn;
@@ -66,6 +68,14 @@ public class Note {
         return tags;
     }
 
+    public String getSummary() {
+        return summary;
+    }
+
+    public void setSummary(String summary) {
+        this.summary = summary;
+    }
+
     public void setTags(List<String> tags) {
         this.tags = tags;
     }
@@ -91,6 +101,7 @@ public class Note {
         return new ToStringBuilder(this)
                 .append("noteId", noteId)
                 .append("title", title)
+                .append("summary", summary)
                 .append("note", note)
                 .append("createdOn", createdOn)
                 .append("modifiedAt", modifiedAt)
