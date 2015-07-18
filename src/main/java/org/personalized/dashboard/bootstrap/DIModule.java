@@ -11,6 +11,7 @@ import org.personalized.dashboard.service.impl.*;
 import org.personalized.dashboard.utils.auth.SessionManager;
 import org.personalized.dashboard.utils.generator.ActivityGenerator;
 import org.personalized.dashboard.utils.generator.IdGenerator;
+import org.personalized.dashboard.utils.htmltidy.DOMParser;
 import org.personalized.dashboard.utils.validator.*;
 
 /**
@@ -27,6 +28,7 @@ public class DIModule extends AbstractModule {
         bind(PinService.class).to(PinServiceImpl.class);
         bind(TodoService.class).to(TodoServiceImpl.class);
         bind(ExpenseService.class).to(ExpenseServiceImpl.class);
+        bind(DiaryService.class).to(DiaryServiceImpl.class);
         bind(ActivityService.class).to(ActivityServiceImpl.class);
         bind(SearchService.class).to(SearchServiceImpl.class);
         bind(TagService.class).to(TagServiceImpl.class);
@@ -37,6 +39,7 @@ public class DIModule extends AbstractModule {
         bind(PinDao.class).to(PinDaoImpl.class);
         bind(TodoDao.class).to(TodoDaoImpl.class);
         bind(ExpenseDao.class).to(ExpenseDaoImpl.class);
+        bind(DiaryDao.class).to(DiaryDaoImpl.class);
         bind(ActivityDao.class).to(ActivityDaoImpl.class);
         bind(TagDao.class).to(TagDaoImpl.class);
 
@@ -56,6 +59,8 @@ public class DIModule extends AbstractModule {
                 .class);
         bind(ValidationService.class).annotatedWith(Names.named("expense")).to(ExpenseValidationService
                 .class);
+        bind(ValidationService.class).annotatedWith(Names.named("diary")).to(DiaryValidationService
+                .class);
         bind(ConstraintValidationService.class);
 
         bind(IdGenerator.class).asEagerSingleton();
@@ -69,8 +74,10 @@ public class DIModule extends AbstractModule {
         bind(ESIndexProducer.class).annotatedWith(Names.named("pin")).to(PinESIndexProducer.class);
         bind(ESIndexProducer.class).annotatedWith(Names.named("tag")).to(TagESIndexProducer.class);
         bind(ESIndexProducer.class).annotatedWith(Names.named("expense")).to(ExpenseESIndexProducer.class);
+        bind(ESIndexProducer.class).annotatedWith(Names.named("page")).to(PageESIndexProducer.class);
 
         bind(ElasticsearchClient.class);
 
+        bind(DOMParser.class);
     }
 }

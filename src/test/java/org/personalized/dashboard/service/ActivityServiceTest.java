@@ -15,6 +15,7 @@ import org.personalized.dashboard.utils.ConfigKeys;
 import org.personalized.dashboard.utils.auth.SessionManager;
 import org.personalized.dashboard.utils.generator.ActivityGenerator;
 import org.personalized.dashboard.utils.generator.IdGenerator;
+import org.personalized.dashboard.utils.htmltidy.DOMParser;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
@@ -35,6 +36,7 @@ public class ActivityServiceTest {
     @Before
     public void initialize() {
 
+        DOMParser domParser = new DOMParser();
         IdGenerator idGenerator = new IdGenerator();
         BookmarkDao bookmarkDao = new BookmarkDaoImpl(idGenerator);
         NoteDao noteDao = new NoteDaoImpl(idGenerator);
@@ -53,7 +55,7 @@ public class ActivityServiceTest {
         this.bookmarkService = new BookmarkServiceImpl(bookmarkDao, sessionManager,
                 activityGenerator, activityDao, bookmarkESIndexProducer);
         this.noteService = new NoteServiceImpl(noteDao, sessionManager, activityGenerator,
-                activityDao, noteESIndexProducer);
+                activityDao, domParser, noteESIndexProducer);
         this.pinService = new PinServiceImpl(pinDao, sessionManager, activityGenerator,
                 activityDao, pinESIndexProducer);
         this.todoService = new TodoServiceImpl(todoDao, sessionManager, activityGenerator,

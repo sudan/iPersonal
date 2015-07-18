@@ -10,6 +10,7 @@ import org.personalized.dashboard.queue.ESIndexProducer;
 import org.personalized.dashboard.service.api.NoteService;
 import org.personalized.dashboard.utils.auth.SessionManager;
 import org.personalized.dashboard.utils.generator.ActivityGenerator;
+import org.personalized.dashboard.utils.htmltidy.DOMParser;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -24,20 +25,24 @@ public class NoteServiceImpl implements NoteService {
     private final SessionManager sessionManager;
     private final ActivityGenerator activityGenerator;
     private final ActivityDao activityDao;
+    private final DOMParser domParser;
     private final ESIndexProducer esIndexProducer;
 
     @Inject
     public NoteServiceImpl(NoteDao noteDao, SessionManager sessionManager, ActivityGenerator
-            activityGenerator, ActivityDao activityDao, @Named("note") ESIndexProducer esIndexProducer) {
+            activityGenerator, ActivityDao activityDao,
+            DOMParser domParser, @Named("note") ESIndexProducer esIndexProducer) {
         this.noteDao = noteDao;
         this.sessionManager = sessionManager;
         this.activityGenerator = activityGenerator;
         this.activityDao = activityDao;
+        this.domParser = domParser;
         this.esIndexProducer = esIndexProducer;
     }
 
     @Override
     public String createNote(Note note) {
+        note.setNote(domParser.removeMalformedTags(note.getNote()));
         String noteId = noteDao.create(note, sessionManager.getUserIdFromSession());
         Activity activity = activityGenerator.generate(ActivityType.CREATED, EntityType.NOTE,
                 noteId, note.getTitle());
@@ -53,6 +58,7 @@ public class NoteServiceImpl implements NoteService {
 
     @Override
     public Long updateNote(Note note) {
+        note.setNote(domParser.removeMalformedTags(note.getNote()));
         Long modifiedCount = noteDao.update(note, sessionManager.getUserIdFromSession());
         if (modifiedCount > 0) {
             Activity activity = activityGenerator.generate(ActivityType.UPDATED, EntityType.NOTE,

@@ -37,6 +37,13 @@ public class FieldKeys {
     public static final String EXPENSE_CATEGORIES = "categories";
     public static final String EXPENSE_CURRENCY_TYPE = "currency_type";
 
+    public static final String PAGE_TITLE = "title";
+    public static final String PAGE_DESCRIPTION = "description";
+    public static final String DIARY_YEAR = "year";
+    public static final String PAGE_MONTH = "month";
+    public static final String PAGE_DATE = "date";
+    public static final String DIARY_PAGES = "pages";
+
     public static final String ACTIVITY_TYPE = "type";
     public static final String ACTIVITY_DESCRIPTION = "description";
 
