@@ -8,7 +8,7 @@ import org.personalized.dashboard.model.EntityType;
 import org.personalized.dashboard.model.SearchContext;
 import org.personalized.dashboard.model.SearchDocument;
 import org.personalized.dashboard.utils.ConfigKeys;
-import org.personalized.dashboard.utils.auth.SessionManager;
+import org.personalized.dashboard.auth.SessionManager;
 import org.personalized.dashboard.utils.htmltidy.DOMParser;
 import org.springframework.test.context.ActiveProfiles;
 

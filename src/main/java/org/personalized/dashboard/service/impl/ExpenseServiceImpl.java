@@ -8,7 +8,7 @@ import org.personalized.dashboard.dao.api.ExpenseDao;
 import org.personalized.dashboard.model.*;
 import org.personalized.dashboard.queue.ESIndexProducer;
 import org.personalized.dashboard.service.api.ExpenseService;
-import org.personalized.dashboard.utils.auth.SessionManager;
+import org.personalized.dashboard.auth.SessionManager;
 import org.personalized.dashboard.utils.generator.ActivityGenerator;
 
 import java.util.List;
