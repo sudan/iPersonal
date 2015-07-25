@@ -2,6 +2,10 @@ package org.personalized.dashboard.bootstrap;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.name.Names;
+import org.personalized.dashboard.auth.user.SimpleConnectionSignup;
+import org.personalized.dashboard.auth.user.SimpleSignInAdapter;
+import org.personalized.dashboard.auth.user.UserCookieGenerator;
+import org.personalized.dashboard.auth.user.UserInterceptor;
 import org.personalized.dashboard.dao.api.*;
 import org.personalized.dashboard.dao.impl.*;
 import org.personalized.dashboard.elasticsearch.ElasticsearchClient;
@@ -44,6 +48,7 @@ public class DIModule extends AbstractModule {
         bind(ActivityDao.class).to(ActivityDaoImpl.class);
         bind(TagDao.class).to(TagDaoImpl.class);
         bind(UserDao.class).to(UserDaoImpl.class);
+        bind(SessionDao.class).to(SessionDaoImpl.class);
 
                 bind(ValidationService.class).annotatedWith(Names.named("bookmark")).to
                         (BookmarkValidationService.class);
@@ -82,5 +87,10 @@ public class DIModule extends AbstractModule {
 
         bind(DOMParser.class);
         bind(StopwordsRemover.class);
+
+        bind(UserCookieGenerator.class);
+        bind(UserInterceptor.class);
+        bind(SimpleConnectionSignup.class);
+        bind(SimpleSignInAdapter.class);
     }
 }

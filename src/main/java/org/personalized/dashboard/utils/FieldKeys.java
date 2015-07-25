@@ -10,6 +10,7 @@ public class FieldKeys {
     public static final String MODIFIED_AT = "modified_at";
     public static final String IS_DELETED = "is_deleted";
     public static final String PRIMARY_KEY = "_id";
+    public static final String SESSION_ID = "session_id";
 
     public static final String USER_NAME = "name";
     public static final String USER_EMAIL = "email";

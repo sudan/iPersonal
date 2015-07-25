@@ -29,16 +29,15 @@ public class UserDaoImpl implements UserDao {
     public String create(User user) {
         MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection(Constants.USERS);
 
-        String userId = idGenerator.generateId(Constants.USER_PREFIX, Constants.ID_LENGTH);
         Document document = new Document()
-                .append(FieldKeys.PRIMARY_KEY, userId)
+                .append(FieldKeys.PRIMARY_KEY, user.getUserId())
                 .append(FieldKeys.USER_NAME, user.getUsername())
                 .append(FieldKeys.USER_EMAIL, user.getEmail())
                 .append(FieldKeys.USER_PROFILE_PIC_URL, user.getProfilePicURL())
                 .append(FieldKeys.CREATED_ON, System.currentTimeMillis())
                 .append(FieldKeys.MODIFIED_AT, System.currentTimeMillis());
         collection.insertOne(document);
-        return userId;
+        return user.getUserId();
     }
 
     @Override
