@@ -11,6 +11,11 @@ public class Constants {
     public static final int TEXT_MAX_LENGTH = 3000;
     public static final int TAG_MAX_LENGTH = 25;
 
+    public static final String USERS = "users";
+    public static final String USER_PREFIX = "USR";
+
+    public static final String SESSIONS = "sessions";
+
     public static final String BOOKMARKS = "bookmarks";
     public static final String BOOKMARK_PREFIX = "BOK";
 
