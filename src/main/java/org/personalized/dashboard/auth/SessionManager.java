@@ -1,4 +1,4 @@
-package org.personalized.dashboard.utils.auth;
+package org.personalized.dashboard.auth;
 
 /**
  * Created by sudan on 28/5/15.

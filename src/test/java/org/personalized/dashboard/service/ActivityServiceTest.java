@@ -12,7 +12,7 @@ import org.personalized.dashboard.queue.*;
 import org.personalized.dashboard.service.api.*;
 import org.personalized.dashboard.service.impl.*;
 import org.personalized.dashboard.utils.ConfigKeys;
-import org.personalized.dashboard.utils.auth.SessionManager;
+import org.personalized.dashboard.auth.SessionManager;
 import org.personalized.dashboard.utils.generator.ActivityGenerator;
 import org.personalized.dashboard.utils.generator.IdGenerator;
 import org.personalized.dashboard.utils.htmltidy.DOMParser;
