@@ -114,7 +114,7 @@ public class TodoController {
 
     @DELETE
     @Path("{todoId}")
-    public Response deletePin(@Context HttpHeaders httpHeaders, @PathParam("todoId") String todoId) {
+    public Response deleteTodo(@Context HttpHeaders httpHeaders, @PathParam("todoId") String todoId) {
 
         try {
             if (StringUtils.isEmpty(todoId)) {
