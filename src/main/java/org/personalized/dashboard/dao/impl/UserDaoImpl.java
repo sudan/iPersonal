@@ -52,7 +52,7 @@ public class UserDaoImpl implements UserDao {
 
             collection.updateOne(and(
                             eq(FieldKeys.EMAIL, user.getEmail()),
-                            eq(FieldKeys.PRIMARY_KEY, user.getUserId())
+                            eq(FieldKeys.PRIMARY_KEY, document.getString(FieldKeys.PRIMARY_KEY))
                     ),
                     new Document(Constants.SET_OPERATION, updatedProfileDocument)
             );
