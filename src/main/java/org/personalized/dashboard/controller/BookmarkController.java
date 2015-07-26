@@ -27,9 +27,6 @@ import java.util.List;
 @Path("/bookmarks")
 public class BookmarkController {
 
-    @Context
-    private HttpHeaders httpHeaders;
-
     private final Logger LOGGER = LoggerFactory.getLogger(BookmarkController.class);
 
     private final BookmarkService bookmarkService;
