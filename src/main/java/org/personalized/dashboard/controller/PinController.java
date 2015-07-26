@@ -15,9 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
 
 import javax.ws.rs.*;
-import javax.ws.rs.core.GenericEntity;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
+import javax.ws.rs.core.*;
 import java.util.List;
 
 /**
@@ -47,7 +45,7 @@ public class PinController {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response createPin(Pin pin) {
+    public Response createPin(@Context HttpHeaders httpHeaders, Pin pin) {
 
         try {
             List<ErrorEntity> errorEntities = pinValidationService.validate(pin);
@@ -69,7 +67,7 @@ public class PinController {
     @GET
     @Path("{pinId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getPin(@PathParam("pinId") String pinId) {
+    public Response getPin(@Context HttpHeaders httpHeaders, @PathParam("pinId") String pinId) {
 
         try {
             if (StringUtils.isEmpty(pinId)) {
@@ -91,7 +89,7 @@ public class PinController {
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response updatePin(Pin pin) {
+    public Response updatePin(@Context HttpHeaders httpHeaders, Pin pin) {
 
         try {
             List<ErrorEntity> errorEntities = pinValidationService.validate(pin);
@@ -116,7 +114,7 @@ public class PinController {
 
     @DELETE
     @Path("{pinId}")
-    public Response deletePin(@PathParam("pinId") String pinId) {
+    public Response deletePin(@Context HttpHeaders httpHeaders, @PathParam("pinId") String pinId) {
 
         try {
             if (StringUtils.isEmpty(pinId)) {
@@ -134,7 +132,7 @@ public class PinController {
     @GET
     @Path("count")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response countPins() {
+    public Response countPins(@Context HttpHeaders httpHeaders) {
 
         try {
             Long count = pinService.countPins();
@@ -147,7 +145,8 @@ public class PinController {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response fetchPins(@QueryParam("limit") int limit, @QueryParam("offset") int offset) {
+    public Response fetchPins(@Context HttpHeaders httpHeaders,
+                              @QueryParam("limit") int limit, @QueryParam("offset") int offset) {
 
         try {
             BatchSize batchSize = new BatchSize(limit, offset);

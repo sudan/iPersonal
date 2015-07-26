@@ -13,9 +13,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
 import javax.ws.rs.*;
-import javax.ws.rs.core.GenericEntity;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
+import javax.ws.rs.core.*;
 import java.util.List;
 
 /**
@@ -41,7 +39,7 @@ public class TagController {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response updateTags(Tag tag) {
+    public Response updateTags(@Context HttpHeaders httpHeaders, Tag tag) {
 
         try {
             List<ErrorEntity> errorEntities = tagValidationService.validate(tag);
@@ -66,7 +64,7 @@ public class TagController {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getTags() {
+    public Response getTags(@Context HttpHeaders httpHeaders) {
 
         try {
             List<String> tags = tagService.getTags();

@@ -15,9 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
 
 import javax.ws.rs.*;
-import javax.ws.rs.core.GenericEntity;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
+import javax.ws.rs.core.*;
 import java.util.List;
 
 /**
@@ -47,7 +45,7 @@ public class TodoController {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response createTodo(Todo todo) {
+    public Response createTodo(@Context HttpHeaders httpHeaders, Todo todo) {
 
         try {
             List<ErrorEntity> errorEntities = todoValidationService.validate(todo);
@@ -69,7 +67,7 @@ public class TodoController {
     @GET
     @Path("{todoId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getTodo(@PathParam("todoId") String todoId) {
+    public Response getTodo(@Context HttpHeaders httpHeaders, @PathParam("todoId") String todoId) {
 
         try {
             if (StringUtils.isEmpty(todoId)) {
@@ -91,7 +89,7 @@ public class TodoController {
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response updateTodo(Todo todo) {
+    public Response updateTodo(@Context HttpHeaders httpHeaders, Todo todo) {
 
         try {
             List<ErrorEntity> errorEntities = todoValidationService.validate(todo);
@@ -116,7 +114,7 @@ public class TodoController {
 
     @DELETE
     @Path("{todoId}")
-    public Response deletePin(@PathParam("todoId") String todoId) {
+    public Response deletePin(@Context HttpHeaders httpHeaders, @PathParam("todoId") String todoId) {
 
         try {
             if (StringUtils.isEmpty(todoId)) {
@@ -134,7 +132,7 @@ public class TodoController {
     @GET
     @Path("count")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response countTodos() {
+    public Response countTodos(@Context HttpHeaders httpHeaders) {
 
         try {
             Long count = todoService.countTodos();
@@ -147,7 +145,8 @@ public class TodoController {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response fetchTodos(@QueryParam("limit") int limit, @QueryParam("offset") int offset) {
+    public Response fetchTodos(@Context HttpHeaders httpHeaders,
+                               @QueryParam("limit") int limit, @QueryParam("offset") int offset) {
 
         try {
             BatchSize batchSize = new BatchSize(limit, offset);

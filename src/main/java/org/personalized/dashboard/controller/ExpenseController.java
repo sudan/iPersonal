@@ -16,9 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
 
 import javax.ws.rs.*;
-import javax.ws.rs.core.GenericEntity;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
+import javax.ws.rs.core.*;
 import java.util.List;
 
 /**
@@ -47,7 +45,7 @@ public class ExpenseController {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response createExpense(Expense expense) {
+    public Response createExpense(@Context HttpHeaders httpHeaders, Expense expense) {
         try {
             List<ErrorEntity> errorEntities = expenseValidationService.validate(expense);
             if (CollectionUtils.isEmpty(errorEntities)) {
@@ -68,7 +66,7 @@ public class ExpenseController {
     @GET
     @Path("{expenseId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getExpense(@PathParam("expenseId") String expenseId) {
+    public Response getExpense(@Context HttpHeaders httpHeaders, @PathParam("expenseId") String expenseId) {
 
         try {
             if (StringUtils.isEmpty(expenseId)) {
@@ -90,7 +88,7 @@ public class ExpenseController {
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response updateExpense(Expense expense) {
+    public Response updateExpense(@Context HttpHeaders httpHeaders, Expense expense) {
 
         try {
             List<ErrorEntity> errorEntities = expenseValidationService.validate(expense);
@@ -115,7 +113,8 @@ public class ExpenseController {
 
     @DELETE
     @Path("{expenseId}")
-    public Response deleteExpense(@PathParam("expenseId") String expenseId) {
+    public Response deleteExpense(@Context HttpHeaders httpHeaders ,
+                                  @PathParam("expenseId") String expenseId) {
 
         try {
             if (StringUtils.isEmpty(expenseId)) {
@@ -133,7 +132,7 @@ public class ExpenseController {
     @POST
     @Path("count")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response countExpenses(ExpenseFilter expenseFilter) {
+    public Response countExpenses(@Context HttpHeaders httpHeaders, ExpenseFilter expenseFilter) {
 
         try {
             Long count = expenseService.countExpense(expenseFilter);
@@ -147,8 +146,9 @@ public class ExpenseController {
     @POST
     @Path("search")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response fetchExpenses(@QueryParam("limit") int limit, @QueryParam("offset") int
-            offset, ExpenseFilter expenseFilter) {
+    public Response fetchExpenses(@Context HttpHeaders httpHeaders,
+                                  @QueryParam("limit") int limit, @QueryParam("offset")
+                                  int offset, ExpenseFilter expenseFilter) {
 
         try {
             BatchSize batchSize = new BatchSize(limit, offset);

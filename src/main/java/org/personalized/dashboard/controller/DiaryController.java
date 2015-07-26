@@ -17,9 +17,7 @@ import org.springframework.util.CollectionUtils;
 
 import javax.inject.Named;
 import javax.ws.rs.*;
-import javax.ws.rs.core.GenericEntity;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
+import javax.ws.rs.core.*;
 import java.util.List;
 import java.util.Map;
 
@@ -52,7 +50,7 @@ public class DiaryController {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response createPage(Diary diary) {
+    public Response createPage(@Context HttpHeaders httpHeaders, Diary diary) {
 
         try {
             List<ErrorEntity> errorEntities = diaryValidationService.validate(diary);
@@ -74,7 +72,7 @@ public class DiaryController {
     @GET
     @Path("{year}/{pageId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getPage(@PathParam("year") int year,
+    public Response getPage(@Context HttpHeaders httpHeaders, @PathParam("year") int year,
                             @PathParam("pageId") String pageId) {
 
         try {
@@ -98,7 +96,7 @@ public class DiaryController {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("{year}")
-    public Response updatePage(@PathParam("year") int year,
+    public Response updatePage(@Context HttpHeaders httpHeaders, @PathParam("year") int year,
                                Diary diary) {
 
         try {
@@ -124,7 +122,7 @@ public class DiaryController {
 
     @DELETE
     @Path("{year}/{pageId}")
-    public Response deletePage(@PathParam("year") int year,
+    public Response deletePage(@Context HttpHeaders httpHeaders, @PathParam("year") int year,
                                @PathParam("pageId") String pageId) {
 
         try {
@@ -143,7 +141,7 @@ public class DiaryController {
     @GET
     @Path("count")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response countPages() {
+    public Response countPages(@Context HttpHeaders httpHeaders) {
 
         try {
             Long count = diaryService.countPages();
@@ -156,7 +154,8 @@ public class DiaryController {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response fetchPages(@QueryParam("limit") int limit, @QueryParam("offset") int
+    public Response fetchPages(@Context HttpHeaders httpHeaders,
+                               @QueryParam("limit") int limit, @QueryParam("offset") int
             offset) {
 
         try {
