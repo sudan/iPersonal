@@ -39,7 +39,7 @@ public class ActivityDaoImpl implements ActivityDao {
                 (Constants.ACTIVITIES);
 
         String activityId = idGenerator.generateId(Constants.ACTIVITIES_PREFIX, Constants
-                .ID_LENGTH);
+                .ID_LENGTH, true);
         Document document = new Document()
                 .append(FieldKeys.PRIMARY_KEY, activityId)
                 .append(FieldKeys.ACTIVITY_TYPE, activity.getActivityType().name())

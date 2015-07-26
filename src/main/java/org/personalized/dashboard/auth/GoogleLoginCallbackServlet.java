@@ -1,10 +1,14 @@
 package org.personalized.dashboard.auth;
 
 import com.google.inject.Inject;
+import org.apache.commons.lang3.StringUtils;
 import org.personalized.dashboard.bootstrap.OAuthBootstrap;
+import org.personalized.dashboard.dao.api.SessionDao;
 import org.personalized.dashboard.dao.api.UserDao;
 import org.personalized.dashboard.model.User;
 import org.personalized.dashboard.utils.ConfigKeys;
+import org.personalized.dashboard.utils.Constants;
+import org.personalized.dashboard.utils.generator.IdGenerator;
 import org.springframework.social.google.api.Google;
 import org.springframework.social.google.api.impl.GoogleTemplate;
 import org.springframework.social.oauth2.AccessGrant;
@@ -21,10 +25,17 @@ import java.io.IOException;
 public class GoogleLoginCallbackServlet extends HttpServlet {
 
     private final UserDao userDao;
+    private final UserCookieGenerator userCookieGenerator;
+    private final IdGenerator idGenerator;
+    private final SessionDao sessionDao;
 
     @Inject
-    public GoogleLoginCallbackServlet(UserDao userDao) {
+    public GoogleLoginCallbackServlet(UserDao userDao, UserCookieGenerator userCookieGenerator,
+                                      IdGenerator idGenerator, SessionDao sessionDao) {
         this.userDao = userDao;
+        this.userCookieGenerator = userCookieGenerator;
+        this.idGenerator = idGenerator;
+        this.sessionDao = sessionDao;
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -41,9 +52,19 @@ public class GoogleLoginCallbackServlet extends HttpServlet {
             user.setEmail(google.plusOperations().getGoogleProfile().getAccountEmail());
             user.setUsername(google.plusOperations().getGoogleProfile().getDisplayName());
             user.setProfilePicURL(google.plusOperations().getGoogleProfile().getImageUrl());
-            userDao.createOrUpdate(user);
-            response.sendRedirect(ConfigKeys.DASHBOARD);
 
+            String userId = userDao.createOrUpdate(user);
+            String cookieValue = idGenerator.generateId(Constants.COOKIE_PREFIX, Constants.COOKIE_LENGTH, false);
+
+            String oldCookieValue = userCookieGenerator.readCookieValue(request);
+            if (StringUtils.isNotEmpty(oldCookieValue)) {
+                sessionDao.delete(oldCookieValue);
+            }
+            sessionDao.create(cookieValue, userId);
+
+            userCookieGenerator.removeCookie(response);
+            userCookieGenerator.addCookie(cookieValue, response);
+            response.sendRedirect(ConfigKeys.DASHBOARD);
         } catch (Exception e) {
             response.sendRedirect(ConfigKeys.GOOGLE_LOGIN);
         }

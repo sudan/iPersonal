@@ -11,8 +11,13 @@ public class Constants {
     public static final int TEXT_MAX_LENGTH = 3000;
     public static final int TAG_MAX_LENGTH = 25;
 
+    public static final String COOKIE_PREFIX = "coo";
+    public static final int COOKIE_LENGTH = 35;
+
     public static final String USERS = "users";
     public static final String USER_PREFIX = "USR";
+
+    public static final String SESSIONS = "sessions";
 
     public static final String BOOKMARKS = "bookmarks";
     public static final String BOOKMARK_PREFIX = "BOK";
@@ -60,4 +65,6 @@ public class Constants {
     public static final int MAX_TAGS_LENGTH = 10;
 
     public static final String SECONDARY_SEPARATOR = "###";
+
+    public static final String COOKIE_NAME = "ipersonal-cookie";
 }

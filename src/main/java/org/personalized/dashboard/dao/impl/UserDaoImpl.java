@@ -10,7 +10,8 @@ import org.personalized.dashboard.utils.Constants;
 import org.personalized.dashboard.utils.FieldKeys;
 import org.personalized.dashboard.utils.generator.IdGenerator;
 
-import static com.mongodb.client.model.Filters.*;
+import static com.mongodb.client.model.Filters.and;
+import static com.mongodb.client.model.Filters.eq;
 
 /**
  * Created by sudan on 26/7/15.
@@ -31,18 +32,18 @@ public class UserDaoImpl implements UserDao {
 
         Document document = collection.find(eq(FieldKeys.EMAIL, user.getEmail())).first();
         if (document == null) {
-            user.setUserId(idGenerator.generateId(Constants.USER_PREFIX, Constants.ID_LENGTH));
+            user.setUserId(idGenerator.generateId(Constants.USER_PREFIX, Constants.ID_LENGTH, true));
 
             collection.insertOne(
                     new Document()
-                    .append(FieldKeys.PRIMARY_KEY, user.getUserId())
-                    .append(FieldKeys.USERNAME, user.getUsername())
-                    .append(FieldKeys.EMAIL, user.getEmail())
-                    .append(FieldKeys.PROFILE_PIC, user.getProfilePicURL())
-                    .append(FieldKeys.CREATED_ON, System.currentTimeMillis())
-                    .append(FieldKeys.MODIFIED_AT, System.currentTimeMillis())
+                            .append(FieldKeys.PRIMARY_KEY, user.getUserId())
+                            .append(FieldKeys.USERNAME, user.getUsername())
+                            .append(FieldKeys.EMAIL, user.getEmail())
+                            .append(FieldKeys.PROFILE_PIC, user.getProfilePicURL())
+                            .append(FieldKeys.CREATED_ON, System.currentTimeMillis())
+                            .append(FieldKeys.MODIFIED_AT, System.currentTimeMillis())
             );
-            return  user.getUserId();
+            return user.getUserId();
         } else {
             Document updatedProfileDocument = new Document()
                     .append(FieldKeys.USERNAME, user.getUsername())
@@ -50,12 +51,12 @@ public class UserDaoImpl implements UserDao {
                     .append(FieldKeys.MODIFIED_AT, System.currentTimeMillis());
 
             collection.updateOne(and(
-                        eq(FieldKeys.EMAIL, user.getEmail()),
-                        eq(FieldKeys.USER_ID, user.getUserId())
+                            eq(FieldKeys.EMAIL, user.getEmail()),
+                            eq(FieldKeys.PRIMARY_KEY, user.getUserId())
                     ),
                     new Document(Constants.SET_OPERATION, updatedProfileDocument)
             );
-            return user.getUserId();
+            return document.getString(FieldKeys.PRIMARY_KEY);
         }
     }
 }

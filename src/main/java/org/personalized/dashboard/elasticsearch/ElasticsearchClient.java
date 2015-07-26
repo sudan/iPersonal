@@ -14,6 +14,7 @@ import org.elasticsearch.action.update.UpdateResponse;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.sort.SortBuilders;
 import org.elasticsearch.search.sort.SortOrder;
+import org.personalized.dashboard.auth.SessionManager;
 import org.personalized.dashboard.bootstrap.ESBootstrap;
 import org.personalized.dashboard.model.EntityType;
 import org.personalized.dashboard.model.SearchContext;
@@ -21,7 +22,6 @@ import org.personalized.dashboard.model.SearchDocument;
 import org.personalized.dashboard.utils.ConfigKeys;
 import org.personalized.dashboard.utils.Constants;
 import org.personalized.dashboard.utils.FieldKeys;
-import org.personalized.dashboard.auth.SessionManager;
 
 import java.util.List;
 import java.util.Map;

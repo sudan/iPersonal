@@ -5,6 +5,8 @@ package org.personalized.dashboard.utils;
  */
 public class FieldKeys {
 
+    public static final String AUTH_TOKEN = "token";
+
     public static final String USER_ID = "user_id";
     public static final String CREATED_ON = "created_on";
     public static final String MODIFIED_AT = "modified_at";

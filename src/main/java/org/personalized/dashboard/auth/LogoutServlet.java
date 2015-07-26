@@ -2,6 +2,7 @@ package org.personalized.dashboard.auth;
 
 import com.google.inject.Inject;
 import org.apache.commons.lang3.StringUtils;
+import org.personalized.dashboard.dao.api.SessionDao;
 import org.personalized.dashboard.utils.ConfigKeys;
 
 import javax.servlet.ServletException;
@@ -13,25 +14,27 @@ import java.io.IOException;
 /**
  * Created by sudan on 26/7/15.
  */
-public class DashboardServlet extends HttpServlet {
+public class LogoutServlet extends HttpServlet {
 
     private final UserCookieGenerator userCookieGenerator;
+    private final SessionDao sessionDao;
 
     @Inject
-    public DashboardServlet(UserCookieGenerator userCookieGenerator) {
+    public LogoutServlet(UserCookieGenerator userCookieGenerator, SessionDao sessionDao) {
         this.userCookieGenerator = userCookieGenerator;
+        this.sessionDao = sessionDao;
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         String cookieValue = userCookieGenerator.readCookieValue(request);
-        if (StringUtils.isEmpty(cookieValue)) {
-            response.sendRedirect(ConfigKeys.GOOGLE_LOGIN);
-        } else {
-            request.getRequestDispatcher("/WEB-INF/index.html").forward(
-                    request, response
-            );
+
+        if (StringUtils.isNotEmpty(cookieValue)) {
+            sessionDao.delete(cookieValue);
+            userCookieGenerator.removeCookie(response);
         }
+
+        response.sendRedirect(ConfigKeys.GOOGLE_LOGIN);
     }
 }

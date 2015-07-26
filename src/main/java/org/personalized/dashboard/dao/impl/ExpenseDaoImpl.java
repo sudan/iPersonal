@@ -37,7 +37,7 @@ public class ExpenseDaoImpl implements ExpenseDao {
     public String create(Expense expense, String userId) {
         MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection(Constants.EXPENSES);
 
-        String expenseId = idGenerator.generateId(Constants.EXPENSE_PREFIX, Constants.ID_LENGTH);
+        String expenseId = idGenerator.generateId(Constants.EXPENSE_PREFIX, Constants.ID_LENGTH, true);
         Document document = new Document()
                 .append(FieldKeys.PRIMARY_KEY, expenseId)
                 .append(FieldKeys.EXPENSE_TITLE, expense.getTitle())

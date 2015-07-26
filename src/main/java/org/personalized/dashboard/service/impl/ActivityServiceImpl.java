@@ -1,11 +1,11 @@
 package org.personalized.dashboard.service.impl;
 
 import com.google.inject.Inject;
+import org.personalized.dashboard.auth.SessionManager;
 import org.personalized.dashboard.dao.api.ActivityDao;
 import org.personalized.dashboard.model.Activity;
 import org.personalized.dashboard.service.api.ActivityService;
 import org.personalized.dashboard.utils.Constants;
-import org.personalized.dashboard.auth.SessionManager;
 
 import java.util.List;
 

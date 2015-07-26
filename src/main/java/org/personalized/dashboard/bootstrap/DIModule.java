@@ -3,16 +3,13 @@ package org.personalized.dashboard.bootstrap;
 import com.google.inject.AbstractModule;
 import com.google.inject.Singleton;
 import com.google.inject.name.Names;
-import org.personalized.dashboard.auth.DashboardServlet;
-import org.personalized.dashboard.auth.GoogleLoginCallbackServlet;
-import org.personalized.dashboard.auth.GoogleLoginServlet;
+import org.personalized.dashboard.auth.*;
 import org.personalized.dashboard.dao.api.*;
 import org.personalized.dashboard.dao.impl.*;
 import org.personalized.dashboard.elasticsearch.ElasticsearchClient;
 import org.personalized.dashboard.queue.*;
 import org.personalized.dashboard.service.api.*;
 import org.personalized.dashboard.service.impl.*;
-import org.personalized.dashboard.auth.SessionManager;
 import org.personalized.dashboard.utils.generator.ActivityGenerator;
 import org.personalized.dashboard.utils.generator.IdGenerator;
 import org.personalized.dashboard.utils.htmltidy.DOMParser;
@@ -48,6 +45,7 @@ public class DIModule extends AbstractModule {
         bind(ActivityDao.class).to(ActivityDaoImpl.class);
         bind(TagDao.class).to(TagDaoImpl.class);
         bind(UserDao.class).to(UserDaoImpl.class);
+        bind(SessionDao.class).to(SessionDaoImpl.class);
 
         bind(ValidationService.class).annotatedWith(Names.named("bookmark")).to
                 (BookmarkValidationService.class);
@@ -90,5 +88,8 @@ public class DIModule extends AbstractModule {
         bind(GoogleLoginServlet.class).in(Singleton.class);
         bind(GoogleLoginCallbackServlet.class).in(Singleton.class);
         bind(DashboardServlet.class).in(Singleton.class);
+        bind(LogoutServlet.class).in(Singleton.class);
+
+        bind(UserCookieGenerator.class);
     }
 }

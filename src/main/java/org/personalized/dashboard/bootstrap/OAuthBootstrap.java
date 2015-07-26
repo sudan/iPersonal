@@ -15,7 +15,7 @@ public class OAuthBootstrap {
 
     public static void init() {
 
-        if(!isInitialized) {
+        if (!isInitialized) {
 
             googlePlusFactory = new GooglePlusFactory(ConfigKeys.GOOGLE_APP_ID, ConfigKeys.GOOGLE_APP_SECRET);
             oAuth2Parameters = new OAuth2Parameters();

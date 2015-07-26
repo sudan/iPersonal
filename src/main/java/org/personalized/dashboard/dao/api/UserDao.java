@@ -9,6 +9,7 @@ public interface UserDao {
 
     /**
      * Create or update user based on email
+     *
      * @param user
      * @return
      */
