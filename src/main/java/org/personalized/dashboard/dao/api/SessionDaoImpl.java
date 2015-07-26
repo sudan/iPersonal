@@ -30,4 +30,17 @@ public class SessionDaoImpl implements SessionDao {
 
         collection.deleteOne(eq(FieldKeys.PRIMARY_KEY, sessionId));
     }
+
+    @Override
+    public String getUserId(String sessionId) {
+
+        MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection(Constants.SESSIONS);
+
+        Document document = collection.find(eq(FieldKeys.PRIMARY_KEY, sessionId)).first();
+
+        if (document != null) {
+            return document.getString(FieldKeys.USER_ID);
+        }
+        return null;
+    }
 }

@@ -14,4 +14,11 @@ public interface UserDao {
      * @return
      */
     String createOrUpdate(User user);
+
+    /**
+     * Get the user object
+     * @param userId
+     * @return
+     */
+    User get(String userId);
 }
