@@ -15,9 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
 
 import javax.ws.rs.*;
-import javax.ws.rs.core.GenericEntity;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
+import javax.ws.rs.core.*;
 import java.util.List;
 
 /**
@@ -28,6 +26,9 @@ import java.util.List;
 @Scope("request")
 @Path("/bookmarks")
 public class BookmarkController {
+
+    @Context
+    private HttpHeaders httpHeaders;
 
     private final Logger LOGGER = LoggerFactory.getLogger(BookmarkController.class);
 
@@ -48,7 +49,7 @@ public class BookmarkController {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response createBookmark(Bookmark bookmark) {
+    public Response createBookmark(@Context HttpHeaders httpHeaders, Bookmark bookmark) {
 
         try {
             List<ErrorEntity> errorEntities = bookmarkValidationService.validate(bookmark);
@@ -70,7 +71,8 @@ public class BookmarkController {
     @GET
     @Path("{bookmarkId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getBookmark(@PathParam("bookmarkId") String bookmarkId) {
+    public Response getBookmark(@Context HttpHeaders httpHeaders,
+                                @PathParam("bookmarkId") String bookmarkId) {
 
         try {
             if (StringUtils.isEmpty(bookmarkId)) {
@@ -92,7 +94,7 @@ public class BookmarkController {
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response updateBookmark(Bookmark bookmark) {
+    public Response updateBookmark(@Context HttpHeaders httpHeaders, Bookmark bookmark) {
 
         try {
             List<ErrorEntity> errorEntities = bookmarkValidationService.validate(bookmark);
@@ -117,7 +119,8 @@ public class BookmarkController {
 
     @DELETE
     @Path("{bookmarkId}")
-    public Response deleteBookmark(@PathParam("bookmarkId") String bookmarkId) {
+    public Response deleteBookmark(@Context HttpHeaders httpHeaders,
+                                   @PathParam("bookmarkId") String bookmarkId) {
 
         try {
             if (StringUtils.isEmpty(bookmarkId)) {
@@ -135,7 +138,7 @@ public class BookmarkController {
     @GET
     @Path("count")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response countBookmarks() {
+    public Response countBookmarks(@Context HttpHeaders httpHeaders) {
 
         try {
             Long count = bookmarkService.countBookmarks();
@@ -148,7 +151,8 @@ public class BookmarkController {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response fetchBookmarks(@QueryParam("limit") int limit, @QueryParam("offset") int
+    public Response fetchBookmarks(@Context HttpHeaders httpHeaders,
+                                   @QueryParam("limit") int limit, @QueryParam("offset") int
             offset) {
 
         try {
