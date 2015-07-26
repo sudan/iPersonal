@@ -2,12 +2,12 @@ package org.personalized.dashboard.service.impl;
 
 import com.google.inject.Inject;
 import org.apache.commons.lang3.StringUtils;
+import org.personalized.dashboard.auth.SessionManager;
 import org.personalized.dashboard.dao.api.ActivityDao;
 import org.personalized.dashboard.dao.api.BookmarkDao;
 import org.personalized.dashboard.model.*;
 import org.personalized.dashboard.queue.ESIndexProducer;
 import org.personalized.dashboard.service.api.BookmarkService;
-import org.personalized.dashboard.auth.SessionManager;
 import org.personalized.dashboard.utils.generator.ActivityGenerator;
 import org.springframework.stereotype.Repository;
 

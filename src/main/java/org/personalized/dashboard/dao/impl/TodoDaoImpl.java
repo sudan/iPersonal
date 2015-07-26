@@ -36,11 +36,11 @@ public class TodoDaoImpl implements TodoDao {
     public String create(Todo todo, String userId) {
         MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection
                 (Constants.TODOS);
-        String todoId = idGenerator.generateId(Constants.TODO_PREFIX, Constants.ID_LENGTH);
+        String todoId = idGenerator.generateId(Constants.TODO_PREFIX, Constants.ID_LENGTH, true);
 
         List<Document> tasks = Lists.newArrayList();
         for (Task task : todo.getTasks()) {
-            String taskId = idGenerator.generateId(Constants.TASK_PREFIX, Constants.ID_LENGTH);
+            String taskId = idGenerator.generateId(Constants.TASK_PREFIX, Constants.ID_LENGTH, true);
             Document document = new Document()
                     .append(FieldKeys.PRIMARY_KEY, taskId)
                     .append(FieldKeys.TASK_NAME, task.getName())
@@ -110,7 +110,7 @@ public class TodoDaoImpl implements TodoDao {
 
         List<Document> tasks = Lists.newArrayList();
         for (Task task : todo.getTasks()) {
-            String taskId = idGenerator.generateId(Constants.TASK_PREFIX, Constants.ID_LENGTH);
+            String taskId = idGenerator.generateId(Constants.TASK_PREFIX, Constants.ID_LENGTH, true);
             Document document = new Document()
                     .append(FieldKeys.PRIMARY_KEY, taskId)
                     .append(FieldKeys.TASK_NAME, task.getName())

@@ -12,7 +12,7 @@
     <properties>
         <junit.version>4.11</junit.version>
         <mockito.version>1.9.5</mockito.version>
-        <servlet.version>3.1.0</servlet.version>
+        <servlet-api.version>2.5</servlet-api.version>
         <jsp.version>2.2</jsp.version>
         <jersey.version>1.9</jersey.version>
         <guava.version>18.0</guava.version>
@@ -35,6 +35,10 @@
         <elasticsearch.version>1.6.0</elasticsearch.version>
         <html-sanitizer.version>r239</html-sanitizer.version>
         <jsoup.version>1.7.2</jsoup.version>
+        <google-plus.version>0.0.3</google-plus.version>
+        <google-api.version>v2-rev65-1.17.0-rc</google-api.version>
+        <spring-social.version>1.1.2.RELEASE</spring-social.version>
+        <spring-social-google.version>1.0.0.RELEASE</spring-social-google.version>
     </properties>
 
     <dependencies>
@@ -54,10 +58,11 @@
         </dependency>
 
         <!-- servlet and jsp -->
+
         <dependency>
             <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <version>${servlet.version}</version>
+            <artifactId>servlet-api</artifactId>
+            <version>${servlet-api.version}</version>
         </dependency>
 
         <dependency>
@@ -275,6 +280,32 @@
             <artifactId>jsoup</artifactId>
             <version>${jsoup.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.springframework.social</groupId>
+            <artifactId>spring-social-web</artifactId>
+            <version>${spring-social.version}</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.springframework.social</groupId>
+            <artifactId>spring-social-google</artifactId>
+            <version>${spring-social-google.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.googlecode.googleplus</groupId>
+            <artifactId>google-plus-java-api</artifactId>
+            <version>${google-plus.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.apis</groupId>
+            <artifactId>google-api-services-oauth2</artifactId>
+            <version>${google-api.version}</version>
+        </dependency>
+
 
     </dependencies>
 

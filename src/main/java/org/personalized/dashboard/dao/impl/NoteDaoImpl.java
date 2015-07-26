@@ -35,7 +35,7 @@ public class NoteDaoImpl implements NoteDao {
         MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection
                 (Constants.NOTES);
 
-        String noteId = idGenerator.generateId(Constants.NOTE_PREFIX, Constants.ID_LENGTH);
+        String noteId = idGenerator.generateId(Constants.NOTE_PREFIX, Constants.ID_LENGTH, true);
         Document document = new Document()
                 .append(FieldKeys.PRIMARY_KEY, noteId)
                 .append(FieldKeys.NOTE_TITLE, note.getTitle())

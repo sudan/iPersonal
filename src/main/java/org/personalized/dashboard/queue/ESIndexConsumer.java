@@ -1,13 +1,13 @@
 package org.personalized.dashboard.queue;
 
 import com.google.gson.Gson;
+import org.personalized.dashboard.auth.SessionManager;
 import org.personalized.dashboard.bootstrap.QueueBootstrap;
 import org.personalized.dashboard.elasticsearch.ElasticsearchClient;
 import org.personalized.dashboard.model.EntityType;
 import org.personalized.dashboard.model.OperationType;
 import org.personalized.dashboard.model.SearchDocument;
 import org.personalized.dashboard.utils.FieldKeys;
-import org.personalized.dashboard.auth.SessionManager;
 import org.personalized.dashboard.utils.htmltidy.DOMParser;
 import org.personalized.dashboard.utils.stopwords.StopwordsRemover;
 import org.slf4j.Logger;

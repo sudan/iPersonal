@@ -35,7 +35,7 @@ public class PinDaoImpl implements PinDao {
         MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection
                 (Constants.PINS);
 
-        String pinId = idGenerator.generateId(Constants.PIN_PREFIX, Constants.ID_LENGTH);
+        String pinId = idGenerator.generateId(Constants.PIN_PREFIX, Constants.ID_LENGTH, true);
         Document document = new Document()
                 .append(FieldKeys.PRIMARY_KEY, pinId)
                 .append(FieldKeys.PIN_NAME, pin.getName())

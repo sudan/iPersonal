@@ -36,7 +36,7 @@ public class DiaryDaoImpl implements DiaryDao {
     public String create(Page page, int year, String userId) {
         MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection(Constants.DIARIES);
 
-        String pageId = idGenerator.generateId(Constants.PAGE_PREFIX, Constants.ID_LENGTH);
+        String pageId = idGenerator.generateId(Constants.PAGE_PREFIX, Constants.ID_LENGTH, true);
         Document document = new Document()
                 .append(FieldKeys.PRIMARY_KEY, pageId)
                 .append(FieldKeys.PAGE_TITLE, page.getTitle())

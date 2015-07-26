@@ -2,12 +2,12 @@ package org.personalized.dashboard.service.impl;
 
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
+import org.personalized.dashboard.auth.SessionManager;
 import org.personalized.dashboard.dao.api.ActivityDao;
 import org.personalized.dashboard.dao.api.TagDao;
 import org.personalized.dashboard.model.*;
 import org.personalized.dashboard.queue.ESIndexProducer;
 import org.personalized.dashboard.service.api.TagService;
-import org.personalized.dashboard.auth.SessionManager;
 import org.personalized.dashboard.utils.generator.ActivityGenerator;
 
 import java.util.List;

@@ -21,7 +21,7 @@ public class IdGeneratorTest {
     @Test
     public void testIdGenerator() {
 
-        String id = idGenerator.generateId("BOK", 16);
+        String id = idGenerator.generateId("BOK", 16, true);
         Assert.assertEquals("ID length is 16", 16, id.length());
         Assert.assertEquals("ID prefix is BOK", 0, id.indexOf("BOK"));
     }

@@ -35,7 +35,7 @@ public class BookmarkDaoImpl implements BookmarkDao {
         MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection
                 (Constants.BOOKMARKS);
 
-        String bookmarkId = idGenerator.generateId(Constants.BOOKMARK_PREFIX, Constants.ID_LENGTH);
+        String bookmarkId = idGenerator.generateId(Constants.BOOKMARK_PREFIX, Constants.ID_LENGTH, true);
         Document document = new Document()
                 .append(FieldKeys.PRIMARY_KEY, bookmarkId)
                 .append(FieldKeys.BOOKMARK_NAME, bookmark.getName())

@@ -5,11 +5,17 @@ package org.personalized.dashboard.utils;
  */
 public class FieldKeys {
 
+    public static final String AUTH_TOKEN = "token";
+
     public static final String USER_ID = "user_id";
     public static final String CREATED_ON = "created_on";
     public static final String MODIFIED_AT = "modified_at";
     public static final String IS_DELETED = "is_deleted";
     public static final String PRIMARY_KEY = "_id";
+
+    public static final String USERNAME = "name";
+    public static final String EMAIL = "email";
+    public static final String PROFILE_PIC = "pic";
 
     public static final String BOOKMARK_NAME = "name";
     public static final String BOOKMARK_URL = "url";
