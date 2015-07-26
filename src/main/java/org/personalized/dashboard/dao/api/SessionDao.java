@@ -19,4 +19,11 @@ public interface SessionDao {
      * @param sessionId
      */
     void delete(String sessionId);
+
+    /**
+     * Get userId from sessionId
+     * @param sessionId
+     * @return
+     */
+    String getUserId(String sessionId);
 }

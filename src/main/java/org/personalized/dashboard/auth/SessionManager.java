@@ -5,12 +5,10 @@ package org.personalized.dashboard.auth;
  */
 public class SessionManager {
 
-    public SessionManager() {
+    private String userId;
 
-    }
-
-    public String getUserIdFromSession() {
-        // TODO return dummy value till auth flow is implemented
-        return "1";
+    public String getUserIdFromSession(){
+        this.userId = "USRE9NOT0ZB6FNYP";
+        return this.userId;
     }
 }

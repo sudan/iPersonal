@@ -59,4 +59,21 @@ public class UserDaoImpl implements UserDao {
             return document.getString(FieldKeys.PRIMARY_KEY);
         }
     }
+
+    @Override
+    public User get(String userId) {
+        MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection(Constants.USERS);
+
+        Document document = collection.find(eq(FieldKeys.PRIMARY_KEY, userId)).first();
+
+        if (document != null) {
+            User user = new User();
+            user.setUserId(document.getString(FieldKeys.PRIMARY_KEY));
+            user.setUsername(document.getString(FieldKeys.USERNAME));
+            user.setEmail(document.getString(FieldKeys.EMAIL));
+            user.setProfilePicURL(document.getString(FieldKeys.PROFILE_PIC));
+            return user;
+        }
+        return null;
+    }
 }
