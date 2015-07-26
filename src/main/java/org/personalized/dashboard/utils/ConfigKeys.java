@@ -26,4 +26,12 @@ public class ConfigKeys {
     public static final String ES_INDEX = ConfigManager.getValue("elasticsearch.index");
     public static final String ES_TYPE = ConfigManager.getValue("elasticsearch.type");
     public static final String ES_DEBUG_FLAG = ConfigManager.getValue("elasticsearch.isDebugMode");
+
+    public static final String GOOGLE_APP_ID = ConfigManager.getValue("google.appId");
+    public static final String GOOGLE_APP_SECRET = ConfigManager.getValue("google.appSecret");
+    public static final String GOOGLE_SCOPE = ConfigManager.getValue("google.scope");
+    public static final String GOOGLE_REDIRECT_URI = ConfigManager.getValue("google.redirectUri");
+
+    public static final String GOOGLE_LOGIN = "login";
+    public static final String DASHBOARD = "dashboard";
 }

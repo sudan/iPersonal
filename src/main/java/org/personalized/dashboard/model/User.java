@@ -13,11 +13,8 @@ public class User {
     private String email;
     private String profilePicURL;
 
-    public User(String userId, String username, String email, String profilePicURL) {
-        this.userId = userId;
-        this.username = username;
-        this.email = email;
-        this.profilePicURL = profilePicURL;
+    public User() {
+
     }
 
     public String getUserId() {

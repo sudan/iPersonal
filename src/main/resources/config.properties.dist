@@ -17,3 +17,8 @@ elasticsearch.type=your-es-type
 elasticsearch.clustername=your-es-clustername
 elasticsearch.nodename=your-es-nodename
 elasticsearch.isDebugMode=false
+
+google.appId=your-google-appid
+google.appSecret=your-google-appsecret
+google.redirectUri=your-google-redirect-uri
+google.scope=your-google-scope

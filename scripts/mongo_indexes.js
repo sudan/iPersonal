@@ -40,3 +40,5 @@ db.diaries.ensureIndex({ is_deleted : 1 })
 db.diaries.ensureIndex({ year : 1 })
 db.diaries.ensureIndex({ month : 1 })
 db.diaries.ensureIndex({ date : 1 })
+
+db.users.ensureIndex({ email : 1}, { unique : true})
