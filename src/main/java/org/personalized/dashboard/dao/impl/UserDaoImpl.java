@@ -26,7 +26,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public String createOrUpdate(User user) {
+    public String upsert(User user) {
 
         MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection(Constants.USERS);
 

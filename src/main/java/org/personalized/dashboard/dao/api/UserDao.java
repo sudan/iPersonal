@@ -13,7 +13,7 @@ public interface UserDao {
      * @param user
      * @return
      */
-    String createOrUpdate(User user);
+    String upsert(User user);
 
     /**
      * Get the user object
