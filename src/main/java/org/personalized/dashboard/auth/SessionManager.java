@@ -5,10 +5,13 @@ package org.personalized.dashboard.auth;
  */
 public class SessionManager {
 
-    private String userId;
+    private static ThreadLocal<String> userId = new ThreadLocal<String>();
 
-    public String getUserIdFromSession(){
-        this.userId = "USRE9NOT0ZB6FNYP";
-        return this.userId;
+    public static String getUserIdFromSession(){
+        return userId.get();
+    }
+
+    public static void setUserId(String extractedUserId) {
+        userId.set(extractedUserId);
     }
 }

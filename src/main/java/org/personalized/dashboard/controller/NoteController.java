@@ -15,9 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
 
 import javax.ws.rs.*;
-import javax.ws.rs.core.GenericEntity;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
+import javax.ws.rs.core.*;
 import java.util.List;
 
 /**
@@ -47,7 +45,7 @@ public class NoteController {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response createNote(Note note) {
+    public Response createNote(@Context HttpHeaders httpHeaders, Note note) {
 
         try {
             List<ErrorEntity> errorEntities = noteValidationService.validate(note);
@@ -69,7 +67,7 @@ public class NoteController {
     @GET
     @Path("{noteId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getNote(@PathParam("noteId") String noteId) {
+    public Response getNote(@Context HttpHeaders httpHeaders, @PathParam("noteId") String noteId) {
 
         try {
             if (StringUtils.isEmpty(noteId)) {
@@ -91,7 +89,7 @@ public class NoteController {
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response updateNote(Note note) {
+    public Response updateNote(@Context HttpHeaders httpHeaders , Note note) {
 
         try {
             List<ErrorEntity> errorEntities = noteValidationService.validate(note);
@@ -116,7 +114,7 @@ public class NoteController {
 
     @DELETE
     @Path("{noteId}")
-    public Response deleteNote(@PathParam("noteId") String noteId) {
+    public Response deleteNote(@Context HttpHeaders httpHeaders , @PathParam("noteId") String noteId) {
 
         try {
             if (StringUtils.isEmpty(noteId)) {
@@ -134,7 +132,7 @@ public class NoteController {
     @GET
     @Path("count")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response countNotes() {
+    public Response countNotes(@Context HttpHeaders httpHeaders) {
 
         try {
             Long count = noteService.countNotes();
@@ -147,7 +145,8 @@ public class NoteController {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response fetchNotes(@QueryParam("limit") int limit, @QueryParam("offset") int offset) {
+    public Response fetchNotes(@Context HttpHeaders httpHeaders,
+                               @QueryParam("limit") int limit, @QueryParam("offset") int offset) {
 
         try {
             BatchSize batchSize = new BatchSize(limit, offset);

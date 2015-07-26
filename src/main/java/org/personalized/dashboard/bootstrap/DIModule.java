@@ -16,6 +16,9 @@ import org.personalized.dashboard.utils.htmltidy.DOMParser;
 import org.personalized.dashboard.utils.stopwords.StopwordsRemover;
 import org.personalized.dashboard.utils.validator.*;
 
+import static com.google.inject.matcher.Matchers.any;
+import static com.google.inject.matcher.Matchers.inSubpackage;
+
 /**
  * Created by sudan on 5/4/15.
  */
@@ -93,5 +96,9 @@ public class DIModule extends AbstractModule {
         bind(LogoutServlet.class).in(Singleton.class);
 
         bind(UserCookieGenerator.class);
+        bind(RequestInterceptor.class);
+
+        bindInterceptor(inSubpackage("org.personalized.dashboard.controller"), any(), new RequestInterceptor());
+
     }
 }

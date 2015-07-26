@@ -39,6 +39,7 @@
         <google-api.version>v2-rev65-1.17.0-rc</google-api.version>
         <spring-social.version>1.1.2.RELEASE</spring-social.version>
         <spring-social-google.version>1.0.0.RELEASE</spring-social-google.version>
+        <aopalliance.version>1.0</aopalliance.version>
     </properties>
 
     <dependencies>
@@ -304,6 +305,12 @@
             <groupId>com.google.apis</groupId>
             <artifactId>google-api-services-oauth2</artifactId>
             <version>${google-api.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>aopalliance</groupId>
+            <artifactId>aopalliance</artifactId>
+            <version>${aopalliance.version}</version>
         </dependency>
 
 

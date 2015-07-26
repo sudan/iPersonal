@@ -67,4 +67,5 @@ public class Constants {
     public static final String SECONDARY_SEPARATOR = "###";
 
     public static final String COOKIE_NAME = "ipersonal-cookie";
+    public static final String AUTH_HEADER = "X-Auth-Token";
 }
