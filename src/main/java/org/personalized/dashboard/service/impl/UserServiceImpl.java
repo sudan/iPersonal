@@ -24,4 +24,9 @@ public class UserServiceImpl implements UserService {
     public User getUser() {
         return userDao.get(sessionManager.getUserIdFromSession());
     }
+
+    @Override
+    public String upsert(User user) {
+        return  userDao.upsert(user);
+    }
 }
