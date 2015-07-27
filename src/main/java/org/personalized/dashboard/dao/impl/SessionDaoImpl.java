@@ -1,8 +1,9 @@
-package org.personalized.dashboard.dao.api;
+package org.personalized.dashboard.dao.impl;
 
 import com.mongodb.client.MongoCollection;
 import org.bson.Document;
 import org.personalized.dashboard.bootstrap.MongoBootstrap;
+import org.personalized.dashboard.dao.api.SessionDao;
 import org.personalized.dashboard.utils.Constants;
 import org.personalized.dashboard.utils.FieldKeys;
 

@@ -3,7 +3,7 @@ package org.personalized.dashboard.auth;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 import org.apache.commons.lang3.StringUtils;
-import org.personalized.dashboard.dao.api.SessionDaoImpl;
+import org.personalized.dashboard.dao.impl.SessionDaoImpl;
 import org.personalized.dashboard.service.api.SessionService;
 import org.personalized.dashboard.service.impl.SessionServiceImpl;
 import org.personalized.dashboard.utils.Constants;

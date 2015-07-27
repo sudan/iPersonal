@@ -6,7 +6,7 @@ import org.junit.Test;
 import org.personalized.dashboard.bootstrap.ConfigManager;
 import org.personalized.dashboard.bootstrap.MongoBootstrap;
 import org.personalized.dashboard.dao.api.SessionDao;
-import org.personalized.dashboard.dao.api.SessionDaoImpl;
+import org.personalized.dashboard.dao.impl.SessionDaoImpl;
 import org.personalized.dashboard.utils.ConfigKeys;
 import org.personalized.dashboard.utils.Constants;
 import org.springframework.test.context.ActiveProfiles;
