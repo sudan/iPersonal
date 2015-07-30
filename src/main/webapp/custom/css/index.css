@@ -1,0 +1,22 @@
+.entity-form {
+	width: 400px;
+	display: table;
+	margin: 0 auto;
+}
+
+.button-group {
+	margin-left: 75px;
+	margin-right: 75px;
+	padding-right: 20px;
+}
+
+.wrapper-entity-form {
+	width: 500px;
+	border: 1px solid #d3d1d1;
+	padding: 5px;
+	border-radius: 10px;
+}
+
+.btn-element {
+	margin-right: 10px;
+}
