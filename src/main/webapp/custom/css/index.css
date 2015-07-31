@@ -1,5 +1,5 @@
 .entity-form {
-	width: 400px;
+	width: 420px;
 	display: table;
 	margin: 0 auto;
 }
@@ -11,7 +11,7 @@
 }
 
 .wrapper-entity-form {
-	width: 500px;
+	width: 520px;
 	border: 1px solid #d3d1d1;
 	padding: 5px;
 	border-radius: 10px;
@@ -19,4 +19,9 @@
 
 .btn-element {
 	margin-right: 10px;
+}
+
+.mandatory {
+	color: red;
+	padding-left: 2px;
 }
