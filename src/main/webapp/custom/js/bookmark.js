@@ -72,6 +72,12 @@
                         var errors = self.buildErrorObject(response, self);
                         self.renderErrors(errors, bookmarkForm);
                     } else {
+                        var bookmarkId = response.responseText;
+                        bookmark.set({ bookmarkId: bookmarkId});
+                        var tags = self.searchTag.val();
+                        if (tags) {
+                            tagModel.addTags(bookmarkId, 'BOOKMARK', bookmark.get(BOOKMARK_NAME), tags);
+                        }
                         self.clearErrors(bookmarkForm);
                     }
                 });
