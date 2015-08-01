@@ -83,24 +83,31 @@
                                     <i>Bookmark</i></h3>
                             </div>
                             <div class="panel-body">
-                                <form method="POST" id="bookmark-form">
+                                <form method="POST" id="bookmark-form" action="#">
                                     <div class="form-group">
-                                        <input class="form-control" id="book-name" placeholder="Title"/>
+                                        <input class="form-control" name="name" placeholder="Title"/>
+                                        <span class="name-error error-msg"></span>
                                     </div>
                                     <div class="form-group">
-                                        <input class="form-control" id="book-url" placeholder="URL"/>
+                                        <input class="form-control" name="url" placeholder="URL"/>
+                                        <span class="url-error error-msg"></span>
                                     </div>
                                     <div class="form-group">
-                                        <textarea class="form-control" id="book-description" rows="3" placeholder="Description goes here"></textarea>
+                                        <textarea class="form-control" name="description" rows="3"
+                                                  placeholder="Description goes here"></textarea>
+                                        <span class="description-error error-msg"></span>
                                     </div>
                                     <div class="button-group">
-                                        <button id="submit" type="submit" class="btn btn-success btn-element">Create</button>
-                                        <button id="cancel" type="submit" class="btn btn-link btn-element">Cancel</button>
+                                        <button id="book-submit" type="submit" class="btn btn-success btn-element">
+                                            Create
+                                        </button>
+                                        <button id="book-cancel" type="submit" class="btn btn-link btn-element">Cancel
+                                        </button>
                                     </div>
                                 </form>
                             </div>
                         </div>
-                    </div>                    
+                    </div>
                     <div id="note-wrapper"></div>
                     <div id="pin-wrapper"></div>
                     <div id="todo-wrapper"></div>

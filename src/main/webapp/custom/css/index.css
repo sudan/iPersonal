@@ -21,7 +21,10 @@
 	margin-right: 10px;
 }
 
-.mandatory {
-	color: red;
-	padding-left: 2px;
+.error-field {
+	border: 1px solid #a94442;
+}
+
+.error-msg {
+	color: #a94442;
 }

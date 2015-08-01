@@ -89,7 +89,7 @@ public class NoteController {
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response updateNote(@Context HttpHeaders httpHeaders , Note note) {
+    public Response updateNote(@Context HttpHeaders httpHeaders, Note note) {
 
         try {
             List<ErrorEntity> errorEntities = noteValidationService.validate(note);
@@ -114,7 +114,7 @@ public class NoteController {
 
     @DELETE
     @Path("{noteId}")
-    public Response deleteNote(@Context HttpHeaders httpHeaders , @PathParam("noteId") String noteId) {
+    public Response deleteNote(@Context HttpHeaders httpHeaders, @PathParam("noteId") String noteId) {
 
         try {
             if (StringUtils.isEmpty(noteId)) {

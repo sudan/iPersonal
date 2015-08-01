@@ -7,7 +7,7 @@ public class SessionManager {
 
     private static ThreadLocal<String> userId = new ThreadLocal<String>();
 
-    public static String getUserIdFromSession(){
+    public static String getUserIdFromSession() {
         return userId.get();
     }
 

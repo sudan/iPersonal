@@ -55,7 +55,7 @@ public class SessionDaoTest {
             userId1 = sessionDao.getUserId("session1");
             userId2 = sessionDao.getUserId("session2");
 
-            Assert.assertNull("userId is null",userId1);
+            Assert.assertNull("userId is null", userId1);
             Assert.assertEquals("userId is user2", "user2", userId2);
 
 

@@ -27,6 +27,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String upsert(User user) {
-        return  userDao.upsert(user);
+        return userDao.upsert(user);
     }
 }
