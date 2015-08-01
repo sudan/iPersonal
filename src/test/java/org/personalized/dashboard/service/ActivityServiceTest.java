@@ -54,6 +54,7 @@ public class ActivityServiceTest {
         ESIndexProducer todoESIndexProducer = new TodoESIndexProducer();
         ESIndexProducer expenseESIndexProducer = new ExpenseESIndexProducer();
         ESIndexProducer pageESIndexProducer = new PageESIndexProducer();
+        ExpenseCategoryDao expenseCategoryDao = new ExpenseCategoryDaoImpl();
 
         this.bookmarkService = new BookmarkServiceImpl(bookmarkDao, sessionManager,
                 activityGenerator, activityDao, bookmarkESIndexProducer);
@@ -64,7 +65,7 @@ public class ActivityServiceTest {
         this.todoService = new TodoServiceImpl(todoDao, sessionManager, activityGenerator,
                 activityDao, todoESIndexProducer);
         this.expenseService = new ExpenseServiceImpl(expenseDao, sessionManager, activityGenerator,
-                activityDao, expenseESIndexProducer);
+                activityDao, expenseESIndexProducer, expenseCategoryDao);
         this.diaryService = new DiaryServiceImpl(diaryDao, sessionManager, activityGenerator,
                 activityDao, pageESIndexProducer, new DOMParser());
         this.activityService = new ActivityServiceImpl(activityDao, sessionManager);
