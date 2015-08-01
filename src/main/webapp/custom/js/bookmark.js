@@ -2,21 +2,26 @@
 
     "use strict"
 
+    var BOOKMARK_URL_ROOT = '/iPersonal/dashboard/bookmarks';
+    var BOOKMARK_NAME = 'name';
+    var BOOKMARK_URL = 'url';
+    var BOOKMARK_DESCRIPTION = 'description';
+
     var Bookmark = Backbone.Model.extend({
-    	urlRoot: '/iPersonal/dashboard/bookmarks',
+    	urlRoot: BOOKMARK_URL_ROOT,
         validate: function(attributes) {
             var errors = {};
 
             if (!attributes.name) {
-                errors['name'] = 'Title cannot be empty';
+                errors[BOOKMARK_NAME] = 'Title cannot be empty';
             }
 
             if(!attributes.url) {
-                errors['url'] = 'URL cannot be empty';
+                errors[BOOKMARK_URL] = 'URL cannot be empty';
             }
 
             if(!attributes.description) {
-                errors['description'] = 'Description cannot be empty';
+                errors[BOOKMARK_DESCRIPTION] = 'Description cannot be empty';
             }
             return $.isEmptyObject(errors) ? false : errors;
         }
@@ -33,6 +38,12 @@
             'click #book-enable-new-tag': 'renderTagInput',
             'click #book-enable-existing-tag': 'renderTagInput'
         },
+
+        tagImage: $('#book-tag-img'),
+        searchTag: $('#book-existing-tag'),
+        addTag: $('#book-new-tag'),
+        enableSearchTag: $('#book-enable-existing-tag'),
+        enableAddTag: $('#book-enable-new-tag'),
 
         createBookmark: function(e) {
 
@@ -77,48 +88,48 @@
             var errorEntities = JSON.parse(response.responseText)['errorEntity'];
 
             var errors = {};
-            errors['name'] = [];
-            errors['url'] = [];
-            errors['description'] = [];
+            errors[BOOKMARK_NAME] = [];
+            errors[BOOKMARK_URL] = [];
+            errors[BOOKMARK_DESCRIPTION] = [];
 
             if (errorEntities instanceof Array) {
 
                 for (var i = 0; i < errorEntities.length; i++) {
 
                     var errorEntity = errorEntities[i];
-                    if (errorEntity.field === 'name') {
-                        errors['name'].push(errorEntity.description);
+                    if (errorEntity.field === BOOKMARK_NAME) {
+                        errors[BOOKMARK_NAME].push(errorEntity.description);
                     }
                             
-                    if (errorEntity.field === 'url') {
-                        errors['url'].push(errorEntity.description);
+                    if (errorEntity.field === BOOKMARK_URL) {
+                        errors[BOOKMARK_URL].push(errorEntity.description);
                     }
 
-                    if (errorEntity.field == 'description') {
-                            errors['description'].push(errorEntity.description);
+                    if (errorEntity.field == BOOKMARK_DESCRIPTION) {
+                            errors[BOOKMARK_DESCRIPTION].push(errorEntity.description);
                     }
                 }
             } else {
                 var errorEntity = errorEntities;
-                if (errorEntity.field === 'name') {
-                    errors['name'].push(errorEntity.description);
+                if (errorEntity.field === BOOKMARK_NAME) {
+                    errors[BOOKMARK_NAME].push(errorEntity.description);
                 }
                             
-                if (errorEntity.field === 'url') {
-                    errors['url'].push(errorEntity.description);
+                if (errorEntity.field === BOOKMARK_URL) {
+                    errors[BOOKMARK_URL].push(errorEntity.description);
                 }
 
-                if (errorEntity.field == 'description') {
-                    errors['description'].push(errorEntity.description);
+                if (errorEntity.field == BOOKMARK_DESCRIPTION) {
+                    errors[BOOKMARK_DESCRIPTION].push(errorEntity.description);
                 }
             }
 
             if (errors.name)
-                errors['name'] = errors['name'].join(';');
+                errors[BOOKMARK_NAME] = errors[BOOKMARK_NAME].join(';');
             if (errors.url)
-                errors['url'] = errors['url'].join(';');
+                errors[BOOKMARK_URL] = errors[BOOKMARK_URL].join(';');
             if (errors.description)
-                errors['description'] = errors['description'].join(';');
+                errors[BOOKMARK_DESCRIPTION] = errors[BOOKMARK_DESCRIPTION].join(';');
 
             return errors;
         },
@@ -164,10 +175,11 @@
 
         displayTagSelection: function(e) {
             
-            $('#book-tag-img').addClass('invisible');
+            var self = this;
+            self.tagImage.addClass('invisible');
 
-            $('#book-existing-tag').parent('div.form-group').removeClass('invisible');
-            $('#book-enable-new-tag').parent('div.form-group').removeClass('invisible');
+            self.searchTag.parent('div.form-group').removeClass('invisible');
+            self.enableAddTag.parent('div.form-group').removeClass('invisible');
         },
 
         resetValues: function(e) {
@@ -181,11 +193,11 @@
             bookmarkForm.find('input[name=url]').val('');
             bookmarkForm.find('textarea[name=description]').val('');
 
-            $('#book-tag-img').removeClass('invisible');
+            self.tagImage.removeClass('invisible');
 
-            $('#book-existing-tag').parent('div.form-group').addClass('invisible');
-            $('#book-new-tag').parent('div.form-group').addClass('invisible');
-            $('#book-enable-new-tag').parent('div.form-group').addClass('invisible');
+            self.searchTag.parent('div.form-group').addClass('invisible');
+            self.addTag.parent('div.form-group').addClass('invisible');
+            self.enableAddTag.parent('div.form-group').addClass('invisible');
         },
 
         renderTagInput: function(e) {
@@ -196,11 +208,11 @@
             var selectionId = $(e.target).attr('id');
 
             if (selectionId ===  'book-enable-new-tag') {
-                $('#book-existing-tag').parent('div.form-group').addClass('invisible');
-                $('#book-new-tag').parent('div.form-group').removeClass('invisible');
+                self.searchTag.parent('div.form-group').addClass('invisible');
+                self.addTag.parent('div.form-group').removeClass('invisible');
             } else if (selectionId == 'book-enable-existing-tag') {
-                $('#book-existing-tag').parent('div.form-group').removeClass('invisible');
-                $('#book-new-tag').parent('div.form-group').addClass('invisible');
+                self.searchTag.parent('div.form-group').removeClass('invisible');
+                self.addTag.parent('div.form-group').addClass('invisible');
             }
         }
 

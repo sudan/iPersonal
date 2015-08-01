@@ -36,3 +36,7 @@
 .invisible {
 	display: none;
 }
+
+a {
+	padding-right: 10px;
+}
