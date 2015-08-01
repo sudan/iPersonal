@@ -16,6 +16,8 @@
     <link href="vendor/dist/css/sb-admin-2.css" rel="stylesheet">
     <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="vendor/chosen/dist/chosen.min.css" rel="stylesheet" type="text/css">
+    <link href="vendor/datepicker/dist/datepicker.min.css" rel="stylesheet" type="text/css" />
+
     <link href="custom/css/index.css" rel="stylesheet" type="text/css"/>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -76,7 +78,7 @@
             <div class="col-lg-8">
 
                 <div id="entity-wrapper">
-                    <div id="bookmark-wrapper">
+                    <div id="bookmark-wrapper" class="invisible">
                         <div class="panel panel-default entity-form">
                             <div class="panel-heading">
                                 <h3 class="panel-title">
@@ -103,7 +105,7 @@
                                         <img id="book-tag-img" class="clickable" title="Add Tags" src="custom/images/tag.png"/>
                                     </div>
                                     <div class="form-group invisible">
-                                         <select id="book-tag" multiple="multiple" class="form-control tag-menu" data-placeholder="search tags">
+                                         <select id="book-tag" multiple="multiple" class="form-control chosen-menu" data-placeholder="search tags">
                                          </select>
                                     </div>
 
@@ -130,6 +132,48 @@
                                     <i>Expense</i>
                                 </h3>
                             </div>
+                            <div class="panel-body">
+                                <form method="POST" id="expense-form" action="#">
+                                    <div class="form-group">
+                                        <input class="form-control" name="title" placeholder="Title"/>
+                                        <span class="title-error error-msg"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <textarea class="form-control" name="description" rows="3"
+                                                  placeholder="Description goes here"></textarea>
+                                        <span class="description-error error-msg"></span>
+                                    </div>
+                                    <div class="form-group input-group">
+                                        <span class="input-group-addon">Rs</span>
+                                        <input class="form-control" name="amount" placeholder="Amount"/>
+                                        <span class="amount-error error-msg"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <input class="form-control datepicker" name="datepicker" placeholder="Select a date"/>
+                                        <span class="date-error error-msg"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <select id="exp-category" multiple="multiple" class="form-control chosen-menu" data-placeholder="search categories">
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <img id="exp-tag-img" class="clickable" title="Add Tags" src="custom/images/tag.png"/>
+                                    </div>
+                                    <div class="form-group invisible">
+                                         <select id="exp-tag" multiple="multiple" class="form-control chosen-menu" data-placeholder="search tags">
+                                         </select>
+                                    </div>
+
+                                    <div class="button-group">
+                                        <button id="exp-submit" type="submit" class="btn btn-success btn-element">
+                                            Create
+                                        </button>
+                                        <button id="exp-cancel" type="submit" class="btn btn-link btn-element">Cancel
+                                        </button>
+                                    </div>
+
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -146,6 +190,7 @@
 <script type="text/javascript" src="vendor/underscore/dist/underscore.js"></script>
 <script type="text/javascript" src="vendor/backbone/dist/backbone.js"></script>
 <script type="text/javascript" src="vendor/chosen/dist/chosen.js"></script>
+<script type="text/javascript" src="vendor/datepicker/dist/datepicker.js"></script>
 
 <script type="text/javascript" src="custom/js/init.js"></script>
 <script type="text/javascript" src="custom/js/bookmark.js"></script>
