@@ -10,7 +10,7 @@
 			var value = $(event.target).val();
 			if(value.length >= 3) {
 				var tagDropDown = $(window.currentTagEntity);
-				tagDropDown.append('<option>' + value + '</option>');
+				tagDropDown.append($('<option></option>').attr('value', value).text(value));
 				var chosenValues = $(window.currentTagEntity).val();
 				if (!chosenValues)
 					chosenValues = []

@@ -181,6 +181,13 @@
 
             window.currentTagEntity = self.searchTag;
             self.searchTag.parent('div.form-group').removeClass('invisible');
+
+            if(window.tags) {
+                for (var i = 0; i < window.tags.length; i++) {
+                    self.searchTag.append($('<option></option>').attr('value', tags[i]).text(tags[i]));
+                }
+                self.searchTag.trigger('chosen:updated');
+            }
         },
 
         resetValues: function(e) {
