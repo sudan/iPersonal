@@ -3,9 +3,7 @@ package org.personalized.dashboard.controller;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
 import org.apache.commons.lang3.StringUtils;
-import org.personalized.dashboard.model.BatchSize;
-import org.personalized.dashboard.model.Expense;
-import org.personalized.dashboard.model.ExpenseFilter;
+import org.personalized.dashboard.model.*;
 import org.personalized.dashboard.service.api.ExpenseService;
 import org.personalized.dashboard.utils.validator.ErrorEntity;
 import org.personalized.dashboard.utils.validator.ValidationService;
@@ -168,6 +166,23 @@ public class ExpenseController {
             }
         } catch (Exception e) {
             LOGGER.error("ExpenseController encountered an error", e);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/categories")
+    public Response getCategories(@Context HttpHeaders httpHeaders) {
+        try {
+            List<String> categories = expenseService.getCategories();
+            ExpenseCategory expenseCategory = new ExpenseCategory();
+            expenseCategory.setCategories(categories);
+            GenericEntity<ExpenseCategory> expenseCategoryObj = new GenericEntity<ExpenseCategory>(expenseCategory) {
+            };
+            return Response.status(Response.Status.OK).entity(expenseCategoryObj).build();
+        } catch (Exception e) {
+            LOGGER.error("TagController encountered an error", e);
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }

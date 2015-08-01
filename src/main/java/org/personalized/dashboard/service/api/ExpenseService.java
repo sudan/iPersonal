@@ -57,4 +57,10 @@ public interface ExpenseService {
      * @return
      */
     List<Expense> fetchExpenses(ExpenseFilter expenseFilter, int limit, int offset);
+
+    /**
+     * Fetch all categories for the user
+     * @return
+     */
+    List<String> getCategories();
 }

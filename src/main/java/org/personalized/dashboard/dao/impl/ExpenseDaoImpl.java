@@ -5,6 +5,7 @@ import com.google.inject.Inject;
 import com.mongodb.Block;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.model.UpdateOptions;
 import com.mongodb.client.result.UpdateResult;
 import org.bson.Document;
 import org.personalized.dashboard.bootstrap.MongoBootstrap;
@@ -51,6 +52,8 @@ public class ExpenseDaoImpl implements ExpenseDao {
                 .append(FieldKeys.MODIFIED_AT, System.currentTimeMillis());
 
         collection.insertOne(document);
+        if(!CollectionUtils.isEmpty(expense.getCategories()))
+            addToUserCategories(userId, expense.getCategories());
         return expenseId;
     }
 
@@ -109,6 +112,11 @@ public class ExpenseDaoImpl implements ExpenseDao {
                 ),
                 new Document(Constants.SET_OPERATION, document)
         );
+
+        if (updateResult.getModifiedCount() > 0) {
+            if(!CollectionUtils.isEmpty(expense.getCategories()))
+                addToUserCategories(userId, expense.getCategories());
+        }
         return updateResult.getModifiedCount();
     }
 
@@ -207,5 +215,20 @@ public class ExpenseDaoImpl implements ExpenseDao {
                 new Document(Constants.NOT_EQUAL_TO, true));
 
         return document;
+    }
+
+
+    private void addToUserCategories(String userId, List<String> categories) {
+
+        MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection(Constants.EXPENSE_CATEGORIES);
+
+        Document nestedDocument = new Document(Constants.EACH, categories);
+        Document document = new Document(FieldKeys.EXPENSE_CATEGORIES, nestedDocument);
+
+        UpdateOptions updateOptions = new UpdateOptions();
+        updateOptions.upsert(true);
+        collection.updateOne(eq(FieldKeys.PRIMARY_KEY, userId),
+                new Document(Constants.ADD_TO_SET_OPERATION, document), updateOptions);
+
     }
 }
