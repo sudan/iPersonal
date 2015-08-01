@@ -35,15 +35,10 @@
             'click #book-submit': 'createBookmark',
             'click #book-cancel': 'resetValues',
             'click #book-tag-img': 'displayTagSelection',
-            'click #book-enable-new-tag': 'renderTagInput',
-            'click #book-enable-existing-tag': 'renderTagInput'
         },
 
         tagImage: $('#book-tag-img'),
-        searchTag: $('#book-existing-tag'),
-        addTag: $('#book-new-tag'),
-        enableSearchTag: $('#book-enable-existing-tag'),
-        enableAddTag: $('#book-enable-new-tag'),
+        searchTag: $('#book-tag'),
 
         createBookmark: function(e) {
 
@@ -178,8 +173,8 @@
             var self = this;
             self.tagImage.addClass('invisible');
 
+            window.currentTagEntity = self.searchTag;
             self.searchTag.parent('div.form-group').removeClass('invisible');
-            self.enableAddTag.parent('div.form-group').removeClass('invisible');
         },
 
         resetValues: function(e) {
@@ -196,24 +191,6 @@
             self.tagImage.removeClass('invisible');
 
             self.searchTag.parent('div.form-group').addClass('invisible');
-            self.addTag.parent('div.form-group').addClass('invisible');
-            self.enableAddTag.parent('div.form-group').addClass('invisible');
-        },
-
-        renderTagInput: function(e) {
-
-            var self = this;
-            e.preventDefault();
-
-            var selectionId = $(e.target).attr('id');
-
-            if (selectionId ===  'book-enable-new-tag') {
-                self.searchTag.parent('div.form-group').addClass('invisible');
-                self.addTag.parent('div.form-group').removeClass('invisible');
-            } else if (selectionId == 'book-enable-existing-tag') {
-                self.searchTag.parent('div.form-group').removeClass('invisible');
-                self.addTag.parent('div.form-group').addClass('invisible');
-            }
         }
 
     });
