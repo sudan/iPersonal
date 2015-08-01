@@ -76,7 +76,12 @@
                         bookmark.set({ bookmarkId: bookmarkId});
                         var tags = self.searchTag.val();
                         if (tags) {
-                            tagModel.addTags(bookmarkId, 'BOOKMARK', bookmark.get(BOOKMARK_NAME), tags);
+                            backboneGlobalObj.trigger('tag:add', {
+                                'entityId': bookmarkId,
+                                'entityType': 'BOOKMARK',
+                                'entityTitle': bookmark.get(BOOKMARK_NAME),
+                                'tags': tags
+                            });
                         }
                         self.clearErrors(bookmarkForm);
                     }
