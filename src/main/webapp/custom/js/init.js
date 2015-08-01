@@ -2,21 +2,22 @@
 
 	$('#book-tag').chosen({
 		width: '100%',
-		no_results_text: 'Add a new tag'
+		no_results_text: 'Add a new tag and press enter(min 3 chars)'
 	}).trigger('chosen:updated');
 
 	$('.tag-menu').parent().find('div.chosen-container').find('input').on('keyup', function(event){
 		if(event.keyCode == 13) {
 			var value = $(event.target).val();
 			if(value.length >= 3) {
-				$(window.currentTagEntity).append('<option>' + value + '</option>');
+				var tagDropDown = $(window.currentTagEntity);
+				tagDropDown.append('<option>' + value + '</option>');
 				var chosenValues = $(window.currentTagEntity).val();
 				if (!chosenValues)
 					chosenValues = []
 				chosenValues.push(value);
 				
-				$(window.currentTagEntity).val(chosenValues);
-				$(window.currentTagEntity).trigger('chosen:updated');
+				tagDropDown.val(chosenValues);
+				tagDropDown.trigger('chosen:updated');
 			}
 		}	
 	});
