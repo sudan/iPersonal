@@ -28,7 +28,8 @@
 
         events : {
             'click #book-submit': 'createBookmark',
-            'click #book-cancel': 'resetValues'
+            'click #book-cancel': 'resetValues',
+            'click #book-tag': 'renderTags'
         },
 
         createBookmark: function(e) {
@@ -159,11 +160,20 @@
 
         },
 
-        resetValues: function() {
+        renderTags: function(e) {
+            console.log('clicked');
+        },
+
+        resetValues: function(e) {
 
             var self = this;
             e.preventDefault();
-            console.log("reseting");
+            
+            var bookmarkForm = $('#bookmark-form');
+
+            bookmarkForm.find('input[name=name]').val('');
+            bookmarkForm.find('input[name=url]').val('');
+            bookmarkForm.find('textarea[name=description]').val('');
         }
     });
 
