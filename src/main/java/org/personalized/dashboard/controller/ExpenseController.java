@@ -182,7 +182,7 @@ public class ExpenseController {
             };
             return Response.status(Response.Status.OK).entity(expenseCategoryObj).build();
         } catch (Exception e) {
-            LOGGER.error("TagController encountered an error", e);
+            LOGGER.error("ExpenseController encountered an error", e);
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
