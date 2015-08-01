@@ -29,7 +29,9 @@
         events : {
             'click #book-submit': 'createBookmark',
             'click #book-cancel': 'resetValues',
-            'click #book-tag': 'renderTags'
+            'click #book-tag-img': 'displayTagSelection',
+            'click #book-enable-new-tag': 'renderTagInput',
+            'click #book-enable-existing-tag': 'renderTagInput'
         },
 
         createBookmark: function(e) {
@@ -160,8 +162,12 @@
 
         },
 
-        renderTags: function(e) {
-            console.log('clicked');
+        displayTagSelection: function(e) {
+            
+            $('#book-tag-img').addClass('invisible');
+
+            $('#book-existing-tag').parent('div.form-group').removeClass('invisible');
+            $('#book-enable-new-tag').parent('div.form-group').removeClass('invisible');
         },
 
         resetValues: function(e) {
@@ -174,7 +180,30 @@
             bookmarkForm.find('input[name=name]').val('');
             bookmarkForm.find('input[name=url]').val('');
             bookmarkForm.find('textarea[name=description]').val('');
+
+            $('#book-tag-img').removeClass('invisible');
+
+            $('#book-existing-tag').parent('div.form-group').addClass('invisible');
+            $('#book-new-tag').parent('div.form-group').addClass('invisible');
+            $('#book-enable-new-tag').parent('div.form-group').addClass('invisible');
+        },
+
+        renderTagInput: function(e) {
+
+            var self = this;
+            e.preventDefault();
+
+            var selectionId = $(e.target).attr('id');
+
+            if (selectionId ===  'book-enable-new-tag') {
+                $('#book-existing-tag').parent('div.form-group').addClass('invisible');
+                $('#book-new-tag').parent('div.form-group').removeClass('invisible');
+            } else if (selectionId == 'book-enable-existing-tag') {
+                $('#book-existing-tag').parent('div.form-group').removeClass('invisible');
+                $('#book-new-tag').parent('div.form-group').addClass('invisible');
+            }
         }
+
     });
 
     window.bookmarksView = new BookmarkView();
