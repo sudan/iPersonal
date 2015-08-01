@@ -8,3 +8,4 @@ iPersonal is a personal dashboard for users to store their bookmarks, pins, todo
 3. ActiveMQ for message passing
 4. Elasticsearch for searching
 5. Spring Social for Auth(Google Plus)
+6. Backbone.js for front end
