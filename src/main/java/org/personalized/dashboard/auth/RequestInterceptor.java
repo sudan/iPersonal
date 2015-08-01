@@ -29,7 +29,7 @@ public class RequestInterceptor implements MethodInterceptor {
     @Override
     public Object invoke(MethodInvocation methodInvocation) throws Throwable {
 
-        Object [] params = methodInvocation.getArguments();
+        Object[] params = methodInvocation.getArguments();
         for (Object param : params) {
             if (param instanceof HttpHeaders) {
                 HttpHeaders httpHeaders = (HttpHeaders) param;
@@ -48,7 +48,7 @@ public class RequestInterceptor implements MethodInterceptor {
                     break;
                 }
                 sessionManager.setUserId(userId);
-                return  methodInvocation.proceed();
+                return methodInvocation.proceed();
             }
         }
         return Response.status(Response.Status.UNAUTHORIZED).build();

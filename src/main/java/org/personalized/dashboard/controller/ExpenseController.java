@@ -113,7 +113,7 @@ public class ExpenseController {
 
     @DELETE
     @Path("{expenseId}")
-    public Response deleteExpense(@Context HttpHeaders httpHeaders ,
+    public Response deleteExpense(@Context HttpHeaders httpHeaders,
                                   @PathParam("expenseId") String expenseId) {
 
         try {
@@ -148,7 +148,7 @@ public class ExpenseController {
     @Produces(MediaType.APPLICATION_JSON)
     public Response fetchExpenses(@Context HttpHeaders httpHeaders,
                                   @QueryParam("limit") int limit, @QueryParam("offset")
-                                  int offset, ExpenseFilter expenseFilter) {
+    int offset, ExpenseFilter expenseFilter) {
 
         try {
             BatchSize batchSize = new BatchSize(limit, offset);

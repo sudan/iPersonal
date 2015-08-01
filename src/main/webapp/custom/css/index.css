@@ -1,0 +1,30 @@
+.entity-form {
+	width: 420px;
+	display: table;
+	margin: 0 auto;
+}
+
+.button-group {
+	margin-left: 75px;
+	margin-right: 75px;
+	padding-right: 20px;
+}
+
+.wrapper-entity-form {
+	width: 520px;
+	border: 1px solid #d3d1d1;
+	padding: 5px;
+	border-radius: 10px;
+}
+
+.btn-element {
+	margin-right: 10px;
+}
+
+.error-field {
+	border: 1px solid #a94442;
+}
+
+.error-msg {
+	color: #a94442;
+}

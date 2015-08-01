@@ -17,6 +17,7 @@ public interface UserDao {
 
     /**
      * Get the user object
+     *
      * @param userId
      * @return
      */

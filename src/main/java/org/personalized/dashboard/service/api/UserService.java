@@ -9,12 +9,14 @@ public interface UserService {
 
     /**
      * Get user object
+     *
      * @return
      */
     User getUser();
 
     /**
      * Create or update a user
+     *
      * @param user
      * @return
      */

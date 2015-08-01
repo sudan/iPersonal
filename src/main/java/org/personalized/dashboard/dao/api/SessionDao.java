@@ -22,6 +22,7 @@ public interface SessionDao {
 
     /**
      * Get userId from sessionId
+     *
      * @param sessionId
      * @return
      */

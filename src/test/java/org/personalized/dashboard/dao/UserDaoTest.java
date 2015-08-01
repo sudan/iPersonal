@@ -69,8 +69,6 @@ public class UserDaoTest {
             Assert.assertEquals("Image url validation", "http://www.yahoo.com", newUser.getProfilePicURL());
 
 
-
-
         }
     }
 }

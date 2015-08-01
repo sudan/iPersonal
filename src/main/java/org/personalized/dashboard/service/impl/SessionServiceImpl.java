@@ -13,7 +13,7 @@ public class SessionServiceImpl implements SessionService {
 
     @Inject
     public SessionServiceImpl(SessionDao sessionDao) {
-         this.sessionDao = sessionDao;
+        this.sessionDao = sessionDao;
     }
 
     @Override

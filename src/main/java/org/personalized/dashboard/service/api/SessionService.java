@@ -7,6 +7,7 @@ public interface SessionService {
 
     /**
      * Get the userId from sessionId
+     *
      * @param sessionId
      * @return
      */
