@@ -1,5 +1,9 @@
 (function($, window, document){
 
+	$(document).ready(function(){
+		$('input.datepicker').datepicker();
+	});
+
 	window.backboneGlobalObj = {};
 	_.extend(backboneGlobalObj, Backbone.Events);
 
@@ -12,7 +16,17 @@
 		no_results_text: 'Add a new tag and press enter(min 3 chars)'
 	}).trigger('chosen:updated');
 
-	$('.tag-menu').parent().find('div.chosen-container').find('input').on('keyup', function(event){
+	$('#exp-tag').chosen({
+		width: '100%',
+		no_results_text: 'Add a new tag and press enter(min 3 chars)'
+	}).trigger('chosen:updated');
+
+	$('#exp-category').chosen({
+		width: '100%',
+		no_results_text: 'Add a new category and press enter(min 3 chars)'
+	}).trigger('chosen:updated');
+
+	$('.chosen-menu').parent().find('div.chosen-container').find('input').on('keyup', function(event){
 		if(event.keyCode == 13) {
 			var value = $(event.target).val();
 			if(value.length >= 3) {
@@ -28,7 +42,5 @@
 			}
 		}	
 	});
-
-
 
 })(jQuery, window, document);

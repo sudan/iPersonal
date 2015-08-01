@@ -12,7 +12,9 @@
 			tag.fetch().complete(function(response) {
 
 				if(response.status == 200) {
-					window.tags = JSON.parse(response.responseText)['tags'];
+
+					if (response.responseText['tags'])
+						window.tags = JSON.parse(response.responseText)['tags'];
 				}
 			});
 		},
