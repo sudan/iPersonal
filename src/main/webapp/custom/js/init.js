@@ -1,5 +1,12 @@
 (function($, window, document){
 
+	window.backboneGlobalObj = {};
+	_.extend(backboneGlobalObj, Backbone.Events);
+
+	backboneGlobalObj.on('tag:add', function(obj){
+		tagModel.addTags(obj.entityId, obj.entityType, obj.entityTitle, obj.tags);
+	});
+
 	$('#book-tag').chosen({
 		width: '100%',
 		no_results_text: 'Add a new tag and press enter(min 3 chars)'
@@ -21,5 +28,7 @@
 			}
 		}	
 	});
+
+
 
 })(jQuery, window, document);
