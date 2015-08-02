@@ -13,7 +13,7 @@
 
 				if(response.status == 200) {
 
-					if (response.responseText['tags'])
+					if (JSON.parse(response.responseText)['tags'])
 						window.tags = JSON.parse(response.responseText)['tags'];
 				}
 			});
