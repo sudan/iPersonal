@@ -14,6 +14,8 @@
 
             if (!attributes.name) {
                 errors[BOOKMARK_NAME] = 'Title cannot be empty';
+            } else if (attributes.name.length > 50) {
+                errors[BOOKMARK_NAME] = 'Title cannot exceed 50 characters';
             }
 
             if(!attributes.url) {
@@ -22,6 +24,8 @@
 
             if(!attributes.description) {
                 errors[BOOKMARK_DESCRIPTION] = 'Description cannot be empty';
+            } else if (attributes.description.length > 1000) {
+                errors[BOOKMARK_DESCRIPTION] = 'Description cannot exceed 1000 characters';
             }
             return $.isEmptyObject(errors) ? false : errors;
         }
