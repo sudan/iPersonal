@@ -1,46 +1,64 @@
 (function($, window, document){
 
-	$(document).ready(function(){
-		$('input.datepicker').datepicker();
-	});
+	var Init = {
 
-	window.backboneGlobalObj = {};
-	_.extend(backboneGlobalObj, Backbone.Events);
+		init : function() {
+			this.initDatePicker();
+			this.initBackboneEvents();
+			this.initChosenDropdowns();
+		},
 
-	backboneGlobalObj.on('tag:add', function(obj){
-		tagModel.addTags(obj.entityId, obj.entityType, obj.entityTitle, obj.tags);
-	});
+		initDatePicker: function() {
+			$(document).ready(function(){
+				$('input.datepicker').datepicker();
+			});
+		},
 
-	$('#book-tag').chosen({
-		width: '100%',
-		no_results_text: 'Add a new tag and press enter(min 3 chars)'
-	}).trigger('chosen:updated');
+		initBackboneEvents: function() {
+			window.backboneGlobalObj = {};
+			_.extend(backboneGlobalObj, Backbone.Events);
 
-	$('#exp-tag').chosen({
-		width: '100%',
-		no_results_text: 'Add a new tag and press enter(min 3 chars)'
-	}).trigger('chosen:updated');
+			backboneGlobalObj.on('tag:add', function(obj){
+				window.tagModel.addTags(obj.entityId, obj.entityType, obj.entityTitle, obj.tags);
+			});
+		},
 
-	$('#exp-category').chosen({
-		width: '100%',
-		no_results_text: 'Add a new category and press enter(min 3 chars)'
-	}).trigger('chosen:updated');
+		initChosenDropdowns: function() {
 
-	$('.chosen-menu').parent().find('div.chosen-container').find('input').on('keyup', function(event){
-		if(event.keyCode == 13) {
-			var value = $(event.target).val();
-			if(value.length >= 3) {
-				var tagDropDown = $(window.currentTagEntity);
-				tagDropDown.append($('<option></option>').attr('value', value).text(value));
-				var chosenValues = $(window.currentTagEntity).val();
-				if (!chosenValues)
-					chosenValues = []
-				chosenValues.push(value);
+			$('#book-tag').chosen({
+				width: '100%',
+				no_results_text: 'Add a new tag and press enter(min 3 chars)'
+			}).trigger('chosen:updated');
+
+			$('#exp-tag').chosen({
+				width: '100%',
+				no_results_text: 'Add a new tag and press enter(min 3 chars)'
+			}).trigger('chosen:updated');
+
+			$('#exp-category').chosen({
+				width: '100%',
+				no_results_text: 'Add a new category and press enter(min 3 chars)'
+			}).trigger('chosen:updated');
+
+			$('.chosen-menu').parent().find('div.chosen-container').find('input').on('keyup', function(event){
+				if(event.keyCode == 13) {
+					var value = $(event.target).val();
+					if(value.length >= 3) {
+						var tagDropDown = $(window.currentTagEntity);
+						tagDropDown.append($('<option></option>').attr('value', value).text(value));
+						var chosenValues = $(window.currentTagEntity).val();
+						if (!chosenValues)
+							chosenValues = []
+						chosenValues.push(value);
 				
-				tagDropDown.val(chosenValues);
-				tagDropDown.trigger('chosen:updated');
-			}
-		}	
-	});
+						tagDropDown.val(chosenValues);
+						tagDropDown.trigger('chosen:updated');
+					}
+				}	
+			});
+		}
+	};
+
+	Init.init();
 
 })(jQuery, window, document);
