@@ -44,3 +44,7 @@ img {
 a {
 	padding-right: 10px;
 }
+
+.add-entity-icon {
+	float: right;
+}

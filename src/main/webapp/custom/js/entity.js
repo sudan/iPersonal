@@ -24,6 +24,10 @@
 			this.getCount();
 		},
 
+		events: {
+			'a' : 'renderAddEntityForm'
+		},
+
 		getCount: function() {
 			var self = this;
 			entityCountModel.fetch().done(function(response) {
@@ -35,6 +39,11 @@
 			var tmpl = _.template(this.template);
 			this.$el.html(tmpl(entityCountModel.toJSON()));
 			return this;
+		},
+
+		renderAddEntityForm: function(e) {
+			e.preventDefault();
+			backboneGlobalObj.trigger('entity:createform', 'BOOKMARK');	
 		},
 
 		refreshCount: function(entityType, relativeValue) {
@@ -70,7 +79,20 @@
 
 	});
 
+	var EntityWrapperView = Backbone.View.extend({
+		el: $('#entity-wrapper'),
+
+		initialize: function() {
+			
+			var self = this;
+			backboneGlobalObj.on('entity:createform', function(entity) {
+				var div = entity.toLowerCase() + '-wrapper';
+				self.$el.children('#' + div).removeClass('invisible').siblings().addClass('invisible');
+			});
+		}
+	})
+
 	window.entityCountModel = new EntityCount();
 	window.entityCountView = new EntityCountView();
-
+	window.entityWrapperView = new EntityWrapperView();
 })(jQuery, window, document);
