@@ -21,6 +21,10 @@
 			backboneGlobalObj.on('tag:add', function(obj){
 				window.tagModel.addTags(obj.entityId, obj.entityType, obj.entityTitle, obj.tags);
 			});
+
+			backboneGlobalObj.on('entity:count', function(obj) {
+				window.entityCountView.refreshCount(obj.entityType, obj.relativeValue);
+			});
 		},
 
 		initChosenDropdowns: function() {

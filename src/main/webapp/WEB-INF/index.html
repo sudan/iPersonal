@@ -60,18 +60,22 @@
             </li>
         </ul>
 
-            <div class="navbar-default sidebar" role="navigation">
-                <div class="sidebar-nav navbar-collapse">
-                    <ul class="nav" id="side-menu">
-                        <li><a href="#">Bookmarks</a></li>
-                        <li><a href="#">Notes</a></li>
-                        <li><a href="#">Pins</a></li>
-                        <li><a href="#">Todos</a></li>
-                        <li><a href="#">Diaries</a></li>
-                        <li><a href="#">Expenses</a></li>
-                    </ul>
+            <script type="text/template" id="side-menu-template">
+                <div class="navbar-default sidebar" role="navigation">
+                    <div class="sidebar-nav navbar-collapse">
+                        <ul class="nav">
+                            <li><a href="#">Bookmarks (<%= bookmarks %>)</a></li>
+                            <li><a href="#">Notes (<%= notes %>)</a></li>
+                            <li><a href="#">Pins (<%= pins %>)</a></li>
+                            <li><a href="#">Todos (<%= todos %>)</a></li>
+                            <li><a href="#">Diaries (<%= diaries %>)</a></li>
+                            <li><a href="#">Expenses (<%= expenses %>)</a></li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
+            </script>
+
+            <div id="side-menu"></div>
     </nav>
 
     <div id="page-wrapper">
@@ -202,6 +206,7 @@
 <script type="text/javascript" src="custom/js/init.js"></script>
 <script type="text/javascript" src="custom/js/bookmark.js"></script>
 <script type="text/javascript" src="custom/js/tag.js"></script>
+<script type="text/javascript" src="custom/js/entity.js"></script>
 </body>
 
 </html>
