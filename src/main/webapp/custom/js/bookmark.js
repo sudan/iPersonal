@@ -87,6 +87,10 @@
                                 'tags': tags
                             });
                         }
+                        backboneGlobalObj.trigger('entity:count', {
+                            'entityType': 'BOOKMARK',
+                            'relativeValue': 1
+                        });
                         self.clearErrors(bookmarkForm);
                     }
                 });

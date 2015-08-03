@@ -1,8 +1,6 @@
 package org.personalized.dashboard.dao.impl;
 
-import com.google.common.collect.Lists;
 import com.mongodb.client.MongoCollection;
-import com.mongodb.client.model.UpdateOptions;
 import com.mongodb.client.result.UpdateResult;
 import org.bson.Document;
 import org.personalized.dashboard.bootstrap.MongoBootstrap;
@@ -44,20 +42,6 @@ public class TagDaoImpl implements TagDao {
         return 0L;
     }
 
-    @Override
-    public List<String> get(String userId) {
-        MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection(Constants.USER_TAGS);
-        Document document = collection.find(and(
-                eq(FieldKeys.PRIMARY_KEY, userId)
-        )).first();
-
-        if (document == null) {
-            return Lists.newArrayList();
-        } else {
-            return (List<String>) document.get(FieldKeys.ENTITY_TAGS);
-        }
-    }
-
     private MongoCollection<Document> getCollection(Entity entity) {
 
         switch (entity.getEntityType()) {
@@ -80,15 +64,13 @@ public class TagDaoImpl implements TagDao {
 
     private void addToUserTags(String userId, List<String> tags) {
 
-        MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection(Constants.USER_TAGS);
+        MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection(Constants.USERS);
 
         Document nestedDocument = new Document(Constants.EACH, tags);
         Document document = new Document(FieldKeys.ENTITY_TAGS, nestedDocument);
 
-        UpdateOptions updateOptions = new UpdateOptions();
-        updateOptions.upsert(true);
         collection.updateOne(eq(FieldKeys.PRIMARY_KEY, userId),
-                new Document(Constants.ADD_TO_SET_OPERATION, document), updateOptions);
+                new Document(Constants.ADD_TO_SET_OPERATION, document));
 
     }
 }

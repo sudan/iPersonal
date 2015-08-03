@@ -10,8 +10,6 @@ import org.personalized.dashboard.queue.ESIndexProducer;
 import org.personalized.dashboard.service.api.TagService;
 import org.personalized.dashboard.utils.generator.ActivityGenerator;
 
-import java.util.List;
-
 /**
  * Created by sudan on 11/7/15.
  */
@@ -46,10 +44,5 @@ public class TagServiceImpl implements TagService {
             esIndexProducer.enqueue(tag, entity.getEntityType(), OperationType.PATCH, entity.getEntityId());
         }
         return modifiedCount;
-    }
-
-    @Override
-    public List<String> getTags() {
-        return tagDao.get(sessionManager.getUserIdFromSession());
     }
 }

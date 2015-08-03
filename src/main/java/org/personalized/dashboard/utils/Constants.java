@@ -47,10 +47,6 @@ public class Constants {
     public static final String ACTIVITIES_PREFIX = "ACT";
     public static final int ACTIVITIES_LIMIT = 30;
 
-    public static final String USER_TAGS = "user_tags";
-
-    public static final String EXPENSE_CATEGORIES = "expense_categories";
-
     public static final String SET_OPERATION = "$set";
     public static final String ADD_TO_SET_OPERATION = "$addToSet";
     public static final String EACH = "$each";

@@ -10,6 +10,8 @@ import org.personalized.dashboard.utils.Constants;
 import org.personalized.dashboard.utils.FieldKeys;
 import org.personalized.dashboard.utils.generator.IdGenerator;
 
+import java.util.List;
+
 import static com.mongodb.client.model.Filters.and;
 import static com.mongodb.client.model.Filters.eq;
 
@@ -72,6 +74,16 @@ public class UserDaoImpl implements UserDao {
             user.setUsername(document.getString(FieldKeys.USERNAME));
             user.setEmail(document.getString(FieldKeys.EMAIL));
             user.setProfilePicURL(document.getString(FieldKeys.PROFILE_PIC));
+
+            if (document.containsKey(FieldKeys.ENTITY_TAGS)) {
+                List<String> tags = (List<String>) document.get(FieldKeys.ENTITY_TAGS);
+                user.setTags(tags);
+            }
+
+            if (document.containsKey(FieldKeys.EXPENSE_CATEGORIES)) {
+                List<String> categories = (List<String>) document.get(FieldKeys.EXPENSE_CATEGORIES);
+                user.setExpenseCategories(categories);
+            }
             return user;
         }
         return null;

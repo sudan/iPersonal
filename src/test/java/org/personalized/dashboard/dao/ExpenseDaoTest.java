@@ -6,10 +6,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.personalized.dashboard.bootstrap.ConfigManager;
 import org.personalized.dashboard.bootstrap.MongoBootstrap;
-import org.personalized.dashboard.dao.api.ExpenseCategoryDao;
 import org.personalized.dashboard.dao.api.ExpenseDao;
-import org.personalized.dashboard.dao.impl.ExpenseCategoryDaoImpl;
+import org.personalized.dashboard.dao.api.UserDao;
 import org.personalized.dashboard.dao.impl.ExpenseDaoImpl;
+import org.personalized.dashboard.dao.impl.UserDaoImpl;
 import org.personalized.dashboard.model.CurrencyType;
 import org.personalized.dashboard.model.Expense;
 import org.personalized.dashboard.model.ExpenseFilter;
@@ -30,13 +30,13 @@ import java.util.List;
 public class ExpenseDaoTest {
 
     private ExpenseDao expenseDao;
-    private ExpenseCategoryDao expenseCategoryDao;
+    private UserDao userDao;
 
     @Before
     public void initialize() throws IOException {
         ConfigManager.init();
         this.expenseDao = new ExpenseDaoImpl(new IdGenerator());
-        this.expenseCategoryDao = new ExpenseCategoryDaoImpl();
+        this.userDao = new UserDaoImpl(new IdGenerator());
     }
 
     @Test
@@ -51,7 +51,6 @@ public class ExpenseDaoTest {
         if (isDebugMode) {
             MongoBootstrap.init();
             MongoBootstrap.getMongoDatabase().getCollection(Constants.EXPENSES).drop();
-            MongoBootstrap.getMongoDatabase().getCollection(Constants.EXPENSE_CATEGORIES).drop();
 
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -213,8 +212,6 @@ public class ExpenseDaoTest {
             Assert.assertEquals("Category match 1", "cat1", expenses.get(2).getCategories().get(0));
             Assert.assertEquals("Category match 1", "cat2", expenses.get(2).getCategories().get(1));
 
-            categories = expenseCategoryDao.get("1");
-            Assert.assertEquals("Category count is 2", 2, categories.size());
         }
     }
 

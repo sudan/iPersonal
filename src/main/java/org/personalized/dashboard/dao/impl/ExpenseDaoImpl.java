@@ -5,7 +5,6 @@ import com.google.inject.Inject;
 import com.mongodb.Block;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
-import com.mongodb.client.model.UpdateOptions;
 import com.mongodb.client.result.UpdateResult;
 import org.bson.Document;
 import org.personalized.dashboard.bootstrap.MongoBootstrap;
@@ -220,15 +219,13 @@ public class ExpenseDaoImpl implements ExpenseDao {
 
     private void addToUserCategories(String userId, List<String> categories) {
 
-        MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection(Constants.EXPENSE_CATEGORIES);
+        MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection(Constants.USERS);
 
         Document nestedDocument = new Document(Constants.EACH, categories);
         Document document = new Document(FieldKeys.EXPENSE_CATEGORIES, nestedDocument);
 
-        UpdateOptions updateOptions = new UpdateOptions();
-        updateOptions.upsert(true);
         collection.updateOne(eq(FieldKeys.PRIMARY_KEY, userId),
-                new Document(Constants.ADD_TO_SET_OPERATION, document), updateOptions);
+                new Document(Constants.ADD_TO_SET_OPERATION, document));
 
     }
 }

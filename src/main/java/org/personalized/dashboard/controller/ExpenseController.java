@@ -169,21 +169,4 @@ public class ExpenseController {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
-
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @Path("/categories")
-    public Response getCategories(@Context HttpHeaders httpHeaders) {
-        try {
-            List<String> categories = expenseService.getCategories();
-            ExpenseCategory expenseCategory = new ExpenseCategory();
-            expenseCategory.setCategories(categories);
-            GenericEntity<ExpenseCategory> expenseCategoryObj = new GenericEntity<ExpenseCategory>(expenseCategory) {
-            };
-            return Response.status(Response.Status.OK).entity(expenseCategoryObj).build();
-        } catch (Exception e) {
-            LOGGER.error("ExpenseController encountered an error", e);
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
-        }
-    }
 }

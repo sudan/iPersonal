@@ -1,8 +1,10 @@
 package org.personalized.dashboard.model;
 
+import com.google.api.client.util.Lists;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.List;
 
 /**
  * Created by sudan on 6/4/15.
@@ -15,6 +17,8 @@ public class User {
     private String username;
     private String email;
     private String profilePicURL;
+    private List<String> tags = Lists.newArrayList();
+    private List<String> expenseCategories = Lists.newArrayList();
 
     public User() {
 
@@ -56,6 +60,22 @@ public class User {
         return isAdmin;
     }
 
+    public List<String> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<String> tags) {
+        this.tags = tags;
+    }
+
+    public List<String> getExpenseCategories() {
+        return expenseCategories;
+    }
+
+    public void setExpenseCategories(List<String> expenseCategories) {
+        this.expenseCategories = expenseCategories;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this)
@@ -63,6 +83,8 @@ public class User {
                 .append("username", username)
                 .append("email", email)
                 .append("profilePicURL", profilePicURL)
+                .append("tags", tags)
+                .append("expenseCategories", expenseCategories)
                 .toString();
     }
 }

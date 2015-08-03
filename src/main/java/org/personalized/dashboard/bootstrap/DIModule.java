@@ -51,7 +51,6 @@ public class DIModule extends AbstractModule {
         bind(TagDao.class).to(TagDaoImpl.class);
         bind(UserDao.class).to(UserDaoImpl.class);
         bind(SessionDao.class).to(SessionDaoImpl.class);
-        bind(ExpenseCategoryDao.class).to(ExpenseCategoryDaoImpl.class);
 
         bind(ValidationService.class).annotatedWith(Names.named("bookmark")).to
                 (BookmarkValidationService.class);
