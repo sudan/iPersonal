@@ -6,21 +6,29 @@
  
 	var Tag = Backbone.Model.extend({
 		urlRoot: TAG_URL_ROOT,
-
-		getTags: function() {
-			var tag = new Tag();
-			tag.fetch().complete(function(response) {
-
-				if(response.status == 200) {
-
-					if (JSON.parse(response.responseText)['tags'])
-						window.tags = JSON.parse(response.responseText)['tags'];
-				}
-			});
+		defaults : {
+			tags : [],
+			tagSet : {}
 		},
 
-		addTags: function(entityId, entityType, entityTitle, tags) {
+		setTags: function(userTags) {
 
+			for (var i = 0; i < userTags.length; i++) {
+
+				if (!this.attributes.tagSet[userTags[i]]) {
+					this.attributes.tags.push(userTags[i])
+					this.attributes.tagSet[userTags[i]] = true;
+				}
+			}
+		},
+
+		getTags: function() {
+			return this.attributes.tags;
+		},
+
+		addTags: function(entityId, entityType, entityTitle, entityTags) {
+
+			var self = this;
 			var entity = {};
 			entity['title'] = entityTitle;
 			entity['entityType'] = entityType;
@@ -28,16 +36,24 @@
 
 			var tag = new Tag({
 				'entity': entity,
-				'tags' : tags
+				'tags' : entityTags
 			});
 
-			return tag.save();
+			return tag.save().complete(function(response){
+				if (response.status == 201) {
+					for (var i = 0; i < entityTags.length; i++) {
+						if (!self.attributes.tagSet[entityTags[i]]) {
+							self.attributes.tags.push(entityTags[i]);
+							self.attributes.tagSet[entityTags[i]] = true;
+						}
+					}
+				}
+			});
 
 		}
 
 	});
 
 	window.tagModel = new Tag();
-	window.tags = [];
-	window.tagModel.getTags();
-})(jQuery, window, document)
+
+})(jQuery, window, document);

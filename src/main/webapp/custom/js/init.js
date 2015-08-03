@@ -25,6 +25,14 @@
 			backboneGlobalObj.on('entity:count', function(obj) {
 				window.entityCountView.refreshCount(obj.entityType, obj.relativeValue);
 			});
+
+			backboneGlobalObj.on('tag:set', function(obj) {
+				window.tagModel.setTags(obj.tags);
+			});
+
+			backboneGlobalObj.on('expense_category:set', function(obj) {
+				window.expenseCategoryModel.addExpenseCategories(obj.expenseCategories);
+			});
 		},
 
 		initChosenDropdowns: function() {
