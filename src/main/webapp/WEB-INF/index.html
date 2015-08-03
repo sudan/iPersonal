@@ -16,7 +16,7 @@
     <link href="vendor/dist/css/sb-admin-2.css" rel="stylesheet">
     <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="vendor/chosen/dist/chosen.min.css" rel="stylesheet" type="text/css">
-    <link href="vendor/datepicker/dist/datepicker.min.css" rel="stylesheet" type="text/css" />
+    <link href="vendor/datepicker/dist/datepicker.min.css" rel="stylesheet" type="text/css"/>
 
     <link href="custom/css/index.css" rel="stylesheet" type="text/css"/>
 
@@ -60,22 +60,28 @@
             </li>
         </ul>
 
-            <script type="text/template" id="side-menu-template">
-                <div class="navbar-default sidebar" role="navigation">
-                    <div class="sidebar-nav navbar-collapse">
-                        <ul class="nav">
-                            <li><a href="#">Bookmarks (<%= bookmarks %>)<img id="bookmark-add-icon" class="add-entity-icon" src="custom/images/plus.png"/></a></li>
-                            <li><a href="#">Notes (<%= notes %>)<img id="note-add-icon" class="add-entity-icon"  src="custom/images/plus.png"/></a></li>
-                            <li><a href="#">Pins (<%= pins %>)<img id="pin-add-icon" class="add-entity-icon"  src="custom/images/plus.png"/></a></li>
-                            <li><a href="#">Todos (<%= todos %>)<img  id="todo-add-icon" class="add-entity-icon" src="custom/images/plus.png"/></a></li>
-                            <li><a href="#">Diaries (<%= diaries %>)<img id="diary-add-icon" class="add-entity-icon"  src="custom/images/plus.png"/></a></li>
-                            <li><a href="#">Expenses (<%= expenses %>)<img id="expense-add-icon" class="add-entity-icon"  src="custom/images/plus.png"/></a></li>
-                        </ul>
-                    </div>
+        <script type="text/template" id="side-menu-template">
+            <div class="navbar-default sidebar" role="navigation">
+                <div class="sidebar-nav navbar-collapse">
+                    <ul class="nav">
+                        <li><a href="#">Bookmarks (<%= bookmarks %>)<img id="bookmark-add-icon" class="add-entity-icon"
+                                                                         src="custom/images/plus.png"/></a></li>
+                        <li><a href="#">Notes (<%= notes %>)<img id="note-add-icon" class="add-entity-icon"
+                                                                 src="custom/images/plus.png"/></a></li>
+                        <li><a href="#">Pins (<%= pins %>)<img id="pin-add-icon" class="add-entity-icon"
+                                                               src="custom/images/plus.png"/></a></li>
+                        <li><a href="#">Todos (<%= todos %>)<img id="todo-add-icon" class="add-entity-icon"
+                                                                 src="custom/images/plus.png"/></a></li>
+                        <li><a href="#">Diaries (<%= diaries %>)<img id="diary-add-icon" class="add-entity-icon"
+                                                                     src="custom/images/plus.png"/></a></li>
+                        <li><a href="#">Expenses (<%= expenses %>)<img id="expense-add-icon" class="add-entity-icon"
+                                                                       src="custom/images/plus.png"/></a></li>
+                    </ul>
                 </div>
-            </script>
+            </div>
+        </script>
 
-            <div id="side-menu"></div>
+        <div id="side-menu"></div>
     </nav>
 
     <div id="page-wrapper">
@@ -113,11 +119,13 @@
                                         <span class="description-error error-msg"></span>
                                     </div>
                                     <div class="form-group">
-                                        <img id="book-tag-img" class="clickable" title="Add Tags" src="custom/images/tag.png"/>
+                                        <img id="book-tag-img" class="clickable" title="Add Tags"
+                                             src="custom/images/tag.png"/>
                                     </div>
                                     <div class="form-group invisible">
-                                         <select id="book-tag" multiple="multiple" class="form-control chosen-menu" data-placeholder="search tags">
-                                         </select>
+                                        <select id="book-tag" multiple="multiple" class="form-control chosen-menu"
+                                                data-placeholder="search tags">
+                                        </select>
                                     </div>
 
                                     <div class="button-group">
@@ -160,19 +168,23 @@
                                         <span class="amount-error error-msg"></span>
                                     </div>
                                     <div class="form-group">
-                                        <input class="form-control datepicker" name="datepicker" placeholder="Select a date"/>
+                                        <input class="form-control datepicker" name="datepicker"
+                                               placeholder="Select a date"/>
                                         <span class="date-error error-msg"></span>
                                     </div>
                                     <div class="form-group">
-                                        <select id="exp-category" multiple="multiple" class="form-control chosen-menu" data-placeholder="search categories">
+                                        <select id="exp-category" multiple="multiple" class="form-control chosen-menu"
+                                                data-placeholder="search categories">
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <img id="exp-tag-img" class="clickable" title="Add Tags" src="custom/images/tag.png"/>
+                                        <img id="exp-tag-img" class="clickable" title="Add Tags"
+                                             src="custom/images/tag.png"/>
                                     </div>
                                     <div class="form-group invisible">
-                                         <select id="exp-tag" multiple="multiple" class="form-control chosen-menu" data-placeholder="search tags">
-                                         </select>
+                                        <select id="exp-tag" multiple="multiple" class="form-control chosen-menu"
+                                                data-placeholder="search tags">
+                                        </select>
                                     </div>
 
                                     <div class="button-group">
