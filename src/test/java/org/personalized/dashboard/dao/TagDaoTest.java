@@ -122,9 +122,6 @@ public class TagDaoTest {
             Assert.assertEquals("Page1 tag 1", "page2", pages.get(2016).get(0).getTags().get(1));
             Assert.assertEquals("Page2 tag 0", "page1", pages.get(2016).get(1).getTags().get(0));
 
-
-            List<String> tags = tagDao.get("1");
-            Assert.assertEquals("Tag count is 12", 12, tags.size());
         }
     }
 
@@ -137,7 +134,6 @@ public class TagDaoTest {
         MongoBootstrap.getMongoDatabase().getCollection(Constants.TODOS).drop();
         MongoBootstrap.getMongoDatabase().getCollection(Constants.EXPENSES).drop();
         MongoBootstrap.getMongoDatabase().getCollection(Constants.DIARIES).drop();
-        MongoBootstrap.getMongoDatabase().getCollection(Constants.USER_TAGS).drop();
 
         bookmark1 = new Bookmark();
         bookmark1.setName("name1");

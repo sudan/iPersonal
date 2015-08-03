@@ -5,7 +5,6 @@ import com.google.inject.name.Named;
 import org.apache.commons.lang3.StringUtils;
 import org.personalized.dashboard.auth.SessionManager;
 import org.personalized.dashboard.dao.api.ActivityDao;
-import org.personalized.dashboard.dao.api.ExpenseCategoryDao;
 import org.personalized.dashboard.dao.api.ExpenseDao;
 import org.personalized.dashboard.model.*;
 import org.personalized.dashboard.queue.ESIndexProducer;
@@ -24,19 +23,16 @@ public class ExpenseServiceImpl implements ExpenseService {
     private final ActivityGenerator activityGenerator;
     private final ActivityDao activityDao;
     private final ESIndexProducer esIndexProducer;
-    private final ExpenseCategoryDao expenseCategoryDao;
 
     @Inject
     public ExpenseServiceImpl(ExpenseDao expenseDao, SessionManager sessionManager,
                               ActivityGenerator activityGenerator, ActivityDao activityDao,
-                              @Named("expense") ESIndexProducer esIndexProducer,
-                              ExpenseCategoryDao expenseCategoryDao) {
+                              @Named("expense") ESIndexProducer esIndexProducer) {
         this.expenseDao = expenseDao;
         this.sessionManager = sessionManager;
         this.activityGenerator = activityGenerator;
         this.activityDao = activityDao;
         this.esIndexProducer = esIndexProducer;
-        this.expenseCategoryDao = expenseCategoryDao;
     }
 
     @Override
@@ -85,10 +81,5 @@ public class ExpenseServiceImpl implements ExpenseService {
     @Override
     public List<Expense> fetchExpenses(ExpenseFilter expenseFilter, int limit, int offset) {
         return expenseDao.get(expenseFilter, limit, offset, sessionManager.getUserIdFromSession());
-    }
-
-    @Override
-    public List<String> getCategories() {
-        return expenseCategoryDao.get(sessionManager.getUserIdFromSession());
     }
 }

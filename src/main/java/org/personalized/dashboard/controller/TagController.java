@@ -61,21 +61,4 @@ public class TagController {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
-
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getTags(@Context HttpHeaders httpHeaders) {
-
-        try {
-            List<String> tags = tagService.getTags();
-            Tag tag = new Tag();
-            tag.setTags(tags);
-            GenericEntity<Tag> tagsObj = new GenericEntity<Tag>(tag) {
-            };
-            return Response.status(Response.Status.OK).entity(tagsObj).build();
-        } catch (Exception e) {
-            LOGGER.error("TagController encountered an error", e);
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
-        }
-    }
 }
