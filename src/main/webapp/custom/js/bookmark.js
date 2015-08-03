@@ -31,7 +31,7 @@
         }
     }); 
 
-    window.BookmarkView = Backbone.View.extend({
+    var BookmarkView = Backbone.View.extend({
 
         el: $('#bookmark-wrapper'),
 
