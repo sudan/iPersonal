@@ -51,7 +51,7 @@ public class ExpenseDaoImpl implements ExpenseDao {
                 .append(FieldKeys.MODIFIED_AT, System.currentTimeMillis());
 
         collection.insertOne(document);
-        if(!CollectionUtils.isEmpty(expense.getCategories()))
+        if (!CollectionUtils.isEmpty(expense.getCategories()))
             addToUserCategories(userId, expense.getCategories());
         return expenseId;
     }
@@ -113,7 +113,7 @@ public class ExpenseDaoImpl implements ExpenseDao {
         );
 
         if (updateResult.getModifiedCount() > 0) {
-            if(!CollectionUtils.isEmpty(expense.getCategories()))
+            if (!CollectionUtils.isEmpty(expense.getCategories()))
                 addToUserCategories(userId, expense.getCategories());
         }
         return updateResult.getModifiedCount();

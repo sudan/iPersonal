@@ -42,7 +42,7 @@ public class UserDaoTest {
     }
 
     @Test
-    public void testUserDao() throws ParseException{
+    public void testUserDao() throws ParseException {
 
         Boolean isDebugMode = Boolean.valueOf(ConfigKeys.MONGO_DEBUG_FLAG);
 
