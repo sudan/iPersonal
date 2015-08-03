@@ -31,7 +31,7 @@
         }
     }); 
 
-    var BookmarkView = Backbone.View.extend({
+    window.BookmarkView = Backbone.View.extend({
 
         el: $('#bookmark-wrapper'),
 
@@ -195,8 +195,9 @@
             window.currentTagEntity = self.searchTag;
             self.searchTag.parent('div.form-group').removeClass('invisible');
 
-            if(window.tags) {
-                for (var i = 0; i < window.tags.length; i++) {
+            var tags = window.tagModel.getTags();
+            if(tags) {
+                for (var i = 0; i < tags.length; i++) {
                     self.searchTag.append($('<option></option>').attr('value', tags[i]).text(tags[i]));
                 }
                 self.searchTag.trigger('chosen:updated');

@@ -49,7 +49,7 @@ public class TagController {
             if (CollectionUtils.isEmpty(errorEntities)) {
                 Long modifiedCount = tagService.updateTags(tag);
                 if (modifiedCount > 0) {
-                    return Response.status(Response.Status.OK).entity(tag).build();
+                    return Response.status(Response.Status.CREATED).entity(tag).build();
                 } else {
                     return Response.status(Response.Status.BAD_REQUEST).build();
                 }

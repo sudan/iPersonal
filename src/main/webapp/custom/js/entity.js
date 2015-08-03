@@ -90,9 +90,10 @@
 				self.$el.children('#' + div).removeClass('invisible').siblings().addClass('invisible');
 			});
 		}
-	})
+	});
 
 	window.entityCountModel = new EntityCount();
 	window.entityCountView = new EntityCountView();
 	window.entityWrapperView = new EntityWrapperView();
+
 })(jQuery, window, document);
