@@ -25,7 +25,7 @@
 		},
 
 		events: {
-			'a' : 'renderAddEntityForm'
+			'click img.add-entity-icon' : 'renderAddEntityForm'
 		},
 
 		getCount: function() {
@@ -43,7 +43,8 @@
 
 		renderAddEntityForm: function(e) {
 			e.preventDefault();
-			backboneGlobalObj.trigger('entity:createform', 'BOOKMARK');	
+			var entity = $(e.target).data('entity');
+			backboneGlobalObj.trigger('entity:createform', entity.toUpperCase());	
 		},
 
 		refreshCount: function(entityType, relativeValue) {
