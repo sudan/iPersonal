@@ -88,7 +88,8 @@
 			var self = this;
 			backboneGlobalObj.on('entity:createform', function(entity) {
 				var div = entity.toLowerCase() + '-wrapper';
-				self.$el.children('#' + div).removeClass('invisible').siblings().addClass('invisible');
+				self.$el.children('#' + div).fadeIn().removeClass('invisible')
+											.siblings().fadeOut().addClass('invisible');
 			});
 		}
 	});
