@@ -7,28 +7,22 @@
     var BOOKMARK_URL = 'url';
     var BOOKMARK_DESCRIPTION = 'description';
 
-    var Bookmark = Backbone.Model.extend({
+    var Bookmark = Base.extend({
     	urlRoot: BOOKMARK_URL_ROOT,
-        validate: function(attributes) {
-            var errors = {};
-
-            if (!attributes.name) {
-                errors[BOOKMARK_NAME] = 'Title cannot be empty';
-            } else if (attributes.name.length > 50) {
-                errors[BOOKMARK_NAME] = 'Title cannot exceed 50 characters';
+        
+        initialize: function() {
+            this.mandatory = {
+                'name': true,
+                'url': true,
+                'description': true
+            },
+            this.maxLength = {
+                'name': 50,
+                'url': 150,
+                'description': 1000
             }
-
-            if(!attributes.url) {
-                errors[BOOKMARK_URL] = 'URL cannot be empty';
-            }
-
-            if(!attributes.description) {
-                errors[BOOKMARK_DESCRIPTION] = 'Description cannot be empty';
-            } else if (attributes.description.length > 1000) {
-                errors[BOOKMARK_DESCRIPTION] = 'Description cannot exceed 1000 characters';
-            }
-            return $.isEmptyObject(errors) ? false : errors;
         }
+
     }); 
 
     var BookmarkView = Backbone.View.extend({
