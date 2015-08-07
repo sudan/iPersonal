@@ -20,12 +20,13 @@
                 'name': 50,
                 'url': 150,
                 'description': 1000
-            }
+            },
+            this.formAttributes = ['name', 'url', 'description']
         }
 
     }); 
 
-    var BookmarkView = Backbone.View.extend({
+    var BookmarkView = BaseView.extend({
 
         el: $('#bookmark-wrapper'),
         saveForm: $('#bookmark-form'),
@@ -153,35 +154,6 @@
             this.saveForm.find('.description-error').html('');
         },
 
-        renderErrors: function(error) {
-                
-                if(error.name) {
-                    this.saveForm.find('input[name=name]').addClass('error-field');
-                    this.saveForm.find('.name-error').html(error.name)
-                } else {
-                    this.saveForm.find('input[name=name]').removeClass('error-field');
-                    this.saveForm.find('.name-error').html('');
-                }
-
-                if(error.url) {
-                    this.saveForm.find('input[name=url]').addClass('error-field');
-                    this.saveForm.find('.url-error').html(error.url);
-                } else {
-                    this.saveForm.find('input[name=url]').removeClass('error-field');
-                    this.saveForm.find('.url-error').html('');
-                
-                }
-
-                if(error.description) {
-                    this.saveForm.find('textarea[name=description]').addClass('error-field');
-                    this.saveForm.find('.description-error').html(error.description);
-                } else {
-                    this.saveForm.find('textarea[name=description]').removeClass('error-field');
-                    this.saveForm.find('.description-error').html('');
-                }
-
-        },
-
         displayTagSelection: function(e) {
             
             var self = this;
@@ -197,20 +169,6 @@
                 }
                 self.searchTag.trigger('chosen:updated');
             }
-        },
-
-        resetValues: function(e) {
-
-            var self = this;
-            e.preventDefault();
-            
-            self.saveForm.find('input[name=name]').val('');
-            self.saveForm.find('input[name=url]').val('');
-            self.saveForm.find('textarea[name=description]').val('');
-
-            self.tagImage.removeClass('invisible');
-
-            self.searchTag.parent('div.form-group').addClass('invisible');
         }
 
     });
