@@ -28,6 +28,7 @@
     var BookmarkView = Backbone.View.extend({
 
         el: $('#bookmark-wrapper'),
+        saveForm: $('#bookmark-form'),
 
         events : {
             'click #book-submit': 'createBookmark',
@@ -43,23 +44,21 @@
             var self = this;
             e.preventDefault();
             
-            var bookmarkForm = $('#bookmark-form');
+            var name = self.saveForm.find('input[name=name]').val();
+            var url = self.saveForm.find('input[name=url]').val();
+            var description = self.saveForm.find('textarea[name=description]').val();
 
-            var name = bookmarkForm.find('input[name=name]').val();
-            var url = bookmarkForm.find('input[name=url]').val();
-            var description = bookmarkForm.find('textarea[name=description]').val();
-
-            var bookmark = new Bookmark({
+            self.model = new Bookmark({
                 name: name,
                 url: url,
                 description: description
             });
 
-            bookmark.on('invalid', function(model , error) {
-                self.renderErrors(error, bookmarkForm);
+            self.model.on('invalid', function(model , error) {
+                self.renderErrors(error);
             });
 
-            var result = bookmark.save({
+            var result = self.model.save({
                 success: function(response) {},
                 error: function(error) {}
             });
@@ -68,16 +67,16 @@
                 result.complete(function(response){
                     if (response.status != 201) {
                         var errors = self.buildErrorObject(response, self);
-                        self.renderErrors(errors, bookmarkForm);
+                        self.renderErrors(errors);
                     } else {
                         var bookmarkId = response.responseText;
-                        bookmark.set({ bookmarkId: bookmarkId});
+                        self.model.set({ bookmarkId: bookmarkId});
                         var tags = self.searchTag.val();
                         if (tags) {
                             backboneGlobalObj.trigger('tag:add', {
                                 'entityId': bookmarkId,
                                 'entityType': 'BOOKMARK',
-                                'entityTitle': bookmark.get(BOOKMARK_NAME),
+                                'entityTitle': self.model.get(BOOKMARK_NAME),
                                 'tags': tags
                             });
                         }
@@ -85,7 +84,9 @@
                             'entityType': 'BOOKMARK',
                             'relativeValue': 1
                         });
-                        self.clearErrors(bookmarkForm);
+                        self.clearErrors();
+                        // Add it to collection in future
+                        self.model.clear();
                     }
                 });
             }
@@ -142,41 +143,41 @@
             return errors;
         },
 
-        clearErrors: function(bookmarkForm) {
-            bookmarkForm.find('input[name=name]').removeClass('error-field');
-            bookmarkForm.find('input[name=url]').removeClass('error-field');
-            bookmarkForm.find('textarea[name=description]').removeClass('error-field');
+        clearErrors: function() {
+            this.saveForm.find('input[name=name]').removeClass('error-field');
+            this.saveForm.find('input[name=url]').removeClass('error-field');
+            this.saveForm.find('textarea[name=description]').removeClass('error-field');
 
-            bookmarkForm.find('.name-error').html('');
-            bookmarkForm.find('.url-error').html('');
-            bookmarkForm.find('.description-error').html('');
+            this.saveForm.find('.name-error').html('');
+            this.saveForm.find('.url-error').html('');
+            this.saveForm.find('.description-error').html('');
         },
 
-        renderErrors: function(error, bookmarkForm) {
+        renderErrors: function(error) {
                 
                 if(error.name) {
-                    bookmarkForm.find('input[name=name]').addClass('error-field');
-                    bookmarkForm.find('.name-error').html(error.name)
+                    this.saveForm.find('input[name=name]').addClass('error-field');
+                    this.saveForm.find('.name-error').html(error.name)
                 } else {
-                    bookmarkForm.find('input[name=name]').removeClass('error-field');
-                    bookmarkForm.find('.name-error').html('');
+                    this.saveForm.find('input[name=name]').removeClass('error-field');
+                    this.saveForm.find('.name-error').html('');
                 }
 
                 if(error.url) {
-                    bookmarkForm.find('input[name=url]').addClass('error-field');
-                    bookmarkForm.find('.url-error').html(error.url);
+                    this.saveForm.find('input[name=url]').addClass('error-field');
+                    this.saveForm.find('.url-error').html(error.url);
                 } else {
-                    bookmarkForm.find('input[name=url]').removeClass('error-field');
-                    bookmarkForm.find('.url-error').html('');
+                    this.saveForm.find('input[name=url]').removeClass('error-field');
+                    this.saveForm.find('.url-error').html('');
                 
                 }
 
                 if(error.description) {
-                    bookmarkForm.find('textarea[name=description]').addClass('error-field');
-                    bookmarkForm.find('.description-error').html(error.description);
+                    this.saveForm.find('textarea[name=description]').addClass('error-field');
+                    this.saveForm.find('.description-error').html(error.description);
                 } else {
-                    bookmarkForm.find('textarea[name=description]').removeClass('error-field');
-                    bookmarkForm.find('.description-error').html('');
+                    this.saveForm.find('textarea[name=description]').removeClass('error-field');
+                    this.saveForm.find('.description-error').html('');
                 }
 
         },
@@ -203,11 +204,9 @@
             var self = this;
             e.preventDefault();
             
-            var bookmarkForm = $('#bookmark-form');
-
-            bookmarkForm.find('input[name=name]').val('');
-            bookmarkForm.find('input[name=url]').val('');
-            bookmarkForm.find('textarea[name=description]').val('');
+            self.saveForm.find('input[name=name]').val('');
+            self.saveForm.find('input[name=url]').val('');
+            self.saveForm.find('textarea[name=description]').val('');
 
             self.tagImage.removeClass('invisible');
 
