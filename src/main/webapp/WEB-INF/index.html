@@ -161,7 +161,50 @@
                         </div>
                     </div>
                     <div id="note-wrapper"></div>
-                    <div id="pin-wrapper"></div>
+                    <div id="pin-wrapper" class="invisible">
+                        <div class="panel panel-default entity-form">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">
+                                    <img src="custom/images/pin.png"/>
+                                    <i>Pin</i>
+                                </h3>
+                            </div>
+                            <div class="panel-body">
+                                <form method="POST" id="pin-form" action="#">
+                                    <div class="form-group">
+                                        <input class="form-control" name="name" placeholder="Title"/>
+                                        <span class="name-error error-msg"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <input class="form-control" name="imageUrl" placeholder="Image URL"/>
+                                        <span class="imageUrl-error error-msg"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <textarea class="form-control" name="description" rows="3"
+                                                  placeholder="Description goes here"></textarea>
+                                        <span class="description-error error-msg"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <img id="pin-tag-img" class="clickable" title="Add Tags"
+                                             src="custom/images/tag.png"/>
+                                    </div>
+                                    <div class="form-group invisible">
+                                        <select id="pin-tag" multiple="multiple" class="form-control chosen-menu"
+                                                data-placeholder="search tags">
+                                        </select>
+                                    </div>
+
+                                    <div class="button-group">
+                                        <button id="pin-submit" type="submit" class="btn btn-success btn-element">
+                                            Create
+                                        </button>
+                                        <button id="pin-cancel" type="submit" class="btn btn-link btn-element">Cancel
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                     <div id="todo-wrapper"></div>
                     <div id="diary-wrapper"></div>
                     <div id="expense-wrapper" class="invisible">
@@ -241,6 +284,7 @@
 <script type="text/javascript" src="custom/js/tag.js"></script>
 <script type="text/javascript" src="custom/js/expense_category.js"></script>
 <script type="text/javascript" src="custom/js/bookmark.js"></script>
+<script type="text/javascript" src="custom/js/pin.js"></script>
 <script type="text/javascript" src="custom/js/expense.js"></script>
 <script type="text/javascript" src="custom/js/entity.js"></script>
 </body>
