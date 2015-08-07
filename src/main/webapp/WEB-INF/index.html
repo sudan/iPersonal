@@ -183,18 +183,17 @@
                                                   placeholder="Description goes here"></textarea>
                                         <span class="description-error error-msg"></span>
                                     </div>
-                                    <div class="form-group input-group">
-                                        <span class="input-group-addon">Rs</span>
-                                        <input class="form-control" name="amount" placeholder="Amount"/>
+                                    <div class="form-group">
+                                        <input class="form-control" name="amount" placeholder="Amount(in Rs)"/>
                                         <span class="amount-error error-msg"></span>
                                     </div>
                                     <div class="form-group">
-                                        <input class="form-control datepicker" name="datepicker"
+                                        <input class="form-control datepicker" name="date"
                                                placeholder="Select a date"/>
                                         <span class="date-error error-msg"></span>
                                     </div>
                                     <div class="form-group">
-                                        <select id="expense-category" multiple="multiple" class="form-control chosen-menu"
+                                        <select id="expense-category" multiple="multiple" name="categories" class="form-control chosen-menu"
                                                 data-placeholder="search categories">
                                         </select>
                                     </div>
@@ -242,6 +241,7 @@
 <script type="text/javascript" src="custom/js/tag.js"></script>
 <script type="text/javascript" src="custom/js/expense_category.js"></script>
 <script type="text/javascript" src="custom/js/bookmark.js"></script>
+<script type="text/javascript" src="custom/js/expense.js"></script>
 <script type="text/javascript" src="custom/js/entity.js"></script>
 </body>
 

@@ -90,6 +90,10 @@
 				var div = entity.toLowerCase() + '-wrapper';
 				self.$el.children('#' + div).fadeIn().removeClass('invisible')
 											.siblings().fadeOut().addClass('invisible');
+
+				if (entity == 'EXPENSE') {
+					backboneGlobalObj.trigger('expense_category:populate');
+				}
 			});
 		}
 	});

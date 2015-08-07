@@ -16,6 +16,8 @@
 			for (var key in attributes) {
 				if (this.mandatory[key] == true && !attributes[key]) {
 					errors[key] = key + ' cannot be empty';
+				} else if (key == 'date' && isNaN(attributes[key])) {
+					errors[key] = key + ' cannot be empty';
 				}
 			}
 
@@ -43,7 +45,7 @@
 				this.saveForm.find('.' + key + '-error').html('');
 			}
 			this.searchTag.parent('div.form-group').addClass('invisible');
-			this.searchTag.val('')
+			this.searchTag.val('').trigger('chosen:updated');
 			this.tagImage.removeClass('invisible');
 		},
 
@@ -102,7 +104,7 @@
         	}
         },
 
-        postCreation: function(entityId, entityType, entityTitle, relativeValue, tags) {
+        postCreation: function(entityId, entityType, entityTitle, relativeValue, tags, expenseCategories) {
 
         	if (tags) {
         		backboneGlobalObj.trigger('tag:add', {
@@ -116,6 +118,12 @@
         		'entityType': entityType,
         		'relativeValue': relativeValue
         	});
+
+        	if (expenseCategories) {
+        		backboneGlobalObj.trigger('expense_category:set', {
+        			'expenseCategories': expenseCategories
+        		});
+        	}
         	this.resetValues();
         }
 
