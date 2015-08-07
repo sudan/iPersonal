@@ -64,7 +64,7 @@
                         var noteId = response.responseText;
                         self.model.set({ noteId: noteId});
                         var tags = self.searchTag.val();
-                        self.postCreation(noteId, "NOTE", self.model.get('note'), 1, tags)
+                        self.postCreation(noteId, "NOTE", self.model.get('title'), 1, tags)
                         // Add it to collection in future
                         self.model.clear();
                     }
