@@ -6,6 +6,7 @@
 			this.initDatePicker();
 			this.initBackboneEvents();
 			this.initChosenDropdowns();
+			this.initRTE();
 		},
 
 		initDatePicker: function() {
@@ -76,6 +77,39 @@
 						tagDropDown.trigger('chosen:updated');
 					}
 				}	
+			});
+		},
+
+		initRTE: function() {
+			var self = this;
+			self.bold = false;
+			self.italic = false;
+			self.underline = false;
+			$('#note').wysiwyg();
+			$('.btn-group').find('a').on('click', function(){
+				var styles = $(this).data('edit');
+
+				if (styles === 'bold') {
+					self.bold = (self.bold == true) ? false : true;
+				}
+				if (styles === 'italic') {
+					self.italic = (self.italic == true) ? false : true;
+				}
+				if (styles === 'underline') {
+					self.underline = (self.underline == true) ? false : true;
+				}
+				
+				(self.bold == true) ?
+					$('.btn-group').find('a.bold').addClass('btn-info') :
+					$('.btn-group').find('a.bold').removeClass('btn-info');
+				
+				(self.italic == true) ?
+					$('.btn-group').find('a.italic').addClass('btn-info') :
+					$('.btn-group').find('a.italic').removeClass('btn-info');
+				
+				(self.underline == true) ?
+					$('.btn-group').find('a.underline').addClass('btn-info') :
+					$('.btn-group').find('a.underline').removeClass('btn-info');
 			});
 		}
 	};
