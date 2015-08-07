@@ -3,9 +3,6 @@
     "use strict"
 
     var BOOKMARK_URL_ROOT = '/iPersonal/dashboard/bookmarks';
-    var BOOKMARK_NAME = 'name';
-    var BOOKMARK_URL = 'url';
-    var BOOKMARK_DESCRIPTION = 'description';
 
     var Bookmark = Base.extend({
     	urlRoot: BOOKMARK_URL_ROOT,
@@ -27,7 +24,7 @@
         el: $('#bookmark-wrapper'),
         saveForm: $('#bookmark-form'),
         tagImage: $('#book-tag-img'),
-        searchTag: $('#book-tag'),
+        searchTag: $('#bookmark-tag'),
 
         events : {
             'click #book-submit': 'createBookmark',
@@ -35,12 +32,16 @@
             'click #book-tag-img': 'displayTagSelection',
         },
 
+        initialize: function() {
+            this.model = new Bookmark();
+        },
+
         createBookmark: function(e) {
 
             var self = this;
             e.preventDefault();
 
-            self.model = new Bookmark({
+            self.model.set({
                 name: self.saveForm.find('[name=name]').val(),
                 url: self.saveForm.find('[name=url]').val(),
                 description: self.saveForm.find('[name=description]').val()
@@ -64,26 +65,13 @@
                         var bookmarkId = response.responseText;
                         self.model.set({ bookmarkId: bookmarkId});
                         var tags = self.searchTag.val();
-                        if (tags) {
-                            backboneGlobalObj.trigger('tag:add', {
-                                'entityId': bookmarkId,
-                                'entityType': 'BOOKMARK',
-                                'entityTitle': self.model.get(BOOKMARK_NAME),
-                                'tags': tags
-                            });
-                        }
-                        backboneGlobalObj.trigger('entity:count', {
-                            'entityType': 'BOOKMARK',
-                            'relativeValue': 1
-                        });
-                        self.resetValues();
+                        self.postCreation(bookmarkId, "BOOKMARK", self.model.get('name'), 1, tags)
                         // Add it to collection in future
                         self.model.clear();
                     }
                 });
             }
         }
-
     });
 
     window.bookmarksView = new BookmarkView();

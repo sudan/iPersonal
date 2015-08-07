@@ -37,17 +37,17 @@
 
 		initChosenDropdowns: function() {
 
-			$('#book-tag').chosen({
+			$('#bookmark-tag').chosen({
 				width: '100%',
 				no_results_text: 'Add a new tag and press enter(min 3 chars)'
 			}).trigger('chosen:updated');
 
-			$('#exp-tag').chosen({
+			$('#expense-tag').chosen({
 				width: '100%',
 				no_results_text: 'Add a new tag and press enter(min 3 chars)'
 			}).trigger('chosen:updated');
 
-			$('#exp-category').chosen({
+			$('#expense-category').chosen({
 				width: '100%',
 				no_results_text: 'Add a new category and press enter(min 3 chars)'
 			}).trigger('chosen:updated');
@@ -56,9 +56,9 @@
 				if(event.keyCode == 13) {
 					var value = $(event.target).val();
 					if(value.length >= 3) {
-						var tagDropDown = $(window.currentTagEntity);
+						var tagDropDown = $(event.target).closest('.form-group').eq(0).children('select');
 						tagDropDown.append($('<option></option>').attr('value', value).text(value));
-						var chosenValues = $(window.currentTagEntity).val();
+						var chosenValues = tagDropDown.val();
 						if (!chosenValues)
 							chosenValues = []
 						chosenValues.push(value);

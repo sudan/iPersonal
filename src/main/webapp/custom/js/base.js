@@ -39,10 +39,11 @@
 
 			for (var i = 0; i < this.model.formAttributes.length; i++) {
 				var key = this.model.formAttributes[i];
-				this.saveForm.find('[name=' + key + ']').removeClass('error-field').val();
+				this.saveForm.find('[name=' + key + ']').removeClass('error-field').val('');
 				this.saveForm.find('.' + key + '-error').html('');
 			}
 			this.searchTag.parent('div.form-group').addClass('invisible');
+			this.searchTag.val('')
 			this.tagImage.removeClass('invisible');
 		},
 
@@ -93,11 +94,29 @@
 
         	var tags = tagModel.getTags();
         	if (tags) {
+        		this.searchTag.empty();
         		for (var i = 0; i < tags.length; i++) {
         			this.searchTag.append($('<option></option>').attr('value', tags[i]).text(tags[i]));
         		}
         		this.searchTag.trigger('chosen:updated');
         	}
+        },
+
+        postCreation: function(entityId, entityType, entityTitle, relativeValue, tags) {
+
+        	if (tags) {
+        		backboneGlobalObj.trigger('tag:add', {
+        			'entityId': entityId,
+        			'entityType': entityType,
+        			'entityTitle': entityTitle,
+        			'tags': tags
+        		});
+        	}
+        	backboneGlobalObj.trigger('entity:count', {
+        		'entityType': entityType,
+        		'relativeValue': relativeValue
+        	});
+        	this.resetValues();
         }
 
 	});
