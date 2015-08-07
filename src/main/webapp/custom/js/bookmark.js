@@ -12,14 +12,10 @@
         
         initialize: function() {
             this.mandatory = {
-                'name': true,
-                'url': true,
-                'description': true
+                'name': true, 'url': true, 'description': true
             },
             this.maxLength = {
-                'name': 50,
-                'url': 150,
-                'description': 1000
+                'name': 50, 'url': 150, 'description': 1000
             },
             this.formAttributes = ['name', 'url', 'description']
         }
@@ -30,6 +26,8 @@
 
         el: $('#bookmark-wrapper'),
         saveForm: $('#bookmark-form'),
+        tagImage: $('#book-tag-img'),
+        searchTag: $('#book-tag'),
 
         events : {
             'click #book-submit': 'createBookmark',
@@ -37,22 +35,15 @@
             'click #book-tag-img': 'displayTagSelection',
         },
 
-        tagImage: $('#book-tag-img'),
-        searchTag: $('#book-tag'),
-
         createBookmark: function(e) {
 
             var self = this;
             e.preventDefault();
-            
-            var name = self.saveForm.find('input[name=name]').val();
-            var url = self.saveForm.find('input[name=url]').val();
-            var description = self.saveForm.find('textarea[name=description]').val();
 
             self.model = new Bookmark({
-                name: name,
-                url: url,
-                description: description
+                name: self.saveForm.find('[name=name]').val(),
+                url: self.saveForm.find('[name=url]').val(),
+                description: self.saveForm.find('[name=description]').val()
             });
 
             self.model.on('invalid', function(model , error) {
@@ -85,73 +76,12 @@
                             'entityType': 'BOOKMARK',
                             'relativeValue': 1
                         });
-                        self.clearErrors();
+                        self.resetValues();
                         // Add it to collection in future
                         self.model.clear();
                     }
                 });
             }
-        },
-
-        buildErrorObject: function(response, self) {
-            window.response = response;
-            var errorEntities = JSON.parse(response.responseText)['errorEntity'];
-
-            var errors = {};
-            errors[BOOKMARK_NAME] = [];
-            errors[BOOKMARK_URL] = [];
-            errors[BOOKMARK_DESCRIPTION] = [];
-
-            if (errorEntities instanceof Array) {
-
-                for (var i = 0; i < errorEntities.length; i++) {
-
-                    var errorEntity = errorEntities[i];
-                    if (errorEntity.field === BOOKMARK_NAME) {
-                        errors[BOOKMARK_NAME].push(errorEntity.description);
-                    }
-                            
-                    if (errorEntity.field === BOOKMARK_URL) {
-                        errors[BOOKMARK_URL].push(errorEntity.description);
-                    }
-
-                    if (errorEntity.field == BOOKMARK_DESCRIPTION) {
-                            errors[BOOKMARK_DESCRIPTION].push(errorEntity.description);
-                    }
-                }
-            } else {
-                var errorEntity = errorEntities;
-                if (errorEntity.field === BOOKMARK_NAME) {
-                    errors[BOOKMARK_NAME].push(errorEntity.description);
-                }
-                            
-                if (errorEntity.field === BOOKMARK_URL) {
-                    errors[BOOKMARK_URL].push(errorEntity.description);
-                }
-
-                if (errorEntity.field == BOOKMARK_DESCRIPTION) {
-                    errors[BOOKMARK_DESCRIPTION].push(errorEntity.description);
-                }
-            }
-
-            if (errors.name)
-                errors[BOOKMARK_NAME] = errors[BOOKMARK_NAME].join(';');
-            if (errors.url)
-                errors[BOOKMARK_URL] = errors[BOOKMARK_URL].join(';');
-            if (errors.description)
-                errors[BOOKMARK_DESCRIPTION] = errors[BOOKMARK_DESCRIPTION].join(';');
-
-            return errors;
-        },
-
-        clearErrors: function() {
-            this.saveForm.find('input[name=name]').removeClass('error-field');
-            this.saveForm.find('input[name=url]').removeClass('error-field');
-            this.saveForm.find('textarea[name=description]').removeClass('error-field');
-
-            this.saveForm.find('.name-error').html('');
-            this.saveForm.find('.url-error').html('');
-            this.saveForm.find('.description-error').html('');
         },
 
         displayTagSelection: function(e) {

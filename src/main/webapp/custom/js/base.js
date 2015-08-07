@@ -33,7 +33,10 @@
 
 		resetValues: function(e) {
 
-			e.preventDefault();
+			if(e) {
+				e.preventDefault();
+			}
+
 			for (var i = 0; i < this.model.formAttributes.length; i++) {
 				var key = this.model.formAttributes[i];
 				this.saveForm.find('[name=' + key + ']').removeClass('error-field').val();
@@ -55,6 +58,32 @@
 					this.saveForm.find('.' + key + '-error').html('');
 				}
 			}
+        },
+
+        buildErrorObject: function(response) {
+
+        	var errorEntities = JSON.parse(response.responseText)['errorEntity'];
+        	var errors = {};
+
+        	for (var i = 0; i < this.model.formAttributes.length; i++) {
+        		var key = this.model.formAttributes[i];
+        		errors[key] = [];
+        	}
+
+        	if (errorEntities instanceof Array) {
+        		for (var i = 0; i < errorEntities.length; i++) {
+        			var errorEntity = errorEntities[i];
+        			errors[errorEntity.field].push(errorEntity.description);
+        		}
+        	} else {
+        		var errorEntity = errorEntities;
+        		errors[errorEntity.field].push(errorEntity.description);
+        	}
+
+        	for (var field in errors) {
+        		errors[field] = errors[field].join(';');
+        	}
+        	return errors;
         }
 	});
 	
