@@ -25,6 +25,7 @@
         saveForm: $('#note-form'),
         tagImage: $('#note-tag-img'),
         searchTag: $('#note-tag'),
+        noteRTE: $('#note'),
 
         events : {
             'click #note-submit': 'createNote',
@@ -34,6 +35,15 @@
 
         initialize: function() {
             this.model = new Note();
+        },
+
+        resetValues: function(e) {
+
+            if (e) {
+                e.preventDefault();
+            }
+            BaseView.prototype.resetValues.apply(this, arguments);
+            this.noteRTE.empty();
         },
 
         createNote: function(e) {
