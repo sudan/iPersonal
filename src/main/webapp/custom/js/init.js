@@ -47,6 +47,11 @@
 				no_results_text: 'Add a new tag and press enter(min 3 chars)'
 			}).trigger('chosen:updated');
 
+			$('#note-tag').chosen({
+				width: '100%',
+				no_results_text: 'Add a new tag and press enter(min 3 chars)'
+			}).trigger('chosen:updated');
+
 			$('#pin-tag').chosen({
 				width: '100%',
 				no_results_text: 'Add a new tag and press enter(min 3 chars)'
