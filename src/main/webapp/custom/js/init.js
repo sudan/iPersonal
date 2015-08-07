@@ -35,7 +35,7 @@
 			});
 
 			backboneGlobalObj.on('expense_category:populate', function(obj){
-				window.expensesView.populateCategories();
+				window.expenseView.populateCategories();
 			});
 		},
 

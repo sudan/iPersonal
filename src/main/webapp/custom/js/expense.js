@@ -98,6 +98,6 @@
         }
     });
 
-    window.expensesView = new ExpenseView();
+    window.expenseView = new ExpenseView();
 
 })(jQuery, window, document);

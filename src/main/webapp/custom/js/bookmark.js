@@ -74,6 +74,6 @@
         }
     });
 
-    window.bookmarksView = new BookmarkView();
+    window.bookmarkView = new BookmarkView();
 
 })(jQuery, window, document);
