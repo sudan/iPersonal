@@ -1,5 +1,9 @@
+.root-wrapper {
+	margin-top: 20px;
+}
+
 .entity-form {
-	width: 420px;
+	width: 450px;
 	display: table;
 	margin: 0 auto;
 }
@@ -11,7 +15,7 @@
 }
 
 .wrapper-entity-form {
-	width: 520px;
+	width: 550px;
 	border: 1px solid #d3d1d1;
 	padding: 5px;
 	border-radius: 10px;
@@ -47,4 +51,10 @@ a {
 
 .add-entity-icon {
 	float: right;
+}
+
+.rte {
+	overflow: scroll; 
+	height: 235px;
+	max-width: 500px;
 }

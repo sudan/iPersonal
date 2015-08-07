@@ -11,15 +11,15 @@
 
     <title>iPersonal</title>
 
-    <link href="vendor/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="vendor/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
-    <link href="vendor/dist/css/sb-admin-2.css" rel="stylesheet">
+    <link href="vendor/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="vendor/metisMenu/dist/metisMenu.min.css" rel="stylesheet" type="text/css">
+    <link href="vendor/dist/css/sb-admin-2.css" rel="stylesheet" type="text/css">
     <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="vendor/chosen/dist/chosen.min.css" rel="stylesheet" type="text/css">
     <link href="vendor/datepicker/dist/datepicker.min.css" rel="stylesheet" type="text/css"/>
-
+    <link rel="stylesheet" href="vendor/rte/dist/font-awesome.css" type="text/css">
+    <link rel="stylesheet" href="vendor/rte/dist/prettify.css" type="text/css">
     <link href="custom/css/index.css" rel="stylesheet" type="text/css"/>
-
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -108,14 +108,13 @@
     <div id="page-wrapper">
         <div class="row">
             <div class="col-lg-12">
-                <h4 class="page-header">Dashboard</h4>
             </div>
         </div>
 
         <div class="row">
             <div class="col-lg-8">
 
-                <div id="entity-wrapper">
+                <div id="entity-wrapper" class="root-wrapper">
                     <div id="bookmark-wrapper" class="invisible">
                         <div class="panel panel-default entity-form">
                             <div class="panel-heading">
@@ -135,7 +134,7 @@
                                         <span class="url-error error-msg"></span>
                                     </div>
                                     <div class="form-group">
-                                        <textarea class="form-control" name="description" rows="3"
+                                        <textarea class="form-control" name="description" rows="7"
                                                   placeholder="Description goes here"></textarea>
                                         <span class="description-error error-msg"></span>
                                     </div>
@@ -160,7 +159,95 @@
                             </div>
                         </div>
                     </div>
-                    <div id="note-wrapper"></div>
+                    <div id="note-wrapper" class="invisible">
+                        <div class="panel panel-default entity-form">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">
+                                    <img src="custom/images/note.png"/>
+                                    <i>Note</i>
+                                </h3>
+                            </div>
+                            <div class="panel-body">
+                                <form method="POST" id="note-form" action="#">
+                                    <div class="form-group">
+                                        <input class="form-control" name="title" placeholder="Title"/>
+                                        <span class="title-error error-msg"></span>
+                                    </div>
+                                    <div class="form-group">
+                                       <div class="btn-toolbar" data-role="editor-toolbar" data-target="#note">
+                                            <div class="btn-group">
+                                                <a class="btn dropdown-toggle" data-toggle="dropdown" title="Font"><i class="icon-font"></i><b class="caret"></b></a>
+                                                <ul class="dropdown-menu">
+                                                    <li><a data-edit="fontName Serif" style="font-family:'Serif'">Serif</a></li>
+                                                    <li><a data-edit="fontName Sans" style="font-family:'Sans'">Sans</a></li>
+                                                    <li><a data-edit="fontName Arial" style="font-family:'Arial'">Arial</a></li>
+                                                    <li><a data-edit="fontName Arial Black" style="font-family:'Arial Black'">Arial Black</a></li>
+                                                    <li><a data-edit="fontName Courier" style="font-family:'Courier'">Courier</a></li>
+                                                    <li><a data-edit="fontName Courier" style="font-family:'Courier'">Courier</a></li>
+                                                    <li><a data-edit="fontName Courier New" style="font-family:'Courier New'">Courier New</a></li>
+                                                    <li><a data-edit="fontName Comic Sans MS" style="font-family:'Comic Sans MS'">Comic Sans MS</a></li>
+                                                    <li><a data-edit="fontName Helvetica" style="font-family:'Helvetica'">Helvetica</a></li>
+                                                    <li><a data-edit="fontName Impact" style="font-family:'Impact'">Impact</a></li>
+                                                    <li><a data-edit="fontName Lucida Grande" style="font-family:'Lucida Grande'">Lucida Grande</a></li>
+                                                    <li><a data-edit="fontName Lucida Sans" style="font-family:'Lucida Sans'">Lucida Sans</a></li>
+                                                    <li><a data-edit="fontName Tahoma" style="font-family:'Tahoma'">Tahoma</a></li>
+                                                    <li><a data-edit="fontName Times" style="font-family:'Times'">Times</a></li>
+                                                    <li><a data-edit="fontName Times New Roman" style="font-family:'Times New Roman'">Times New Roman</a></li>
+                                                    <li><a data-edit="fontName Verdana" style="font-family:'Verdana'">Verdana</a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="btn-group">
+                                                <a class="btn dropdown-toggle" data-toggle="dropdown" title="Font Size"><i class="icon-text-height"></i>&nbsp;<b class="caret"></b></a>
+                                                <ul class="dropdown-menu">
+                                                  <li><a data-edit="fontSize 5"><font size="5">Huge</font></a></li>
+                                                  <li><a data-edit="fontSize 3"><font size="3">Normal</font></a></li>
+                                                  <li><a data-edit="fontSize 1"><font size="1">Small</font></a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="btn-group">
+                                                <a class="btn bold" data-edit="bold" title="Bold (Ctrl/Cmd+B)"><i class="icon-bold"></i></a>
+                                                <a class="btn italic" data-edit="italic" title="Italic (Ctrl/Cmd+I)"><i class="icon-italic"></i></a>
+                                                <a class="btn underline" data-edit="underline" title="Underline (Ctrl/Cmd+U)"><i class="icon-underline"></i></a>
+                                            </div>
+                                            <div class="btn-group">
+                                                <a class="btn" data-edit="insertunorderedlist" title="Bullet list"><i class="icon-list-ul"></i></a>
+                                                <a class="btn" data-edit="insertorderedlist" title="Number list"><i class="icon-list-ol"></i></a>
+                                                <a class="btn" data-edit="outdent" title="Reduce indent (Shift+Tab)"><i class="icon-indent-left"></i></a>
+                                                <a class="btn" data-edit="indent" title="Indent (Tab)"><i class="icon-indent-right"></i></a>
+                                            </div>
+                                            <div class="btn-group">
+                                                <a class="btn" data-edit="justifyleft" title="Align Left (Ctrl/Cmd+L)"><i class="icon-align-left"></i></a>
+                                                <a class="btn" data-edit="justifycenter" title="Center (Ctrl/Cmd+E)"><i class="icon-align-center"></i></a>
+                                                <a class="btn" data-edit="justifyright" title="Align Right (Ctrl/Cmd+R)"><i class="icon-align-right"></i></a>
+                                                <a class="btn" data-edit="justifyfull" title="Justify (Ctrl/Cmd+J)"><i class="icon-align-justify"></i></a>
+                                            </div>
+                                        </div>
+                                        <div id="note" class="form-control rte" name="note">
+                                        </div> 
+          
+                                        <span class="note-error error-msg"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <img id="note-tag-img" class="clickable" title="Add Tags"
+                                             src="custom/images/tag.png"/>
+                                    </div>
+                                    <div class="form-group invisible">
+                                        <select id="note-tag" multiple="multiple" class="form-control chosen-menu"
+                                                data-placeholder="search tags">
+                                        </select>
+                                    </div>
+
+                                    <div class="button-group">
+                                        <button id="note-submit" type="submit" class="btn btn-success btn-element">
+                                            Create
+                                        </button>
+                                        <button id="note-cancel" type="submit" class="btn btn-link btn-element">Cancel
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                     <div id="pin-wrapper" class="invisible">
                         <div class="panel panel-default entity-form">
                             <div class="panel-heading">
@@ -180,7 +267,7 @@
                                         <span class="imageUrl-error error-msg"></span>
                                     </div>
                                     <div class="form-group">
-                                        <textarea class="form-control" name="description" rows="3"
+                                        <textarea class="form-control" name="description" rows="7"
                                                   placeholder="Description goes here"></textarea>
                                         <span class="description-error error-msg"></span>
                                     </div>
@@ -222,7 +309,7 @@
                                         <span class="title-error error-msg"></span>
                                     </div>
                                     <div class="form-group">
-                                        <textarea class="form-control" name="description" rows="3"
+                                        <textarea class="form-control" name="description" rows="5"
                                                   placeholder="Description goes here"></textarea>
                                         <span class="description-error error-msg"></span>
                                     </div>
@@ -277,6 +364,9 @@
 <script type="text/javascript" src="vendor/backbone/dist/backbone.js"></script>
 <script type="text/javascript" src="vendor/chosen/dist/chosen.js"></script>
 <script type="text/javascript" src="vendor/datepicker/dist/datepicker.js"></script>
+<script type="text/javascript" src="vendor/rte/dist/jquery.hotkeys.js"></script>
+<script type="text/javascript" src="vendor/rte/dist/prettify.js"></script>
+<script type="text/javascript" src="vendor/rte/dist/bootstrap-wysiwyg.js"></script>
 
 <script type="text/javascript" src="custom/js/init.js"></script>
 <script type="text/javascript" src="custom/js/user.js"></script>
@@ -284,6 +374,7 @@
 <script type="text/javascript" src="custom/js/tag.js"></script>
 <script type="text/javascript" src="custom/js/expense_category.js"></script>
 <script type="text/javascript" src="custom/js/bookmark.js"></script>
+<script type="text/javascript" src="custom/js/note.js"></script>
 <script type="text/javascript" src="custom/js/pin.js"></script>
 <script type="text/javascript" src="custom/js/expense.js"></script>
 <script type="text/javascript" src="custom/js/entity.js"></script>
