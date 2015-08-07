@@ -44,7 +44,6 @@
             self.model.set({
                 title: self.saveForm.find('[name=title]').val(),
                 note: self.saveForm.find('div#note').cleanHtml(),
-                description: self.saveForm.find('[name=description]').val()
             });
 
             self.model.on('invalid', function(model , error) {
