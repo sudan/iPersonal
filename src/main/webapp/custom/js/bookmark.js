@@ -82,23 +82,6 @@
                     }
                 });
             }
-        },
-
-        displayTagSelection: function(e) {
-            
-            var self = this;
-            self.tagImage.addClass('invisible');
-
-            window.currentTagEntity = self.searchTag;
-            self.searchTag.parent('div.form-group').removeClass('invisible');
-
-            var tags = window.tagModel.getTags();
-            if(tags) {
-                for (var i = 0; i < tags.length; i++) {
-                    self.searchTag.append($('<option></option>').attr('value', tags[i]).text(tags[i]));
-                }
-                self.searchTag.trigger('chosen:updated');
-            }
         }
 
     });

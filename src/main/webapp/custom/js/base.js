@@ -84,7 +84,22 @@
         		errors[field] = errors[field].join(';');
         	}
         	return errors;
+        },
+
+        displayTagSelection: function(e) {
+
+        	this.tagImage.addClass('invisible');
+        	this.searchTag.parent('div.form-group').removeClass('invisible');
+
+        	var tags = tagModel.getTags();
+        	if (tags) {
+        		for (var i = 0; i < tags.length; i++) {
+        			this.searchTag.append($('<option></option>').attr('value', tags[i]).text(tags[i]));
+        		}
+        		this.searchTag.trigger('chosen:updated');
+        	}
         }
+
 	});
 	
 })(jQuery, window, document);
