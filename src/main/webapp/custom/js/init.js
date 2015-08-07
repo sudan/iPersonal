@@ -10,7 +10,7 @@
 
 		initDatePicker: function() {
 			$(document).ready(function(){
-				$('input.datepicker').datepicker();
+				$('input.datepicker').datepicker({ format: 'yyyy-mm-dd'});
 			});
 		},
 
@@ -32,6 +32,10 @@
 
 			backboneGlobalObj.on('expense_category:set', function(obj) {
 				window.expenseCategoryModel.addExpenseCategories(obj.expenseCategories);
+			});
+
+			backboneGlobalObj.on('expense_category:populate', function(obj){
+				window.expensesView.populateCategories();
 			});
 		},
 
