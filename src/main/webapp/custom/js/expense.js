@@ -14,6 +14,9 @@
             this.maxLength = {
                 'title': 50, 'description': 1000
             },
+            this.type = {
+                'amount': 'double'
+            },
             this.formAttributes = ['title', 'description', 'amount', 'date', 'categories']
         }
 

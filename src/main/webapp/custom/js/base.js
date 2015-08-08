@@ -6,26 +6,40 @@
 
 		defaults: {
 			mandatory: {},
-			maxLength: {}
+			maxLength: {},
+                        type: {},
+                        nonModelAttrs: {}
 		},
 
 		validate: function(attributes) {
 
 			var errors = {};
 
-			for (var key in attributes) {
-				if (this.mandatory[key] == true && !attributes[key]) {
-					errors[key] = key + ' cannot be empty';
-				} else if (key == 'date' && isNaN(attributes[key])) {
-					errors[key] = key + ' cannot be empty';
-				}
-			}
+                        for (var key in this.mandatory) {
+                                if (!attributes[key]) {
+                                        errors[key] = key + ' cannot be empty';
+                                } else if (key == 'date' && isNaN(attributes[key])) {
+                                        errors[key] = key + ' is Invalid';
+                                }
+                        }
 
-			for (var key in attributes) {
-				if (this.maxLength[key]  && attributes[key].length > this.maxLength[key]) {
-					errors[key] = key + ' cannot exceed ' + this.maxLength[key] + ' characters';
-				}
-			}
+                        for (var key in this.maxLength) {
+                                if (attributes[key].length > this.maxLength[key]) {
+                                        errors[key] = key + ' cannot exceed ' + this.maxLength[key] + ' characters';
+                                }
+                        }
+
+                        for (var key in this.type) {
+                                if (this.type[key] == 'int' || this.type[key] == 'double') {
+                                        if (isNaN(parseInt(attributes[key]))) {
+                                                errors[key] = 'Invalid value for ' + key;
+                                        }
+                                }
+                        }
+
+                        for (var key in this.nonModelAttrs) {
+                                delete attributes[key];
+                        }
 
 			return $.isEmptyObject(errors) ? false : errors;
 		}

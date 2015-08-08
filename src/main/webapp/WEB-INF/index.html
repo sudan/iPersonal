@@ -272,7 +272,97 @@
                         </div>
                      </div>
                      <div id="todo-wrapper"></div>
-                     <div id="diary-wrapper"></div>
+                     <div id="diary-wrapper" class="invisible">
+                        <div class="panel panel-default entity-form">
+                           <div class="panel-heading">
+                              <h3 class="panel-title">
+                                 <img src="custom/images/diary.jpg"/>
+                                 <i>Diary</i>
+                              </h3>
+                           </div>
+                           <div class="panel-body">
+                              <form method="POST" id="diary-form" action="#">
+                                 <div class="form-group">
+                                    <input class="form-control" name="title" placeholder="Title"/>
+                                    <span class="title-error error-msg"></span>
+                                 </div>
+                                 <div class="form-group">
+                                    <input class="form-control datepicker" name="date"
+                                       placeholder="Select a date"/>
+                                    <span class="date-error error-msg"></span>
+                                 </div>
+                                 <div class="form-group">
+                                    <div class="btn-toolbar" data-role="editor-toolbar" data-target="#diary">
+                                       <div class="btn-group">
+                                          <a class="btn dropdown-toggle" data-toggle="dropdown" title="Font"><i class="icon-font"></i><b class="caret"></b></a>
+                                          <ul class="dropdown-menu">
+                                             <li><a data-edit="fontName Serif" style="font-family:'Serif'">Serif</a></li>
+                                             <li><a data-edit="fontName Sans" style="font-family:'Sans'">Sans</a></li>
+                                             <li><a data-edit="fontName Arial" style="font-family:'Arial'">Arial</a></li>
+                                             <li><a data-edit="fontName Arial Black" style="font-family:'Arial Black'">Arial Black</a></li>
+                                             <li><a data-edit="fontName Courier" style="font-family:'Courier'">Courier</a></li>
+                                             <li><a data-edit="fontName Courier" style="font-family:'Courier'">Courier</a></li>
+                                             <li><a data-edit="fontName Courier New" style="font-family:'Courier New'">Courier New</a></li>
+                                             <li><a data-edit="fontName Comic Sans MS" style="font-family:'Comic Sans MS'">Comic Sans MS</a></li>
+                                             <li><a data-edit="fontName Helvetica" style="font-family:'Helvetica'">Helvetica</a></li>
+                                             <li><a data-edit="fontName Impact" style="font-family:'Impact'">Impact</a></li>
+                                             <li><a data-edit="fontName Lucida Grande" style="font-family:'Lucida Grande'">Lucida Grande</a></li>
+                                             <li><a data-edit="fontName Lucida Sans" style="font-family:'Lucida Sans'">Lucida Sans</a></li>
+                                             <li><a data-edit="fontName Tahoma" style="font-family:'Tahoma'">Tahoma</a></li>
+                                             <li><a data-edit="fontName Times" style="font-family:'Times'">Times</a></li>
+                                             <li><a data-edit="fontName Times New Roman" style="font-family:'Times New Roman'">Times New Roman</a></li>
+                                             <li><a data-edit="fontName Verdana" style="font-family:'Verdana'">Verdana</a></li>
+                                          </ul>
+                                       </div>
+                                       <div class="btn-group">
+                                          <a class="btn dropdown-toggle" data-toggle="dropdown" title="Font Size"><i class="icon-text-height"></i>&nbsp;<b class="caret"></b></a>
+                                          <ul class="dropdown-menu">
+                                             <li><a data-edit="fontSize 5"><font size="5">Huge</font></a></li>
+                                             <li><a data-edit="fontSize 3"><font size="3">Normal</font></a></li>
+                                             <li><a data-edit="fontSize 1"><font size="1">Small</font></a></li>
+                                          </ul>
+                                       </div>
+                                       <div class="btn-group">
+                                          <a class="btn bold" data-edit="bold" title="Bold (Ctrl/Cmd+B)"><i class="icon-bold"></i></a>
+                                          <a class="btn italic" data-edit="italic" title="Italic (Ctrl/Cmd+I)"><i class="icon-italic"></i></a>
+                                          <a class="btn underline" data-edit="underline" title="Underline (Ctrl/Cmd+U)"><i class="icon-underline"></i></a>
+                                       </div>
+                                       <div class="btn-group">
+                                          <a class="btn" data-edit="insertunorderedlist" title="Bullet list"><i class="icon-list-ul"></i></a>
+                                          <a class="btn" data-edit="insertorderedlist" title="Number list"><i class="icon-list-ol"></i></a>
+                                          <a class="btn" data-edit="outdent" title="Reduce indent (Shift+Tab)"><i class="icon-indent-left"></i></a>
+                                          <a class="btn" data-edit="indent" title="Indent (Tab)"><i class="icon-indent-right"></i></a>
+                                       </div>
+                                       <div class="btn-group">
+                                          <a class="btn" data-edit="justifyleft" title="Align Left (Ctrl/Cmd+L)"><i class="icon-align-left"></i></a>
+                                          <a class="btn" data-edit="justifycenter" title="Center (Ctrl/Cmd+E)"><i class="icon-align-center"></i></a>
+                                          <a class="btn" data-edit="justifyright" title="Align Right (Ctrl/Cmd+R)"><i class="icon-align-right"></i></a>
+                                          <a class="btn" data-edit="justifyfull" title="Justify (Ctrl/Cmd+J)"><i class="icon-align-justify"></i></a>
+                                       </div>
+                                    </div>
+                                    <div id="diary" class="form-control rte" name="content"></div>
+                                    <span class="content-error error-msg"></span>
+                                 </div>
+                                 <div class="form-group">
+                                    <img id="diary-tag-img" class="clickable" title="Add Tags"
+                                       src="custom/images/tag.png"/>
+                                 </div>
+                                 <div class="form-group invisible">
+                                    <select id="diary-tag" multiple="multiple" class="form-control chosen-menu"
+                                       data-placeholder="search tags">
+                                    </select>
+                                 </div>
+                                 <div class="button-group">
+                                    <button id="diary-submit" type="submit" class="btn btn-success btn-element">
+                                    Create
+                                    </button>
+                                    <button id="diary-cancel" type="submit" class="btn btn-link btn-element">Cancel
+                                    </button>
+                                 </div>
+                              </form>
+                           </div>   
+                        </div>
+                     </div>
                      <div id="expense-wrapper" class="invisible">
                         <div class="panel panel-default entity-form">
                            <div class="panel-heading">
@@ -350,6 +440,7 @@
       <script type="text/javascript" src="custom/js/bookmark.js"></script>
       <script type="text/javascript" src="custom/js/note.js"></script>
       <script type="text/javascript" src="custom/js/pin.js"></script>
+      <script type="text/javascript" src="custom/js/diary.js"></script>
       <script type="text/javascript" src="custom/js/expense.js"></script>
       <script type="text/javascript" src="custom/js/entity.js"></script>
    </body>

@@ -91,6 +91,7 @@
 			self.italic = false;
 			self.underline = false;
 			$('#note').wysiwyg();
+			$('#diary').wysiwyg();
 			$('.btn-group').find('a').on('click', function(){
 				var styles = $(this).data('edit');
 
