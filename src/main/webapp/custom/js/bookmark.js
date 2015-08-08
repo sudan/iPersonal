@@ -19,6 +19,10 @@
 
     }); 
 
+    var Bookmarks = Backbone.Collection.extend({
+        model: Bookmark
+    });
+
     var BookmarkView = BaseView.extend({
 
         el: $('#bookmark-wrapper'),
@@ -66,14 +70,48 @@
                         self.model.set({ bookmarkId: bookmarkId});
                         var tags = self.searchTag.val();
                         self.postCreation(bookmarkId, "BOOKMARK", self.model.get('name'), 1, tags)
-                        // Add it to collection in future
-                        self.model.clear();
+                        self.model.set({
+                            'createdOn': Math.floor(Date.now()/1000),
+                            'modifiedAt': Math.floor(Date.now()/1000),
+                            'tags': tags 
+                        });
+                        self.collection.unshift(self.model);
                     }
                 });
             }
+        },
+
+        fetchBookmarks: function(e) {
+
+            var offset = 0;
+            var self = this;
+
+            if (e) {
+                e.preventDefault();
+
+                if ($(e.target).attr('offset')) {
+                    offset = $(e.target).attr('offset');
+                }
+            }
+
+            if (this.collection.length  >= parseInt(offset+1) * 10)
+                return;
+
+            this.model.fetch({data: {offset: offset, limit : 20} }).complete(function(response){
+                if (response.status == 200) {
+                        var bookmarks = JSON.parse(response.responseText)['bookmark'];
+                        for (var index in bookmarks) {
+                            self.collection.push(bookmarks[index]);
+                        }
+                }
+            });
+        },
+
+        renderAll: function() {
+            
         }
     });
 
-    window.bookmarkView = new BookmarkView();
+    window.bookmarkView = new BookmarkView({ collection : []});
 
 })(jQuery, window, document);
