@@ -25,10 +25,7 @@
     var ExpenseView = BaseView.extend({
 
         el: $('#expense-wrapper'),
-        saveForm: $('#expense-form'),
-        tagImage: $('#exp-tag-img'),
-        searchTag: $('#expense-tag'),
-        categoryDropDown: $('#expense-form').find('[name=categories]'),
+        createTemplate: $('#expense-create-template').html(),
 
         events : {
             'click #exp-submit': 'createExpense',
@@ -38,6 +35,15 @@
 
         initialize: function() {
             this.model = new Expense();
+        },
+
+        prepareVariables: function() {
+
+            this.saveForm = $('#expense-form');
+            this.tagImage = $('#exp-tag-img');
+            this.searchTag = $('#expense-tag');
+            this.categoryDropDown = $('#expense-form').find('[name=categories]');
+            this.populateCategories();
         },
 
         resetValues: function(e) {

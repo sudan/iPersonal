@@ -24,14 +24,14 @@
                         }
 
                         for (var key in this.maxLength) {
-                                if (attributes[key].length > this.maxLength[key]) {
+                                if (attributes[key] && attributes[key].length > this.maxLength[key]) {
                                         errors[key] = key + ' cannot exceed ' + this.maxLength[key] + ' characters';
                                 }
                         }
 
                         for (var key in this.type) {
                                 if (this.type[key] == 'int' || this.type[key] == 'double') {
-                                        if (isNaN(parseInt(attributes[key]))) {
+                                        if (attributes[key] && isNaN(parseInt(attributes[key]))) {
                                                 errors[key] = 'Invalid value for ' + key;
                                         }
                                 }
@@ -77,70 +77,76 @@
 			}
         },
 
-        buildErrorObject: function(response) {
+                buildErrorObject: function(response) {
 
-        	var errorEntities = JSON.parse(response.responseText)['errorEntity'];
-        	var errors = {};
+                	var errorEntities = JSON.parse(response.responseText)['errorEntity'];
+                	var errors = {};
 
-        	for (var i = 0; i < this.model.formAttributes.length; i++) {
-        		var key = this.model.formAttributes[i];
-        		errors[key] = [];
-        	}
+                	for (var i = 0; i < this.model.formAttributes.length; i++) {
+                		var key = this.model.formAttributes[i];
+                		errors[key] = [];
+                	}
 
-        	if (errorEntities instanceof Array) {
-        		for (var i = 0; i < errorEntities.length; i++) {
-        			var errorEntity = errorEntities[i];
-        			errors[errorEntity.field].push(errorEntity.description);
-        		}
-        	} else {
-        		var errorEntity = errorEntities;
-        		errors[errorEntity.field].push(errorEntity.description);
-        	}
+                	if (errorEntities instanceof Array) {
+                		for (var i = 0; i < errorEntities.length; i++) {
+                			var errorEntity = errorEntities[i];
+                			errors[errorEntity.field].push(errorEntity.description);
+                		}
+                	} else {
+                		var errorEntity = errorEntities;
+                		errors[errorEntity.field].push(errorEntity.description);
+                	}
 
-        	for (var field in errors) {
-        		errors[field] = errors[field].join(';');
-        	}
-        	return errors;
-        },
+                	for (var field in errors) {
+                		errors[field] = errors[field].join(';');
+                	}
+                	return errors;
+                },
 
-        displayTagSelection: function(e) {
+                displayTagSelection: function(e) {
 
-        	this.tagImage.addClass('invisible');
-        	this.searchTag.parent('div.form-group').removeClass('invisible');
+                	this.tagImage.addClass('invisible');
+                	this.searchTag.parent('div.form-group').removeClass('invisible');
 
-        	var tags = tagModel.getTags();
-        	if (tags) {
-        		this.searchTag.empty();
-        		for (var i = 0; i < tags.length; i++) {
-        			this.searchTag.append($('<option></option>').attr('value', tags[i]).text(tags[i]));
-        		}
-        		this.searchTag.trigger('chosen:updated');
-        	}
-        },
+                	var tags = tagModel.getTags();
+                	if (tags) {
+                		this.searchTag.empty();
+                		for (var i = 0; i < tags.length; i++) {
+                			this.searchTag.append($('<option></option>').attr('value', tags[i]).text(tags[i]));
+                		}
+                		this.searchTag.trigger('chosen:updated');
+                	}
+                },
 
-        postCreation: function(entityId, entityType, entityTitle, relativeValue, tags, expenseCategories) {
+                postCreation: function(entityId, entityType, entityTitle, relativeValue, tags, expenseCategories) {
 
-        	if (tags) {
-        		backboneGlobalObj.trigger('tag:add', {
-        			'entityId': entityId,
-        			'entityType': entityType,
-        			'entityTitle': entityTitle,
-        			'tags': tags
-        		});
-        	}
-        	backboneGlobalObj.trigger('entity:count', {
-        		'entityType': entityType,
-        		'relativeValue': relativeValue
-        	});
+                	if (tags) {
+                		backboneGlobalObj.trigger('tag:add', {
+                			'entityId': entityId,
+                			'entityType': entityType,
+                			'entityTitle': entityTitle,
+                			'tags': tags
+                		});
+                	}
+                	backboneGlobalObj.trigger('entity:count', {
+                		'entityType': entityType,
+                		'relativeValue': relativeValue
+                	});
 
-        	if (expenseCategories) {
-        		backboneGlobalObj.trigger('expense_category:set', {
-        			'expenseCategories': expenseCategories
-        		});
-        	}
-        	this.resetValues();
-        }
+                	if (expenseCategories) {
+                		backboneGlobalObj.trigger('expense_category:set', {
+                			'expenseCategories': expenseCategories
+                		});
+                	}
+                	this.resetValues();
+                },
 
+                renderCreateTemplate: function() {
+                        var template = _.template(this.createTemplate);
+                        this.$el.html(template());
+                        this.$el.fadeIn().removeClass('invisible')
+                                .siblings().fadeOut().addClass('invisible');
+                }
 	});
 	
 })(jQuery, window, document);

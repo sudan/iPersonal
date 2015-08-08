@@ -1,12 +1,66 @@
 (function($, window, document){
 
-	var Init = {
+	window.Init = {
 
 		init : function() {
-			this.initDatePicker();
 			this.initBackboneEvents();
+		},
+
+		initBookmark: function() {
+
+			$('#bookmark-tag').chosen({
+				width: '100%',
+				no_results_text: 'Add a new tag and press enter(min 3 chars)'
+			}).trigger('chosen:updated');
 			this.initChosenDropdowns();
+		},
+
+		initNote: function() {
+
+			$('#note-tag').chosen({
+				width: '100%',
+				no_results_text: 'Add a new tag and press enter(min 3 chars)'
+			}).trigger('chosen:updated');
+			this.initChosenDropdowns();
+			$('#note').wysiwyg();
 			this.initRTE();
+		},
+
+		initPin: function() {
+
+			$('#pin-tag').chosen({
+				width: '100%',
+				no_results_text: 'Add a new tag and press enter(min 3 chars)'
+			}).trigger('chosen:updated');
+			this.initChosenDropdowns();
+		},
+
+		initDiary: function() {
+			
+			$('#diary-tag').chosen({
+				width: '100%',
+				no_results_text: 'Add a new tag and press enter(min 3 chars)'
+			}).trigger('chosen:updated');
+			this.initChosenDropdowns();
+
+			$('#diary').wysiwyg();
+			this.initRTE();
+			this.initDatePicker();
+		},
+
+		initExpense: function() {
+
+			$('#expense-tag').chosen({
+				width: '100%',
+				no_results_text: 'Add a new tag and press enter(min 3 chars)'
+			}).trigger('chosen:updated');
+
+			$('#expense-category').chosen({
+				width: '100%',
+				no_results_text: 'Add a new category and press enter(min 3 chars)'
+			}).trigger('chosen:updated');
+			this.initChosenDropdowns();
+			this.initDatePicker();
 		},
 
 		initDatePicker: function() {
@@ -42,31 +96,6 @@
 
 		initChosenDropdowns: function() {
 
-			$('#bookmark-tag').chosen({
-				width: '100%',
-				no_results_text: 'Add a new tag and press enter(min 3 chars)'
-			}).trigger('chosen:updated');
-
-			$('#note-tag').chosen({
-				width: '100%',
-				no_results_text: 'Add a new tag and press enter(min 3 chars)'
-			}).trigger('chosen:updated');
-
-			$('#pin-tag').chosen({
-				width: '100%',
-				no_results_text: 'Add a new tag and press enter(min 3 chars)'
-			}).trigger('chosen:updated');
-
-			$('#expense-tag').chosen({
-				width: '100%',
-				no_results_text: 'Add a new tag and press enter(min 3 chars)'
-			}).trigger('chosen:updated');
-
-			$('#expense-category').chosen({
-				width: '100%',
-				no_results_text: 'Add a new category and press enter(min 3 chars)'
-			}).trigger('chosen:updated');
-
 			$('.chosen-menu').parent().find('div.chosen-container').find('input').on('keyup', function(event){
 				if(event.keyCode == 13) {
 					var value = $(event.target).val();
@@ -90,8 +119,7 @@
 			self.bold = false;
 			self.italic = false;
 			self.underline = false;
-			$('#note').wysiwyg();
-			$('#diary').wysiwyg();
+			
 			$('.btn-group').find('a').on('click', function(){
 				var styles = $(this).data('edit');
 
@@ -104,7 +132,6 @@
 				if (styles === 'underline') {
 					self.underline = (self.underline == true) ? false : true;
 				}
-				
 				(self.bold == true) ?
 					$('.btn-group').find('a.bold').addClass('btn-info') :
 					$('.btn-group').find('a.bold').removeClass('btn-info');

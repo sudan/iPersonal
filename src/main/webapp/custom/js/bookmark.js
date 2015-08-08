@@ -26,9 +26,7 @@
     var BookmarkView = BaseView.extend({
 
         el: $('#bookmark-wrapper'),
-        saveForm: $('#bookmark-form'),
-        tagImage: $('#book-tag-img'),
-        searchTag: $('#bookmark-tag'),
+        createTemplate: $('#bookmark-create-template').html(),
 
         events : {
             'click #book-submit': 'createBookmark',
@@ -38,6 +36,13 @@
 
         initialize: function() {
             this.model = new Bookmark();
+        },
+
+        prepareVariables: function() {
+            
+            this.saveForm =  $('#bookmark-form');
+            this.tagImage = $('#book-tag-img');
+            this.searchTag = $('#bookmark-tag');
         },
 
         createBookmark: function(e) {
