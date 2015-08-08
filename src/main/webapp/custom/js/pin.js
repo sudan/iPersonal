@@ -22,9 +22,7 @@
     var PinView = BaseView.extend({
 
         el: $('#pin-wrapper'),
-        saveForm: $('#pin-form'),
-        tagImage: $('#pin-tag-img'),
-        searchTag: $('#pin-tag'),
+        createTemplate: $('#pin-create-template').html(),
 
         events : {
             'click #pin-submit': 'createPin',
@@ -34,6 +32,13 @@
 
         initialize: function() {
             this.model = new Pin();
+        },
+
+        prepareVariables: function() {
+            this.tagImage = $('#pin-tag-img');
+            this.searchTag =  $('#pin-tag');
+            this.saveForm =  $('#pin-form');
+
         },
 
         createPin: function(e) {

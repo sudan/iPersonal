@@ -22,10 +22,7 @@
     var NoteView = BaseView.extend({
 
         el: $('#note-wrapper'),
-        saveForm: $('#note-form'),
-        tagImage: $('#note-tag-img'),
-        searchTag: $('#note-tag'),
-        noteRTE: $('#note'),
+        createTemplate: $('#note-create-template').html(),
 
         events : {
             'click #note-submit': 'createNote',
@@ -35,6 +32,14 @@
 
         initialize: function() {
             this.model = new Note();
+        },
+
+        prepareVariables: function() {
+
+            this.saveForm = $('#note-form');
+            this.tagImage = $('#note-tag-img');
+            this.searchTag =  $('#note-tag');
+            this.noteRTE =  $('#note');
         },
 
         resetValues: function(e) {

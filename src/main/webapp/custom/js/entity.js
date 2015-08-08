@@ -87,12 +87,33 @@
 			
 			var self = this;
 			backboneGlobalObj.on('entity:createform', function(entity) {
-				var div = entity.toLowerCase() + '-wrapper';
-				self.$el.children('#' + div).fadeIn().removeClass('invisible')
-											.siblings().fadeOut().addClass('invisible');
-
-				if (entity == 'EXPENSE') {
-					backboneGlobalObj.trigger('expense_category:populate');
+				
+				switch(entity) {
+					case 'BOOKMARK': 
+						bookmarkView.renderCreateTemplate(); 
+						bookmarkView.prepareVariables();
+						Init.initBookmark();
+						break;
+					case 'NOTE':
+						noteView.renderCreateTemplate();
+						noteView.prepareVariables();
+						Init.initNote();
+						break;
+					case 'PIN':
+						pinView.renderCreateTemplate();
+						pinView.prepareVariables();
+						Init.initPin();
+						break;
+					case 'DIARY':
+						diaryView.renderCreateTemplate();
+						diaryView.prepareVariables();
+						Init.initDiary();
+						break;
+					case 'EXPENSE':
+						expenseView.renderCreateTemplate();
+						expenseView.prepareVariables();
+						Init.initExpense();
+						break;
 				}
 			});
 		}
