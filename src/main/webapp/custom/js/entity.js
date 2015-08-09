@@ -130,7 +130,9 @@
 					case 'BOOKMARK': 
 						bookmarkView.fetchBookmarks();
 						break;
-					case 'NOTE': break;
+					case 'NOTE': 
+						noteView.fetchNotes();
+						break;
 					case 'PIN': break;
 					case 'TODO': break;
 					case 'DIARY': break;
