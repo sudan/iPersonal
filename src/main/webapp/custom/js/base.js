@@ -158,6 +158,19 @@
                                         break;
                                 }
                         }
+
+                        if (!entity.attributes.tags) {
+                                entity.set({
+                                        tags: []
+                                })
+                        }
+
+                        if (entityType == 'expense' && !entity.attributes.categories) {
+                                entity.set({
+                                        categories: []
+                                })
+                        }
+
                         var template = _.template(this.displayTemplate);
                         this.$el.html(template(entity.toJSON()));
                         this.$el.fadeIn().removeClass('invisible')

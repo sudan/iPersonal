@@ -35,6 +35,7 @@
 
         el: $('#expense-wrapper'),
         createTemplate: $('#expense-create-template').html(),
+        displayTemplate: $('#expense-display-template').html(),
 
         events : {
             'click #exp-submit': 'createExpense',
