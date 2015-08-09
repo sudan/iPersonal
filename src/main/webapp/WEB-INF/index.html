@@ -34,30 +34,30 @@
                 <ul class="nav">
                     <li><a href="#" data-entity="bookmark">Bookmarks (<%= bookmarks %>)
                         <img id="bookmark-add-icon" class="add-entity-icon" data-entity="bookmark"
-                             src="custom/images/plus.png"/></a>
+                             src="custom/images/plus.png" title="Add a bookmark"/></a>
                     </li>
                     <li><a href="#" data-entity="note">Notes (<%= notes %>)
                         <img id="note-add-icon" class="add-entity-icon" data-entity="note"
-                             src="custom/images/plus.png"/></a>
+                             src="custom/images/plus.png" title="Add a note"/></a>
                     </li>
                     <li><a href="#" data-entity="pin">Pins (<%= pins %>)
                         <img id="pin-add-icon" class="add-entity-icon" data-entity="pin"
-                             src="custom/images/plus.png"/></a>
+                             src="custom/images/plus.png" title="Add a pin"/></a>
                     </li>
                     <li>
                         <a href="#" data-entity="todo">Todos (<%= todos %>)
                             <img id="todo-add-icon" class="add-entity-icon" data-entity="todo"
-                                 src="custom/images/plus.png"/></a>
+                                 src="custom/images/plus.png" title="Add a todo"/></a>
                     </li>
                     <li>
                         <a href="#" data-entity="diary">Diaries (<%= diaries %>)
                             <img id="diary-add-icon" class="add-entity-icon" data-entity="diary"
-                                 src="custom/images/plus.png"/></a>
+                                 src="custom/images/plus.png" title="Add a diary"/></a>
                     </li>
                     <li>
                         <a href="#" data-entity="expense">Expenses (<%= expenses %>)
                             <img id="expense-add-icon" class="add-entity-icon" data-entity="expense"
-                                 src="custom/images/plus.png"/></a>
+                                 src="custom/images/plus.png" title="Add a expense"/></a>
                     </li>
                 </ul>
             </div>
@@ -424,6 +424,10 @@
          </div>
          <div class="panel-body entity-menu-list">
             <ul class="chat">
+
+                <% if (_.isEmpty(entities)) { %>
+                    <span><i>No data</i></span>
+                <% } %>
                 <% _.each(entities, function(entity){ %>
                     <li class="left clearfix clickable" data-id = '<%= entity.entityId %>' data-entity = '<%=  entity.entityType %>'>
                         <span class="chat-img pull-left">
@@ -526,11 +530,11 @@
 <script type="text/javascript" src="vendor/rte/dist/prettify.js"></script>
 <script type="text/javascript" src="vendor/rte/dist/bootstrap-wysiwyg.js"></script>
 <script type="text/javascript" src="vendor/moment/dist/moment.min.js"></script>
+<script type="text/javascript" src="custom/js/tag.js"></script>
+<script type="text/javascript" src="custom/js/expense_category.js"></script>
 <script type="text/javascript" src="custom/js/init.js"></script>
 <script type="text/javascript" src="custom/js/user.js"></script>
 <script type="text/javascript" src="custom/js/base.js"></script>
-<script type="text/javascript" src="custom/js/tag.js"></script>
-<script type="text/javascript" src="custom/js/expense_category.js"></script>
 <script type="text/javascript" src="custom/js/bookmark.js"></script>
 <script type="text/javascript" src="custom/js/note.js"></script>
 <script type="text/javascript" src="custom/js/pin.js"></script>
