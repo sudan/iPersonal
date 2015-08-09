@@ -133,7 +133,9 @@
 					case 'NOTE': 
 						noteView.fetchNotes();
 						break;
-					case 'PIN': break;
+					case 'PIN': 
+						pinView.fetchPins();
+						break;
 					case 'TODO': break;
 					case 'DIARY': break;
 					case 'EXPENSE': break;

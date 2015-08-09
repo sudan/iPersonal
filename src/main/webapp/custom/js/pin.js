@@ -19,6 +19,10 @@
 
     }); 
 
+    var Pins = Backbone.Collection.extend({
+        model: Pin
+    })
+
     var PinView = BaseView.extend({
 
         el: $('#pin-wrapper'),
@@ -28,10 +32,6 @@
             'click #pin-submit': 'createPin',
             'click #pin-cancel': 'resetValues',
             'click #pin-tag-img': 'displayTagSelection',
-        },
-
-        initialize: function() {
-            this.model = new Pin();
         },
 
         prepareVariables: function() {
@@ -46,6 +46,7 @@
             var self = this;
             e.preventDefault();
 
+            self.model = new Pin();
             self.model.set({
                 name: self.saveForm.find('[name=name]').val(),
                 imageUrl: self.saveForm.find('[name=imageUrl]').val(),
@@ -68,17 +69,76 @@
                         self.renderErrors(errors);
                     } else {
                         var pinId = response.responseText;
-                        self.model.set({ pinId: pinId});
                         var tags = self.searchTag.val();
                         self.postCreation(pinId, "PIN", self.model.get('name'), 1, tags)
-                        // Add it to collection in future
-                        self.model.clear();
+                        self.model.set({
+                            pinId: pinId,
+                            'createdOn': Math.floor(Date.now()),
+                            'modifiedAt': Math.floor(Date.now()),
+                            'tags': tags
+                        });
+                        self.collection.unshift(self.model);
+                        var entityList = self.buildEntityList();
+                        backboneGlobalObj.trigger('entity:displaylist', entityList);
                     }
                 });
             }
+        },
+
+
+        fetchPins: function(e) {
+
+            var self = this;
+
+            if (e) {
+                e.preventDefault();
+            }
+
+            if (this.collection.length  == parseInt(entityCountModel.attributes.pins)) {
+                var entityList = this.buildEntityList();
+                backboneGlobalObj.trigger('entity:displaylist', entityList);
+                return;
+            }
+             
+            this.model = new Note();   
+            this.model.fetch({data: {offset: this.collection.length, limit : 20} }).complete(function(response){
+                if (response.status == 200) {
+                    var pins = JSON.parse(response.responseText)['pins'];
+                    if (pins instanceof Array) {
+                        for (var index in pins) {
+                            var pin = new Pin(pins[index])
+                            self.collection.push(pin);
+                        }
+                    } else if (pins) {
+                        var pin = new Pin(pins);
+                        self.collection.push(pin);
+                    }
+                    var entityList = self.buildEntityList();
+                    backboneGlobalObj.trigger('entity:displaylist', entityList);
+                }
+            });
+        },
+
+        buildEntityList: function() {
+
+            var entityList = [];
+
+            for (var i = 0; i < this.collection.length; i++) {
+                var description = this.collection.models[i].attributes.description;
+                var entity = {
+                    'entityId' : this.collection.models[i].attributes.pinId,
+                    'entityTitle' : this.collection.models[i].attributes.name,
+                    'url': this.collection.models[i].attributes.imageUrl,
+                    'entitySummary': description ? description.substring(0,100) : description,
+                    'entityType': 'pin',
+                    'modifiedAt': this.collection.models[i].attributes.modifiedAt,
+                };
+                entityList.push(entity);
+            }
+            return entityList;
         }
     });
 
-    window.pinView = new PinView();
+    window.pinView = new PinView({ collection: new Pins() });
 
 })(jQuery, window, document);

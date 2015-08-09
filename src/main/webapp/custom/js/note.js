@@ -79,10 +79,10 @@
                         self.renderErrors(errors);
                     } else {
                         var noteId = response.responseText;
-                        self.model.set({ noteId: noteId});
                         var tags = self.searchTag.val();
                         self.postCreation(noteId, "NOTE", self.model.get('title'), 1, tags)
                         self.model.set({
+                            noteId: noteId,
                             'createdOn': Math.floor(Date.now()),
                             'modifiedAt': Math.floor(Date.now()),
                             'summary': self.model.get('note').replace(/<(?:.|\n)*?>/gm, ''),

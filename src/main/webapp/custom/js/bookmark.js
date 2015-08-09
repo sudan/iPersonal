@@ -75,10 +75,10 @@
                         self.renderErrors(errors);
                     } else {
                         var bookmarkId = response.responseText;
-                        self.model.set({ bookmarkId: bookmarkId});
                         var tags = self.searchTag.val();
                         self.postCreation(bookmarkId, "BOOKMARK", self.model.get('name'), 1, tags)
                         self.model.set({
+                            bookmarkId: bookmarkId,
                             'createdOn': Math.floor(Date.now()),
                             'modifiedAt': Math.floor(Date.now()),
                             'tags': tags 
