@@ -112,8 +112,8 @@
 						Init.initPin();
 						break;
 					case 'DIARY':
-						diaryView.renderCreateTemplate();
-						diaryView.prepareVariables();
+						pageView.renderCreateTemplate();
+						pageView.prepareVariables();
 						Init.initDiary();
 						break;
 					case 'EXPENSE':
@@ -130,11 +130,19 @@
 					case 'BOOKMARK': 
 						bookmarkView.fetchBookmarks();
 						break;
-					case 'NOTE': break;
-					case 'PIN': break;
+					case 'NOTE': 
+						noteView.fetchNotes();
+						break;
+					case 'PIN': 
+						pinView.fetchPins();
+						break;
 					case 'TODO': break;
-					case 'DIARY': break;
-					case 'EXPENSE': break;
+					case 'DIARY': 
+						pageView.fetchPages();
+						break;
+					case 'EXPENSE':
+						expenseView.fetchExpenses(); 
+						break;
 					case 'ALL': break;
 				}
 

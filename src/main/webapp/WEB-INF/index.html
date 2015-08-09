@@ -422,7 +422,7 @@
          <div class="panel-heading">
             Menu
          </div>
-         <div class="panel-body">
+         <div class="panel-body entity-menu-list">
             <ul class="chat">
                 <% _.each(entities, function(entity){ %>
                     <li class="left clearfix clickable" data-id = '<%= entity.entityId %>' data-entity = '<%=  entity.entityType %>'>
@@ -433,7 +433,18 @@
                             <div class="header">
                                 <strong class="primary-font">
                                     <%= entity.entityTitle %>
+                                    <% if (entity.entityType == 'pin'){ %>
+                                        <img src="<%= entity.url %>" height="20" width="20"/>
+                                    <% } %>
                                 </strong>
+                                <% if (entity.entityType == 'expense'){ %>
+                                    <span>- Rs <%= entity.amount %></span>
+                                <% } %>
+
+                                <% if (entity.entityType == 'diary'){ %>
+                                    <span>- <%= entity.dateStr %></span>
+                                <% } %>
+
                                 <small class="pull-right text-muted">
                                     <i class="fa fa-clock-o fa-fw"></i> <%= moment.unix(entity.modifiedAt/1000).fromNow() %>
                                 </small>

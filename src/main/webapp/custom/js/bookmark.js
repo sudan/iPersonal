@@ -35,7 +35,8 @@
         },
 
         initialize: function() {
-            this.model = new Bookmark();
+
+            var self = this;
         },
 
         prepareVariables: function() {
@@ -49,6 +50,8 @@
 
             var self = this;
             e.preventDefault();
+
+            self.model = new Bookmark();
 
             self.model.set({
                 name: self.saveForm.find('[name=name]').val(),
@@ -72,15 +75,17 @@
                         self.renderErrors(errors);
                     } else {
                         var bookmarkId = response.responseText;
-                        self.model.set({ bookmarkId: bookmarkId});
                         var tags = self.searchTag.val();
                         self.postCreation(bookmarkId, "BOOKMARK", self.model.get('name'), 1, tags)
                         self.model.set({
+                            bookmarkId: bookmarkId,
                             'createdOn': Math.floor(Date.now()),
                             'modifiedAt': Math.floor(Date.now()),
                             'tags': tags 
                         });
                         self.collection.unshift(self.model);
+                        var entityList = self.buildEntityList();
+                        backboneGlobalObj.trigger('entity:displaylist', entityList);
                     }
                 });
             }
@@ -99,7 +104,8 @@
                 backboneGlobalObj.trigger('entity:displaylist', entityList);
                 return;
             }
-                
+             
+            this.model = new Bookmark();   
             this.model.fetch({data: {offset: this.collection.length, limit : 20} }).complete(function(response){
                 if (response.status == 200) {
                     var bookmarks = JSON.parse(response.responseText)['bookmark'];
@@ -112,9 +118,9 @@
                         var bookmark = new Bookmark(bookmarks);
                         self.collection.push(bookmark);
                     }
+                    var entityList = self.buildEntityList();
+                    backboneGlobalObj.trigger('entity:displaylist', entityList);
                 }
-                var entityList = self.buildEntityList();
-                backboneGlobalObj.trigger('entity:displaylist', entityList);
             });
         },
 
@@ -123,14 +129,14 @@
             var entityList = [];
 
             for (var i = 0; i < this.collection.length; i++) {
-                var description = this.collection[i].attributes.description;
+                var description = this.collection.models[i].attributes.description;
                 var entity = {
-                    'entityId' : this.collection[i].attributes.bookmarkId,
-                    'entityTitle' : this.collection[i].attributes.name,
-                    'url': this.collection[i].attributes.url,
+                    'entityId' : this.collection.models[i].attributes.bookmarkId,
+                    'entityTitle' : this.collection.models[i].attributes.name,
+                    'url': this.collection.models[i].attributes.url,
                     'entitySummary': description ? description.substring(0,100) : description,
                     'entityType': 'bookmark',
-                    'modifiedAt': this.collection[i].attributes.modifiedAt,
+                    'modifiedAt': this.collection.models[i].attributes.modifiedAt,
                 };
                 entityList.push(entity);
             }
@@ -138,6 +144,6 @@
         }
     });
 
-    window.bookmarkView = new BookmarkView({ collection : []});
+    window.bookmarkView = new BookmarkView({ collection : new Bookmarks()});
 
 })(jQuery, window, document);
