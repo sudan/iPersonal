@@ -92,6 +92,10 @@
 			backboneGlobalObj.on('expense_category:populate', function(obj){
 				window.expenseView.populateCategories();
 			});
+
+			backboneGlobalObj.on('entity:displaylist', function(obj){
+				window.entityListView.renderList(obj);
+			});
 		},
 
 		initChosenDropdowns: function() {
