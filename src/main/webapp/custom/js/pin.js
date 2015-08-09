@@ -100,10 +100,10 @@
                 return;
             }
              
-            this.model = new Note();   
+            this.model = new Pin();   
             this.model.fetch({data: {offset: this.collection.length, limit : 20} }).complete(function(response){
                 if (response.status == 200) {
-                    var pins = JSON.parse(response.responseText)['pins'];
+                    var pins = JSON.parse(response.responseText)['pin'];
                     if (pins instanceof Array) {
                         for (var index in pins) {
                             var pin = new Pin(pins[index])
