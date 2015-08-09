@@ -138,7 +138,9 @@
 						break;
 					case 'TODO': break;
 					case 'DIARY': break;
-					case 'EXPENSE': break;
+					case 'EXPENSE':
+						expenseView.fetchExpenses(); 
+						break;
 					case 'ALL': break;
 				}
 

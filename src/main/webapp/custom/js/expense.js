@@ -3,6 +3,7 @@
     "use strict"
 
     var EXPENSE_URL_ROOT = '/iPersonal/dashboard/expenses';
+    var EXPENSE_SEARCH_URL_ROOT = '/iPersonal/dashboard/expenses/search';
 
     var Expense = Base.extend({
     	urlRoot: EXPENSE_URL_ROOT,
@@ -20,7 +21,15 @@
             this.formAttributes = ['title', 'description', 'amount', 'date', 'categories']
         }
 
-    }); 
+    });
+
+    var ExpenseSearch = Backbone.Model.extend({
+        urlRoot: EXPENSE_SEARCH_URL_ROOT
+    });
+
+    var Expenses = Backbone.Collection.extend({
+        model: Expense
+    })
 
     var ExpenseView = BaseView.extend({
 
@@ -31,10 +40,6 @@
             'click #exp-submit': 'createExpense',
             'click #exp-cancel': 'resetValues',
             'click #exp-tag-img': 'displayTagSelection',
-        },
-
-        initialize: function() {
-            this.model = new Expense();
         },
 
         prepareVariables: function() {
@@ -72,6 +77,7 @@
             var self = this;
             e.preventDefault();
 
+            self.model = new Expense();
             self.model.set({
                 title: self.saveForm.find('[name=title]').val(),
                 description: self.saveForm.find('[name=description]').val(),
@@ -96,17 +102,76 @@
                         self.renderErrors(errors);
                     } else {
                         var expenseId = response.responseText;
-                        self.model.set({ expenseId: expenseId });
                         var tags = self.searchTag.val();
                         self.postCreation(expenseId, "EXPENSE", self.model.get('title'), 1, tags, self.model.get('categories'))
-                        // Add it to collection in future
-                        self.model.clear();
+                        self.model.set({
+                            expenseId: expenseId,
+                            'createdOn': Math.floor(Date.now()),
+                            'modifiedAt': Math.floor(Date.now()),
+                            'tags': tags
+                        });
+                        self.collection.unshift(self.model);
+                        var entityList = self.buildEntityList();
+                        backboneGlobalObj.trigger('entity:displaylist', entityList);
                     }
                 });
             }
+        },
+
+        fetchExpenses: function(e) {
+
+            var self = this;
+
+            if (e) {
+                e.preventDefault();
+            }
+
+            if (this.collection.length  == parseInt(entityCountModel.attributes.expenses)) {
+                var entityList = this.buildEntityList();
+                backboneGlobalObj.trigger('entity:displaylist', entityList);
+                return;
+            }
+             
+            this.model = new ExpenseSearch();
+            this.model.set({ url: '/iPersonal/dashboard/expenses/search'})
+            this.model.save({data: {offset: this.collection.length, limit : 20} }).complete(function(response){
+                if (response.status == 200) {
+                    var expenses = JSON.parse(response.responseText)['expense'];
+                    if (expenses instanceof Array) {
+                        for (var index in expenses) {
+                            var expense = new Expense(expenses[index])
+                            self.collection.push(expense);
+                        }
+                    } else if (expenses) {
+                        var expense = new Expense(expenses);
+                        self.collection.push(expense);
+                    }
+                    var entityList = self.buildEntityList();
+                    backboneGlobalObj.trigger('entity:displaylist', entityList);
+                }
+            });
+        },
+
+        buildEntityList: function() {
+
+            var entityList = [];
+
+            for (var i = 0; i < this.collection.length; i++) {
+                var description = this.collection.models[i].attributes.description;
+                var entity = {
+                    'entityId' : this.collection.models[i].attributes.expenseId,
+                    'entityTitle' : this.collection.models[i].attributes.title,
+                    'amount': this.collection.models[i].attributes.amount,
+                    'entitySummary': description ? description.substring(0,100) : description,
+                    'entityType': 'expense',
+                    'modifiedAt': this.collection.models[i].attributes.modifiedAt,
+                };
+                entityList.push(entity);
+            }
+            return entityList;
         }
     });
 
-    window.expenseView = new ExpenseView();
+    window.expenseView = new ExpenseView({ collection: new Expenses() });
 
 })(jQuery, window, document);
