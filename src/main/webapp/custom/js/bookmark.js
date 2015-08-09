@@ -127,6 +127,7 @@
                 var entity = {
                     'entityId' : this.collection[i].attributes.bookmarkId,
                     'entityTitle' : this.collection[i].attributes.name,
+                    'url': this.collection[i].attributes.url,
                     'entitySummary': description ? description.substring(0,100) : description,
                     'entityType': 'bookmark',
                     'modifiedAt': this.collection[i].attributes.modifiedAt,

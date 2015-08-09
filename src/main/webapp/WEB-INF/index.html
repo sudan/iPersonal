@@ -431,12 +431,21 @@
                         </span>
                         <div class="chat-body clearfix">
                             <div class="header">
-                                <strong class="primary-font"><%= entity.entityTitle %></strong>
+                                <strong class="primary-font">
+                                    <%= entity.entityTitle %>
+                                </strong>
                                 <small class="pull-right text-muted">
                                     <i class="fa fa-clock-o fa-fw"></i> <%= moment.unix(entity.modifiedAt/1000).fromNow() %>
                                 </small>
                             </div>
-                            <p><%= entity.entitySummary %></p>
+                            <p>
+                                <div>
+                                    <% if (entity.entityType == 'bookmark'){ %>
+                                        <a href = "<%= entity.url %>" target="_blank">Link</a>
+                                    <%  } %>
+                                </div>
+                                <%= entity.entitySummary %>
+                            </p>
                         </div>
                     </li>
                 <% }); %>
