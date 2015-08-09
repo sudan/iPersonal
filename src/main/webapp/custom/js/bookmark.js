@@ -27,6 +27,7 @@
 
         el: $('#bookmark-wrapper'),
         createTemplate: $('#bookmark-create-template').html(),
+        displayTemplate: $('#bookmark-display-template').html(),
 
         events : {
             'click #book-submit': 'createBookmark',

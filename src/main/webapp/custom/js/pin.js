@@ -27,6 +27,7 @@
 
         el: $('#pin-wrapper'),
         createTemplate: $('#pin-create-template').html(),
+        displayTemplate: $('#pin-display-template').html(),
 
         events : {
             'click #pin-submit': 'createPin',
