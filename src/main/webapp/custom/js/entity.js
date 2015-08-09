@@ -137,7 +137,9 @@
 						pinView.fetchPins();
 						break;
 					case 'TODO': break;
-					case 'DIARY': break;
+					case 'DIARY': 
+						diaryView.fetchPages();
+						break;
 					case 'EXPENSE':
 						expenseView.fetchExpenses(); 
 						break;

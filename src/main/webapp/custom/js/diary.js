@@ -16,6 +16,10 @@
 		}
 	});
 
+    var Pages = Backbone.Collection.extend({
+        model: Page
+    });
+
 	var Diary = Base.extend({
 
 		urlRoot: DIARY_URL_ROOT,
@@ -36,10 +40,6 @@
             'click #diary-submit': 'createDiary',
             'click #diary-cancel': 'resetValues',
             'click #diary-tag-img': 'displayTagSelection',
-        },
-
-        initialize: function() {
-            this.model = new Diary();
         },
 
         prepareVariables: function() {
@@ -85,6 +85,7 @@
             	this.renderErrors(errors);
             }
 
+            this.model = new Diary();
             this.model.pages = [];
             this.model.pages.push(page);
 
@@ -106,15 +107,82 @@
                         self.renderErrors(errors);
                     } else {
                         var pageId = response.responseText;
-                        self.model.set({ pageId: pageId});
                         var tags = self.searchTag.val();
                         self.postCreation(pageId, "DIARIES", title, 1, tags);
+                        var page = new Page({
+                            'pageId': pageId,
+                            'title': title,
+                            'content': content,
+                            'createdOn': Math.floor(Date.now()),
+                            'modifiedAt': Math.floor(Date.now()),
+                            'summary': content.replace(/<(?:.|\n)*?>/gm, ''),
+                            'tags': tags 
+                        });
+                        self.collection.unshift(page);
+                        var entityList = self.buildEntityList();
+                        backboneGlobalObj.trigger('entity:displaylist', entityList);
                     }
                 });
             }
+        },
+
+        fetchPages: function(e) {
+
+            var self = this;
+
+            if (e) {
+                e.preventDefault();
+            }
+
+            if (this.collection.length  == parseInt(entityCountModel.attributes.diaries)) {
+                var entityList = this.buildEntityList();
+                backboneGlobalObj.trigger('entity:displaylist', entityList);
+                return;
+            }
+             
+            this.model = new Diary();   
+            this.model.fetch({data: {offset: this.collection.length, limit : 20} }).complete(function(response){
+                if (response.status == 200) {
+                    var diary = JSON.parse(response.responseText)['diary'];
+                    var pages = diary.pages;
+
+                    if (pages instanceof Array) {
+
+                        for (var index in pages) {
+                            var page = new Page(pages[index])
+                            self.collection.push(page);
+                        }
+
+                    } else if( pages) {
+                        var page = new Page(pages);
+                        self.collection.push(page);
+                    }
+
+                    var entityList = self.buildEntityList();
+                    backboneGlobalObj.trigger('entity:displaylist', entityList);
+                }
+            });
+        },
+
+        buildEntityList: function() {
+
+            var entityList = [];
+
+            for (var i = 0; i < this.collection.length; i++) {
+                var summary = this.collection.models[i].attributes.summary;
+                var entity = {
+                    'entityId' : this.collection.models[i].attributes.pageId,
+                    'entityTitle' : this.collection.models[i].attributes.title,
+                    'entitySummary': summary ? summary.substring(0,100) : summary,
+                    'entityType': 'diary',
+                    'modifiedAt': this.collection.models[i].attributes.modifiedAt,
+                };
+                entityList.push(entity);
+            }
+            return entityList;
         }
 
 	});
 
-	window.diaryView = new DiaryView();
+	window.diaryView = new DiaryView({ collection: new Pages() });
 })(jQuery, window, document);
