@@ -17,7 +17,11 @@
             this.formAttributes = ['title', 'note']
         }
 
-    }); 
+    });
+
+    var Notes = Backbone.Collection.extend({
+        model: Note
+    });
 
     var NoteView = BaseView.extend({
 
@@ -28,10 +32,6 @@
             'click #note-submit': 'createNote',
             'click #note-cancel': 'resetValues',
             'click #note-tag-img': 'displayTagSelection',
-        },
-
-        initialize: function() {
-            this.model = new Note();
         },
 
         prepareVariables: function() {
@@ -55,6 +55,8 @@
 
             var self = this;
             e.preventDefault();
+
+            self.model = new Note();
 
             self.model.set({
                 title: self.saveForm.find('[name=title]').val(),
@@ -80,14 +82,72 @@
                         self.model.set({ noteId: noteId});
                         var tags = self.searchTag.val();
                         self.postCreation(noteId, "NOTE", self.model.get('title'), 1, tags)
-                        // Add it to collection in future
-                        self.model.clear();
+                        self.model.set({
+                            'createdOn': Math.floor(Date.now()),
+                            'modifiedAt': Math.floor(Date.now()),
+                            'summary': self.model.get('note').replace(/<(?:.|\n)*?>/gm, ''),
+                            'tags': tags
+                        });
+                        self.collection.unshift(self.model);
+                        var entityList = self.buildEntityList();
+                        backboneGlobalObj.trigger('entity:displaylist', entityList);
                     }
                 });
             }
+        },
+
+        fetchNotes: function(e) {
+
+            var self = this;
+
+            if (e) {
+                e.preventDefault();
+            }
+
+            if (this.collection.length  == parseInt(entityCountModel.attributes.notes)) {
+                var entityList = this.buildEntityList();
+                backboneGlobalObj.trigger('entity:displaylist', entityList);
+                return;
+            }
+             
+            this.model = new Note();   
+            this.model.fetch({data: {offset: this.collection.length, limit : 20} }).complete(function(response){
+                if (response.status == 200) {
+                    var notes = JSON.parse(response.responseText)['note'];
+                    if (notes instanceof Array) {
+                        for (var index in notes) {
+                            var note = new Note(notes[index])
+                            self.collection.push(note);
+                        }
+                    } else if (notes) {
+                        var note = new Note(notes);
+                        self.collection.push(note);
+                    }
+                    var entityList = self.buildEntityList();
+                    backboneGlobalObj.trigger('entity:displaylist', entityList);
+                }
+            });
+        },
+
+        buildEntityList: function() {
+
+            var entityList = [];
+
+            for (var i = 0; i < this.collection.length; i++) {
+                var summary = this.collection.models[i].attributes.summary;
+                var entity = {
+                    'entityId' : this.collection.models[i].attributes.noteId,
+                    'entityTitle' : this.collection.models[i].attributes.title,
+                    'entitySummary': summary ? summary.substring(0,100) : summary,
+                    'entityType': 'note',
+                    'modifiedAt': this.collection.models[i].attributes.modifiedAt,
+                };
+                entityList.push(entity);
+            }
+            return entityList;
         }
     });
 
-    window.noteView = new NoteView();
+    window.noteView = new NoteView({ collection : new Notes()});
 
 })(jQuery, window, document);

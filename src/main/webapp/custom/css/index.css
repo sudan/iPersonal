@@ -62,3 +62,8 @@ a {
 li.clickable:hover {
 	background-color: #f8f8f8;
 }
+
+.entity-menu-list {
+	max-height: 500px;
+	overflow: scroll;
+}
