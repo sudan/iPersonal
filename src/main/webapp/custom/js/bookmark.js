@@ -76,8 +76,8 @@
                         var tags = self.searchTag.val();
                         self.postCreation(bookmarkId, "BOOKMARK", self.model.get('name'), 1, tags)
                         self.model.set({
-                            'createdOn': Math.floor(Date.now()/1000),
-                            'modifiedAt': Math.floor(Date.now()/1000),
+                            'createdOn': Math.floor(Date.now()),
+                            'modifiedAt': Math.floor(Date.now()),
                             'tags': tags 
                         });
                         self.collection.unshift(self.model);
@@ -88,35 +88,33 @@
 
         fetchBookmarks: function(e) {
 
-            var offset = 0;
             var self = this;
 
             if (e) {
                 e.preventDefault();
-
-                if ($(e.target).attr('offset')) {
-                    offset = $(e.target).attr('offset');
-                }
             }
 
-            if (this.collection.length  >= parseInt(offset+1) * 10) {
+            if (this.collection.length  == parseInt(entityCountModel.attributes.bookmarks)) {
                 var entityList = this.buildEntityList();
                 backboneGlobalObj.trigger('entity:displaylist', entityList);
+                return;
             }
                 
-            this.model.fetch({data: {offset: offset, limit : 20} }).complete(function(response){
+            this.model.fetch({data: {offset: this.collection.length, limit : 20} }).complete(function(response){
                 if (response.status == 200) {
                     var bookmarks = JSON.parse(response.responseText)['bookmark'];
-                    for (var index in bookmarks) {
-                        self.collection.push(bookmarks[index]);
-
+                    if (bookmarks instanceof Array) {
+                        for (var index in bookmarks) {
+                            var bookmark = new Bookmark(bookmarks[index])
+                            self.collection.push(bookmark);
+                        }
+                    } else if (bookmarks) {
+                        var bookmark = new Bookmark(bookmarks);
+                        self.collection.push(bookmark);
                     }
-                    var entityList = self.buildEntityList();
-                    backboneGlobalObj.trigger('entity:displaylist', entityList);
-                } else {
-                    var entityList = self.buildEntityList();
-                    backboneGlobalObj.trigger('entity:displaylist', entityList);
                 }
+                var entityList = self.buildEntityList();
+                backboneGlobalObj.trigger('entity:displaylist', entityList);
             });
         },
 
@@ -125,13 +123,13 @@
             var entityList = [];
 
             for (var i = 0; i < this.collection.length; i++) {
-                var description = this.collection[i].description;
+                var description = this.collection[i].attributes.description;
                 var entity = {
-                    'entityId' : this.collection[i].bookmarkId,
-                    'entityTitle' : this.collection[i].name,
+                    'entityId' : this.collection[i].attributes.bookmarkId,
+                    'entityTitle' : this.collection[i].attributes.name,
                     'entitySummary': description ? description.substring(0,100) : description,
                     'entityType': 'bookmark',
-                    'modifiedAt': this.collection[i].modifiedAt,
+                    'modifiedAt': this.collection[i].attributes.modifiedAt,
                 };
                 entityList.push(entity);
             }

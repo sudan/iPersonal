@@ -12,6 +12,7 @@
 		},
 
 		renderList: function(entities) {
+			this.$el.empty();
 			var template = _.template(this.listTemplate);
 			this.$el.html(template({ 'entities' : entities } ));
 			return this;
