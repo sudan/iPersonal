@@ -125,10 +125,11 @@
             var entityList = [];
 
             for (var i = 0; i < this.collection.length; i++) {
+                var description = this.collection[i].description;
                 var entity = {
                     'entityId' : this.collection[i].bookmarkId,
                     'entityTitle' : this.collection[i].name,
-                    'entitySummary': this.collection[i].description,
+                    'entitySummary': description ? description.substring(0,100) : description,
                     'entityType': 'bookmark',
                     'modifiedAt': this.collection[i].modifiedAt,
                 };
