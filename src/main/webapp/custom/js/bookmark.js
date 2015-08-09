@@ -99,21 +99,42 @@
                 }
             }
 
-            if (this.collection.length  >= parseInt(offset+1) * 10)
-                return;
-
+            if (this.collection.length  >= parseInt(offset+1) * 10) {
+                var entityList = this.buildEntityList();
+                backboneGlobalObj.trigger('entity:displaylist', entityList);
+            }
+                
             this.model.fetch({data: {offset: offset, limit : 20} }).complete(function(response){
                 if (response.status == 200) {
-                        var bookmarks = JSON.parse(response.responseText)['bookmark'];
-                        for (var index in bookmarks) {
-                            self.collection.push(bookmarks[index]);
-                        }
+                    var bookmarks = JSON.parse(response.responseText)['bookmark'];
+                    for (var index in bookmarks) {
+                        self.collection.push(bookmarks[index]);
+
+                    }
+                    var entityList = self.buildEntityList();
+                    backboneGlobalObj.trigger('entity:displaylist', entityList);
+                } else {
+                    var entityList = self.buildEntityList();
+                    backboneGlobalObj.trigger('entity:displaylist', entityList);
                 }
             });
         },
 
-        renderAll: function() {
-            
+        buildEntityList: function() {
+
+            var entityList = [];
+
+            for (var i = 0; i < this.collection.length; i++) {
+                var entity = {
+                    'entityId' : this.collection[i].bookmarkId,
+                    'entityTitle' : this.collection[i].name,
+                    'entitySummary': this.collection[i].description,
+                    'entityType': 'bookmark',
+                    'modifiedAt': this.collection[i].modifiedAt,
+                };
+                entityList.push(entity);
+            }
+            return entityList;
         }
     });
 

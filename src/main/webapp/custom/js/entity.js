@@ -25,7 +25,8 @@
 		},
 
 		events: {
-			'click img.add-entity-icon' : 'renderAddEntityForm'
+			'click img.add-entity-icon' : 'renderAddEntityForm',
+			'click a': 'renderListEntityForm'
 		},
 
 		getCount: function() {
@@ -45,6 +46,12 @@
 			e.preventDefault();
 			var entity = $(e.target).data('entity');
 			backboneGlobalObj.trigger('entity:createform', entity.toUpperCase());	
+		},
+
+		renderListEntityForm: function(e) {
+			e.preventDefault();
+			var entity = $(e.target).data('entity');
+			backboneGlobalObj.trigger('entity:fetchlist', entity.toUpperCase());
 		},
 
 		refreshCount: function(entityType, relativeValue) {
@@ -115,6 +122,22 @@
 						Init.initExpense();
 						break;
 				}
+			});
+
+			backboneGlobalObj.on('entity:fetchlist', function(entity){
+
+				switch(entity) {
+					case 'BOOKMARK': 
+						bookmarkView.fetchBookmarks();
+						break;
+					case 'NOTE': break;
+					case 'PIN': break;
+					case 'TODO': break;
+					case 'DIARY': break;
+					case 'EXPENSE': break;
+					case 'ALL': break;
+				}
+
 			});
 		}
 	});

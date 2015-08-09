@@ -58,3 +58,7 @@ a {
 	height: 235px;
 	max-width: 500px;
 }
+
+li.clickable:hover {
+	background-color: #f8f8f8;
+}
