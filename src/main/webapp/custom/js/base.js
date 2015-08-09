@@ -146,6 +146,22 @@
                         this.$el.html(template());
                         this.$el.fadeIn().removeClass('invisible')
                                 .siblings().fadeOut().addClass('invisible');
+                },
+
+                displayEntity: function(entityId, key, entityType) {
+
+                        var entity;
+                        for (var i = 0; i < this.collection.models.length; i++) {
+                                if (this.collection.models[i].attributes[key] === entityId) {
+                                        entity = this.collection.models[i];
+                                        entity.set({ 'entityType': entityType})
+                                        break;
+                                }
+                        }
+                        var template = _.template(this.displayTemplate);
+                        this.$el.html(template(entity.toJSON()));
+                        this.$el.fadeIn().removeClass('invisible')
+                                .siblings().fadeOut().addClass('invisible');          
                 }
 	});
 	

@@ -468,6 +468,35 @@
          </div>
       </div>
     </script>
+    <script type="text/template" id="bookmark-display-template">
+        <div class="panel panel-default entity-form">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    <img src="custom/images/<%= entityType %>.png"/>
+                    <i><%= entityType.charAt(0).toUpperCase() + entityType.slice(1) %>
+                    <img class="actionable clickable" data-id="<%= bookmarkId %>" src="custom/images/edit.png" title="Edit the bookmark"/>
+                    <img class="actionable clickable" data-id="<%= bookmarkId %>" src="custom/images/delete.png" title="Delete the bookmark"/>
+                </h3>
+            </div>
+            <div class="panel-body">
+                <div class="timeline-heading">
+                    <h4 class="timeline-title">
+                        <%= name %>
+                    </h4>
+                    <small class="text-muted">
+                        <i class="fa fa-clock-o"></i> Modified <%= moment.unix(modifiedAt/1000).fromNow() %>
+                    </small>
+                </div>
+                <div class="timeline-body">
+                    <p></p>
+                    <p><a href="<%= url %>"><%= url %></a></p>
+                </div>
+                <div class="timeline-body">
+                    <p></p>
+                    <p><%= description %></p>
+                </div>
+            </div>
+    </script>
     <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
