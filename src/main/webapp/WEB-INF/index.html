@@ -509,6 +509,43 @@
                 </div>
             </div>
     </script>
+    <script type="text/template" id="note-display-template">
+        <div class="panel panel-default entity-form">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    <img src="custom/images/<%= entityType %>.png"/>
+                    <i><%= entityType.charAt(0).toUpperCase() + entityType.slice(1) %>
+                    <img class="actionable clickable" data-id="<%= noteId %>" src="custom/images/edit.png" title="Edit the note"/>
+                    <img class="actionable clickable" data-id="<%= noteId %>" src="custom/images/delete.png" title="Delete the note"/>
+                </h3>
+            </div>
+            <div class="panel-body">
+                <div class="timeline-heading">
+                    <h4 class="timeline-title">
+                        <%= title %>
+                    </h4>
+                    <small class="text-muted">
+                        <i class="fa fa-clock-o"></i> Modified <%= moment.unix(modifiedAt/1000).fromNow() %>
+                    </small>
+                </div>
+                <div class="timeline-body">
+                    <p></p>
+                    <p><%= note %></p>
+                </div>
+                <div class="timeline-body">
+                    <% if (typeof tags !== 'undefined' && tags.length > 0 ) { %>
+                        Tags: 
+                        <% if (tags instanceof Array) { %>
+                            <% _.each(tags, function(tag) { %>
+                                <span class="tag"><%= tag %></span>
+                            <% }); %>
+                        <% } else { %>
+                            <span class="tag"><%= tags %></span>
+                        <% } %>
+                    <% } %>
+                </div>
+            </div>
+    </script>
     <script type="text/template" id="pin-display-template">
         <div class="panel panel-default entity-form">
             <div class="panel-heading">

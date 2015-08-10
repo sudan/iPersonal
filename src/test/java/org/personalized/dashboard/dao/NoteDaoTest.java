@@ -102,15 +102,15 @@ public class NoteDaoTest {
 
             Assert.assertEquals("NoteIds match", noteid2, notes.get(0).getNoteId());
             Assert.assertEquals("title match", "google_advanced", notes.get(0).getTitle());
-            Assert.assertNull("note match", notes.get(0).getNote());
+            Assert.assertEquals("note match", "desc_advanced", notes.get(0).getNote());
             Assert.assertEquals("summary match", "desc_advanced", notes.get(0).getSummary());
             Assert.assertNotNull("Createdon is not null", notes.get(0).getCreatedOn());
             Assert.assertNotNull("modifiedAt is not null", notes.get(0).getModifiedAt());
 
             Assert.assertEquals("NoteIds match", noteid1, notes.get(1).getNoteId());
             Assert.assertEquals("title match", "title1", notes.get(1).getTitle());
-            Assert.assertNull("note match", notes.get(0).getNote());
-            Assert.assertEquals("summary match", "note1", notes.get(1).getSummary());
+            Assert.assertEquals("note match", "note1", notes.get(1).getNote());
+                    Assert.assertEquals("summary match", "note1", notes.get(1).getSummary());
             Assert.assertNotNull("Createdon is not null", notes.get(1).getCreatedOn());
             Assert.assertNotNull("modifiedAt is not null", notes.get(1).getModifiedAt());
 
@@ -126,7 +126,7 @@ public class NoteDaoTest {
 
             Assert.assertEquals("NoteIds match", noteid1, notes.get(0).getNoteId());
             Assert.assertEquals("title match", "title1", notes.get(0).getTitle());
-            Assert.assertNull("note match", notes.get(0).getNote());
+            Assert.assertEquals("note match", "note1", notes.get(0).getNote());
             Assert.assertEquals("summary match", "note1", notes.get(0).getSummary());
             Assert.assertNotNull("Createdon is not null", notes.get(0).getCreatedOn());
             Assert.assertNotNull("modifiedAt is not null", notes.get(0).getModifiedAt());

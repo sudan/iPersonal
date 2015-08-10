@@ -27,6 +27,7 @@
 
         el: $('#note-wrapper'),
         createTemplate: $('#note-create-template').html(),
+        displayTemplate: $('#note-display-template').html(),
 
         events : {
             'click #note-submit': 'createNote',
