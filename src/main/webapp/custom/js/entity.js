@@ -73,7 +73,7 @@
 					var newValue = parseInt(entityCountModel.get('todos')) + parseInt(relativeValue);
 					entityCountModel.set({'todos' : newValue});
 					break;
-				case 'DIARIES':
+				case 'DIARY':
 					var newValue = parseInt(entityCountModel.get('diaries')) + parseInt(relativeValue);
 					entityCountModel.set({'diaries' : newValue});
 					break;

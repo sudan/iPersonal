@@ -29,6 +29,7 @@
 
 		el: $('#diary-wrapper'),
         createTemplate: $('#diary-create-template').html(),
+        displayTemplate: $('#diary-display-template').html(),
 
         events : {
             'click #diary-submit': 'createDiary',
@@ -100,7 +101,7 @@
                     } else {
                         var pageId = response.responseText;
                         var tags = self.searchTag.val();
-                        self.postCreation(pageId, "DIARIES", title, 1, tags);
+                        self.postCreation(pageId, "DIARY", title, 1, tags);
                         self.model.set({
                             'pageId': pageId,
                             'createdOn': Math.floor(Date.now()),
@@ -144,7 +145,7 @@
                             page.set({ 'year' : diary.year})
                             var date = page.attributes.year + "-" + page.attributes.month + "-" + page.attributes.date;
                             page.set({
-                                dateStr : date
+                                'dateStr' : date
                             })
                             self.collection.push(page);
                         }
