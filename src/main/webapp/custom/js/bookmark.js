@@ -33,6 +33,7 @@
             'click #book-submit': 'createBookmark',
             'click #book-cancel': 'resetValues',
             'click #book-tag-img': 'displayTagSelection',
+            'click img.delete': 'deleteBookmark'
         },
 
         initialize: function() {
@@ -142,6 +143,36 @@
                 entityList.push(entity);
             }
             return entityList;
+        },
+
+        deleteBookmark: function(e) {
+
+            var self = this;
+            var bookmarkId = $(e.target).data('id');
+            var model = new Bookmark({
+                id: bookmarkId
+            });
+            var result = model.destroy();
+            if (result) {
+                result.complete(function(response){
+                    if (response.status == 200) {
+                        self.$el.empty();
+
+                        for (var i = 0; i < self.collection.models.length; i++) {
+                            if (self.collection.models[i].attributes.bookmarkId == bookmarkId) {
+                                break;
+                            }
+                        }
+                        self.collection.remove(self.collection.at(i));
+                        var entityList = self.buildEntityList();
+                        backboneGlobalObj.trigger('entity:displaylist', entityList);
+                        backboneGlobalObj.trigger('entity:count', {
+                            'entityType': 'BOOKMARK',
+                            'relativeValue': -1
+                        });
+                    }
+                })
+            }
         }
     });
 
