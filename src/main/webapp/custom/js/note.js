@@ -33,6 +33,7 @@
             'click #note-submit': 'createNote',
             'click #note-cancel': 'resetValues',
             'click #note-tag-img': 'displayTagSelection',
+            'click img.delete': 'deleteNote'
         },
 
         prepareVariables: function() {
@@ -146,7 +147,38 @@
                 entityList.push(entity);
             }
             return entityList;
+        },
+
+        deleteNote: function(e) {
+
+            var self = this;
+            var noteId = $(e.target).data('id');
+            var model = new Note({
+                id: noteId
+            });
+            var result = model.destroy();
+            if (result) {
+                result.complete(function(response){
+                    if (response.status == 200) {
+                        self.$el.empty();
+
+                        for (var i = 0; i < self.collection.models.length; i++) {
+                            if (self.collection.models[i].attributes.noteId == noteId) {
+                                break;
+                            }
+                        }
+                        self.collection.remove(self.collection.at(i));
+                        var entityList = self.buildEntityList();
+                        backboneGlobalObj.trigger('entity:displaylist', entityList);
+                        backboneGlobalObj.trigger('entity:count', {
+                            'entityType': 'NOTE',
+                            'relativeValue': -1
+                        });
+                    }
+                })
+            }
         }
+
     });
 
     window.noteView = new NoteView({ collection : new Notes()});
