@@ -26,6 +26,7 @@
     var PinView = BaseView.extend({
 
         el: $('#pin-wrapper'),
+        entityType: 'PIN',
         createTemplate: $('#pin-create-template').html(),
         displayTemplate: $('#pin-display-template').html(),
 
@@ -33,7 +34,7 @@
             'click #pin-submit': 'createPin',
             'click #pin-cancel': 'resetValues',
             'click #pin-tag-img': 'displayTagSelection',
-            'click img.delete': 'deletePin'
+            'click img.delete': 'deleteEntity'
         },
 
         prepareVariables: function() {
@@ -140,35 +141,20 @@
             return entityList;
         },
 
+        getDeletableModel: function(pinId) {
 
-        deletePin: function(e) {
-
-            var self = this;
-            var pinId = $(e.target).data('id');
-            var model = new Pin({
+            return new Pin({
                 id: pinId
             });
-            var result = model.destroy();
-            if (result) {
-                result.complete(function(response){
-                    if (response.status == 200) {
-                        self.$el.empty();
+        },
 
-                        for (var i = 0; i < self.collection.models.length; i++) {
-                            if (self.collection.models[i].attributes.pinId == pinId) {
-                                break;
-                            }
-                        }
-                        self.collection.remove(self.collection.at(i));
-                        var entityList = self.buildEntityList();
-                        backboneGlobalObj.trigger('entity:displaylist', entityList);
-                        backboneGlobalObj.trigger('entity:count', {
-                            'entityType': 'PIN',
-                            'relativeValue': -1
-                        });
-                    }
-                })
+        findIndex: function(pinId) {
+            for (var i = 0; i < this.collection.models.length; i++) {
+                if (this.collection.models[i].attributes.pinId == pinId) {
+                    break;
+                }
             }
+            return i;
         }
     });
 
