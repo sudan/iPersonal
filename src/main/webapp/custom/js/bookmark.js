@@ -25,6 +25,7 @@
 
     var BookmarkView = BaseView.extend({
 
+        entityType: 'BOOKMARK',
         el: $('#bookmark-wrapper'),
         createTemplate: $('#bookmark-create-template').html(),
         displayTemplate: $('#bookmark-display-template').html(),
@@ -33,7 +34,7 @@
             'click #book-submit': 'createBookmark',
             'click #book-cancel': 'resetValues',
             'click #book-tag-img': 'displayTagSelection',
-            'click img.delete': 'deleteBookmark'
+            'click img.delete': 'deleteEntity'
         },
 
         initialize: function() {
@@ -145,34 +146,20 @@
             return entityList;
         },
 
-        deleteBookmark: function(e) {
+        getDeletableModel: function(bookmarkId) {
 
-            var self = this;
-            var bookmarkId = $(e.target).data('id');
-            var model = new Bookmark({
+            return new Bookmark({
                 id: bookmarkId
             });
-            var result = model.destroy();
-            if (result) {
-                result.complete(function(response){
-                    if (response.status == 200) {
-                        self.$el.empty();
+        },
 
-                        for (var i = 0; i < self.collection.models.length; i++) {
-                            if (self.collection.models[i].attributes.bookmarkId == bookmarkId) {
-                                break;
-                            }
-                        }
-                        self.collection.remove(self.collection.at(i));
-                        var entityList = self.buildEntityList();
-                        backboneGlobalObj.trigger('entity:displaylist', entityList);
-                        backboneGlobalObj.trigger('entity:count', {
-                            'entityType': 'BOOKMARK',
-                            'relativeValue': -1
-                        });
-                    }
-                })
+        findIndex: function(bookmarkId) {
+            for (var i = 0; i < this.collection.models.length; i++) {
+                if (this.collection.models[i].attributes.bookmarkId == bookmarkId) {
+                    break;
+                }
             }
+            return i;
         }
     });
 

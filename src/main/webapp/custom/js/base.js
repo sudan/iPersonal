@@ -175,6 +175,31 @@
                         this.$el.html(template(entity.toJSON()));
                         this.$el.fadeIn().removeClass('invisible')
                                 .siblings().fadeOut().addClass('invisible');          
+                },
+
+
+                deleteEntity: function(e) {
+
+                    var self = this;
+                    var entityId = $(e.target).data('id');
+                    var model = this.getDeletableModel(entityId);
+                    var result = model.destroy();
+                    if (result) {
+                        result.complete(function(response){
+                            if (response.status == 200) {
+                                self.$el.empty();
+
+                                var i = self.findIndex(entityId);
+                                self.collection.remove(self.collection.at(i));
+                                var entityList = self.buildEntityList();
+                                backboneGlobalObj.trigger('entity:displaylist', entityList);
+                                backboneGlobalObj.trigger('entity:count', {
+                                    'entityType': self.entityType,
+                                    'relativeValue': -1
+                                });
+                            }
+                        })
+                    }
                 }
 	});
 	
