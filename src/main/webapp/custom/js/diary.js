@@ -28,6 +28,7 @@
 	var PageView = BaseView.extend({
 
 		el: $('#diary-wrapper'),
+        entityType: 'DIARY',
         createTemplate: $('#diary-create-template').html(),
         displayTemplate: $('#diary-display-template').html(),
 
@@ -35,7 +36,7 @@
             'click #diary-submit': 'createDiary',
             'click #diary-cancel': 'resetValues',
             'click #diary-tag-img': 'displayTagSelection',
-            'click img.delete': 'deletePage'
+            'click img.delete': 'deleteEntity'
         },
 
         prepareVariables: function() {
@@ -187,37 +188,23 @@
             return entityList;
         },
 
-        deletePage: function(e) {
+        getDeletableModel: function(pageId, year) {
 
-            var self = this;
-            var pageId = $(e.target).data('id');
-            var model = new Diary({
+            var model =  new Diary({
                 id: pageId
             });
-            model.urlRoot =  '/iPersonal/dashboard/diaries/' + $(e.target).data('year');
-            var result = model.destroy();
-            if (result) {
-                result.complete(function(response){
-                    if (response.status == 200) {
-                        self.$el.empty();
+            model.urlRoot =  '/iPersonal/dashboard/diaries/' + year;
+            return model;
+        },
 
-                        for (var i = 0; i < self.collection.models.length; i++) {
-                            if (self.collection.models[i].attributes.pageId == pageId) {
-                                break;
-                            }
-                        }
-                        self.collection.remove(self.collection.at(i));
-                        var entityList = self.buildEntityList();
-                        backboneGlobalObj.trigger('entity:displaylist', entityList);
-                        backboneGlobalObj.trigger('entity:count', {
-                            'entityType': 'DIARY',
-                            'relativeValue': -1
-                        });
-                    }
-                })
+        findIndex: function(pageId) {
+            for (var i = 0; i < this.collection.models.length; i++) {
+                if (this.collection.models[i].attributes.pageId == pageId) {
+                    break;
+                }
             }
+            return i;
         }
-
 	});
 
 	window.pageView = new PageView({ collection: new Pages() });

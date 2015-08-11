@@ -182,7 +182,11 @@
 
                     var self = this;
                     var entityId = $(e.target).data('id');
-                    var model = this.getDeletableModel(entityId);
+
+                    if (this.entityType == 'DIARY')
+                        var model = this.getDeletableModel(entityId, $(e.target).data('year'));
+                    else
+                        var model = this.getDeletableModel(entityId);
                     var result = model.destroy();
                     if (result) {
                         result.complete(function(response){
