@@ -26,6 +26,7 @@
     var NoteView = BaseView.extend({
 
         el: $('#note-wrapper'),
+        entityType: 'NOTE',
         createTemplate: $('#note-create-template').html(),
         displayTemplate: $('#note-display-template').html(),
 
@@ -33,7 +34,7 @@
             'click #note-submit': 'createNote',
             'click #note-cancel': 'resetValues',
             'click #note-tag-img': 'displayTagSelection',
-            'click img.delete': 'deleteNote'
+            'click img.delete': 'deleteEntity'
         },
 
         prepareVariables: function() {
@@ -149,36 +150,21 @@
             return entityList;
         },
 
-        deleteNote: function(e) {
+        getDeletableModel: function(noteId) {
 
-            var self = this;
-            var noteId = $(e.target).data('id');
-            var model = new Note({
+            return new Note({
                 id: noteId
             });
-            var result = model.destroy();
-            if (result) {
-                result.complete(function(response){
-                    if (response.status == 200) {
-                        self.$el.empty();
+        },
 
-                        for (var i = 0; i < self.collection.models.length; i++) {
-                            if (self.collection.models[i].attributes.noteId == noteId) {
-                                break;
-                            }
-                        }
-                        self.collection.remove(self.collection.at(i));
-                        var entityList = self.buildEntityList();
-                        backboneGlobalObj.trigger('entity:displaylist', entityList);
-                        backboneGlobalObj.trigger('entity:count', {
-                            'entityType': 'NOTE',
-                            'relativeValue': -1
-                        });
-                    }
-                })
+        findIndex: function(noteId) {
+            for (var i = 0; i < this.collection.models.length; i++) {
+                if (this.collection.models[i].attributes.noteId == noteId) {
+                    break;
+                }
             }
+            return i;
         }
-
     });
 
     window.noteView = new NoteView({ collection : new Notes()});
