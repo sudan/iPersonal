@@ -34,6 +34,7 @@
     var ExpenseView = BaseView.extend({
 
         el: $('#expense-wrapper'),
+        entityType: 'EXPENSE',
         createTemplate: $('#expense-create-template').html(),
         displayTemplate: $('#expense-display-template').html(),
 
@@ -41,7 +42,7 @@
             'click #exp-submit': 'createExpense',
             'click #exp-cancel': 'resetValues',
             'click #exp-tag-img': 'displayTagSelection',
-            'click img.delete': 'deleteExpense'
+            'click img.delete': 'deleteEntity'
         },
 
         prepareVariables: function() {
@@ -72,6 +73,22 @@
                 }
                 this.categoryDropDown.trigger('chosen:updated');
             }
+        },
+
+        getDeletableModel: function(expenseId) {
+
+            return new Expense({
+                id: expenseId
+            });
+        },
+
+        findIndex: function(expenseId) {
+            for (var i = 0; i < this.collection.models.length; i++) {
+                if (this.collection.models[i].attributes.expenseId == expenseId) {
+                    break;
+                }
+            }
+            return i;
         },
 
         createExpense: function(e) {
@@ -171,37 +188,6 @@
                 entityList.push(entity);
             }
             return entityList;
-        },
-
-
-        deleteExpense: function(e) {
-
-            var self = this;
-            var expenseId = $(e.target).data('id');
-            var model = new Expense({
-                id: expenseId
-            });
-            var result = model.destroy();
-            if (result) {
-                result.complete(function(response){
-                    if (response.status == 200) {
-                        self.$el.empty();
-
-                        for (var i = 0; i < self.collection.models.length; i++) {
-                            if (self.collection.models[i].attributes.expenseId == expenseId) {
-                                break;
-                            }
-                        }
-                        self.collection.remove(self.collection.at(i));
-                        var entityList = self.buildEntityList();
-                        backboneGlobalObj.trigger('entity:displaylist', entityList);
-                        backboneGlobalObj.trigger('entity:count', {
-                            'entityType': 'EXPENSE',
-                            'relativeValue': -1
-                        });
-                    }
-                })
-            }
         }
     });
 
