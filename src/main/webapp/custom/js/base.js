@@ -178,6 +178,7 @@
 
                         var self = this;
                         $('img.delete').confirmation({
+                                placement: 'bottom',
                                 onConfirm: function() {
                                         self.deleteEntity();
                                 }
