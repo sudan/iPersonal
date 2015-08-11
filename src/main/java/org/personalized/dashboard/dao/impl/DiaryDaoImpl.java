@@ -160,6 +160,7 @@ public class DiaryDaoImpl implements DiaryDao {
                 page.setPageId(document.getString(FieldKeys.PRIMARY_KEY));
                 page.setTitle(document.getString(FieldKeys.PAGE_TITLE));
                 page.setSummary(document.getString(FieldKeys.PAGE_SUMMARY));
+                page.setContent(document.getString(FieldKeys.PAGE_DESCRIPTION));
                 page.setDate(document.getInteger(FieldKeys.PAGE_DATE));
                 page.setMonth(document.getInteger(FieldKeys.PAGE_MONTH));
                 page.setCreatedOn(document.getLong(FieldKeys.CREATED_ON));

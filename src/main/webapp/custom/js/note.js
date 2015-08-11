@@ -26,7 +26,9 @@
     var NoteView = BaseView.extend({
 
         el: $('#note-wrapper'),
+        entityType: 'NOTE',
         createTemplate: $('#note-create-template').html(),
+        displayTemplate: $('#note-display-template').html(),
 
         events : {
             'click #note-submit': 'createNote',
@@ -145,6 +147,22 @@
                 entityList.push(entity);
             }
             return entityList;
+        },
+
+        getDeletableModel: function(noteId) {
+
+            return new Note({
+                id: noteId
+            });
+        },
+
+        findIndex: function(noteId) {
+            for (var i = 0; i < this.collection.models.length; i++) {
+                if (this.collection.models[i].attributes.noteId == noteId) {
+                    break;
+                }
+            }
+            return i;
         }
     });
 

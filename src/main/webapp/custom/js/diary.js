@@ -28,7 +28,9 @@
 	var PageView = BaseView.extend({
 
 		el: $('#diary-wrapper'),
+        entityType: 'DIARY',
         createTemplate: $('#diary-create-template').html(),
+        displayTemplate: $('#diary-display-template').html(),
 
         events : {
             'click #diary-submit': 'createDiary',
@@ -100,9 +102,10 @@
                     } else {
                         var pageId = response.responseText;
                         var tags = self.searchTag.val();
-                        self.postCreation(pageId, "DIARIES", title, 1, tags);
+                        self.postCreation(pageId, "DIARY", title, 1, tags);
                         self.model.set({
                             'pageId': pageId,
+                            'year': dateArr[0],
                             'createdOn': Math.floor(Date.now()),
                             'modifiedAt': Math.floor(Date.now()),
                             'summary': content.replace(/<(?:.|\n)*?>/gm, ''),
@@ -144,7 +147,7 @@
                             page.set({ 'year' : diary.year})
                             var date = page.attributes.year + "-" + page.attributes.month + "-" + page.attributes.date;
                             page.set({
-                                dateStr : date
+                                'dateStr' : date
                             })
                             self.collection.push(page);
                         }
@@ -176,14 +179,31 @@
                     'entityTitle' : this.collection.models[i].attributes.title,
                     'entitySummary': summary ? summary.substring(0,100) : summary,
                     'entityType': 'diary',
-                    'dateStr': this.collection.models[i].attributes.dateStr, 
+                    'dateStr': this.collection.models[i].attributes.dateStr,
                     'modifiedAt': this.collection.models[i].attributes.modifiedAt,
                 };
                 entityList.push(entity);
             }
             return entityList;
-        }
+        },
 
+        getDeletableModel: function(pageId, year) {
+
+            var model =  new Diary({
+                id: pageId
+            });
+            model.urlRoot =  '/iPersonal/dashboard/diaries/' + year;
+            return model;
+        },
+
+        findIndex: function(pageId) {
+            for (var i = 0; i < this.collection.models.length; i++) {
+                if (this.collection.models[i].attributes.pageId == pageId) {
+                    break;
+                }
+            }
+            return i;
+        }
 	});
 
 	window.pageView = new PageView({ collection: new Pages() });

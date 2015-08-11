@@ -157,6 +157,7 @@ public class NoteDaoImpl implements NoteDao {
                 note.setNoteId(document.getString(FieldKeys.PRIMARY_KEY));
                 note.setTitle(document.getString(FieldKeys.NOTE_TITLE));
                 note.setSummary(document.getString(FieldKeys.NOTE_SUMMARY));
+                note.setNote(document.getString(FieldKeys.NOTE_DESCRIPTION));
                 note.setCreatedOn(document.getLong(FieldKeys.CREATED_ON));
                 note.setModifiedAt(document.getLong(FieldKeys.MODIFIED_AT));
                 if (document.containsKey(FieldKeys.ENTITY_TAGS)) {

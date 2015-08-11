@@ -174,7 +174,44 @@
                         var template = _.template(this.displayTemplate);
                         this.$el.html(template(entity.toJSON()));
                         this.$el.fadeIn().removeClass('invisible')
-                                .siblings().fadeOut().addClass('invisible');          
+                                .siblings().fadeOut().addClass('invisible');
+
+                        var self = this;
+                        $('img.delete').confirmation({
+                                placement: 'bottom',
+                                onConfirm: function() {
+                                        self.deleteEntity();
+                                }
+                        })     
+                },
+
+
+                deleteEntity: function() {
+
+                    var self = this;
+                    var entityId = $('img.delete').data('id');
+
+                    if (this.entityType == 'DIARY')
+                        var model = this.getDeletableModel(entityId, $('img.delete').data('year'));
+                    else
+                        var model = this.getDeletableModel(entityId);
+                    var result = model.destroy();
+                    if (result) {
+                        result.complete(function(response){
+                            if (response.status == 200) {
+                                self.$el.empty();
+
+                                var i = self.findIndex(entityId);
+                                self.collection.remove(self.collection.at(i));
+                                var entityList = self.buildEntityList();
+                                backboneGlobalObj.trigger('entity:displaylist', entityList);
+                                backboneGlobalObj.trigger('entity:count', {
+                                    'entityType': self.entityType,
+                                    'relativeValue': -1
+                                });
+                            }
+                        })
+                    }
                 }
 	});
 	

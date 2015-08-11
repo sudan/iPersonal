@@ -26,6 +26,7 @@
     var PinView = BaseView.extend({
 
         el: $('#pin-wrapper'),
+        entityType: 'PIN',
         createTemplate: $('#pin-create-template').html(),
         displayTemplate: $('#pin-display-template').html(),
 
@@ -137,6 +138,22 @@
                 entityList.push(entity);
             }
             return entityList;
+        },
+
+        getDeletableModel: function(pinId) {
+
+            return new Pin({
+                id: pinId
+            });
+        },
+
+        findIndex: function(pinId) {
+            for (var i = 0; i < this.collection.models.length; i++) {
+                if (this.collection.models[i].attributes.pinId == pinId) {
+                    break;
+                }
+            }
+            return i;
         }
     });
 

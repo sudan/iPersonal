@@ -25,6 +25,7 @@
 
     var BookmarkView = BaseView.extend({
 
+        entityType: 'BOOKMARK',
         el: $('#bookmark-wrapper'),
         createTemplate: $('#bookmark-create-template').html(),
         displayTemplate: $('#bookmark-display-template').html(),
@@ -32,7 +33,7 @@
         events : {
             'click #book-submit': 'createBookmark',
             'click #book-cancel': 'resetValues',
-            'click #book-tag-img': 'displayTagSelection',
+            'click #book-tag-img': 'displayTagSelection'
         },
 
         initialize: function() {
@@ -142,6 +143,22 @@
                 entityList.push(entity);
             }
             return entityList;
+        },
+
+        getDeletableModel: function(bookmarkId) {
+
+            return new Bookmark({
+                id: bookmarkId
+            });
+        },
+
+        findIndex: function(bookmarkId) {
+            for (var i = 0; i < this.collection.models.length; i++) {
+                if (this.collection.models[i].attributes.bookmarkId == bookmarkId) {
+                    break;
+                }
+            }
+            return i;
         }
     });
 

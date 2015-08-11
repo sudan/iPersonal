@@ -34,6 +34,7 @@
     var ExpenseView = BaseView.extend({
 
         el: $('#expense-wrapper'),
+        entityType: 'EXPENSE',
         createTemplate: $('#expense-create-template').html(),
         displayTemplate: $('#expense-display-template').html(),
 
@@ -71,6 +72,22 @@
                 }
                 this.categoryDropDown.trigger('chosen:updated');
             }
+        },
+
+        getDeletableModel: function(expenseId) {
+
+            return new Expense({
+                id: expenseId
+            });
+        },
+
+        findIndex: function(expenseId) {
+            for (var i = 0; i < this.collection.models.length; i++) {
+                if (this.collection.models[i].attributes.expenseId == expenseId) {
+                    break;
+                }
+            }
+            return i;
         },
 
         createExpense: function(e) {
