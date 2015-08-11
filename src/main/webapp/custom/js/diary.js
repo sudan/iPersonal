@@ -35,6 +35,7 @@
             'click #diary-submit': 'createDiary',
             'click #diary-cancel': 'resetValues',
             'click #diary-tag-img': 'displayTagSelection',
+            'click img.delete': 'deletePage'
         },
 
         prepareVariables: function() {
@@ -104,6 +105,7 @@
                         self.postCreation(pageId, "DIARY", title, 1, tags);
                         self.model.set({
                             'pageId': pageId,
+                            'year': dateArr[0],
                             'createdOn': Math.floor(Date.now()),
                             'modifiedAt': Math.floor(Date.now()),
                             'summary': content.replace(/<(?:.|\n)*?>/gm, ''),
@@ -177,12 +179,43 @@
                     'entityTitle' : this.collection.models[i].attributes.title,
                     'entitySummary': summary ? summary.substring(0,100) : summary,
                     'entityType': 'diary',
-                    'dateStr': this.collection.models[i].attributes.dateStr, 
+                    'dateStr': this.collection.models[i].attributes.dateStr,
                     'modifiedAt': this.collection.models[i].attributes.modifiedAt,
                 };
                 entityList.push(entity);
             }
             return entityList;
+        },
+
+        deletePage: function(e) {
+
+            var self = this;
+            var pageId = $(e.target).data('id');
+            var model = new Diary({
+                id: pageId
+            });
+            model.urlRoot =  '/iPersonal/dashboard/diaries/' + $(e.target).data('year');
+            var result = model.destroy();
+            if (result) {
+                result.complete(function(response){
+                    if (response.status == 200) {
+                        self.$el.empty();
+
+                        for (var i = 0; i < self.collection.models.length; i++) {
+                            if (self.collection.models[i].attributes.pageId == pageId) {
+                                break;
+                            }
+                        }
+                        self.collection.remove(self.collection.at(i));
+                        var entityList = self.buildEntityList();
+                        backboneGlobalObj.trigger('entity:displaylist', entityList);
+                        backboneGlobalObj.trigger('entity:count', {
+                            'entityType': 'DIARY',
+                            'relativeValue': -1
+                        });
+                    }
+                })
+            }
         }
 
 	});
