@@ -36,7 +36,6 @@
             'click #diary-submit': 'createDiary',
             'click #diary-cancel': 'resetValues',
             'click #diary-tag-img': 'displayTagSelection',
-            'click img.delete': 'deleteEntity'
         },
 
         prepareVariables: function() {

@@ -34,7 +34,6 @@
             'click #pin-submit': 'createPin',
             'click #pin-cancel': 'resetValues',
             'click #pin-tag-img': 'displayTagSelection',
-            'click img.delete': 'deleteEntity'
         },
 
         prepareVariables: function() {

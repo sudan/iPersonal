@@ -174,17 +174,24 @@
                         var template = _.template(this.displayTemplate);
                         this.$el.html(template(entity.toJSON()));
                         this.$el.fadeIn().removeClass('invisible')
-                                .siblings().fadeOut().addClass('invisible');          
+                                .siblings().fadeOut().addClass('invisible');
+
+                        var self = this;
+                        $('img.delete').confirmation({
+                                onConfirm: function() {
+                                        self.deleteEntity();
+                                }
+                        })     
                 },
 
 
-                deleteEntity: function(e) {
+                deleteEntity: function() {
 
                     var self = this;
-                    var entityId = $(e.target).data('id');
+                    var entityId = $('img.delete').data('id');
 
                     if (this.entityType == 'DIARY')
-                        var model = this.getDeletableModel(entityId, $(e.target).data('year'));
+                        var model = this.getDeletableModel(entityId, $('img.delete').data('year'));
                     else
                         var model = this.getDeletableModel(entityId);
                     var result = model.destroy();

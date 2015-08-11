@@ -42,7 +42,6 @@
             'click #exp-submit': 'createExpense',
             'click #exp-cancel': 'resetValues',
             'click #exp-tag-img': 'displayTagSelection',
-            'click img.delete': 'deleteEntity'
         },
 
         prepareVariables: function() {

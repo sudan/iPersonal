@@ -34,7 +34,6 @@
             'click #note-submit': 'createNote',
             'click #note-cancel': 'resetValues',
             'click #note-tag-img': 'displayTagSelection',
-            'click img.delete': 'deleteEntity'
         },
 
         prepareVariables: function() {

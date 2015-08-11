@@ -33,8 +33,7 @@
         events : {
             'click #book-submit': 'createBookmark',
             'click #book-cancel': 'resetValues',
-            'click #book-tag-img': 'displayTagSelection',
-            'click img.delete': 'deleteEntity'
+            'click #book-tag-img': 'displayTagSelection'
         },
 
         initialize: function() {
