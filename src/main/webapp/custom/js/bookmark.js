@@ -7,6 +7,10 @@
     var Bookmark = Base.extend({
     	urlRoot: BOOKMARK_URL_ROOT,
         
+        defaults: {
+            tags: []
+        },
+        
         initialize: function() {
             this.mandatory = {
                 'name': true, 'url': true, 'description': true
@@ -150,6 +154,22 @@
             return new Bookmark({
                 id: bookmarkId
             });
+        },
+
+        getModel: function(bookmarkId) {
+
+            if (bookmarkId) {
+                var index = this.findIndex(bookmarkId);
+                return this.collection.at(index);
+            } else {
+                return new Bookmark({
+                    bookmarkId: "",
+                    name: "",
+                    description: "",
+                    url: "",
+                    tags: []
+                });
+            }
         },
 
         findIndex: function(bookmarkId) {

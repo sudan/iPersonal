@@ -73,17 +73,18 @@
             </div>
             <div class="panel-body">
                 <form method="POST" id="bookmark-form" action="#">
+                    <span class="invisible" id="entityId"><%= bookmarkId %></span>
                     <div class="form-group">
-                        <input class="form-control" name="name" placeholder="Title"/>
+                        <input class="form-control" name="name" placeholder="Title" value="<%= name %>"/>
                         <span class="name-error error-msg"></span>
                     </div>
                     <div class="form-group">
-                        <input class="form-control" name="url" placeholder="URL"/>
+                        <input class="form-control" name="url" placeholder="URL" value="<%= url %>"/>
                         <span class="url-error error-msg"></span>
                     </div>
                     <div class="form-group">
                         <textarea class="form-control" name="description" rows="7"
-                                  placeholder="Description goes here"></textarea>
+                                  placeholder="Description goes here"><%= description %></textarea>
                         <span class="description-error error-msg"></span>
                     </div>
                     <div class="form-group">
@@ -93,11 +94,14 @@
                     <div class="form-group invisible">
                         <select id="bookmark-tag" multiple="multiple" class="form-control chosen-menu"
                                 data-placeholder="search tags">
+                                <% _.each(tags, function(tag){ %>
+                                    <option selected="selected" value = "<%= tag %>"><%= tag %></option>
+                                <% }); %>
                         </select>
                     </div>
                     <div class="button-group">
                         <button id="book-submit" type="submit" class="btn btn-success btn-element">
-                            Create
+                            Submit
                         </button>
                         <button id="book-cancel" type="submit" class="btn btn-link btn-element">Cancel
                         </button>
