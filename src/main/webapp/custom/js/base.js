@@ -183,7 +183,11 @@
                 onConfirm: function() {
                     self.deleteEntity();
                 }
-            })
+            });
+
+            $('img.edit').on('click', function(){
+                self.editEntity();
+            });
         },
 
 
@@ -213,6 +217,18 @@
                     }
                 })
             }
+        },
+
+        editEntity: function(e) {
+            var entityId = $('img.edit').data('id');
+            var template = _.template(this.createTemplate);
+            this.$el.html(template(this.getModel(entityId).toJSON()));
+            this.$el.fadeIn().removeClass('invisible')
+                .siblings().fadeOut().addClass('invisible');
+
+            this.prepareVariables();
+            this.initEntity();
+            this.tagImage.click();
         }
     });
 

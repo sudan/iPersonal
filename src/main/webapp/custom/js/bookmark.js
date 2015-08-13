@@ -117,11 +117,21 @@
                     var bookmarks = JSON.parse(response.responseText)['bookmark'];
                     if (bookmarks instanceof Array) {
                         for (var index in bookmarks) {
-                            var bookmark = new Bookmark(bookmarks[index])
+                            var bookmark = new Bookmark(bookmarks[index]);
+                            if (bookmark.attributes.tags && typeof bookmark.attributes.tags === "string") {
+                                var tags = []
+                                tags.push(bookmark.attributes.tags);
+                                bookmark.set({ tags : tags});
+                            }
                             self.collection.push(bookmark);
                         }
                     } else if (bookmarks) {
                         var bookmark = new Bookmark(bookmarks);
+                        if (bookmark.attributes.tags && typeof bookmark.attributes.tags === "string") {
+                            var tags = []
+                            tags.push(bookmark.attributes.tags);
+                            bookmark.set({ tags : tags});
+                        }
                         self.collection.push(bookmark);
                     }
                     var entityList = self.buildEntityList();
@@ -179,6 +189,10 @@
                 }
             }
             return i;
+        },
+
+        initEntity: function() {
+            Init.initBookmark();
         }
     });
 

@@ -502,13 +502,9 @@
                 <div class="timeline-body">
                     <% if (typeof tags !== 'undefined' && tags.length > 0 ) { %>
                         Tags: 
-                        <% if (tags instanceof Array) { %>
                             <% _.each(tags, function(tag) { %>
                                 <span class="tag"><%= tag %></span>
                             <% }); %>
-                        <% } else { %>
-                            <span class="tag"><%= tags %></span>
-                        <% } %>
                     <% } %>
                 </div>
             </div>
