@@ -31,7 +31,7 @@
 			switch(entity.toUpperCase()) {
 
 				case 'BOOKMARK':
-					bookmarkView.displayEntity(entityId, 'bookmarkId', 'bookmark');
+					bookmarkView.displayEntity(entityId, 'id', 'bookmark');
 					break;
 				case 'NOTE':
 					noteView.displayEntity(entityId, 'noteId', 'note');
