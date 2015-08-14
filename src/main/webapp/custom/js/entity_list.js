@@ -46,7 +46,7 @@
 					pageView.displayEntity(entityId, 'pageId', 'diary');
 					break;
 				case 'EXPENSE':
-					expenseView.displayEntity(entityId, 'expenseId', 'expense');
+					expenseView.displayEntity(entityId, 'id', 'expense');
 					break;
 			}
 		}
