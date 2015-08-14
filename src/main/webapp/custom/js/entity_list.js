@@ -40,10 +40,10 @@
 					pinView.displayEntity(entityId, 'id', 'pin');
 					break;
 				case 'TODO':
-					todoView.displayEntity(entityId, 'todoId', 'todo');
+					todoView.displayEntity(entityId, 'id', 'todo');
 					break;
 				case 'DIARY':
-					pageView.displayEntity(entityId, 'pageId', 'diary');
+					pageView.displayEntity(entityId, 'id', 'diary');
 					break;
 				case 'EXPENSE':
 					expenseView.displayEntity(entityId, 'id', 'expense');

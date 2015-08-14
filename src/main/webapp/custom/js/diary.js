@@ -100,11 +100,11 @@
                         var errors = self.buildErrorObject(response, self);
                         self.renderErrors(errors);
                     } else {
-                        var pageId = response.responseText;
+                        var id = response.responseText;
                         var tags = self.searchTag.val();
-                        self.postCreation(pageId, "DIARY", title, 1, tags);
+                        self.postCreation(id, "DIARY", title, 1, tags);
                         self.model.set({
-                            'pageId': pageId,
+                            'id': id,
                             'year': dateArr[0],
                             'createdOn': Math.floor(Date.now()),
                             'modifiedAt': Math.floor(Date.now()),
@@ -147,7 +147,8 @@
                             page.set({ 'year' : diary.year})
                             var date = page.attributes.year + "-" + page.attributes.month + "-" + page.attributes.date;
                             page.set({
-                                'dateStr' : date
+                                'dateStr' : date,
+                                'id': pages[index]['pageId']
                             })
                             self.collection.push(page);
                         }
@@ -157,7 +158,8 @@
                         page.set({ 'year' : diary.year})
                         var date = page.attributes.year + "-" + page.attributes.month + "-" + page.attributes.date;
                         page.set({
-                            dateStr : date
+                            dateStr : date,
+                            'id': pages['pageId']
                         })
                         self.collection.push(page);
                     }
@@ -175,7 +177,7 @@
             for (var i = 0; i < this.collection.length; i++) {
                 var summary = this.collection.models[i].attributes.summary;
                 var entity = {
-                    'entityId' : this.collection.models[i].attributes.pageId,
+                    'entityId' : this.collection.models[i].attributes.id,
                     'entityTitle' : this.collection.models[i].attributes.title,
                     'entitySummary': summary ? summary.substring(0,100) : summary,
                     'entityType': 'diary',
@@ -187,18 +189,18 @@
             return entityList;
         },
 
-        getDeletableModel: function(pageId, year) {
+        getDeletableModel: function(id, year) {
 
             var model =  new Diary({
-                id: pageId
+                id: id
             });
             model.urlRoot =  '/iPersonal/dashboard/diaries/' + year;
             return model;
         },
 
-        findIndex: function(pageId) {
+        findIndex: function(id) {
             for (var i = 0; i < this.collection.models.length; i++) {
-                if (this.collection.models[i].attributes.pageId == pageId) {
+                if (this.collection.models[i].attributes.id == id) {
                     break;
                 }
             }
