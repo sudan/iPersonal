@@ -34,7 +34,7 @@
 					bookmarkView.displayEntity(entityId, 'id', 'bookmark');
 					break;
 				case 'NOTE':
-					noteView.displayEntity(entityId, 'noteId', 'note');
+					noteView.displayEntity(entityId, 'id', 'note');
 					break;
 				case 'PIN':
 					pinView.displayEntity(entityId, 'pinId', 'pin');
