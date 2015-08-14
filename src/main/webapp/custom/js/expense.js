@@ -74,20 +74,11 @@
             }
         },
 
-        getDeletableModel: function(expenseId) {
+        getDeletableModel: function(id) {
 
             return new Expense({
-                id: expenseId
+                id: id
             });
-        },
-
-        findIndex: function(expenseId) {
-            for (var i = 0; i < this.collection.models.length; i++) {
-                if (this.collection.models[i].attributes.expenseId == expenseId) {
-                    break;
-                }
-            }
-            return i;
         },
 
         createExpense: function(e) {
@@ -119,11 +110,11 @@
                         var errors = self.buildErrorObject(response, self);
                         self.renderErrors(errors);
                     } else {
-                        var expenseId = response.responseText;
+                        var id = response.responseText;
                         var tags = self.searchTag.val();
-                        self.postCreation(expenseId, "EXPENSE", self.model.get('title'), 1, tags, self.model.get('categories'))
+                        self.postCreation(id, "EXPENSE", self.model.get('title'), 1, tags, self.model.get('categories'))
                         self.model.set({
-                            expenseId: expenseId,
+                            id : id,
                             'createdOn': Math.floor(Date.now()),
                             'modifiedAt': Math.floor(Date.now()),
                             'tags': tags
@@ -157,11 +148,13 @@
                     var expenses = JSON.parse(response.responseText)['expense'];
                     if (expenses instanceof Array) {
                         for (var index in expenses) {
-                            var expense = new Expense(expenses[index])
+                            var expense = new Expense(expenses[index]);
+                            expense.set({ id : expenses[index]['expenseId']});
                             self.collection.push(expense);
                         }
                     } else if (expenses) {
                         var expense = new Expense(expenses);
+                        expense.set({ id : expenses['expenseId']});
                         self.collection.push(expense);
                     }
                     var entityList = self.buildEntityList();
@@ -177,7 +170,7 @@
             for (var i = 0; i < this.collection.length; i++) {
                 var description = this.collection.models[i].attributes.description;
                 var entity = {
-                    'entityId' : this.collection.models[i].attributes.expenseId,
+                    'entityId' : this.collection.models[i].attributes.id,
                     'entityTitle' : this.collection.models[i].attributes.title,
                     'amount': this.collection.models[i].attributes.amount,
                     'entitySummary': description ? description.substring(0,100) : description,

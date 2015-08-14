@@ -31,22 +31,22 @@
 			switch(entity.toUpperCase()) {
 
 				case 'BOOKMARK':
-					bookmarkView.displayEntity(entityId, 'bookmarkId', 'bookmark');
+					bookmarkView.displayEntity(entityId, 'id', 'bookmark');
 					break;
 				case 'NOTE':
-					noteView.displayEntity(entityId, 'noteId', 'note');
+					noteView.displayEntity(entityId, 'id', 'note');
 					break;
 				case 'PIN':
-					pinView.displayEntity(entityId, 'pinId', 'pin');
+					pinView.displayEntity(entityId, 'id', 'pin');
 					break;
 				case 'TODO':
-					todoView.displayEntity(entityId, 'todoId', 'todo');
+					todoView.displayEntity(entityId, 'id', 'todo');
 					break;
 				case 'DIARY':
-					pageView.displayEntity(entityId, 'pageId', 'diary');
+					pageView.displayEntity(entityId, 'id', 'diary');
 					break;
 				case 'EXPENSE':
-					expenseView.displayEntity(entityId, 'expenseId', 'expense');
+					expenseView.displayEntity(entityId, 'id', 'expense');
 					break;
 			}
 		}

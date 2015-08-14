@@ -76,11 +76,11 @@
                         var errors = self.buildErrorObject(response, self);
                         self.renderErrors(errors);
                     } else {
-                        var bookmarkId = response.responseText;
+                        var id = response.responseText;
                         var tags = self.searchTag.val();
-                        self.postCreation(bookmarkId, "BOOKMARK", self.model.get('name'), 1, tags)
+                        self.postCreation(id, "BOOKMARK", self.model.get('name'), 1, tags)
                         self.model.set({
-                            bookmarkId: bookmarkId,
+                            id: id,
                             'createdOn': Math.floor(Date.now()),
                             'modifiedAt': Math.floor(Date.now()),
                             'tags': tags 
@@ -114,10 +114,12 @@
                     if (bookmarks instanceof Array) {
                         for (var index in bookmarks) {
                             var bookmark = new Bookmark(bookmarks[index])
+                            bookmark.set({ id : bookmarks[index]['bookmarkId']});
                             self.collection.push(bookmark);
                         }
                     } else if (bookmarks) {
                         var bookmark = new Bookmark(bookmarks);
+                        bookmark.set({ id : bookmarks['bookmarkId']});
                         self.collection.push(bookmark);
                     }
                     var entityList = self.buildEntityList();
@@ -133,7 +135,7 @@
             for (var i = 0; i < this.collection.length; i++) {
                 var description = this.collection.models[i].attributes.description;
                 var entity = {
-                    'entityId' : this.collection.models[i].attributes.bookmarkId,
+                    'entityId' : this.collection.models[i].attributes.id,
                     'entityTitle' : this.collection.models[i].attributes.name,
                     'url': this.collection.models[i].attributes.url,
                     'entitySummary': description ? description.substring(0,100) : description,
@@ -145,20 +147,11 @@
             return entityList;
         },
 
-        getDeletableModel: function(bookmarkId) {
+        getDeletableModel: function(id) {
 
             return new Bookmark({
-                id: bookmarkId
+                id: id
             });
-        },
-
-        findIndex: function(bookmarkId) {
-            for (var i = 0; i < this.collection.models.length; i++) {
-                if (this.collection.models[i].attributes.bookmarkId == bookmarkId) {
-                    break;
-                }
-            }
-            return i;
         }
     });
 

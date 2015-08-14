@@ -80,11 +80,11 @@
                         var errors = self.buildErrorObject(response, self);
                         self.renderErrors(errors);
                     } else {
-                        var noteId = response.responseText;
+                        var id = response.responseText;
                         var tags = self.searchTag.val();
-                        self.postCreation(noteId, "NOTE", self.model.get('title'), 1, tags)
+                        self.postCreation(id, "NOTE", self.model.get('title'), 1, tags)
                         self.model.set({
-                            noteId: noteId,
+                            id: id,
                             'createdOn': Math.floor(Date.now()),
                             'modifiedAt': Math.floor(Date.now()),
                             'summary': self.model.get('note').replace(/<(?:.|\n)*?>/gm, ''),
@@ -118,11 +118,13 @@
                     var notes = JSON.parse(response.responseText)['note'];
                     if (notes instanceof Array) {
                         for (var index in notes) {
-                            var note = new Note(notes[index])
+                            var note = new Note(notes[index]);
+                            note.set({ id : notes[index]['noteId']})
                             self.collection.push(note);
                         }
                     } else if (notes) {
                         var note = new Note(notes);
+                        note.set({ id : notes['noteId']});
                         self.collection.push(note);
                     }
                     var entityList = self.buildEntityList();
@@ -138,7 +140,7 @@
             for (var i = 0; i < this.collection.length; i++) {
                 var summary = this.collection.models[i].attributes.summary;
                 var entity = {
-                    'entityId' : this.collection.models[i].attributes.noteId,
+                    'entityId' : this.collection.models[i].attributes.id,
                     'entityTitle' : this.collection.models[i].attributes.title,
                     'entitySummary': summary ? summary.substring(0,100) : summary,
                     'entityType': 'note',
@@ -149,20 +151,11 @@
             return entityList;
         },
 
-        getDeletableModel: function(noteId) {
+        getDeletableModel: function(id) {
 
             return new Note({
-                id: noteId
+                id: id
             });
-        },
-
-        findIndex: function(noteId) {
-            for (var i = 0; i < this.collection.models.length; i++) {
-                if (this.collection.models[i].attributes.noteId == noteId) {
-                    break;
-                }
-            }
-            return i;
         }
     });
 
