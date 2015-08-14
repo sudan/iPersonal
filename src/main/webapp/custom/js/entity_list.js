@@ -37,7 +37,7 @@
 					noteView.displayEntity(entityId, 'id', 'note');
 					break;
 				case 'PIN':
-					pinView.displayEntity(entityId, 'pinId', 'pin');
+					pinView.displayEntity(entityId, 'id', 'pin');
 					break;
 				case 'TODO':
 					todoView.displayEntity(entityId, 'todoId', 'todo');

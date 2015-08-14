@@ -49,15 +49,15 @@ public class PinValidationTest {
 
         Assert.assertEquals("Error 3 name matches", ErrorCodes.EMPTY_FIELD.name(), errorEntities
                 .get(2).getName());
-        Assert.assertEquals("Error 3 description matches", "image_url cannot be empty",
+        Assert.assertEquals("Error 3 description matches", "imageUrl cannot be empty",
                 errorEntities.get(2).getDescription());
-        Assert.assertEquals("Error 3 field matches", "image_url", errorEntities.get(2).getField());
+        Assert.assertEquals("Error 3 field matches", "imageUrl", errorEntities.get(2).getField());
 
         Assert.assertEquals("Error 4 name matches", ErrorCodes.INVALID_URL.name(), errorEntities
                 .get(3).getName());
         Assert.assertEquals("Error 4 description matches", "Invalid URL format", errorEntities
                 .get(3).getDescription());
-        Assert.assertEquals("Error 4 field matches", "image_url", errorEntities.get(3).getField());
+        Assert.assertEquals("Error 4 field matches", "imageUrl", errorEntities.get(3).getField());
 
         pin = new Pin();
         pin.setPinId("PIN123456789");
@@ -106,15 +106,15 @@ public class PinValidationTest {
 
         Assert.assertEquals("Error 3 name matches", ErrorCodes.LENGTH_EXCEEDED.name(),
                 errorEntities.get(2).getName());
-        Assert.assertEquals("Error 3 description matches", "image_url cannot exceed 300 " +
+        Assert.assertEquals("Error 3 description matches", "imageUrl cannot exceed 300 " +
                 "characters", errorEntities.get(2).getDescription());
-        Assert.assertEquals("Error 3 field matches", "image_url", errorEntities.get(2).getField());
+        Assert.assertEquals("Error 3 field matches", "imageUrl", errorEntities.get(2).getField());
 
         Assert.assertEquals("Error 4 name matches", ErrorCodes.INVALID_URL.name(), errorEntities
                 .get(3).getName());
         Assert.assertEquals("Error 4 description matches", "Invalid URL format", errorEntities
                 .get(3).getDescription());
-        Assert.assertEquals("Error 4 field matches", "image_url", errorEntities.get(3).getField());
+        Assert.assertEquals("Error 4 field matches", "imageUrl", errorEntities.get(3).getField());
 
     }
 }

@@ -27,7 +27,7 @@ public class FieldKeys {
 
     public static final String PIN_NAME = "name";
     public static final String PIN_DESCRIPTION = "description";
-    public static final String PIN_IMAGE_URL = "image_url";
+    public static final String PIN_IMAGE_URL = "imageUrl";
 
     public static final String TODO_TITLE = "title";
     public static final String TASK_DESCRIPTION = "task";

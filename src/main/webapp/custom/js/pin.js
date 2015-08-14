@@ -70,11 +70,11 @@
                         var errors = self.buildErrorObject(response, self);
                         self.renderErrors(errors);
                     } else {
-                        var pinId = response.responseText;
+                        var id = response.responseText;
                         var tags = self.searchTag.val();
-                        self.postCreation(pinId, "PIN", self.model.get('name'), 1, tags)
+                        self.postCreation(id, "PIN", self.model.get('name'), 1, tags)
                         self.model.set({
-                            pinId: pinId,
+                            id: id,
                             'createdOn': Math.floor(Date.now()),
                             'modifiedAt': Math.floor(Date.now()),
                             'tags': tags
@@ -109,10 +109,12 @@
                     if (pins instanceof Array) {
                         for (var index in pins) {
                             var pin = new Pin(pins[index])
+                            pin.set({ id : pins[index]['pinId']});
                             self.collection.push(pin);
                         }
                     } else if (pins) {
                         var pin = new Pin(pins);
+                        pin.set({ id : pins['pinId']});
                         self.collection.push(pin);
                     }
                     var entityList = self.buildEntityList();
@@ -128,7 +130,7 @@
             for (var i = 0; i < this.collection.length; i++) {
                 var description = this.collection.models[i].attributes.description;
                 var entity = {
-                    'entityId' : this.collection.models[i].attributes.pinId,
+                    'entityId' : this.collection.models[i].attributes.id,
                     'entityTitle' : this.collection.models[i].attributes.name,
                     'url': this.collection.models[i].attributes.imageUrl,
                     'entitySummary': description ? description.substring(0,100) : description,
@@ -140,16 +142,16 @@
             return entityList;
         },
 
-        getDeletableModel: function(pinId) {
+        getDeletableModel: function(id) {
 
             return new Pin({
-                id: pinId
+                id: id
             });
         },
 
-        findIndex: function(pinId) {
+        findIndex: function(id) {
             for (var i = 0; i < this.collection.models.length; i++) {
-                if (this.collection.models[i].attributes.pinId == pinId) {
+                if (this.collection.models[i].attributes.id == id) {
                     break;
                 }
             }
