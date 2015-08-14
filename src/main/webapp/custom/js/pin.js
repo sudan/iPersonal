@@ -147,15 +147,6 @@
             return new Pin({
                 id: id
             });
-        },
-
-        findIndex: function(id) {
-            for (var i = 0; i < this.collection.models.length; i++) {
-                if (this.collection.models[i].attributes.id == id) {
-                    break;
-                }
-            }
-            return i;
         }
     });
 
