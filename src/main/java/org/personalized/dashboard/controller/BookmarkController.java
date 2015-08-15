@@ -91,7 +91,10 @@ public class BookmarkController {
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response updateBookmark(@Context HttpHeaders httpHeaders, Bookmark bookmark) {
+    @Path("{bookmarkId}")
+    public Response updateBookmark(@Context HttpHeaders httpHeaders, 
+                                   @PathParam("bookmarkId") String bookmarkId,
+                                   Bookmark bookmark) {
 
         try {
             List<ErrorEntity> errorEntities = bookmarkValidationService.validate(bookmark);
