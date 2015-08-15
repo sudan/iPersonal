@@ -89,7 +89,7 @@ public class ExpenseController {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("{expenseId}")
-    public Response updateExpense(@Context HttpHeaders httpHeaders, 
+    public Response updateExpense(@Context HttpHeaders httpHeaders,
                                   @PathParam("expenseId") String expenseId,
                                   Expense expense) {
 

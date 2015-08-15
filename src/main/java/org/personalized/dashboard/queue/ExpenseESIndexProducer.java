@@ -26,13 +26,15 @@ public class ExpenseESIndexProducer implements ESIndexProducer<Expense> {
     private final Logger LOGGER = LoggerFactory.getLogger(ExpenseESIndexProducer.class);
 
     @Override
-    public void enqueue(Expense obj, EntityType entityType, OperationType operationType, String entityId) {
+    public void enqueue(Expense obj, EntityType entityType, OperationType operationType, String entityId,
+                        String userId) {
 
         Gson gson = new GsonBuilder().create();
         Map<String, String> payload = Maps.newHashMap();
         payload.put(FieldKeys.ES_ID, entityId);
         payload.put(FieldKeys.ES_ENTITY_TYPE, entityType.name());
         payload.put(FieldKeys.ES_OP_TYPE, operationType.name());
+        payload.put(FieldKeys.USER_ID, userId);
         if (operationType != OperationType.DELETE) {
             payload.put(FieldKeys.ES_TITLE, obj.getTitle());
             StringBuilder description = new StringBuilder();

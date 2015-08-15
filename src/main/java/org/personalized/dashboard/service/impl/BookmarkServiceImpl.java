@@ -43,7 +43,8 @@ public class BookmarkServiceImpl implements BookmarkService {
         Activity activity = activityGenerator.generate(ActivityType.CREATED, EntityType.BOOKMARK,
                 bookmarkId, bookmark.getName());
         activityDao.add(activity, sessionManager.getUserIdFromSession());
-        esIndexProducer.enqueue(bookmark, EntityType.BOOKMARK, OperationType.CREATE, bookmarkId);
+        esIndexProducer.enqueue(bookmark, EntityType.BOOKMARK, OperationType.CREATE, bookmarkId,
+                sessionManager.getUserIdFromSession());
         return bookmarkId;
     }
 
@@ -59,7 +60,8 @@ public class BookmarkServiceImpl implements BookmarkService {
             Activity activity = activityGenerator.generate(ActivityType.UPDATED, EntityType
                     .BOOKMARK, bookmark.getBookmarkId(), bookmark.getName());
             activityDao.add(activity, sessionManager.getUserIdFromSession());
-            esIndexProducer.enqueue(bookmark, EntityType.BOOKMARK, OperationType.UPDATE, bookmark.getBookmarkId());
+            esIndexProducer.enqueue(bookmark, EntityType.BOOKMARK, OperationType.UPDATE, bookmark.getBookmarkId(),
+                    sessionManager.getUserIdFromSession());
         }
         return modifiedCount;
     }
@@ -71,7 +73,8 @@ public class BookmarkServiceImpl implements BookmarkService {
             Activity activity = activityGenerator.generate(ActivityType.DELETED, EntityType
                     .BOOKMARK, bookmarkId, StringUtils.EMPTY);
             activityDao.add(activity, sessionManager.getUserIdFromSession());
-            esIndexProducer.enqueue(null, EntityType.BOOKMARK, OperationType.DELETE, bookmarkId);
+            esIndexProducer.enqueue(null, EntityType.BOOKMARK, OperationType.DELETE, bookmarkId,
+                    sessionManager.getUserIdFromSession());
 
         }
     }

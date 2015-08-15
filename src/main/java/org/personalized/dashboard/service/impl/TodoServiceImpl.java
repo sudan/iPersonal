@@ -43,7 +43,8 @@ public class TodoServiceImpl implements TodoService {
         Activity activity = activityGenerator.generate(ActivityType.CREATED, EntityType.TODO,
                 todoId, todo.getTitle());
         activityDao.add(activity, sessionManager.getUserIdFromSession());
-        esIndexProducer.enqueue(todo, EntityType.TODO, OperationType.CREATE, todoId);
+        esIndexProducer.enqueue(todo, EntityType.TODO, OperationType.CREATE, todoId,
+                sessionManager.getUserIdFromSession());
         return todoId;
     }
 
@@ -59,7 +60,8 @@ public class TodoServiceImpl implements TodoService {
             Activity activity = activityGenerator.generate(ActivityType.UPDATED, EntityType.TODO,
                     todo.getTodoId(), todo.getTitle());
             activityDao.add(activity, sessionManager.getUserIdFromSession());
-            esIndexProducer.enqueue(todo, EntityType.TODO, OperationType.UPDATE, todo.getTodoId());
+            esIndexProducer.enqueue(todo, EntityType.TODO, OperationType.UPDATE, todo.getTodoId(),
+                    sessionManager.getUserIdFromSession());
 
         }
         return modifiedCount;
@@ -72,7 +74,8 @@ public class TodoServiceImpl implements TodoService {
             Activity activity = activityGenerator.generate(ActivityType.DELETED, EntityType.TODO,
                     todoId, StringUtils.EMPTY);
             activityDao.add(activity, sessionManager.getUserIdFromSession());
-            esIndexProducer.enqueue(null, EntityType.TODO, OperationType.DELETE, todoId);
+            esIndexProducer.enqueue(null, EntityType.TODO, OperationType.DELETE, todoId,
+                    sessionManager.getUserIdFromSession());
         }
     }
 

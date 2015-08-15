@@ -48,7 +48,8 @@ public class NoteServiceImpl implements NoteService {
         Activity activity = activityGenerator.generate(ActivityType.CREATED, EntityType.NOTE,
                 noteId, note.getTitle());
         activityDao.add(activity, sessionManager.getUserIdFromSession());
-        esIndexProducer.enqueue(note, EntityType.NOTE, OperationType.CREATE, noteId);
+        esIndexProducer.enqueue(note, EntityType.NOTE, OperationType.CREATE, noteId,
+                sessionManager.getUserIdFromSession());
         return noteId;
     }
 
@@ -66,7 +67,8 @@ public class NoteServiceImpl implements NoteService {
             Activity activity = activityGenerator.generate(ActivityType.UPDATED, EntityType.NOTE,
                     note.getNoteId(), note.getTitle());
             activityDao.add(activity, sessionManager.getUserIdFromSession());
-            esIndexProducer.enqueue(note, EntityType.NOTE, OperationType.UPDATE, note.getNoteId());
+            esIndexProducer.enqueue(note, EntityType.NOTE, OperationType.UPDATE, note.getNoteId(),
+                    sessionManager.getUserIdFromSession());
 
         }
         return modifiedCount;
@@ -79,7 +81,8 @@ public class NoteServiceImpl implements NoteService {
             Activity activity = activityGenerator.generate(ActivityType.DELETED, EntityType.NOTE,
                     noteId, StringUtils.EMPTY);
             activityDao.add(activity, sessionManager.getUserIdFromSession());
-            esIndexProducer.enqueue(null, EntityType.NOTE, OperationType.DELETE, noteId);
+            esIndexProducer.enqueue(null, EntityType.NOTE, OperationType.DELETE, noteId,
+                    sessionManager.getUserIdFromSession());
         }
     }
 

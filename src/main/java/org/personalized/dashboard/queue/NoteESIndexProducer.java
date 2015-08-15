@@ -24,7 +24,8 @@ public class NoteESIndexProducer implements ESIndexProducer<Note> {
     private final Logger LOGGER = LoggerFactory.getLogger(NoteESIndexProducer.class);
 
     @Override
-    public void enqueue(Note obj, EntityType entityType, OperationType operationType, String entityId) {
+    public void enqueue(Note obj, EntityType entityType, OperationType operationType, String entityId,
+                        String userId) {
 
 
         Gson gson = new GsonBuilder().create();
@@ -32,6 +33,7 @@ public class NoteESIndexProducer implements ESIndexProducer<Note> {
         payload.put(FieldKeys.ES_ID, entityId);
         payload.put(FieldKeys.ES_ENTITY_TYPE, entityType.name());
         payload.put(FieldKeys.ES_OP_TYPE, operationType.name());
+        payload.put(FieldKeys.USER_ID, userId);
         if (operationType != OperationType.DELETE) {
             payload.put(FieldKeys.ES_TITLE, obj.getTitle());
             payload.put(FieldKeys.ES_DESCRIPTION, obj.getNote());

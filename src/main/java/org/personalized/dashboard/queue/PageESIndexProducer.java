@@ -24,13 +24,15 @@ public class PageESIndexProducer implements ESIndexProducer<Page> {
     private final Logger LOGGER = LoggerFactory.getLogger(PageESIndexProducer.class);
 
     @Override
-    public void enqueue(Page obj, EntityType entityType, OperationType operationType, String entityId) {
+    public void enqueue(Page obj, EntityType entityType, OperationType operationType, String entityId,
+                        String userId) {
 
         Gson gson = new GsonBuilder().create();
         Map<String, String> payload = Maps.newHashMap();
         payload.put(FieldKeys.ES_ID, entityId);
         payload.put(FieldKeys.ES_ENTITY_TYPE, entityType.name());
         payload.put(FieldKeys.ES_OP_TYPE, operationType.name());
+        payload.put(FieldKeys.USER_ID, userId);
         if (operationType != OperationType.DELETE) {
             payload.put(FieldKeys.ES_TITLE, obj.getTitle());
             payload.put(FieldKeys.ES_DESCRIPTION, obj.getContent());

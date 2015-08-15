@@ -51,7 +51,8 @@ public class DiaryServiceImpl implements DiaryService {
         Activity activity = activityGenerator.generate(ActivityType.CREATED, EntityType.DIARY,
                 pageId, page.getTitle());
         activityDao.add(activity, sessionManager.getUserIdFromSession());
-        esIndexProducer.enqueue(page, EntityType.DIARY, OperationType.CREATE, pageId);
+        esIndexProducer.enqueue(page, EntityType.DIARY, OperationType.CREATE, pageId,
+                sessionManager.getUserIdFromSession());
         return pageId;
     }
 
@@ -69,7 +70,8 @@ public class DiaryServiceImpl implements DiaryService {
             Activity activity = activityGenerator.generate(ActivityType.UPDATED, EntityType.DIARY,
                     page.getPageId(), page.getTitle());
             activityDao.add(activity, sessionManager.getUserIdFromSession());
-            esIndexProducer.enqueue(page, EntityType.DIARY, OperationType.UPDATE, page.getPageId());
+            esIndexProducer.enqueue(page, EntityType.DIARY, OperationType.UPDATE, page.getPageId(),
+                    sessionManager.getUserIdFromSession());
         }
         return modifiedCount;
     }
@@ -81,7 +83,8 @@ public class DiaryServiceImpl implements DiaryService {
             Activity activity = activityGenerator.generate(ActivityType.DELETED, EntityType.DIARY,
                     pageId, StringUtils.EMPTY);
             activityDao.add(activity, sessionManager.getUserIdFromSession());
-            esIndexProducer.enqueue(null, EntityType.DIARY, OperationType.DELETE, pageId);
+            esIndexProducer.enqueue(null, EntityType.DIARY, OperationType.DELETE, pageId,
+                    sessionManager.getUserIdFromSession());
         }
         return deletedCount;
     }

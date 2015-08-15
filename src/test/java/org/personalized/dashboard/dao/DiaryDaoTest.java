@@ -135,7 +135,7 @@ public class DiaryDaoTest {
             Assert.assertEquals("PageId match", pageId2, pageList2.get(0).getPageId());
             Assert.assertEquals("Title match", "titlechanged", pageList2.get(0).getTitle());
             Assert.assertEquals("Desc match", "<div><p>Halo good boy</p></div>", pageList2.get(0).getContent());
-                    Assert.assertEquals("Summary match", "Halo good boy", pageList2.get(0).getSummary());
+            Assert.assertEquals("Summary match", "Halo good boy", pageList2.get(0).getSummary());
             Assert.assertEquals("Month match", 11, pageList2.get(0).getMonth());
             Assert.assertEquals("Date match", 30, pageList2.get(0).getDate());
 

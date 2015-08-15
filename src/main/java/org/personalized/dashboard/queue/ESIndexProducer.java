@@ -8,5 +8,5 @@ import org.personalized.dashboard.model.OperationType;
  */
 public interface ESIndexProducer<T> {
 
-    void enqueue(T obj, EntityType entityType, OperationType operationType, String entityId);
+    void enqueue(T obj, EntityType entityType, OperationType operationType, String entityId, String userId);
 }

@@ -90,7 +90,7 @@ public class PinController {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("{pinId}")
-    public Response updatePin(@Context HttpHeaders httpHeaders, 
+    public Response updatePin(@Context HttpHeaders httpHeaders,
                               @PathParam("pinId") String pinId,
                               Pin pin) {
 

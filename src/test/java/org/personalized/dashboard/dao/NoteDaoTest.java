@@ -110,7 +110,7 @@ public class NoteDaoTest {
             Assert.assertEquals("NoteIds match", noteid1, notes.get(1).getNoteId());
             Assert.assertEquals("title match", "title1", notes.get(1).getTitle());
             Assert.assertEquals("note match", "note1", notes.get(1).getNote());
-                    Assert.assertEquals("summary match", "note1", notes.get(1).getSummary());
+            Assert.assertEquals("summary match", "note1", notes.get(1).getSummary());
             Assert.assertNotNull("Createdon is not null", notes.get(1).getCreatedOn());
             Assert.assertNotNull("modifiedAt is not null", notes.get(1).getModifiedAt());
 

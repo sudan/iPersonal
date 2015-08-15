@@ -44,28 +44,28 @@ public class ElasticSearchClientTest {
             List<EntityType> entityTypes = Lists.newArrayList();
             entityTypes.add(EntityType.BOOKMARK);
             searchContext.setEntityTypes(entityTypes);
-            List<SearchDocument> searchDocuments = elasticsearchClient.search(searchContext);
+            List<SearchDocument> searchDocuments = elasticsearchClient.search(searchContext, "1");
             Assert.assertEquals("Total bookmark count is 2", 2, searchDocuments.size());
 
             searchContext = new SearchContext();
             entityTypes = Lists.newArrayList();
             entityTypes.add(EntityType.NOTE);
             searchContext.setEntityTypes(entityTypes);
-            searchDocuments = elasticsearchClient.search(searchContext);
+            searchDocuments = elasticsearchClient.search(searchContext, "1");
             Assert.assertEquals("Total note count is 2", 2, searchDocuments.size());
 
             searchContext = new SearchContext();
             entityTypes = Lists.newArrayList();
             entityTypes.add(EntityType.TODO);
             searchContext.setEntityTypes(entityTypes);
-            searchDocuments = elasticsearchClient.search(searchContext);
+            searchDocuments = elasticsearchClient.search(searchContext, "1");
             Assert.assertEquals("Total todo count is 2", 2, searchDocuments.size());
 
             searchContext = new SearchContext();
             entityTypes = Lists.newArrayList();
             entityTypes.add(EntityType.PIN);
             searchContext.setEntityTypes(entityTypes);
-            searchDocuments = elasticsearchClient.search(searchContext);
+            searchDocuments = elasticsearchClient.search(searchContext, "1");
             Assert.assertEquals("Total pin count is 1", 1, searchDocuments.size());
 
             searchContext = new SearchContext();
@@ -75,7 +75,7 @@ public class ElasticSearchClientTest {
             List<String> keywords = Lists.newArrayList();
             keywords.add("Microsoft");
             searchContext.setKeywords(keywords);
-            searchDocuments = elasticsearchClient.search(searchContext);
+            searchDocuments = elasticsearchClient.search(searchContext, "1");
             Assert.assertEquals("Total search result count is 1", 1, searchDocuments.size());
 
             searchContext = new SearchContext();
@@ -83,14 +83,14 @@ public class ElasticSearchClientTest {
             keywords.add("language");
             keywords.add("engine");
             searchContext.setKeywords(keywords);
-            searchDocuments = elasticsearchClient.search(searchContext);
+            searchDocuments = elasticsearchClient.search(searchContext, "1");
             Assert.assertEquals("Total search count is 4", 4, searchDocuments.size());
 
             searchContext = new SearchContext();
             keywords = Lists.newArrayList();
             keywords.add("technology");
             searchContext.setKeywords(keywords);
-            searchDocuments = elasticsearchClient.search(searchContext);
+            searchDocuments = elasticsearchClient.search(searchContext, "1");
             Assert.assertEquals("Total search count is 1", 1, searchDocuments.size());
 
             searchContext = new SearchContext();
@@ -98,7 +98,7 @@ public class ElasticSearchClientTest {
             titles.add("bing");
             titles.add("python");
             searchContext.setTitles(titles);
-            searchDocuments = elasticsearchClient.search(searchContext);
+            searchDocuments = elasticsearchClient.search(searchContext, "1");
             Assert.assertEquals("Total search count is 2", 2, searchDocuments.size());
 
             searchContext = new SearchContext();
@@ -108,7 +108,7 @@ public class ElasticSearchClientTest {
             entityTypes = Lists.newArrayList();
             entityTypes.add(EntityType.PIN);
             searchContext.setEntityTypes(entityTypes);
-            searchDocuments = elasticsearchClient.search(searchContext);
+            searchDocuments = elasticsearchClient.search(searchContext, "1");
             Assert.assertEquals("Total search count is 0", 0, searchDocuments.size());
 
             searchContext = new SearchContext();
@@ -118,7 +118,7 @@ public class ElasticSearchClientTest {
             titles = Lists.newArrayList();
             titles.add("python");
             searchContext.setTitles(titles);
-            searchDocuments = elasticsearchClient.search(searchContext);
+            searchDocuments = elasticsearchClient.search(searchContext, "1");
             Assert.assertEquals("Total search count is 1", 1, searchDocuments.size());
 
             searchContext = new SearchContext();
@@ -126,7 +126,7 @@ public class ElasticSearchClientTest {
             tags.add("language");
             tags.add("java");
             searchContext.setTags(tags);
-            searchDocuments = elasticsearchClient.search(searchContext);
+            searchDocuments = elasticsearchClient.search(searchContext, "1");
             Assert.assertEquals("Total search count is 3", 3, searchDocuments.size());
 
             searchContext = new SearchContext();
@@ -136,7 +136,7 @@ public class ElasticSearchClientTest {
             entityTypes = Lists.newArrayList();
             entityTypes.add(EntityType.DIARY);
             searchContext.setEntityTypes(entityTypes);
-            searchDocuments = elasticsearchClient.search(searchContext);
+            searchDocuments = elasticsearchClient.search(searchContext, "1");
             Assert.assertEquals("Total search count is 0", 0, searchDocuments.size());
 
             searchContext = new SearchContext();
@@ -147,14 +147,14 @@ public class ElasticSearchClientTest {
             entityTypes = Lists.newArrayList();
             entityTypes.add(EntityType.NOTE);
             searchContext.setEntityTypes(entityTypes);
-            searchDocuments = elasticsearchClient.search(searchContext);
+            searchDocuments = elasticsearchClient.search(searchContext, "1");
             Assert.assertEquals("Total search count is 2", 2, searchDocuments.size());
 
             searchContext = new SearchContext();
             tags = Lists.newArrayList();
             tags.add("python");
             searchContext.setTags(tags);
-            searchDocuments = elasticsearchClient.search(searchContext);
+            searchDocuments = elasticsearchClient.search(searchContext, "1");
             Assert.assertEquals("Total search count is 2", 2, searchDocuments.size());
 
             searchContext = new SearchContext();
@@ -164,14 +164,14 @@ public class ElasticSearchClientTest {
             entityTypes = Lists.newArrayList();
             entityTypes.add(EntityType.EXPENSE);
             searchContext.setEntityTypes(entityTypes);
-            searchDocuments = elasticsearchClient.search(searchContext);
+            searchDocuments = elasticsearchClient.search(searchContext, "1");
             Assert.assertEquals("Total search count is 1", 1, searchDocuments.size());
 
             searchContext = new SearchContext();
             entityTypes = Lists.newArrayList();
             entityTypes.add(EntityType.DIARY);
             searchContext.setEntityTypes(entityTypes);
-            searchDocuments = elasticsearchClient.search(searchContext);
+            searchDocuments = elasticsearchClient.search(searchContext, "1");
             Assert.assertEquals("Total search count is 2", 2, searchDocuments.size());
 
             searchContext = new SearchContext();
@@ -181,7 +181,7 @@ public class ElasticSearchClientTest {
             entityTypes = Lists.newArrayList();
             entityTypes.add(EntityType.DIARY);
             searchContext.setEntityTypes(entityTypes);
-            searchDocuments = elasticsearchClient.search(searchContext);
+            searchDocuments = elasticsearchClient.search(searchContext, "1");
             Assert.assertEquals("Total search count is 1", 1, searchDocuments.size());
 
 
@@ -192,7 +192,7 @@ public class ElasticSearchClientTest {
             entityTypes = Lists.newArrayList();
             entityTypes.add(EntityType.DIARY);
             searchContext.setEntityTypes(entityTypes);
-            searchDocuments = elasticsearchClient.search(searchContext);
+            searchDocuments = elasticsearchClient.search(searchContext, "1");
             Assert.assertEquals("Total search count is 0", 0, searchDocuments.size());
 
 
@@ -203,7 +203,7 @@ public class ElasticSearchClientTest {
             entityTypes = Lists.newArrayList();
             entityTypes.add(EntityType.BOOKMARK);
             searchContext.setEntityTypes(entityTypes);
-            searchDocuments = elasticsearchClient.search(searchContext);
+            searchDocuments = elasticsearchClient.search(searchContext, "1");
             Assert.assertEquals("Total bookmark count is 1", 1, searchDocuments.size());
         }
 
@@ -216,42 +216,42 @@ public class ElasticSearchClientTest {
         searchDocument.setTitle("BingSearch");
         searchDocument.setEntityType(EntityType.BOOKMARK);
         searchDocument.setDescription("Bing is Microsoft product. It is a very good search engine");
-        elasticsearchClient.insertOrUpdate(searchDocument);
+        elasticsearchClient.insertOrUpdate(searchDocument, "1");
 
         searchDocument = new SearchDocument();
         searchDocument.setDocumentId("BOK234567890");
         searchDocument.setTitle("YahooSearch");
         searchDocument.setEntityType(EntityType.BOOKMARK);
         searchDocument.setDescription("Yahoo search engine ");
-        elasticsearchClient.insertOrUpdate(searchDocument);
+        elasticsearchClient.insertOrUpdate(searchDocument, "1");
 
         searchDocument = new SearchDocument();
         searchDocument.setDocumentId("TOD234567890");
         searchDocument.setTitle("TodoList");
         searchDocument.setEntityType(EntityType.TODO);
         searchDocument.setDescription("My Todo List contains learning technologies");
-        elasticsearchClient.insertOrUpdate(searchDocument);
+        elasticsearchClient.insertOrUpdate(searchDocument, "1");
 
         searchDocument = new SearchDocument();
         searchDocument.setDocumentId("TOD134567890");
         searchDocument.setTitle("SecondtodoList");
         searchDocument.setEntityType(EntityType.TODO);
         searchDocument.setDescription("Core Java is in backlog");
-        elasticsearchClient.insertOrUpdate(searchDocument);
+        elasticsearchClient.insertOrUpdate(searchDocument, "1");
 
         searchDocument = new SearchDocument();
         searchDocument.setDocumentId("NOT234567890");
         searchDocument.setTitle("Java");
         searchDocument.setEntityType(EntityType.NOTE);
         searchDocument.setDescription("Java Virtual Machine. Java is a programming Language");
-        elasticsearchClient.insertOrUpdate(searchDocument);
+        elasticsearchClient.insertOrUpdate(searchDocument, "1");
 
         searchDocument = new SearchDocument();
         searchDocument.setDocumentId("NOT234567891");
         searchDocument.setTitle("Python");
         searchDocument.setEntityType(EntityType.NOTE);
         searchDocument.setDescription("Python is an interpreted language");
-        elasticsearchClient.insertOrUpdate(searchDocument);
+        elasticsearchClient.insertOrUpdate(searchDocument, "1");
 
 
         searchDocument = new SearchDocument();
@@ -259,14 +259,14 @@ public class ElasticSearchClientTest {
         searchDocument.setTitle("Sample pin");
         searchDocument.setEntityType(EntityType.PIN);
         searchDocument.setDescription("Pin for testing users");
-        elasticsearchClient.insertOrUpdate(searchDocument);
+        elasticsearchClient.insertOrUpdate(searchDocument, "1");
 
         searchDocument = new SearchDocument();
         searchDocument.setDocumentId("EXP123456789");
         searchDocument.setTitle("sample expense");
         searchDocument.setDescription("marriage bought ##python");
         searchDocument.setEntityType(EntityType.EXPENSE);
-        elasticsearchClient.insertOrUpdate(searchDocument);
+        elasticsearchClient.insertOrUpdate(searchDocument, "1");
 
         String description = "<html><body><li>sudan</li><li>personal diary</li></body></html>";
         searchDocument = new SearchDocument();
@@ -275,7 +275,7 @@ public class ElasticSearchClientTest {
         DOMParser domParser = new DOMParser();
         searchDocument.setDescription(domParser.removeHtmlTags(description));
         searchDocument.setEntityType(EntityType.DIARY);
-        elasticsearchClient.insertOrUpdate(searchDocument);
+        elasticsearchClient.insertOrUpdate(searchDocument, "1");
 
         description = "<html><body><li>sudan</li><li>cleopatra diary</li></body></html>";
         searchDocument = new SearchDocument();
@@ -284,7 +284,7 @@ public class ElasticSearchClientTest {
         domParser = new DOMParser();
         searchDocument.setDescription(domParser.removeHtmlTags(description));
         searchDocument.setEntityType(EntityType.DIARY);
-        elasticsearchClient.insertOrUpdate(searchDocument);
+        elasticsearchClient.insertOrUpdate(searchDocument, "1");
 
         String tags = "bookmark microsoft product";
         elasticsearchClient.addTags("BOK123456789", tags);
