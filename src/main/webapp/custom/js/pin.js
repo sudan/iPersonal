@@ -63,7 +63,14 @@
             var self = this;
             e.preventDefault();
 
-            self.model = new Pin();
+            var entityId = self.saveForm.find('.entityId').html();
+
+            if (entityId) {
+                self.model = new Pin({ id : entityId, pinId : entityId });
+            } else {
+                self.model = new Pin();
+            }
+
             self.model.set({
                 name: self.saveForm.find('[name=name]').val(),
                 imageUrl: self.saveForm.find('[name=imageUrl]').val(),
@@ -81,19 +88,29 @@
 
             if (result) {
                 result.complete(function(response){
-                    if (response.status != 201) {
+                    if (response.status != 201 && response.status != 200) {
                         var errors = self.buildErrorObject(response, self);
                         self.renderErrors(errors);
                     } else {
-                        var id = response.responseText;
                         var tags = self.searchTag.val();
-                        self.postCreation(id, "PIN", self.model.get('name'), 1, tags)
-                        self.model.set({
-                            id: id,
-                            'createdOn': Math.floor(Date.now()),
-                            'modifiedAt': Math.floor(Date.now()),
-                            'tags': tags
-                        });
+
+                        if (!entityId) {
+                            self.postCreation(response.responseText, "PIN", self.model.get('name'), 1, tags);
+                            self.model.set({
+                                id: response.responseText,
+                                'createdOn': Math.floor(Date.now()),
+                                'modifiedAt': Math.floor(Date.now()),
+                                'tags': tags
+                            });
+                        } else {
+                            self.postCreation(entityId, "PIN", self.model.get('name'), 0, tags);
+                            self.model.set({
+                                id : entityId,
+                                'modifiedAt': Math.floor(Date.now()),
+                                'tags': tags
+                            });
+                            self.collection.remove(self.collection.at(self.findIndex(entityId)));
+                        }
                         self.collection.unshift(self.model);
                         var entityList = self.buildEntityList();
                         backboneGlobalObj.trigger('entity:displaylist', entityList);
