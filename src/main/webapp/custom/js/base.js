@@ -49,18 +49,8 @@
 
 		resetValues: function(e) {
 
-			if(e) {
-				e.preventDefault();
-			}
+            this.$el.empty();
 
-			for (var i = 0; i < this.model.formAttributes.length; i++) {
-				var key = this.model.formAttributes[i];
-				this.saveForm.find('[name=' + key + ']').removeClass('error-field').val('');
-				this.saveForm.find('.' + key + '-error').html('');
-			}
-			this.searchTag.parent('div.form-group').addClass('invisible');
-			this.searchTag.val('').trigger('chosen:updated');
-			this.tagImage.removeClass('invisible');
 		},
 
 		renderErrors: function(error) {
