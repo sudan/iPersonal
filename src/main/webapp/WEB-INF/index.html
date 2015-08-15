@@ -279,7 +279,7 @@
             </div>
         </div>
     </script>
-    <script type="text/template" id="diary-create-template">
+    <script type="text/template" id="diary-upsert-template">
         <div class="panel panel-default entity-form">
             <div class="panel-heading">
                 <h3 class="panel-title">
@@ -290,12 +290,17 @@
             <div class="panel-body">
                 <form method="POST" id="diary-form" action="#">
                     <div class="form-group">
-                        <input class="form-control" name="title" placeholder="Title"/>
+                        <% if (typeof id !== "undefined") { %>
+                            <span class="entityId invisible"><%= id %></span>
+                        <% } else { %>
+                            <span class="entityId invisible"></span>
+                        <% } %>
+                        <input class="form-control" name="title" placeholder="Title" value="<%= title %>"/>
                         <span class="title-error error-msg"></span>
                     </div>
                     <div class="form-group">
                         <input class="form-control datepicker" name="date"
-                               placeholder="Select a date"/>
+                               placeholder="Select a date" value="<%= dateStr %>"/>
                         <span class="date-error error-msg"></span>
                     </div>
                     <div class="form-group">
@@ -365,7 +370,9 @@
                                         class="icon-align-justify"></i></a>
                             </div>
                         </div>
-                        <div id="diary" class="form-control rte" name="content"></div>
+                        <div id="diary" class="form-control rte" name="content">
+                            <%= content %>
+                        </div>
                         <span class="content-error error-msg"></span>
                     </div>
                     <div class="form-group">
@@ -375,11 +382,14 @@
                     <div class="form-group invisible">
                         <select id="diary-tag" multiple="multiple" class="form-control chosen-menu"
                                 data-placeholder="search tags">
+                            <% _.each(tags, function(tag){ %>
+                                <option value="<%= tag %>" selected="selected"><%= tag %></option>
+                            <% }); %>
                         </select>
                     </div>
                     <div class="button-group">
                         <button id="diary-submit" type="submit" class="btn btn-success btn-element">
-                            Create
+                            Submit
                         </button>
                         <button id="diary-cancel" type="submit" class="btn btn-link btn-element">Cancel
                         </button>

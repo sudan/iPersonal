@@ -29,13 +29,24 @@
 
 		el: $('#diary-wrapper'),
         entityType: 'DIARY',
-        createTemplate: $('#diary-create-template').html(),
+        upsertTemplate: $('#diary-upsert-template').html(),
         displayTemplate: $('#diary-display-template').html(),
 
         events : {
-            'click #diary-submit': 'createDiary',
+            'click #diary-submit': 'upsertDiary',
             'click #diary-cancel': 'resetValues',
             'click #diary-tag-img': 'displayTagSelection',
+        },
+
+        getModel: function(id) {
+
+            return new Page({
+                title: '',
+                content: '',
+                dateStr: '',
+                tags: []
+            });
+            
         },
 
         prepareVariables: function() {
@@ -46,13 +57,9 @@
             this.diaryRTE =  $('#diary');
         },
 
-        getModel: function(id) {
-
-            if (id) {
-                return new Page({ id : id});
-            } else {
-                return new Page();
-            }
+        initializeUpdateForm: function() {
+            this.prepareVariables();
+            Init.initDiary();
         },
 
         resetValues: function(e) {
@@ -64,7 +71,7 @@
             this.diaryRTE.empty();
         },
 
-        createDiary: function(e) {
+        upsertDiary: function(e) {
 
             var self = this;
             e.preventDefault();
@@ -158,7 +165,14 @@
                             page.set({
                                 'dateStr' : date,
                                 'id': pages[index]['pageId']
-                            })
+                            });
+
+                            if (page.attributes.tags && !(page.attributes.tags instanceof Array)) {
+                                var tags = [];
+                                tags.push(page.attributes.tags);
+                                page.set({ 'tags': tags });
+                            }
+
                             self.collection.push(page);
                         }
 
@@ -169,7 +183,14 @@
                         page.set({
                             dateStr : date,
                             'id': pages['pageId']
-                        })
+                        });
+
+                        if (page.attributes.tags && !(page.attributes.tags instanceof Array)) {
+                            var tags = [];
+                            tags.push(page.attributes.tags);
+                            page.set({ 'tags': tags });
+                        }
+
                         self.collection.push(page);
                     }
 
