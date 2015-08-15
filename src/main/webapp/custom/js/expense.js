@@ -35,13 +35,26 @@
 
         el: $('#expense-wrapper'),
         entityType: 'EXPENSE',
-        createTemplate: $('#expense-create-template').html(),
+        upsertTemplate: $('#expense-upsert-template').html(),
         displayTemplate: $('#expense-display-template').html(),
 
         events : {
-            'click #exp-submit': 'createExpense',
+            'click #exp-submit': 'upsertExpense',
             'click #exp-cancel': 'resetValues',
             'click #exp-tag-img': 'displayTagSelection',
+        },
+
+        getModel: function(id) {
+            
+            return new Expense({
+                title: '',
+                description: '',
+                amount: '',
+                date: '',
+                tags: [],
+                categories: []
+            });
+            
         },
 
         prepareVariables: function() {
@@ -53,13 +66,9 @@
             this.populateCategories();
         },
 
-        getModel: function(id) {
-
-            if (id) {
-                return new Expense({ id : id});
-            } else {
-                return new Expense();
-            }
+        initializeUpdateForm: function() {
+            this.prepareVariables();
+            Init.initExpense();
         },
 
         resetValues: function(e) {
@@ -75,7 +84,6 @@
 
             var categories = expenseCategoryModel.getExpenseCategories();
             if (categories) {
-                this.categoryDropDown.empty();
                 for (var i = 0; i < categories.length; i++) {
                     this.categoryDropDown.append($('<option></option>').attr('value', categories[i]).text(categories[i]));
                 }
@@ -90,7 +98,7 @@
             });
         },
 
-        createExpense: function(e) {
+        upsertExpense: function(e) {
 
             var self = this;
             e.preventDefault();
@@ -159,11 +167,36 @@
                         for (var index in expenses) {
                             var expense = new Expense(expenses[index]);
                             expense.set({ id : expenses[index]['expenseId']});
+
+                            if (expense.attributes.tags && !(expense.attributes.tags instanceof Array)) {
+                                var tags = [];
+                                tags.push(expense.attributes.tags);
+                                expense.set({ 'tags': tags });
+                            }
+
+                            if (expense.attributes.categories && !(expense.attributes.categories instanceof Array)) {
+                                var categories = [];
+                                categories.push(expense.attributes.categories);
+                                expense.set({ 'categories': categories });
+                            }
+
                             self.collection.push(expense);
                         }
                     } else if (expenses) {
                         var expense = new Expense(expenses);
                         expense.set({ id : expenses['expenseId']});
+
+                        if (expense.attributes.tags && !(expense.attributes.tags instanceof Array)) {
+                            var tags = [];
+                            tags.push(expense.attributes.tags);
+                            expense.set({ 'tags': tags });
+                        }
+
+                        if (expense.attributes.categories && !(expense.attributes.categories instanceof Array)) {
+                            var categories = [];
+                            categories.push(expense.attributes.categories);
+                            expense.set({ 'categories': categories });
+                        }
                         self.collection.push(expense);
                     }
                     var entityList = self.buildEntityList();
