@@ -103,7 +103,14 @@
             var self = this;
             e.preventDefault();
 
-            self.model = new Expense();
+            var entityId = self.saveForm.find('.entityId').html();
+
+            if (entityId) {
+                self.model = new Expense({ id : entityId, expenseId : entityId });
+            } else {
+                self.model = new Expense();    
+            }
+            
             self.model.set({
                 title: self.saveForm.find('[name=title]').val(),
                 description: self.saveForm.find('[name=description]').val(),
@@ -123,19 +130,30 @@
 
             if (result) {
                 result.complete(function(response){
-                    if (response.status != 201) {
+                    if (response.status != 201 && response.status != 200) {
                         var errors = self.buildErrorObject(response, self);
                         self.renderErrors(errors);
                     } else {
-                        var id = response.responseText;
+                        
                         var tags = self.searchTag.val();
-                        self.postCreation(id, "EXPENSE", self.model.get('title'), 1, tags, self.model.get('categories'))
-                        self.model.set({
-                            id : id,
-                            'createdOn': Math.floor(Date.now()),
-                            'modifiedAt': Math.floor(Date.now()),
-                            'tags': tags
-                        });
+
+                        if (!entityId) {
+                            self.postCreation(response.responseText, "EXPENSE", self.model.get('title'), 1, tags, self.model.get('categories'))
+                            self.model.set({
+                                id : response.responseText,
+                                'createdOn': Math.floor(Date.now()),
+                                'modifiedAt': Math.floor(Date.now()),
+                                'tags': tags
+                            });
+                        } else {
+                            self.postCreation(entityId, "EXPENSE", self.model.get('title'), 0, tags, self.model.get('categories'));
+                            self.model.set({
+                                id : entityId,
+                                'modifiedAt': Math.floor(Date.now()),
+                                'tags': tags
+                            });
+                            self.collection.remove(self.collection.at(self.findIndex(entityId)));     
+                        }
                         self.collection.unshift(self.model);
                         var entityList = self.buildEntityList();
                         backboneGlobalObj.trigger('entity:displaylist', entityList);
