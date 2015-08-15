@@ -74,9 +74,9 @@
             <div class="panel-body">
                 <form method="POST" id="bookmark-form" action="#">
                     <% if (typeof id !== "undefined") { %>
-                        <span class="entityId invisible"><%= id %></span>
+                    <span class="entityId invisible"><%= id %></span>
                     <% } else { %>
-                        <span class="entityId invisible"></span>
+                    <span class="entityId invisible"></span>
                     <% } %>
                     <div class="form-group">
                         <input class="form-control" name="name" placeholder="Title" value="<%= name %>"/>
@@ -99,7 +99,7 @@
                         <select id="bookmark-tag" multiple="multiple" class="form-control chosen-menu"
                                 data-placeholder="search tags">
                             <% _.each(tags, function(tag){ %>
-                                <option value="<%= tag %>" selected="selected"><%= tag %></option>
+                            <option value="<%= tag %>" selected="selected"><%= tag %></option>
                             <% }); %>
                         </select>
                     </div>
@@ -125,9 +125,9 @@
             <div class="panel-body">
                 <form method="POST" id="note-form" action="#">
                     <% if (typeof id !== "undefined") { %>
-                        <span class="entityId invisible"><%= id %></span>
+                    <span class="entityId invisible"><%= id %></span>
                     <% } else { %>
-                        <span class="entityId invisible"></span>
+                    <span class="entityId invisible"></span>
                     <% } %>
                     <div class="form-group">
                         <input class="form-control" name="title" placeholder="Title" value="<%= title %>"/>
@@ -213,7 +213,7 @@
                         <select id="note-tag" multiple="multiple" class="form-control chosen-menu"
                                 data-placeholder="search tags">
                             <% _.each(tags, function(tag){ %>
-                                <option value="<%= tag %>" selected="selected"><%= tag %></option>
+                            <option value="<%= tag %>" selected="selected"><%= tag %></option>
                             <% }); %>
                         </select>
                     </div>
@@ -239,9 +239,9 @@
             <div class="panel-body">
                 <form method="POST" id="pin-form" action="#">
                     <% if (typeof id !== "undefined") { %>
-                        <span class="entityId invisible"><%= id %></span>
+                    <span class="entityId invisible"><%= id %></span>
                     <% } else { %>
-                        <span class="entityId invisible"></span>
+                    <span class="entityId invisible"></span>
                     <% } %>
                     <div class="form-group">
                         <input class="form-control" name="name" placeholder="Title" value="<%= name %>"/>
@@ -264,7 +264,7 @@
                         <select id="pin-tag" multiple="multiple" class="form-control chosen-menu"
                                 data-placeholder="search tags">
                             <% _.each(tags, function(tag){ %>
-                                <option value="<%= tag %>" selected="selected"><%= tag %></option>
+                            <option value="<%= tag %>" selected="selected"><%= tag %></option>
                             <% }); %>
                         </select>
                     </div>
@@ -291,9 +291,9 @@
                 <form method="POST" id="diary-form" action="#">
                     <div class="form-group">
                         <% if (typeof id !== "undefined") { %>
-                            <span class="entityId invisible"><%= id %></span>
+                        <span class="entityId invisible"><%= id %></span>
                         <% } else { %>
-                            <span class="entityId invisible"></span>
+                        <span class="entityId invisible"></span>
                         <% } %>
                         <input class="form-control" name="title" placeholder="Title" value="<%= title %>"/>
                         <span class="title-error error-msg"></span>
@@ -383,7 +383,7 @@
                         <select id="diary-tag" multiple="multiple" class="form-control chosen-menu"
                                 data-placeholder="search tags">
                             <% _.each(tags, function(tag){ %>
-                                <option value="<%= tag %>" selected="selected"><%= tag %></option>
+                            <option value="<%= tag %>" selected="selected"><%= tag %></option>
                             <% }); %>
                         </select>
                     </div>
@@ -409,9 +409,9 @@
             <div class="panel-body">
                 <form method="POST" id="expense-form" action="#">
                     <% if (typeof id !== "undefined") { %>
-                        <span class="entityId invisible"><%= id %></span>
+                    <span class="entityId invisible"><%= id %></span>
                     <% } else { %>
-                        <span class="entityId invisible"></span>
+                    <span class="entityId invisible"></span>
                     <% } %>
                     <div class="form-group">
                         <input class="form-control" name="title" placeholder="Title" value="<%= title %>"/>
@@ -428,10 +428,11 @@
                     </div>
                     <div class="form-group">
                         <% if (date) { %>
-                            <input class="form-control datepicker" name="date" value="<%= moment.utc(date, 'X').format('YYYY-MM-DD') %>"
+                        <input class="form-control datepicker" name="date"
+                               value="<%= moment.utc(date, 'X').format('YYYY-MM-DD') %>"
                                placeholder="Select a date"/>
                         <% } else { %>
-                                <input class="form-control datepicker" name="date" placeholder="Select a date"/>
+                        <input class="form-control datepicker" name="date" placeholder="Select a date"/>
                         <% } %>
                         <span class="date-error error-msg"></span>
                     </div>
@@ -440,7 +441,7 @@
                                 class="form-control chosen-menu"
                                 data-placeholder="search categories">
                             <% _.each(categories, function(category){ %>
-                                <option value="<%= category %>" selected="selected"><%= category %></option>
+                            <option value="<%= category %>" selected="selected"><%= category %></option>
                             <% }); %>
                         </select>
                     </div>
@@ -452,7 +453,7 @@
                         <select id="expense-tag" multiple="multiple" class="form-control chosen-menu"
                                 data-placeholder="search tags">
                             <% _.each(tags, function(tag){ %>
-                                <option value="<%= tag %>" selected="selected"><%= tag %></option>
+                            <option value="<%= tag %>" selected="selected"><%= tag %></option>
                             <% }); %>
                         </select>
                     </div>
@@ -468,55 +469,59 @@
         </div>
     </script>
     <script type="text/template" id="entity-list-template">
-      <div class="panel panel-default">
-         <div class="panel-heading">
-            Menu
-         </div>
-         <div class="panel-body entity-menu-list">
-            <ul class="chat">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Menu
+            </div>
+            <div class="panel-body entity-menu-list">
+                <ul class="chat">
 
-                <% if (_.isEmpty(entities)) { %>
+                    <% if (_.isEmpty(entities)) { %>
                     <span><i>No data</i></span>
-                <% } %>
-                <% _.each(entities, function(entity){ %>
-                    <li class="left clearfix clickable" data-id = '<%= entity.entityId %>' data-entity = '<%=  entity.entityType %>'>
+                    <% } %>
+                    <% _.each(entities, function(entity){ %>
+                    <li class="left clearfix clickable" data-id='<%= entity.entityId %>'
+                        data-entity='<%=  entity.entityType %>'>
                         <span class="chat-img pull-left">
-                            <img src="custom/images/<%= entity.entityType %>.png" alt="User Avatar" class="img-circle" />
+                            <img src="custom/images/<%= entity.entityType %>.png" alt="User Avatar" class="img-circle"/>
                         </span>
+
                         <div class="chat-body clearfix">
                             <div class="header">
                                 <strong class="primary-font">
                                     <%= entity.entityTitle %>
                                     <% if (entity.entityType == 'pin'){ %>
-                                        <img src="<%= entity.url %>" height="20" width="20"/>
+                                    <img src="<%= entity.url %>" height="20" width="20"/>
                                     <% } %>
                                 </strong>
                                 <% if (entity.entityType == 'expense'){ %>
-                                    <span>- Rs <%= entity.amount %></span>
+                                <span>- Rs <%= entity.amount %></span>
                                 <% } %>
 
                                 <% if (entity.entityType == 'diary'){ %>
-                                    <span>- <%= entity.dateStr %></span>
+                                <span>- <%= entity.dateStr %></span>
                                 <% } %>
 
                                 <small class="pull-right text-muted">
-                                    <i class="fa fa-clock-o fa-fw"></i> <%= moment.unix(entity.modifiedAt/1000).fromNow() %>
+                                    <i class="fa fa-clock-o fa-fw"></i> <%=
+                                    moment.unix(entity.modifiedAt/1000).fromNow() %>
                                 </small>
                             </div>
                             <p>
-                                <div>
-                                    <% if (entity.entityType == 'bookmark'){ %>
-                                        <a href = "<%= entity.url %>" target="_blank">Link</a>
-                                    <%  } %>
-                                </div>
-                                <%= entity.entitySummary %>
+
+                            <div>
+                                <% if (entity.entityType == 'bookmark'){ %>
+                                <a href="<%= entity.url %>" target="_blank">Link</a>
+                                <% } %>
+                            </div>
+                            <%= entity.entitySummary %>
                             </p>
                         </div>
                     </li>
-                <% }); %>
-            </ul>
-         </div>
-      </div>
+                    <% }); %>
+                </ul>
+            </div>
+        </div>
     </script>
     <script type="text/template" id="bookmark-display-template">
         <div class="panel panel-default entity-form">
@@ -524,8 +529,10 @@
                 <h3 class="panel-title">
                     <img src="custom/images/<%= entityType %>.png"/>
                     <i><%= entityType.charAt(0).toUpperCase() + entityType.slice(1) %>
-                    <img class="actionable clickable edit" data-id="<%= id %>" src="custom/images/edit.png" title="Edit the bookmark"/>
-                    <img class="actionable clickable delete" data-id="<%= id %>" src="custom/images/delete.png" title="Confirm delete"/>
+                        <img class="actionable clickable edit" data-id="<%= id %>" src="custom/images/edit.png"
+                             title="Edit the bookmark"/>
+                        <img class="actionable clickable delete" data-id="<%= id %>" src="custom/images/delete.png"
+                             title="Confirm delete"/>
                 </h3>
             </div>
             <div class="panel-body">
@@ -539,22 +546,24 @@
                 </div>
                 <div class="timeline-body">
                     <p></p>
+
                     <p><a href="<%= url %>"><%= url %></a></p>
                 </div>
                 <div class="timeline-body">
                     <p></p>
+
                     <p><%= description %></p>
                 </div>
                 <div class="timeline-body">
                     <% if (typeof tags !== 'undefined' && tags.length > 0 ) { %>
-                        Tags: 
-                        <% if (tags instanceof Array) { %>
-                            <% _.each(tags, function(tag) { %>
-                                <span class="tag"><%= tag %></span>
-                            <% }); %>
-                        <% } else { %>
-                            <span class="tag"><%= tags %></span>
-                        <% } %>
+                    Tags:
+                    <% if (tags instanceof Array) { %>
+                    <% _.each(tags, function(tag) { %>
+                    <span class="tag"><%= tag %></span>
+                    <% }); %>
+                    <% } else { %>
+                    <span class="tag"><%= tags %></span>
+                    <% } %>
                     <% } %>
                 </div>
             </div>
@@ -565,8 +574,10 @@
                 <h3 class="panel-title">
                     <img src="custom/images/<%= entityType %>.png"/>
                     <i><%= entityType.charAt(0).toUpperCase() + entityType.slice(1) %>
-                    <img class="actionable clickable edit" data-id="<%= id %>" src="custom/images/edit.png" title="Edit the note"/>
-                    <img class="actionable clickable delete" data-id="<%= id %>" src="custom/images/delete.png" title="Confirm delete"/>
+                        <img class="actionable clickable edit" data-id="<%= id %>" src="custom/images/edit.png"
+                             title="Edit the note"/>
+                        <img class="actionable clickable delete" data-id="<%= id %>" src="custom/images/delete.png"
+                             title="Confirm delete"/>
                 </h3>
             </div>
             <div class="panel-body">
@@ -580,18 +591,19 @@
                 </div>
                 <div class="timeline-body">
                     <p></p>
+
                     <p><%= note %></p>
                 </div>
                 <div class="timeline-body">
                     <% if (typeof tags !== 'undefined' && tags.length > 0 ) { %>
-                        Tags: 
-                        <% if (tags instanceof Array) { %>
-                            <% _.each(tags, function(tag) { %>
-                                <span class="tag"><%= tag %></span>
-                            <% }); %>
-                        <% } else { %>
-                            <span class="tag"><%= tags %></span>
-                        <% } %>
+                    Tags:
+                    <% if (tags instanceof Array) { %>
+                    <% _.each(tags, function(tag) { %>
+                    <span class="tag"><%= tag %></span>
+                    <% }); %>
+                    <% } else { %>
+                    <span class="tag"><%= tags %></span>
+                    <% } %>
                     <% } %>
                 </div>
             </div>
@@ -602,8 +614,10 @@
                 <h3 class="panel-title">
                     <img src="custom/images/<%= entityType %>.png"/>
                     <i><%= entityType.charAt(0).toUpperCase() + entityType.slice(1) %>
-                    <img class="actionable clickable edit" data-id="<%= id %>" src="custom/images/edit.png" title="Edit the Pin"/>
-                    <img class="actionable clickable delete" data-id="<%= id %>" src="custom/images/delete.png" title="Confirm delete"/>
+                        <img class="actionable clickable edit" data-id="<%= id %>" src="custom/images/edit.png"
+                             title="Edit the Pin"/>
+                        <img class="actionable clickable delete" data-id="<%= id %>" src="custom/images/delete.png"
+                             title="Confirm delete"/>
                 </h3>
             </div>
             <div class="panel-body">
@@ -617,22 +631,24 @@
                 </div>
                 <div class="timeline-body">
                     <p></p>
+
                     <p><img class="medium" src="<%= imageUrl %>"/></p>
                 </div>
                 <div class="timeline-body">
                     <p></p>
+
                     <p><%= description %></p>
-                </div>                
+                </div>
                 <div class="timeline-body">
                     <% if (typeof tags !== 'undefined' && tags.length > 0 ) { %>
-                        Tags: 
-                        <% if (tags instanceof Array) { %>
-                            <% _.each(tags, function(tag) { %>
-                                <span class="tag"><%= tag %></span>
-                            <% }); %>
-                        <% } else { %>
-                            <span class="tag"><%= tags %></span>
-                        <% } %>
+                    Tags:
+                    <% if (tags instanceof Array) { %>
+                    <% _.each(tags, function(tag) { %>
+                    <span class="tag"><%= tag %></span>
+                    <% }); %>
+                    <% } else { %>
+                    <span class="tag"><%= tags %></span>
+                    <% } %>
                     <% } %>
                 </div>
             </div>
@@ -643,8 +659,10 @@
                 <h3 class="panel-title">
                     <img src="custom/images/<%= entityType %>.png"/>
                     <i><%= entityType.charAt(0).toUpperCase() + entityType.slice(1) %>
-                    <img class="actionable clickable edit" data-id="<%= id %>" src="custom/images/edit.png" title="Edit the Page in diary"/>
-                    <img class="actionable clickable delete" data-id="<%= id %>" data-year="<%= year %>" src="custom/images/delete.png" title="Confirm delete"/>
+                        <img class="actionable clickable edit" data-id="<%= id %>" src="custom/images/edit.png"
+                             title="Edit the Page in diary"/>
+                        <img class="actionable clickable delete" data-id="<%= id %>" data-year="<%= year %>"
+                             src="custom/images/delete.png" title="Confirm delete"/>
                 </h3>
             </div>
             <div class="panel-body">
@@ -661,18 +679,19 @@
                 </div>
                 <div class="timeline-body">
                     <p></p>
+
                     <p><%= content %></p>
                 </div>
                 <div class="timeline-body">
                     <% if (typeof tags !== 'undefined' && tags.length > 0 ) { %>
-                        Tags: 
-                        <% if (tags instanceof Array) { %>
-                            <% _.each(tags, function(tag) { %>
-                                <span class="tag"><%= tag %></span>
-                            <% }); %>
-                        <% } else { %>
-                            <span class="tag"><%= tags %></span>
-                        <% } %>
+                    Tags:
+                    <% if (tags instanceof Array) { %>
+                    <% _.each(tags, function(tag) { %>
+                    <span class="tag"><%= tag %></span>
+                    <% }); %>
+                    <% } else { %>
+                    <span class="tag"><%= tags %></span>
+                    <% } %>
                     <% } %>
                 </div>
             </div>
@@ -684,8 +703,10 @@
                 <h3 class="panel-title">
                     <img src="custom/images/<%= entityType %>.png"/>
                     <i><%= entityType.charAt(0).toUpperCase() + entityType.slice(1) %>
-                    <img class="actionable clickable edit" data-id="<%= id %>" src="custom/images/edit.png" title="Edit the Expense"/>
-                    <img class="actionable clickable delete" data-id="<%= id %>" src="custom/images/delete.png" title="Confirm delete"/>
+                        <img class="actionable clickable edit" data-id="<%= id %>" src="custom/images/edit.png"
+                             title="Edit the Expense"/>
+                        <img class="actionable clickable delete" data-id="<%= id %>" src="custom/images/delete.png"
+                             title="Confirm delete"/>
                 </h3>
             </div>
             <div class="panel-body">
@@ -699,34 +720,36 @@
                 </div>
                 <div class="timeline-body">
                     <p></p>
+
                     <p>Spent Rs <%= amount %> on <%= moment.utc(date, 'X').format('YYYY-MM-DD') %></p>
                 </div>
                 <div class="timeline-body">
                     <p></p>
+
                     <p><%= description %></p>
                 </div>
                 <div class="timeline-body">
                     <% if (typeof categories !== 'undefined' && categories.length > 0 ) { %>
-                        Categories: 
-                        <% if (categories instanceof Array) { %>
-                            <% _.each(categories, function(category) { %>
-                                <span class="tag"><%= category %></span>
-                            <% }); %>
-                        <% } else { %>
-                            <span class="tag"><%= categories %></span>
-                        <% } %>
+                    Categories:
+                    <% if (categories instanceof Array) { %>
+                    <% _.each(categories, function(category) { %>
+                    <span class="tag"><%= category %></span>
+                    <% }); %>
+                    <% } else { %>
+                    <span class="tag"><%= categories %></span>
+                    <% } %>
                     <% } %>
                 </div>
                 <div class="timeline-body">
                     <% if (typeof tags !== 'undefined' && tags.length > 0 ) { %>
-                        Tags: 
-                        <% if (tags instanceof Array) { %>
-                            <% _.each(tags, function(tag) { %>
-                                <span class="tag"><%= tag %></span>
-                            <% }); %>
-                        <% } else { %>
-                            <span class="tag"><%= tags %></span>
-                        <% } %>
+                    Tags:
+                    <% if (tags instanceof Array) { %>
+                    <% _.each(tags, function(tag) { %>
+                    <span class="tag"><%= tag %></span>
+                    <% }); %>
+                    <% } else { %>
+                    <span class="tag"><%= tags %></span>
+                    <% } %>
                     <% } %>
                 </div>
             </div>
@@ -767,7 +790,7 @@
         <div class="row">
 
             <div class="col-lg-4">
-               <div id="list-wrapper"></div>
+                <div id="list-wrapper"></div>
             </div>
             <div class="col-lg-7">
                 <div id="entity-wrapper" class="root-wrapper">

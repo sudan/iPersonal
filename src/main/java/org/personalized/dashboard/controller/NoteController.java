@@ -90,9 +90,9 @@ public class NoteController {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("{noteId}")
-    public Response updateNote(@Context HttpHeaders httpHeaders, 
-                              @PathParam("noteId") String noteId,
-                              Note note) {
+    public Response updateNote(@Context HttpHeaders httpHeaders,
+                               @PathParam("noteId") String noteId,
+                               Note note) {
 
         try {
             List<ErrorEntity> errorEntities = noteValidationService.validate(note);

@@ -92,7 +92,7 @@ public class BookmarkController {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("{bookmarkId}")
-    public Response updateBookmark(@Context HttpHeaders httpHeaders, 
+    public Response updateBookmark(@Context HttpHeaders httpHeaders,
                                    @PathParam("bookmarkId") String bookmarkId,
                                    Bookmark bookmark) {
 
