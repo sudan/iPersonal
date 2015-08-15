@@ -114,7 +114,7 @@
             </div>
         </div>
     </script>
-    <script type="text/template" id="note-create-template">
+    <script type="text/template" id="note-upsert-template">
         <div class="panel panel-default entity-form">
             <div class="panel-heading">
                 <h3 class="panel-title">
@@ -124,8 +124,13 @@
             </div>
             <div class="panel-body">
                 <form method="POST" id="note-form" action="#">
+                    <% if (typeof id !== "undefined") { %>
+                        <span class="entityId invisible"><%= id %></span>
+                    <% } else { %>
+                        <span class="entityId invisible"></span>
+                    <% } %>
                     <div class="form-group">
-                        <input class="form-control" name="title" placeholder="Title"/>
+                        <input class="form-control" name="title" placeholder="Title" value="<%= title %>"/>
                         <span class="title-error error-msg"></span>
                     </div>
                     <div class="form-group">
@@ -196,6 +201,7 @@
                             </div>
                         </div>
                         <div id="note" class="form-control rte" name="note">
+                            <%= note %>
                         </div>
                         <span class="note-error error-msg"></span>
                     </div>
@@ -206,11 +212,14 @@
                     <div class="form-group invisible">
                         <select id="note-tag" multiple="multiple" class="form-control chosen-menu"
                                 data-placeholder="search tags">
+                            <% _.each(tags, function(tag){ %>
+                                <option value="<%= tag %>" selected="selected"><%= tag %></option>
+                            <% }); %>
                         </select>
                     </div>
                     <div class="button-group">
                         <button id="note-submit" type="submit" class="btn btn-success btn-element">
-                            Create
+                            Submit
                         </button>
                         <button id="note-cancel" type="submit" class="btn btn-link btn-element">Cancel
                         </button>

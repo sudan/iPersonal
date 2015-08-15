@@ -27,13 +27,22 @@
 
         el: $('#note-wrapper'),
         entityType: 'NOTE',
-        createTemplate: $('#note-create-template').html(),
+        upsertTemplate: $('#note-upsert-template').html(),
         displayTemplate: $('#note-display-template').html(),
 
         events : {
-            'click #note-submit': 'createNote',
+            'click #note-submit': 'upsertNote',
             'click #note-cancel': 'resetValues',
             'click #note-tag-img': 'displayTagSelection',
+        },
+
+        getModel: function(id) {
+
+            return new Note({
+                title: '',
+                note: '',
+                tags: []
+            });
         },
 
         prepareVariables: function() {
@@ -44,13 +53,9 @@
             this.noteRTE =  $('#note');
         },
 
-        getModel: function(id) {
-
-            if (id) {
-                return new Note({ id : id});
-            } else {
-                return new Note();
-            }
+        initializeUpdateForm: function() {
+            this.prepareVariables();
+            Init.initNote();
         },
 
         resetValues: function(e) {
@@ -62,7 +67,7 @@
             this.noteRTE.empty();
         },
 
-        createNote: function(e) {
+        upsertNote: function(e) {
 
             var self = this;
             e.preventDefault();
@@ -128,12 +133,22 @@
                     if (notes instanceof Array) {
                         for (var index in notes) {
                             var note = new Note(notes[index]);
-                            note.set({ id : notes[index]['noteId']})
+                            note.set({ id : notes[index]['noteId']});
+                            if (note.attributes.tags && !(note.attributes.tags instanceof Array)) {
+                                var tags = [];
+                                tags.push(note.attributes.tags);
+                                note.set({ tags : tags});
+                            }
                             self.collection.push(note);
                         }
                     } else if (notes) {
                         var note = new Note(notes);
                         note.set({ id : notes['noteId']});
+                        if (note.attributes.tags && !(note.attributes.tags instanceof Array)) {
+                            var tags = [];
+                            tags.push(note.attributes.tags);
+                            note.set({ tags : tags});
+                        }
                         self.collection.push(note);
                     }
                     var entityList = self.buildEntityList();
