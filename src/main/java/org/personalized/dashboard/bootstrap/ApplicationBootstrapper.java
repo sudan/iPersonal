@@ -8,10 +8,7 @@ import com.sun.jersey.api.core.PackagesResourceConfig;
 import com.sun.jersey.api.core.ResourceConfig;
 import com.sun.jersey.guice.spi.container.servlet.GuiceContainer;
 import org.bson.Document;
-import org.personalized.dashboard.auth.DashboardServlet;
-import org.personalized.dashboard.auth.GoogleLoginCallbackServlet;
-import org.personalized.dashboard.auth.GoogleLoginServlet;
-import org.personalized.dashboard.auth.LogoutServlet;
+import org.personalized.dashboard.auth.*;
 import org.personalized.dashboard.utils.stopwords.StopwordsRemover;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,9 +42,11 @@ public class ApplicationBootstrapper extends GuiceServletContextListener {
             @Override
             protected void configureServlets() {
                 super.configureServlets();
-                serve("/login").with(GoogleLoginServlet.class);
+                serve("/login").with(LoginServlet.class);
+                serve("/google-login").with(GoogleLoginServlet.class);
                 serve("/google-redirect").with(GoogleLoginCallbackServlet.class);
                 serve("/dashboard").with(DashboardServlet.class);
+                serve("/").with(DashboardServlet.class);
                 serve("/logout").with(LogoutServlet.class);
 
                 ResourceConfig resourceConfig = new PackagesResourceConfig("org.personalized" +

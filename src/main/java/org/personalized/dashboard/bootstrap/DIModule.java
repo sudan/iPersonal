@@ -94,6 +94,7 @@ public class DIModule extends AbstractModule {
         bind(GoogleLoginCallbackServlet.class).in(Singleton.class);
         bind(DashboardServlet.class).in(Singleton.class);
         bind(LogoutServlet.class).in(Singleton.class);
+        bind(LoginServlet.class).in(Singleton.class);
 
         bind(UserCookieGenerator.class);
         bind(RequestInterceptor.class);

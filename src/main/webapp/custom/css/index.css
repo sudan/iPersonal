@@ -1,3 +1,7 @@
+body {
+	background-color: #f8f8f8;
+}
+
 .root-wrapper {
 	margin-top: 20px;
 }
@@ -87,4 +91,14 @@ span.tag {
 	width: 100px;
 	height: 30px;
 	padding: 3px;
+}
+
+img.google-plus {
+	width: 200px;
+	height: 35px;
+}
+
+.center {
+	width: 50%;
+    margin: 0 auto;
 }
