@@ -33,7 +33,7 @@ public class PageESIndexProducer implements ESIndexProducer<Page> {
         payload.put(FieldKeys.ES_OP_TYPE, operationType.name());
         if (operationType != OperationType.DELETE) {
             payload.put(FieldKeys.ES_TITLE, obj.getTitle());
-            payload.put(FieldKeys.ES_DESCRIPTION, obj.getSummary());
+            payload.put(FieldKeys.ES_DESCRIPTION, obj.getContent());
         }
         String text = gson.toJson(payload);
         MessageProducer producer = QueueBootstrap.getInstance().getMessageProducer();
