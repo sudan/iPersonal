@@ -27,13 +27,15 @@ public class TagESIndexProducer implements ESIndexProducer<Tag> {
     private final Logger LOGGER = LoggerFactory.getLogger(TagESIndexProducer.class);
 
     @Override
-    public void enqueue(Tag obj, EntityType entityType, OperationType operationType, String entityId) {
+    public void enqueue(Tag obj, EntityType entityType, OperationType operationType, String entityId,
+                        String userId) {
 
         Gson gson = new GsonBuilder().create();
         Map<String, String> payload = Maps.newHashMap();
         payload.put(FieldKeys.ES_ID, entityId);
         payload.put(FieldKeys.ES_ENTITY_TYPE, entityType.name());
         payload.put(FieldKeys.ES_OP_TYPE, operationType.name());
+        payload.put(FieldKeys.USER_ID, userId);
 
         if (!CollectionUtils.isEmpty(obj.getTags())) {
             StringBuilder tagString = new StringBuilder();

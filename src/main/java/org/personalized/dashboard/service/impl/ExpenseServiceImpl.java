@@ -41,7 +41,8 @@ public class ExpenseServiceImpl implements ExpenseService {
         Activity activity = activityGenerator.generate(ActivityType.CREATED, EntityType.EXPENSE,
                 expenseId, expense.getTitle());
         activityDao.add(activity, sessionManager.getUserIdFromSession());
-        esIndexProducer.enqueue(expense, EntityType.EXPENSE, OperationType.CREATE, expenseId);
+        esIndexProducer.enqueue(expense, EntityType.EXPENSE, OperationType.CREATE, expenseId,
+                sessionManager.getUserIdFromSession());
         return expenseId;
     }
 
@@ -57,7 +58,8 @@ public class ExpenseServiceImpl implements ExpenseService {
             Activity activity = activityGenerator.generate(ActivityType.UPDATED, EntityType.EXPENSE,
                     expense.getExpenseId(), expense.getTitle());
             activityDao.add(activity, sessionManager.getUserIdFromSession());
-            esIndexProducer.enqueue(expense, EntityType.EXPENSE, OperationType.UPDATE, expense.getExpenseId());
+            esIndexProducer.enqueue(expense, EntityType.EXPENSE, OperationType.UPDATE, expense.getExpenseId(),
+                    sessionManager.getUserIdFromSession());
         }
         return modifiedCount;
     }
@@ -69,7 +71,8 @@ public class ExpenseServiceImpl implements ExpenseService {
             Activity activity = activityGenerator.generate(ActivityType.DELETED, EntityType.EXPENSE,
                     expenseId, StringUtils.EMPTY);
             activityDao.add(activity, sessionManager.getUserIdFromSession());
-            esIndexProducer.enqueue(null, EntityType.EXPENSE, OperationType.DELETE, expenseId);
+            esIndexProducer.enqueue(null, EntityType.EXPENSE, OperationType.DELETE, expenseId,
+                    sessionManager.getUserIdFromSession());
         }
     }
 

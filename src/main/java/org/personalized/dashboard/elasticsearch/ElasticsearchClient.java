@@ -38,7 +38,7 @@ public class ElasticsearchClient {
         this.sessionManager = sessionManager;
     }
 
-    public IndexResponse insertOrUpdate(SearchDocument searchDocument) {
+    public IndexResponse insertOrUpdate(SearchDocument searchDocument, String userId) {
         searchDocument.setCreatedAt(System.currentTimeMillis());
         IndexRequest indexRequest = new IndexRequest(
                 ConfigKeys.ES_INDEX, ConfigKeys.ES_TYPE, searchDocument.getDocumentId()
@@ -52,7 +52,7 @@ public class ElasticsearchClient {
         }
         payload.put(FieldKeys.ES_TIMESTAMP, String.valueOf(searchDocument.getCreatedAt()));
         payload.put(FieldKeys.ES_ENTITY_TYPE, searchDocument.getEntityType().name());
-        payload.put(FieldKeys.USER_ID, sessionManager.getUserIdFromSession());
+        payload.put(FieldKeys.USER_ID, userId);
 
         indexRequest.source(new Gson().toJson(payload));
         return ESBootstrap.getClient().index(indexRequest).actionGet();
@@ -64,7 +64,7 @@ public class ElasticsearchClient {
                 ConfigKeys.ES_TYPE, documentId).execute().actionGet();
     }
 
-    public List<SearchDocument> search(SearchContext searchContext) {
+    public List<SearchDocument> search(SearchContext searchContext, String userId) {
 
         List<SearchDocument> searchDocuments = Lists.newArrayList();
         ESQueryBuilder esQueryBuilder = new ESQueryBuilder();
@@ -72,7 +72,7 @@ public class ElasticsearchClient {
         SearchResponse searchResponse = ESBootstrap.getClient()
                 .prepareSearch(ConfigKeys.ES_INDEX)
                 .setTypes(ConfigKeys.ES_TYPE)
-                .setQuery(esQueryBuilder.getQueryBuilder(searchContext, sessionManager.getUserIdFromSession()))
+                .setQuery(esQueryBuilder.getQueryBuilder(searchContext, userId))
                 .setFrom(Constants.ES_OFFSET)
                 .setSize(Constants.ES_LIMIT)
                 .addSort(SortBuilders.fieldSort(FieldKeys.ES_TIMESTAMP).order(SortOrder.DESC))

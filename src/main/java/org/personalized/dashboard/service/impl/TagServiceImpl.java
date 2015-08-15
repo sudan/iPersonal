@@ -41,7 +41,8 @@ public class TagServiceImpl implements TagService {
             Activity activity = activityGenerator.generate(ActivityType.TAG_ADDED, entity.getEntityType(),
                     entity.getEntityId(), entity.getTitle());
             activityDao.add(activity, sessionManager.getUserIdFromSession());
-            esIndexProducer.enqueue(tag, entity.getEntityType(), OperationType.PATCH, entity.getEntityId());
+            esIndexProducer.enqueue(tag, entity.getEntityType(), OperationType.PATCH, entity.getEntityId(),
+                    sessionManager.getUserIdFromSession());
         }
         return modifiedCount;
     }

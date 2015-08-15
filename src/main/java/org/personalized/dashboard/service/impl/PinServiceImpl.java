@@ -42,7 +42,8 @@ public class PinServiceImpl implements PinService {
         Activity activity = activityGenerator.generate(ActivityType.CREATED, EntityType.PIN,
                 pinId, pin.getName());
         activityDao.add(activity, sessionManager.getUserIdFromSession());
-        esIndexProducer.enqueue(pin, EntityType.PIN, OperationType.CREATE, pinId);
+        esIndexProducer.enqueue(pin, EntityType.PIN, OperationType.CREATE, pinId,
+                sessionManager.getUserIdFromSession());
         return pinId;
     }
 
@@ -58,7 +59,8 @@ public class PinServiceImpl implements PinService {
             Activity activity = activityGenerator.generate(ActivityType.UPDATED, EntityType.PIN,
                     pin.getPinId(), pin.getName());
             activityDao.add(activity, sessionManager.getUserIdFromSession());
-            esIndexProducer.enqueue(pin, EntityType.PIN, OperationType.UPDATE, pin.getPinId());
+            esIndexProducer.enqueue(pin, EntityType.PIN, OperationType.UPDATE, pin.getPinId(),
+                    sessionManager.getUserIdFromSession());
         }
         return modifiedCount;
     }
@@ -70,7 +72,8 @@ public class PinServiceImpl implements PinService {
             Activity activity = activityGenerator.generate(ActivityType.DELETED, EntityType.PIN,
                     pinId, StringUtils.EMPTY);
             activityDao.add(activity, sessionManager.getUserIdFromSession());
-            esIndexProducer.enqueue(null, EntityType.PIN, OperationType.DELETE, pinId);
+            esIndexProducer.enqueue(null, EntityType.PIN, OperationType.DELETE, pinId,
+                    sessionManager.getUserIdFromSession());
         }
     }
 

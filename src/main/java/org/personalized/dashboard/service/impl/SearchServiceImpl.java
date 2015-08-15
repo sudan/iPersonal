@@ -1,6 +1,7 @@
 package org.personalized.dashboard.service.impl;
 
 import com.google.inject.Inject;
+import org.personalized.dashboard.auth.SessionManager;
 import org.personalized.dashboard.elasticsearch.ElasticsearchClient;
 import org.personalized.dashboard.model.SearchContext;
 import org.personalized.dashboard.model.SearchDocument;
@@ -13,15 +14,17 @@ import java.util.List;
  */
 public class SearchServiceImpl implements SearchService {
 
-    private ElasticsearchClient elasticsearchClient;
+    private final ElasticsearchClient elasticsearchClient;
+    private final SessionManager sessionManager;
 
     @Inject
-    public SearchServiceImpl(ElasticsearchClient elasticsearchClient) {
+    public SearchServiceImpl(ElasticsearchClient elasticsearchClient, SessionManager sessionManager) {
         this.elasticsearchClient = elasticsearchClient;
+        this.sessionManager = sessionManager;
     }
 
     @Override
     public List<SearchDocument> searchEntities(SearchContext searchContext) {
-        return elasticsearchClient.search(searchContext);
+        return elasticsearchClient.search(searchContext, sessionManager.getUserIdFromSession());
     }
 }
