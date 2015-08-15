@@ -27,11 +27,11 @@
 
         entityType: 'BOOKMARK',
         el: $('#bookmark-wrapper'),
-        createTemplate: $('#bookmark-create-template').html(),
+        upsertTemplate: $('#bookmark-upsert-template').html(),
         displayTemplate: $('#bookmark-display-template').html(),
 
         events : {
-            'click #book-submit': 'createBookmark',
+            'click #book-submit': 'upsertBookmark',
             'click #book-cancel': 'resetValues',
             'click #book-tag-img': 'displayTagSelection'
         },
@@ -41,6 +41,15 @@
             var self = this;
         },
 
+        getModel: function() {
+            return new Bookmark({
+                name: '',
+                description: '',
+                url: '',
+                tags: []
+            });
+        },
+
         prepareVariables: function() {
             
             this.saveForm =  $('#bookmark-form');
@@ -48,12 +57,23 @@
             this.searchTag = $('#bookmark-tag');
         },
 
-        createBookmark: function(e) {
+        initializeUpdateForm: function() {
+            this.prepareVariables();
+            Init.initBookmark();
+        },
+
+        upsertBookmark: function(e) {
 
             var self = this;
             e.preventDefault();
 
-            self.model = new Bookmark();
+            var entityId = self.saveForm.find('.entityId').html();
+
+            if (entityId) {
+                self.model = new Bookmark({ id : entityId , bookmarkId : entityId });
+            } else {
+                self.model = new Bookmark();
+            }
 
             self.model.set({
                 name: self.saveForm.find('[name=name]').val(),
@@ -72,19 +92,29 @@
 
             if (result) {
                 result.complete(function(response){
-                    if (response.status != 201) {
+                    if (response.status != 201 && response.status != 200) {
                         var errors = self.buildErrorObject(response, self);
                         self.renderErrors(errors);
                     } else {
-                        var id = response.responseText;
                         var tags = self.searchTag.val();
-                        self.postCreation(id, "BOOKMARK", self.model.get('name'), 1, tags)
-                        self.model.set({
-                            id: id,
-                            'createdOn': Math.floor(Date.now()),
-                            'modifiedAt': Math.floor(Date.now()),
-                            'tags': tags 
-                        });
+                        if (!entityId) {
+                            self.postCreation(response.responseText, "BOOKMARK", self.model.get('name'), 1, tags);
+                            self.model.set({
+                                id: response.responseText,
+                                'createdOn': Math.floor(Date.now()),
+                                'modifiedAt': Math.floor(Date.now()),
+                                'tags': tags
+                            });
+                        } else {
+                            self.postCreation(entityId, "BOOKMARK", self.model.get('name'), 0 , tags);
+                            self.model.set({
+                                'id': entityId,
+                                'modifiedAt': Math.floor(Date.now()),
+                                'tags': tags
+                            });
+                            self.collection.remove(self.collection.at(self.findIndex(entityId)));
+                        }
+
                         self.collection.unshift(self.model);
                         var entityList = self.buildEntityList();
                         backboneGlobalObj.trigger('entity:displaylist', entityList);
@@ -113,13 +143,24 @@
                     var bookmarks = JSON.parse(response.responseText)['bookmark'];
                     if (bookmarks instanceof Array) {
                         for (var index in bookmarks) {
-                            var bookmark = new Bookmark(bookmarks[index])
+                            var bookmark = new Bookmark(bookmarks[index]);                            
                             bookmark.set({ id : bookmarks[index]['bookmarkId']});
+
+                            if (bookmark.attributes.tags && !(bookmark.attributes.tags instanceof Array)) {
+                                var tags = [];
+                                tags.push(bookmark.attributes.tags);
+                                bookmark.set({ 'tags': tags });
+                            }
                             self.collection.push(bookmark);
                         }
                     } else if (bookmarks) {
                         var bookmark = new Bookmark(bookmarks);
-                        bookmark.set({ id : bookmarks['bookmarkId']});
+                        bookmark.set({ id : bookmarks['bookmarkId']});                        
+                        if (bookmark.attributes.tags && !(bookmark.attributes.tags instanceof Array)) {
+                            var tags = [];
+                            tags.push(bookmark.attributes.tags);
+                            bookmark.set({ 'tags': tags });
+                        }
                         self.collection.push(bookmark);
                     }
                     var entityList = self.buildEntityList();

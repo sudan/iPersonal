@@ -88,7 +88,10 @@ public class ExpenseController {
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response updateExpense(@Context HttpHeaders httpHeaders, Expense expense) {
+    @Path("{expenseId}")
+    public Response updateExpense(@Context HttpHeaders httpHeaders, 
+                                  @PathParam("expenseId") String expenseId,
+                                  Expense expense) {
 
         try {
             List<ErrorEntity> errorEntities = expenseValidationService.validate(expense);

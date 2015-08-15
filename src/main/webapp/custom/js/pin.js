@@ -27,13 +27,23 @@
 
         el: $('#pin-wrapper'),
         entityType: 'PIN',
-        createTemplate: $('#pin-create-template').html(),
+        upsertTemplate: $('#pin-upsert-template').html(),
         displayTemplate: $('#pin-display-template').html(),
 
         events : {
-            'click #pin-submit': 'createPin',
+            'click #pin-submit': 'upsertPin',
             'click #pin-cancel': 'resetValues',
             'click #pin-tag-img': 'displayTagSelection',
+        },
+
+        getModel: function(id) {
+
+            return new Pin({
+                name: '',
+                description: '',
+                imageUrl: '',
+                tags: []
+            });
         },
 
         prepareVariables: function() {
@@ -43,12 +53,24 @@
 
         },
 
-        createPin: function(e) {
+        initializeUpdateForm: function() {
+            this.prepareVariables();
+            Init.initPin();
+        },
+
+        upsertPin: function(e) {
 
             var self = this;
             e.preventDefault();
 
-            self.model = new Pin();
+            var entityId = self.saveForm.find('.entityId').html();
+
+            if (entityId) {
+                self.model = new Pin({ id : entityId, pinId : entityId });
+            } else {
+                self.model = new Pin();
+            }
+
             self.model.set({
                 name: self.saveForm.find('[name=name]').val(),
                 imageUrl: self.saveForm.find('[name=imageUrl]').val(),
@@ -66,19 +88,29 @@
 
             if (result) {
                 result.complete(function(response){
-                    if (response.status != 201) {
+                    if (response.status != 201 && response.status != 200) {
                         var errors = self.buildErrorObject(response, self);
                         self.renderErrors(errors);
                     } else {
-                        var id = response.responseText;
                         var tags = self.searchTag.val();
-                        self.postCreation(id, "PIN", self.model.get('name'), 1, tags)
-                        self.model.set({
-                            id: id,
-                            'createdOn': Math.floor(Date.now()),
-                            'modifiedAt': Math.floor(Date.now()),
-                            'tags': tags
-                        });
+
+                        if (!entityId) {
+                            self.postCreation(response.responseText, "PIN", self.model.get('name'), 1, tags);
+                            self.model.set({
+                                id: response.responseText,
+                                'createdOn': Math.floor(Date.now()),
+                                'modifiedAt': Math.floor(Date.now()),
+                                'tags': tags
+                            });
+                        } else {
+                            self.postCreation(entityId, "PIN", self.model.get('name'), 0, tags);
+                            self.model.set({
+                                id : entityId,
+                                'modifiedAt': Math.floor(Date.now()),
+                                'tags': tags
+                            });
+                            self.collection.remove(self.collection.at(self.findIndex(entityId)));
+                        }
                         self.collection.unshift(self.model);
                         var entityList = self.buildEntityList();
                         backboneGlobalObj.trigger('entity:displaylist', entityList);
@@ -110,11 +142,22 @@
                         for (var index in pins) {
                             var pin = new Pin(pins[index])
                             pin.set({ id : pins[index]['pinId']});
+                            if (pin.attributes.tags && !(pin.attributes.tags instanceof Array)) {
+                                var tags = [];
+                                tags.push(pin.attributes.tags);
+                                pin.set({ 'tags': tags });
+                            }
+
                             self.collection.push(pin);
                         }
                     } else if (pins) {
                         var pin = new Pin(pins);
                         pin.set({ id : pins['pinId']});
+                        if (pin.attributes.tags && !(pin.attributes.tags instanceof Array)) {
+                            var tags = [];
+                            tags.push(pin.attributes.tags);
+                            pin.set({ 'tags': tags });
+                        }
                         self.collection.push(pin);
                     }
                     var entityList = self.buildEntityList();

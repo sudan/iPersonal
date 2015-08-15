@@ -27,13 +27,22 @@
 
         el: $('#note-wrapper'),
         entityType: 'NOTE',
-        createTemplate: $('#note-create-template').html(),
+        upsertTemplate: $('#note-upsert-template').html(),
         displayTemplate: $('#note-display-template').html(),
 
         events : {
-            'click #note-submit': 'createNote',
+            'click #note-submit': 'upsertNote',
             'click #note-cancel': 'resetValues',
             'click #note-tag-img': 'displayTagSelection',
+        },
+
+        getModel: function(id) {
+
+            return new Note({
+                title: '',
+                note: '',
+                tags: []
+            });
         },
 
         prepareVariables: function() {
@@ -42,6 +51,11 @@
             this.tagImage = $('#note-tag-img');
             this.searchTag =  $('#note-tag');
             this.noteRTE =  $('#note');
+        },
+
+        initializeUpdateForm: function() {
+            this.prepareVariables();
+            Init.initNote();
         },
 
         resetValues: function(e) {
@@ -53,12 +67,18 @@
             this.noteRTE.empty();
         },
 
-        createNote: function(e) {
+        upsertNote: function(e) {
 
             var self = this;
             e.preventDefault();
 
-            self.model = new Note();
+            var entityId = self.saveForm.find('.entityId').html();
+
+            if (entityId) {
+                self.model = new Note({ id : entityId, noteId : entityId });
+            } else {
+                self.model = new Note();
+            }
 
             self.model.set({
                 title: self.saveForm.find('[name=title]').val(),
@@ -76,20 +96,32 @@
 
             if (result) {
                 result.complete(function(response){
-                    if (response.status != 201) {
+                    if (response.status != 201 && response.status != 200) {
                         var errors = self.buildErrorObject(response, self);
                         self.renderErrors(errors);
                     } else {
-                        var id = response.responseText;
                         var tags = self.searchTag.val();
-                        self.postCreation(id, "NOTE", self.model.get('title'), 1, tags)
-                        self.model.set({
-                            id: id,
-                            'createdOn': Math.floor(Date.now()),
-                            'modifiedAt': Math.floor(Date.now()),
-                            'summary': self.model.get('note').replace(/<(?:.|\n)*?>/gm, ''),
-                            'tags': tags
-                        });
+
+                        if (!entityId) {
+                            self.postCreation(response.responseText, "NOTE", self.model.get('title'), 1, tags);    
+                            self.model.set({
+                                id: response.responseText,
+                                'createdOn': Math.floor(Date.now()),
+                                'modifiedAt': Math.floor(Date.now()),
+                                'summary': self.model.get('note').replace(/<(?:.|\n)*?>/gm, '').trim(),
+                                'tags': tags
+                            });
+                        } else {
+                            var summary = self.model.get('note').replace(/<(?:.|\n)*?>/gm, '').trim();
+                            self.postCreation(entityId, "NOTE", self.model.get('title'), 0, tags);
+                            self.model.set({
+                                id: entityId,
+                                'modifiedAt': Math.floor(Date.now()),
+                                'summary': summary,
+                                'tags': tags
+                            });
+                            self.collection.remove(self.collection.at(self.findIndex(entityId)));
+                        }
                         self.collection.unshift(self.model);
                         var entityList = self.buildEntityList();
                         backboneGlobalObj.trigger('entity:displaylist', entityList);
@@ -119,12 +151,22 @@
                     if (notes instanceof Array) {
                         for (var index in notes) {
                             var note = new Note(notes[index]);
-                            note.set({ id : notes[index]['noteId']})
+                            note.set({ id : notes[index]['noteId']});
+                            if (note.attributes.tags && !(note.attributes.tags instanceof Array)) {
+                                var tags = [];
+                                tags.push(note.attributes.tags);
+                                note.set({ tags : tags});
+                            }
                             self.collection.push(note);
                         }
                     } else if (notes) {
                         var note = new Note(notes);
                         note.set({ id : notes['noteId']});
+                        if (note.attributes.tags && !(note.attributes.tags instanceof Array)) {
+                            var tags = [];
+                            tags.push(note.attributes.tags);
+                            note.set({ tags : tags});
+                        }
                         self.collection.push(note);
                     }
                     var entityList = self.buildEntityList();

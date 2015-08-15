@@ -89,7 +89,10 @@ public class PinController {
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response updatePin(@Context HttpHeaders httpHeaders, Pin pin) {
+    @Path("{pinId}")
+    public Response updatePin(@Context HttpHeaders httpHeaders, 
+                              @PathParam("pinId") String pinId,
+                              Pin pin) {
 
         try {
             List<ErrorEntity> errorEntities = pinValidationService.validate(pin);

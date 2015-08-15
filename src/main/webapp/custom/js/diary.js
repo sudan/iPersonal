@@ -29,13 +29,24 @@
 
 		el: $('#diary-wrapper'),
         entityType: 'DIARY',
-        createTemplate: $('#diary-create-template').html(),
+        upsertTemplate: $('#diary-upsert-template').html(),
         displayTemplate: $('#diary-display-template').html(),
 
         events : {
-            'click #diary-submit': 'createDiary',
+            'click #diary-submit': 'upsertDiary',
             'click #diary-cancel': 'resetValues',
             'click #diary-tag-img': 'displayTagSelection',
+        },
+
+        getModel: function(id) {
+
+            return new Page({
+                title: '',
+                content: '',
+                dateStr: '',
+                tags: []
+            });
+            
         },
 
         prepareVariables: function() {
@@ -44,6 +55,11 @@
             this.tagImage = $('#diary-tag-img');
             this.searchTag = $('#diary-tag');
             this.diaryRTE =  $('#diary');
+        },
+
+        initializeUpdateForm: function() {
+            this.prepareVariables();
+            Init.initDiary();
         },
 
         resetValues: function(e) {
@@ -55,7 +71,7 @@
             this.diaryRTE.empty();
         },
 
-        createDiary: function(e) {
+        upsertDiary: function(e) {
 
             var self = this;
             e.preventDefault();
@@ -64,7 +80,14 @@
             var content = self.saveForm.find('div#diary').cleanHtml();
             var title = self.saveForm.find('[name=title]').val();
 
-            self.model = new Page();
+
+            var entityId = self.saveForm.find('.entityId').html();
+            if (entityId) {
+                self.model = new Page({ pageId: entityId});
+            } else {
+                self.model = new Page();
+            }
+
             self.model.set({
                 title: title,
                 content: content,
@@ -88,6 +111,11 @@
                 year: dateArr[0],
                 pages: pages
             });
+
+            if (entityId) {
+                diary.set({ id : entityId});
+                diary.urlRoot =  '/iPersonal/dashboard/diaries/' + dateArr[0];
+            }
         
             var result = diary.save({
                 success: function(response) {},
@@ -96,22 +124,36 @@
 
             if (result) {
                 result.complete(function(response){
-                    if (response.status != 201) {
+                    if (response.status != 201 && response.status != 200) {
                         var errors = self.buildErrorObject(response, self);
                         self.renderErrors(errors);
                     } else {
-                        var id = response.responseText;
                         var tags = self.searchTag.val();
-                        self.postCreation(id, "DIARY", title, 1, tags);
-                        self.model.set({
-                            'id': id,
-                            'year': dateArr[0],
-                            'createdOn': Math.floor(Date.now()),
-                            'modifiedAt': Math.floor(Date.now()),
-                            'summary': content.replace(/<(?:.|\n)*?>/gm, ''),
-                            'dateStr': date,
-                            'tags': tags 
-                        });
+                            
+                        if (!entityId) {
+                            self.postCreation(response.responseText, "DIARY", title, 1, tags);
+                            self.model.set({
+                                'id': response.responseText,
+                                'year': dateArr[0],
+                                'createdOn': Math.floor(Date.now()),
+                                'modifiedAt': Math.floor(Date.now()),
+                                'summary': content.replace(/<(?:.|\n)*?>/gm, '').trim(),
+                                'dateStr': date,
+                                'tags': tags 
+                            });                            
+                        } else {
+                            self.postCreation(entityId, "DIARY", title, 0, tags);
+                            self.model.set({
+                                'id': entityId,
+                                'year': dateArr[0],
+                                'modifiedAt': Math.floor(Date.now()),
+                                'summary': content.replace(/<(?:.|\n)*?>/gm, '').trim(),
+                                'dateStr': date,
+                                'tags': tags 
+                            });
+                            self.collection.remove(self.collection.at(self.findIndex(entityId)));
+                        }
+
                         self.collection.unshift(self.model);
                         var entityList = self.buildEntityList();
                         backboneGlobalObj.trigger('entity:displaylist', entityList);
@@ -149,7 +191,14 @@
                             page.set({
                                 'dateStr' : date,
                                 'id': pages[index]['pageId']
-                            })
+                            });
+
+                            if (page.attributes.tags && !(page.attributes.tags instanceof Array)) {
+                                var tags = [];
+                                tags.push(page.attributes.tags);
+                                page.set({ 'tags': tags });
+                            }
+
                             self.collection.push(page);
                         }
 
@@ -160,7 +209,14 @@
                         page.set({
                             dateStr : date,
                             'id': pages['pageId']
-                        })
+                        });
+
+                        if (page.attributes.tags && !(page.attributes.tags instanceof Array)) {
+                            var tags = [];
+                            tags.push(page.attributes.tags);
+                            page.set({ 'tags': tags });
+                        }
+
                         self.collection.push(page);
                     }
 
