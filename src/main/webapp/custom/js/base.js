@@ -7,8 +7,8 @@
 		defaults: {
 			mandatory: {},
 			maxLength: {},
-                        type: {},
-                        nonModelAttrs: {}
+            type: {},
+            nonModelAttrs: {}
 		},
 
 		validate: function(attributes) {
@@ -110,7 +110,6 @@
 
                 	var tags = tagModel.getTags();
                 	if (tags) {
-                		this.searchTag.empty();
                 		for (var i = 0; i < tags.length; i++) {
                 			this.searchTag.append($('<option></option>').attr('value', tags[i]).text(tags[i]));
                 		}
@@ -142,8 +141,8 @@
                 },
 
                 renderCreateTemplate: function() {
-                        var template = _.template(this.createTemplate);
-                        this.$el.html(template());
+                        var template = _.template(this.upsertTemplate);
+                        this.$el.html(template(this.getModel().toJSON()));
                         this.$el.fadeIn().removeClass('invisible')
                                 .siblings().fadeOut().addClass('invisible');
                 },
@@ -182,7 +181,12 @@
                                 onConfirm: function() {
                                         self.deleteEntity();
                                 }
-                        })     
+                        });
+
+                        var self = this;
+                        $('img.edit').on('click', function(){
+                            self.editEntity();
+                        });  
                 },
 
                 findIndex: function(id) {
@@ -192,6 +196,23 @@
                         }
                     }
                     return i;
+                },
+
+                findModel: function(id) {
+
+                    var index  = this.findIndex(id);
+                    return this.collection.at(index);
+                },
+
+                editEntity: function() {
+
+                    var entityId = $('img.edit').data('id');
+                    var template = _.template(this.upsertTemplate);
+                    this.$el.html(template(this.findModel(entityId).toJSON()));
+                    this.$el.fadeIn().removeClass('invisible')
+                            .siblings().fadeOut().addClass('invisible');
+                    this.initializeUpdateForm();
+                    this.displayTagSelection();
                 },
 
                 deleteEntity: function() {

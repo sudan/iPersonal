@@ -43,6 +43,15 @@
 
         },
 
+        getModel: function(id) {
+
+            if (id) {
+                return new Pin({ id : id});
+            } else {
+                return new Pin();
+            }
+        },
+
         createPin: function(e) {
 
             var self = this;

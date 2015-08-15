@@ -27,11 +27,11 @@
 
         entityType: 'BOOKMARK',
         el: $('#bookmark-wrapper'),
-        createTemplate: $('#bookmark-create-template').html(),
+        upsertTemplate: $('#bookmark-upsert-template').html(),
         displayTemplate: $('#bookmark-display-template').html(),
 
         events : {
-            'click #book-submit': 'createBookmark',
+            'click #book-submit': 'upsertBookmark',
             'click #book-cancel': 'resetValues',
             'click #book-tag-img': 'displayTagSelection'
         },
@@ -41,6 +41,15 @@
             var self = this;
         },
 
+        getModel: function() {
+            return new Bookmark({
+                name: '',
+                description: '',
+                url: '',
+                tags: []
+            });
+        },
+
         prepareVariables: function() {
             
             this.saveForm =  $('#bookmark-form');
@@ -48,7 +57,12 @@
             this.searchTag = $('#bookmark-tag');
         },
 
-        createBookmark: function(e) {
+        initializeUpdateForm: function() {
+            this.prepareVariables();
+            Init.initBookmark();
+        },
+
+        upsertBookmark: function(e) {
 
             var self = this;
             e.preventDefault();
@@ -113,13 +127,24 @@
                     var bookmarks = JSON.parse(response.responseText)['bookmark'];
                     if (bookmarks instanceof Array) {
                         for (var index in bookmarks) {
-                            var bookmark = new Bookmark(bookmarks[index])
+                            var bookmark = new Bookmark(bookmarks[index]);                            
                             bookmark.set({ id : bookmarks[index]['bookmarkId']});
+
+                            if (bookmark.attributes.tags && !(bookmark.attributes.tags instanceof Array)) {
+                                var tags = [];
+                                tags.push(bookmark.attributes.tags);
+                                bookmark.set({ 'tags': tags });
+                            }
                             self.collection.push(bookmark);
                         }
                     } else if (bookmarks) {
                         var bookmark = new Bookmark(bookmarks);
-                        bookmark.set({ id : bookmarks['bookmarkId']});
+                        bookmark.set({ id : bookmarks['bookmarkId']});                        
+                        if (bookmark.attributes.tags && !(bookmark.attributes.tags instanceof Array)) {
+                            var tags = [];
+                            tags.push(bookmark.attributes.tags);
+                            bookmark.set({ 'tags': tags });
+                        }
                         self.collection.push(bookmark);
                     }
                     var entityList = self.buildEntityList();

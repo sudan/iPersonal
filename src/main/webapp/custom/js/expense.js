@@ -53,6 +53,15 @@
             this.populateCategories();
         },
 
+        getModel: function(id) {
+
+            if (id) {
+                return new Expense({ id : id});
+            } else {
+                return new Expense();
+            }
+        },
+
         resetValues: function(e) {
 
             if (e) {

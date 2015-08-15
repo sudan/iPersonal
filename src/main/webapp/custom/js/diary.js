@@ -46,6 +46,15 @@
             this.diaryRTE =  $('#diary');
         },
 
+        getModel: function(id) {
+
+            if (id) {
+                return new Page({ id : id});
+            } else {
+                return new Page();
+            }
+        },
+
         resetValues: function(e) {
 
             if (e) {

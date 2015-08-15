@@ -44,6 +44,15 @@
             this.noteRTE =  $('#note');
         },
 
+        getModel: function(id) {
+
+            if (id) {
+                return new Note({ id : id});
+            } else {
+                return new Note();
+            }
+        },
+
         resetValues: function(e) {
 
             if (e) {
