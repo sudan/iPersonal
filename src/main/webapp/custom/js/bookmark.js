@@ -106,7 +106,7 @@
                                 'tags': tags
                             });
                         } else {
-                            self.postCreation(entityId, "BOOKMARK", self.model.get('name'), 0 , self.searchTag.val());
+                            self.postCreation(entityId, "BOOKMARK", self.model.get('name'), 0 , tags);
                             self.model.set({
                                 'id': entityId,
                                 'modifiedAt': Math.floor(Date.now()),
