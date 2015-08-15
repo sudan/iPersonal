@@ -1,56 +1,58 @@
-(function($, window, document){
+(function($, window, document) {
 
-	"use strict"
+    "use strict"
 
-	var EntityListView = Backbone.View.extend({
+    var EntityListView = Backbone.View.extend({
 
-		el: $('#list-wrapper'),
-		listTemplate: $('#entity-list-template').html(),
+        el: $('#list-wrapper'),
+        listTemplate: $('#entity-list-template').html(),
 
-		events: {
-			'click li.clickable': 'displayEntity'
-		},
+        events: {
+            'click li.clickable': 'displayEntity'
+        },
 
-		initialize: function() {
+        initialize: function() {
 
-		},
+        },
 
-		renderList: function(entities) {
-			this.$el.empty();
-			var template = _.template(this.listTemplate);
-			this.$el.html(template({ 'entities' : entities } ));
-			return this;
-		},
+        renderList: function(entities) {
+            this.$el.empty();
+            var template = _.template(this.listTemplate);
+            this.$el.html(template({
+                'entities': entities
+            }));
+            return this;
+        },
 
-		displayEntity: function(e) {
-			var self = this;
-			var root = $(e.target).closest('li.clickable');
-			var entity = root.data('entity');
-			var entityId = root.data('id');
+        displayEntity: function(e) {
+            var self = this;
+            var root = $(e.target).closest('li.clickable');
+            var entity = root.data('entity');
+            var entityId = root.data('id');
 
-			switch(entity.toUpperCase()) {
+            switch (entity.toUpperCase()) {
 
-				case 'BOOKMARK':
-					bookmarkView.displayEntity(entityId, 'id', 'bookmark');
-					break;
-				case 'NOTE':
-					noteView.displayEntity(entityId, 'id', 'note');
-					break;
-				case 'PIN':
-					pinView.displayEntity(entityId, 'id', 'pin');
-					break;
-				case 'TODO':
-					todoView.displayEntity(entityId, 'id', 'todo');
-					break;
-				case 'DIARY':
-					pageView.displayEntity(entityId, 'id', 'diary');
-					break;
-				case 'EXPENSE':
-					expenseView.displayEntity(entityId, 'id', 'expense');
-					break;
-			}
-		}
-	});
+                case 'BOOKMARK':
+                    bookmarkView.displayEntity(entityId, 'id', 'bookmark');
+                    break;
+                case 'NOTE':
+                    noteView.displayEntity(entityId, 'id', 'note');
+                    break;
+                case 'PIN':
+                    pinView.displayEntity(entityId, 'id', 'pin');
+                    break;
+                case 'TODO':
+                    todoView.displayEntity(entityId, 'id', 'todo');
+                    break;
+                case 'DIARY':
+                    pageView.displayEntity(entityId, 'id', 'diary');
+                    break;
+                case 'EXPENSE':
+                    expenseView.displayEntity(entityId, 'id', 'expense');
+                    break;
+            }
+        }
+    });
 
-	window.entityListView = new EntityListView();
+    window.entityListView = new EntityListView();
 })(jQuery, window, document);

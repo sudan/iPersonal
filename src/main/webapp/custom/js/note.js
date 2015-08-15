@@ -1,20 +1,22 @@
-(function($, window, document){
+(function($, window, document) {
 
     "use strict"
 
     var NOTE_URL_ROOT = '/iPersonal/dashboard/notes';
 
     var Note = Base.extend({
-    	urlRoot: NOTE_URL_ROOT,
-        
+        urlRoot: NOTE_URL_ROOT,
+
         initialize: function() {
             this.mandatory = {
-                'title': true, 'note': true
-            },
-            this.maxLength = {
-                'title': 50,  'note': 1000
-            },
-            this.formAttributes = ['title', 'note']
+                    'title': true,
+                    'note': true
+                },
+                this.maxLength = {
+                    'title': 50,
+                    'note': 1000
+                },
+                this.formAttributes = ['title', 'note']
         }
 
     });
@@ -30,7 +32,7 @@
         upsertTemplate: $('#note-upsert-template').html(),
         displayTemplate: $('#note-display-template').html(),
 
-        events : {
+        events: {
             'click #note-submit': 'upsertNote',
             'click #note-cancel': 'resetValues',
             'click #note-tag-img': 'displayTagSelection',
@@ -49,8 +51,8 @@
 
             this.saveForm = $('#note-form');
             this.tagImage = $('#note-tag-img');
-            this.searchTag =  $('#note-tag');
-            this.noteRTE =  $('#note');
+            this.searchTag = $('#note-tag');
+            this.noteRTE = $('#note');
         },
 
         initializeUpdateForm: function() {
@@ -75,7 +77,10 @@
             var entityId = self.saveForm.find('.entityId').html();
 
             if (entityId) {
-                self.model = new Note({ id : entityId, noteId : entityId });
+                self.model = new Note({
+                    id: entityId,
+                    noteId: entityId
+                });
             } else {
                 self.model = new Note();
             }
@@ -85,7 +90,7 @@
                 note: self.saveForm.find('div#note').cleanHtml(),
             });
 
-            self.model.on('invalid', function(model , error) {
+            self.model.on('invalid', function(model, error) {
                 self.renderErrors(error);
             });
 
@@ -95,7 +100,7 @@
             });
 
             if (result) {
-                result.complete(function(response){
+                result.complete(function(response) {
                     if (response.status != 201 && response.status != 200) {
                         var errors = self.buildErrorObject(response, self);
                         self.renderErrors(errors);
@@ -103,7 +108,7 @@
                         var tags = self.searchTag.val();
 
                         if (!entityId) {
-                            self.postCreation(response.responseText, "NOTE", self.model.get('title'), 1, tags);    
+                            self.postCreation(response.responseText, "NOTE", self.model.get('title'), 1, tags);
                             self.model.set({
                                 id: response.responseText,
                                 'createdOn': Math.floor(Date.now()),
@@ -138,34 +143,47 @@
                 e.preventDefault();
             }
 
-            if (this.collection.length  == parseInt(entityCountModel.attributes.notes)) {
+            if (this.collection.length == parseInt(entityCountModel.attributes.notes)) {
                 var entityList = this.buildEntityList();
                 backboneGlobalObj.trigger('entity:displaylist', entityList);
                 return;
             }
-             
-            this.model = new Note();   
-            this.model.fetch({data: {offset: this.collection.length, limit : 20} }).complete(function(response){
+
+            this.model = new Note();
+            this.model.fetch({
+                data: {
+                    offset: this.collection.length,
+                    limit: 20
+                }
+            }).complete(function(response) {
                 if (response.status == 200) {
                     var notes = JSON.parse(response.responseText)['note'];
                     if (notes instanceof Array) {
                         for (var index in notes) {
                             var note = new Note(notes[index]);
-                            note.set({ id : notes[index]['noteId']});
+                            note.set({
+                                id: notes[index]['noteId']
+                            });
                             if (note.attributes.tags && !(note.attributes.tags instanceof Array)) {
                                 var tags = [];
                                 tags.push(note.attributes.tags);
-                                note.set({ tags : tags});
+                                note.set({
+                                    tags: tags
+                                });
                             }
                             self.collection.push(note);
                         }
                     } else if (notes) {
                         var note = new Note(notes);
-                        note.set({ id : notes['noteId']});
+                        note.set({
+                            id: notes['noteId']
+                        });
                         if (note.attributes.tags && !(note.attributes.tags instanceof Array)) {
                             var tags = [];
                             tags.push(note.attributes.tags);
-                            note.set({ tags : tags});
+                            note.set({
+                                tags: tags
+                            });
                         }
                         self.collection.push(note);
                     }
@@ -182,9 +200,9 @@
             for (var i = 0; i < this.collection.length; i++) {
                 var summary = this.collection.models[i].attributes.summary;
                 var entity = {
-                    'entityId' : this.collection.models[i].attributes.id,
-                    'entityTitle' : this.collection.models[i].attributes.title,
-                    'entitySummary': summary ? summary.substring(0,100) : summary,
+                    'entityId': this.collection.models[i].attributes.id,
+                    'entityTitle': this.collection.models[i].attributes.title,
+                    'entitySummary': summary ? summary.substring(0, 100) : summary,
                     'entityType': 'note',
                     'modifiedAt': this.collection.models[i].attributes.modifiedAt,
                 };
@@ -201,6 +219,8 @@
         }
     });
 
-    window.noteView = new NoteView({ collection : new Notes()});
+    window.noteView = new NoteView({
+        collection: new Notes()
+    });
 
 })(jQuery, window, document);

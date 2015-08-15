@@ -1,23 +1,27 @@
-(function($, window, document){
+(function($, window, document) {
 
     "use strict"
 
     var BOOKMARK_URL_ROOT = '/iPersonal/dashboard/bookmarks';
 
     var Bookmark = Base.extend({
-    	urlRoot: BOOKMARK_URL_ROOT,
-        
+        urlRoot: BOOKMARK_URL_ROOT,
+
         initialize: function() {
             this.mandatory = {
-                'name': true, 'url': true, 'description': true
-            },
-            this.maxLength = {
-                'name': 50, 'url': 150, 'description': 1000
-            },
-            this.formAttributes = ['name', 'url', 'description']
+                    'name': true,
+                    'url': true,
+                    'description': true
+                },
+                this.maxLength = {
+                    'name': 50,
+                    'url': 150,
+                    'description': 1000
+                },
+                this.formAttributes = ['name', 'url', 'description']
         }
 
-    }); 
+    });
 
     var Bookmarks = Backbone.Collection.extend({
         model: Bookmark
@@ -30,7 +34,7 @@
         upsertTemplate: $('#bookmark-upsert-template').html(),
         displayTemplate: $('#bookmark-display-template').html(),
 
-        events : {
+        events: {
             'click #book-submit': 'upsertBookmark',
             'click #book-cancel': 'resetValues',
             'click #book-tag-img': 'displayTagSelection'
@@ -51,8 +55,8 @@
         },
 
         prepareVariables: function() {
-            
-            this.saveForm =  $('#bookmark-form');
+
+            this.saveForm = $('#bookmark-form');
             this.tagImage = $('#book-tag-img');
             this.searchTag = $('#bookmark-tag');
         },
@@ -70,7 +74,10 @@
             var entityId = self.saveForm.find('.entityId').html();
 
             if (entityId) {
-                self.model = new Bookmark({ id : entityId , bookmarkId : entityId });
+                self.model = new Bookmark({
+                    id: entityId,
+                    bookmarkId: entityId
+                });
             } else {
                 self.model = new Bookmark();
             }
@@ -81,7 +88,7 @@
                 description: self.saveForm.find('[name=description]').val()
             });
 
-            self.model.on('invalid', function(model , error) {
+            self.model.on('invalid', function(model, error) {
                 self.renderErrors(error);
             });
 
@@ -91,7 +98,7 @@
             });
 
             if (result) {
-                result.complete(function(response){
+                result.complete(function(response) {
                     if (response.status != 201 && response.status != 200) {
                         var errors = self.buildErrorObject(response, self);
                         self.renderErrors(errors);
@@ -106,7 +113,7 @@
                                 'tags': tags
                             });
                         } else {
-                            self.postCreation(entityId, "BOOKMARK", self.model.get('name'), 0 , tags);
+                            self.postCreation(entityId, "BOOKMARK", self.model.get('name'), 0, tags);
                             self.model.set({
                                 'id': entityId,
                                 'modifiedAt': Math.floor(Date.now()),
@@ -131,35 +138,48 @@
                 e.preventDefault();
             }
 
-            if (this.collection.length  == parseInt(entityCountModel.attributes.bookmarks)) {
+            if (this.collection.length == parseInt(entityCountModel.attributes.bookmarks)) {
                 var entityList = this.buildEntityList();
                 backboneGlobalObj.trigger('entity:displaylist', entityList);
                 return;
             }
-             
-            this.model = new Bookmark();   
-            this.model.fetch({data: {offset: this.collection.length, limit : 20} }).complete(function(response){
+
+            this.model = new Bookmark();
+            this.model.fetch({
+                data: {
+                    offset: this.collection.length,
+                    limit: 20
+                }
+            }).complete(function(response) {
                 if (response.status == 200) {
                     var bookmarks = JSON.parse(response.responseText)['bookmark'];
                     if (bookmarks instanceof Array) {
                         for (var index in bookmarks) {
-                            var bookmark = new Bookmark(bookmarks[index]);                            
-                            bookmark.set({ id : bookmarks[index]['bookmarkId']});
+                            var bookmark = new Bookmark(bookmarks[index]);
+                            bookmark.set({
+                                id: bookmarks[index]['bookmarkId']
+                            });
 
                             if (bookmark.attributes.tags && !(bookmark.attributes.tags instanceof Array)) {
                                 var tags = [];
                                 tags.push(bookmark.attributes.tags);
-                                bookmark.set({ 'tags': tags });
+                                bookmark.set({
+                                    'tags': tags
+                                });
                             }
                             self.collection.push(bookmark);
                         }
                     } else if (bookmarks) {
                         var bookmark = new Bookmark(bookmarks);
-                        bookmark.set({ id : bookmarks['bookmarkId']});                        
+                        bookmark.set({
+                            id: bookmarks['bookmarkId']
+                        });
                         if (bookmark.attributes.tags && !(bookmark.attributes.tags instanceof Array)) {
                             var tags = [];
                             tags.push(bookmark.attributes.tags);
-                            bookmark.set({ 'tags': tags });
+                            bookmark.set({
+                                'tags': tags
+                            });
                         }
                         self.collection.push(bookmark);
                     }
@@ -176,10 +196,10 @@
             for (var i = 0; i < this.collection.length; i++) {
                 var description = this.collection.models[i].attributes.description;
                 var entity = {
-                    'entityId' : this.collection.models[i].attributes.id,
-                    'entityTitle' : this.collection.models[i].attributes.name,
+                    'entityId': this.collection.models[i].attributes.id,
+                    'entityTitle': this.collection.models[i].attributes.name,
                     'url': this.collection.models[i].attributes.url,
-                    'entitySummary': description ? description.substring(0,100) : description,
+                    'entitySummary': description ? description.substring(0, 100) : description,
                     'entityType': 'bookmark',
                     'modifiedAt': this.collection.models[i].attributes.modifiedAt,
                 };
@@ -196,6 +216,8 @@
         }
     });
 
-    window.bookmarkView = new BookmarkView({ collection : new Bookmarks()});
+    window.bookmarkView = new BookmarkView({
+        collection: new Bookmarks()
+    });
 
 })(jQuery, window, document);
