@@ -80,7 +80,14 @@
             var content = self.saveForm.find('div#diary').cleanHtml();
             var title = self.saveForm.find('[name=title]').val();
 
-            self.model = new Page();
+
+            var entityId = self.saveForm.find('.entityId').html();
+            if (entityId) {
+                self.model = new Page({ pageId: entityId});
+            } else {
+                self.model = new Page();
+            }
+
             self.model.set({
                 title: title,
                 content: content,
@@ -104,6 +111,11 @@
                 year: dateArr[0],
                 pages: pages
             });
+
+            if (entityId) {
+                diary.set({ id : entityId});
+                diary.urlRoot =  '/iPersonal/dashboard/diaries/' + dateArr[0];
+            }
         
             var result = diary.save({
                 success: function(response) {},
@@ -112,22 +124,36 @@
 
             if (result) {
                 result.complete(function(response){
-                    if (response.status != 201) {
+                    if (response.status != 201 && response.status != 200) {
                         var errors = self.buildErrorObject(response, self);
                         self.renderErrors(errors);
                     } else {
-                        var id = response.responseText;
                         var tags = self.searchTag.val();
-                        self.postCreation(id, "DIARY", title, 1, tags);
-                        self.model.set({
-                            'id': id,
-                            'year': dateArr[0],
-                            'createdOn': Math.floor(Date.now()),
-                            'modifiedAt': Math.floor(Date.now()),
-                            'summary': content.replace(/<(?:.|\n)*?>/gm, ''),
-                            'dateStr': date,
-                            'tags': tags 
-                        });
+                            
+                        if (!entityId) {
+                            self.postCreation(response.responseText, "DIARY", title, 1, tags);
+                            self.model.set({
+                                'id': response.responseText,
+                                'year': dateArr[0],
+                                'createdOn': Math.floor(Date.now()),
+                                'modifiedAt': Math.floor(Date.now()),
+                                'summary': content.replace(/<(?:.|\n)*?>/gm, '').trim(),
+                                'dateStr': date,
+                                'tags': tags 
+                            });                            
+                        } else {
+                            self.postCreation(entityId, "DIARY", title, 0, tags);
+                            self.model.set({
+                                'id': entityId,
+                                'year': dateArr[0],
+                                'modifiedAt': Math.floor(Date.now()),
+                                'summary': content.replace(/<(?:.|\n)*?>/gm, '').trim(),
+                                'dateStr': date,
+                                'tags': tags 
+                            });
+                            self.collection.remove(self.collection.at(self.findIndex(entityId)));
+                        }
+
                         self.collection.unshift(self.model);
                         var entityList = self.buildEntityList();
                         backboneGlobalObj.trigger('entity:displaylist', entityList);

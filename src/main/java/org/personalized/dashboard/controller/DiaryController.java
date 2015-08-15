@@ -95,8 +95,9 @@ public class DiaryController {
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    @Path("{year}")
+    @Path("{year}/{pageId}")
     public Response updatePage(@Context HttpHeaders httpHeaders, @PathParam("year") int year,
+                               @PathParam("pageId") String pageId,
                                Diary diary) {
 
         try {
