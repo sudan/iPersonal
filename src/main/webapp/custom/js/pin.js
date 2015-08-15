@@ -27,13 +27,23 @@
 
         el: $('#pin-wrapper'),
         entityType: 'PIN',
-        createTemplate: $('#pin-create-template').html(),
+        upsertTemplate: $('#pin-upsert-template').html(),
         displayTemplate: $('#pin-display-template').html(),
 
         events : {
-            'click #pin-submit': 'createPin',
+            'click #pin-submit': 'upsertPin',
             'click #pin-cancel': 'resetValues',
             'click #pin-tag-img': 'displayTagSelection',
+        },
+
+        getModel: function(id) {
+
+            return new Pin({
+                name: '',
+                description: '',
+                imageUrl: '',
+                tags: []
+            });
         },
 
         prepareVariables: function() {
@@ -43,16 +53,12 @@
 
         },
 
-        getModel: function(id) {
-
-            if (id) {
-                return new Pin({ id : id});
-            } else {
-                return new Pin();
-            }
+        initializeUpdateForm: function() {
+            this.prepareVariables();
+            Init.initPin();
         },
 
-        createPin: function(e) {
+        upsertPin: function(e) {
 
             var self = this;
             e.preventDefault();
@@ -119,11 +125,22 @@
                         for (var index in pins) {
                             var pin = new Pin(pins[index])
                             pin.set({ id : pins[index]['pinId']});
+                            if (pin.attributes.tags && !(pin.attributes.tags instanceof Array)) {
+                                var tags = [];
+                                tags.push(pin.attributes.tags);
+                                pin.set({ 'tags': tags });
+                            }
+
                             self.collection.push(pin);
                         }
                     } else if (pins) {
                         var pin = new Pin(pins);
                         pin.set({ id : pins['pinId']});
+                        if (pin.attributes.tags && !(pin.attributes.tags instanceof Array)) {
+                            var tags = [];
+                            tags.push(pin.attributes.tags);
+                            pin.set({ 'tags': tags });
+                        }
                         self.collection.push(pin);
                     }
                     var entityList = self.buildEntityList();
