@@ -51,7 +51,7 @@ public class ESIndexConsumer implements MessageListener {
                     searchDocument.setTitle(payloadMap.get(FieldKeys.ES_TITLE));
                     DOMParser domParser = new DOMParser();
                     String summary = domParser.extractSummary(payloadMap.get(FieldKeys.ES_DESCRIPTION));
-                    searchDocument.setSummary(summary.substring(0, Math.min(summary.length(), 150)));
+                    searchDocument.setSummary(summary.substring(0, Math.min(summary.length(), 250)));
                     searchDocument.setDescription(
                             domParser.removeHtmlTags(
                                     StopwordsRemover.removeStopWords(payloadMap.get(FieldKeys.ES_DESCRIPTION))

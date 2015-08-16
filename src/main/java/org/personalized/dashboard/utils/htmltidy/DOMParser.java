@@ -25,7 +25,7 @@ public class DOMParser {
 
     public String extractSummary(String html) {
         String content = this.removeHtmlTags(html);
-        return content.substring(0, Math.min(content.length(), 50));
+        return content.substring(0, Math.min(content.length(), 150));
     }
 
     public String removeHtmlTags(String html) {
