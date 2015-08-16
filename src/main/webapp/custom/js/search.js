@@ -72,16 +72,21 @@
 
                                     var searchResult = new SearchResult();
                                     searchResult.set({
-                                        entityType: searchResults['index']['entityType'],
-                                        entityId: searchResults['index']['documentId'],
-                                        modifiedAt: searchResults['index']['createdAt'],
-                                        entityTitle: searchResults['index']['title']
+                                        entityType: searchResults[index]['entityType'],
+                                        entityId: searchResults[index]['documentId'],
+                                        modifiedAt: searchResults[index]['createdAt'],
+                                        entityTitle: searchResults[index]['title'],
+                                        tags: []
                                     });
 
-                                    if (entityType == 'BOOKMARK') {
+                                    if (searchResult.get('entityType') == 'BOOKMARK' || searchResult.get('entityType') == 'PIN') {
                                         searchResult.set({
-                                            url: searchResults['index']['summary'].split('###')[0],
-                                            summary: searchResults['index']['summary'].split('###')[1]
+                                            url: searchResults[index]['summary'].split('###')[0],
+                                            entitySummary: searchResults[index]['summary'].split('###')[1]
+                                        });
+                                    } else {
+                                        searchResult.set({
+                                            entitySummary: searchResults[index]['summary']
                                         });
                                     }
                                     self.collection.add(searchResult);
@@ -92,18 +97,25 @@
                                     entityType: searchResults['entityType'],
                                     entityId: searchResults['documentId'],
                                     modifiedAt: searchResults['createdAt'],
-                                    entityTitle: searchResults['title']
+                                    entityTitle: searchResults['title'],
+                                    tags: []
                                 });
 
-                                if (searchResult.get('entityType') == 'BOOKMARK') {
+                                if (searchResult.get('entityType') == 'BOOKMARK' || searchResult.get('entityType') == 'PIN') {
                                     searchResult.set({
                                         url: searchResults['summary'].split('###')[0],
                                         entitySummary: searchResults['summary'].split('###')[1]
+                                    });
+                                } else {
+                                    searchResult.set({
+                                        entitySummary: searchResults['summary']
                                     });
                                 }
                                 self.collection.add(searchResult);
                             }
                             var entityList = self.buildEntityList();
+                            $('.modal-header').find('button.close').click();
+                            backboneGlobalObj.trigger('entity:displaylist', entityList);
                         }
                     }
                 });
@@ -123,7 +135,8 @@
                 entity['entitySummary'] = this.collection.models[i].attributes.entitySummary;
                 entity['modifiedAt'] = this.collection.models[i].attributes.modifiedAt;
 
-                if (this.collection.models[i].attributes.entityType == 'BOOKMARK') {
+                if (this.collection.models[i].attributes.entityType == 'BOOKMARK' ||
+                    this.collection.models[i].attributes.entityType == 'PIN') {
                     entity['url'] = this.collection.models[i].attributes.url;
                 }
 
