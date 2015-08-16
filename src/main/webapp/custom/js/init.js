@@ -4,6 +4,7 @@
 
         init: function() {
             this.initBackboneEvents();
+            this.initSearch();
         },
 
         initBookmark: function() {
@@ -150,6 +151,31 @@
                 $('.btn-group').find('a.underline').addClass('btn-info'):
                     $('.btn-group').find('a.underline').removeClass('btn-info');
             });
+        },
+
+        initSearch: function() {
+
+            $('#search-tag').chosen({
+                width: '100%',
+                no_results_text: 'Add a tag and press enter(min 3 chars)'
+            }).trigger('chosen:updated');
+
+            $('#search-title').chosen({
+                width: '100%',
+                no_results_text: 'Add a tag and press enter(min 3 chars)'
+            }).trigger('chosen:updated');
+
+            $('#search-keyword').chosen({
+                width: '100%',
+                no_results_text: 'Add a tag and press enter(min 3 chars)'
+            }).trigger('chosen:updated');
+
+            $('#search-entity').chosen({
+                width: '100%',
+                no_results_text: 'Add a tag and press enter(min 3 chars)'
+            }).trigger('chosen:updated');
+
+            this.initChosenDropdowns();
         }
     };
 

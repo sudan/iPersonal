@@ -799,12 +799,60 @@
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                                 <h4 class="modal-title" id="advanced-search-label">Advanced Search</h4>
                             </div>
-                            <div class="modal-body">
-                                Advanced Search coming soon!
+                            <div class="modal-body panel-body">
+                                <ul class="nav nav-tabs">
+                                    <li class="active general">
+                                        <a href="#general" data-toggle="tab">General</a>
+                                    </li>
+                                    <li class="expense">
+                                        <a href="#expense" data-toggle="tab">Expense</a>
+                                    </li>
+                                </ul>
+                                <div class="content">
+                                    <div class="tab-pane fade in active" id="general">
+                                        <form id="general-search-form" method="POST" action = "#">
+                                            <div class="general-search-wrapper">
+                                                <div class="form-group">
+                                                    <label for="search-entity">Entities: </label>
+                                                    <select id="search-entity" multiple="multiple" class="form-control chosen-menu"
+                                                        data-placeholder="select entities">
+                                                        <option value="BOOKMARK">Bookmark</option>
+                                                        <option value="NOTE">Note</option>
+                                                        <option value="PIN">Pin</option>
+                                                        <option value="TODO">Todo</option>
+                                                        <option value="DIARY">Diary</option>
+                                                        <option value="EXPENSE">Expense</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="search-tag">Tags: </label>
+                                                    <select id="search-tag" multiple="multiple" class="form-control chosen-menu"
+                                                        data-placeholder="add tags">
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="search-title">Title: </label>
+                                                    <select id="search-title" multiple="multiple" class="form-control chosen-menu"
+                                                        data-placeholder="add title">
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="search-keyword">Keywords: </label>
+                                                    <select id="search-keyword" multiple="multiple" class="form-control chosen-menu"
+                                                        data-placeholder="add keywords">
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="tab-pane fade" id="expense">
+                                        <h4>Expense Filters</h4>
+                                    </div>
+                                </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Save changes</button>
+                                <button type="button" class="btn btn-primary"> Filter </button>
                             </div>
                         </div>
                     </div>
