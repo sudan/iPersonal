@@ -113,10 +113,10 @@
                                 }
                                 self.collection.add(searchResult);
                             }
-                            var entityList = self.buildEntityList();
-                            $('.modal-header').find('button.close').click();
-                            backboneGlobalObj.trigger('entity:displaylist', entityList);
                         }
+                        var entityList = self.buildEntityList();
+                        $('.modal-header').find('button.close').click();
+                        backboneGlobalObj.trigger('entity:displaylist', entityList);
                     }
                 });
             }
