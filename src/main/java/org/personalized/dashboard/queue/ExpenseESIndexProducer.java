@@ -38,6 +38,8 @@ public class ExpenseESIndexProducer implements ESIndexProducer<Expense> {
         if (operationType != OperationType.DELETE) {
             payload.put(FieldKeys.ES_TITLE, obj.getTitle());
             StringBuilder description = new StringBuilder();
+            description.append(obj.getAmount());
+            description.append(Constants.SECONDARY_SEPARATOR);
             description.append(obj.getDescription());
 
             if (!CollectionUtils.isEmpty(obj.getCategories())) {

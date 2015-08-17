@@ -84,6 +84,11 @@
                                             url: searchResults[index]['summary'].split('###')[0],
                                             entitySummary: searchResults[index]['summary'].split('###')[1]
                                         });
+                                    } else if (searchResult.get('entityType') == 'EXPENSE') {
+                                        searchResult.set({
+                                            amount : searchResults[index]['summary'].split('###')[0],
+                                            entitySummary: searchResults[index]['summary'].split('###')[1]
+                                        });
                                     } else {
                                         searchResult.set({
                                             entitySummary: searchResults[index]['summary']
@@ -104,6 +109,11 @@
                                 if (searchResult.get('entityType') == 'BOOKMARK' || searchResult.get('entityType') == 'PIN') {
                                     searchResult.set({
                                         url: searchResults['summary'].split('###')[0],
+                                        entitySummary: searchResults['summary'].split('###')[1]
+                                    });
+                                } else if (searchResult.get('entityType') == 'EXPENSE') {
+                                    searchResult.set({
+                                        amount: searchResults['summary'].split('###')[0],
                                         entitySummary: searchResults['summary'].split('###')[1]
                                     });
                                 } else {
@@ -138,6 +148,10 @@
                 if (this.collection.models[i].attributes.entityType == 'BOOKMARK' ||
                     this.collection.models[i].attributes.entityType == 'PIN') {
                     entity['url'] = this.collection.models[i].attributes.url;
+                }
+
+                if (this.collection.models[i].attributes.entityType == 'EXPENSE') {
+                    entity['amount'] = this.collection.models[i].attributes.amount;
                 }
 
                 entityList.push(entity);

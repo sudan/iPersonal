@@ -498,10 +498,6 @@
                                 <span>- Rs <%= entity.amount %></span>
                                 <% } %>
 
-                                <% if (entity.entityType == 'diary'){ %>
-                                <span>- <%= entity.dateStr %></span>
-                                <% } %>
-
                                 <small class="pull-right text-muted">
                                     <i class="fa fa-clock-o fa-fw"></i> <%=
                                     moment.unix(entity.modifiedAt/1000).fromNow() %>
