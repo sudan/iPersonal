@@ -125,6 +125,7 @@
                             }
                         }
                         var entityList = self.buildEntityList();
+                        self.resetModal();
                         $('.modal-header').find('button.close').click();
                         backboneGlobalObj.trigger('entity:displaylist', entityList);
                     }
@@ -158,6 +159,13 @@
             }
             return entityList;
         },
+
+        resetModal: function() {
+            this.generalSearchForm.find('#search-entity').val('').trigger('chosen:updated');
+            this.generalSearchForm.find('#search-tag').val('').trigger('chosen:updated');
+            this.generalSearchForm.find('#search-title').val('').trigger('chosen:updated');
+            this.generalSearchForm.find('#search-keyword').val('').trigger('chosen:updated');
+        }
     });
 
     window.searchView = new SearchView();
