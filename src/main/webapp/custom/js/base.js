@@ -153,6 +153,11 @@
                 }
             }
 
+            this._displayEntity(entity, entityType, entityId);
+        },
+
+        _displayEntity: function(entity, entityType, entityId) {
+
             if (!entity.attributes.tags) {
                 entity.set({
                     tags: []
