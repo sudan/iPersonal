@@ -47,6 +47,11 @@
             });
         },
 
+
+        buildModel: function(entity) {
+            return new Note(entity);
+        },
+
         prepareVariables: function() {
 
             this.saveForm = $('#note-form');

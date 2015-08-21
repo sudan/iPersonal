@@ -153,18 +153,42 @@
                 }
             }
 
-            this._displayEntity(entity, entityType, entityId);
+            if (!entity) {
+
+                var self = this;
+                var model = this.getModel();
+                model.set({ id : entityId });
+                var result = model.fetch({
+                    success: function(response){},
+                    error: function(error){}
+                });
+
+                result.complete(function(response){
+
+                    if (response.status == 200) {
+                        var entity = JSON.parse(response.responseText);
+                        var entity = self.buildModel(entity);
+                        entity.set({ entityType : entityType });
+                        entity.set({ id : entityId });
+                        self._displayEntity(entity);
+                    }
+                });
+
+
+            } else {
+                this._displayEntity(entity);
+            }
         },
 
         _displayEntity: function(entity, entityType, entityId) {
 
-            if (!entity.attributes.tags) {
+            if (!entity.get('tags')) {
                 entity.set({
                     tags: []
                 })
             }
 
-            if (entityType == 'expense' && !entity.attributes.categories) {
+            if (entityType == 'expense' && !entity.get('categories')) {
                 entity.set({
                     categories: []
                 })
@@ -185,7 +209,7 @@
 
             var self = this;
             $('img.edit').on('click', function() {
-                self.editEntity();
+                self.editEntity(entity);
             });
         },
 
@@ -204,11 +228,11 @@
             return this.collection.at(index);
         },
 
-        editEntity: function() {
+        editEntity: function(entity) {
 
             var entityId = $('img.edit').data('id');
             var template = _.template(this.upsertTemplate);
-            this.$el.html(template(this.findModel(entityId).toJSON()));
+            this.$el.html(template(entity.toJSON()));
             this.$el.fadeIn().removeClass('invisible')
                 .siblings().fadeOut().addClass('invisible');
             this.initializeUpdateForm();

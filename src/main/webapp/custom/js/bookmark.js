@@ -54,6 +54,10 @@
             });
         },
 
+        buildModel: function(entity) {
+            return new Bookmark(entity);
+        },
+
         prepareVariables: function() {
 
             this.saveForm = $('#bookmark-form');
