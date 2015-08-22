@@ -20,6 +20,6 @@ iPersonal is a personal dashboard for users to store their bookmarks, pins, todo
 4. Add destination Queue for activemq
 5. Copy config.properties.dist to config.properties
 6. Create a google developer account to get appId and appSecret (Used for signup and login)
-7. Update config.properties (let the debugMode be true unless there is a need to run test cases. Test cases should be run with clean data for mongodb and elasticsearch)
+7. Update config.properties (let the debugMode be false unless there is a need to run test cases. Test cases should be run with clean data for mongodb and elasticsearch)
 8.  Compile the code using (mvn clean install) and run using ( mvn jetty:run)
 9.  Visit http://localhost:8080/iPersonal/ to see the home page
