@@ -14,7 +14,6 @@ import org.personalized.dashboard.utils.htmltidy.DOMParser;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by sudan on 3/4/15.
@@ -44,10 +43,10 @@ public class DiaryServiceImpl implements DiaryService {
     }
 
     @Override
-    public String createPage(Page page, int year) {
+    public String createPage(Page page) {
         page.setContent(domParser.removeMalformedTags(page.getContent()));
         page.setSummary(domParser.extractSummary(page.getContent()));
-        String pageId = diaryDao.create(page, year, sessionManager.getUserIdFromSession());
+        String pageId = diaryDao.create(page, sessionManager.getUserIdFromSession());
         Activity activity = activityGenerator.generate(ActivityType.CREATED, EntityType.DIARY,
                 pageId, page.getTitle());
         activityDao.add(activity, sessionManager.getUserIdFromSession());
@@ -57,15 +56,15 @@ public class DiaryServiceImpl implements DiaryService {
     }
 
     @Override
-    public Page getPage(String pageId, int year) {
-        return diaryDao.get(pageId, year, sessionManager.getUserIdFromSession());
+    public Page getPage(String pageId) {
+        return diaryDao.get(pageId, sessionManager.getUserIdFromSession());
     }
 
     @Override
-    public Long updatePage(Page page, int year) {
+    public Long updatePage(Page page) {
         page.setContent(domParser.removeMalformedTags(page.getContent()));
         page.setSummary(domParser.extractSummary(page.getContent()));
-        Long modifiedCount = diaryDao.update(page, year, sessionManager.getUserIdFromSession());
+        Long modifiedCount = diaryDao.update(page, sessionManager.getUserIdFromSession());
         if (modifiedCount > 0) {
             Activity activity = activityGenerator.generate(ActivityType.UPDATED, EntityType.DIARY,
                     page.getPageId(), page.getTitle());
@@ -77,8 +76,8 @@ public class DiaryServiceImpl implements DiaryService {
     }
 
     @Override
-    public Long deletePage(String pageId, int year) {
-        Long deletedCount = diaryDao.delete(pageId, year, sessionManager.getUserIdFromSession());
+    public Long deletePage(String pageId) {
+        Long deletedCount = diaryDao.delete(pageId, sessionManager.getUserIdFromSession());
         if (deletedCount > 0) {
             Activity activity = activityGenerator.generate(ActivityType.DELETED, EntityType.DIARY,
                     pageId, StringUtils.EMPTY);
@@ -95,7 +94,7 @@ public class DiaryServiceImpl implements DiaryService {
     }
 
     @Override
-    public Map<Integer, List<Page>> getPages(int limit, int offset) {
+    public List<Page> getPages(int limit, int offset) {
         return diaryDao.getAll(limit, offset, sessionManager.getUserIdFromSession());
     }
 }

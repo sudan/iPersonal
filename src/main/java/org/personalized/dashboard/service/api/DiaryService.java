@@ -3,7 +3,6 @@ package org.personalized.dashboard.service.api;
 import org.personalized.dashboard.model.Page;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by sudan on 3/4/15.
@@ -14,37 +13,33 @@ public interface DiaryService {
      * Create a new page for the user
      *
      * @param page
-     * @param year
      * @return
      */
-    String createPage(Page page, int year);
+    String createPage(Page page);
 
     /**
      * Get page for the given pageId
      *
      * @param pageId
-     * @param year
      * @return
      */
-    Page getPage(String pageId, int year);
+    Page getPage(String pageId);
 
     /**
      * Update page for the user
      *
      * @param page
-     * @param year
      * @return
      */
-    Long updatePage(Page page, int year);
+    Long updatePage(Page page);
 
     /**
      * Delete the page given the pageId
      *
      * @param pageId
-     * @param year
      * @return
      */
-    Long deletePage(String pageId, int year);
+    Long deletePage(String pageId);
 
     /**
      * Count the pages for the given year
@@ -60,5 +55,5 @@ public interface DiaryService {
      * @param offset
      * @return
      */
-    Map<Integer, List<Page>> getPages(int limit, int offset);
+    List<Page> getPages(int limit, int offset);
 }

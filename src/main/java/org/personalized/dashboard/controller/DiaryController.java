@@ -4,7 +4,6 @@ import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 import org.apache.commons.lang3.StringUtils;
 import org.personalized.dashboard.model.BatchSize;
-import org.personalized.dashboard.model.Diary;
 import org.personalized.dashboard.model.Page;
 import org.personalized.dashboard.service.api.DiaryService;
 import org.personalized.dashboard.utils.validator.ErrorEntity;
@@ -19,7 +18,6 @@ import javax.inject.Named;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by sudan on 3/4/15
@@ -50,12 +48,12 @@ public class DiaryController {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response createPage(@Context HttpHeaders httpHeaders, Diary diary) {
+    public Response createPage(@Context HttpHeaders httpHeaders, Page page) {
 
         try {
-            List<ErrorEntity> errorEntities = diaryValidationService.validate(diary);
+            List<ErrorEntity> errorEntities = diaryValidationService.validate(page);
             if (CollectionUtils.isEmpty(errorEntities)) {
-                String pageId = diaryService.createPage(diary.getPages().get(0), diary.getYear());
+                String pageId = diaryService.createPage(page);
                 return Response.status(Response.Status.CREATED).entity(pageId).build();
             } else {
                 GenericEntity<List<ErrorEntity>> errorObj = new GenericEntity<List<ErrorEntity>>
@@ -70,16 +68,16 @@ public class DiaryController {
     }
 
     @GET
-    @Path("{year}/{pageId}")
+    @Path("{pageId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getPage(@Context HttpHeaders httpHeaders, @PathParam("year") int year,
+    public Response getPage(@Context HttpHeaders httpHeaders,
                             @PathParam("pageId") String pageId) {
 
         try {
             if (StringUtils.isEmpty(pageId)) {
                 return Response.status(Response.Status.BAD_REQUEST).build();
             } else {
-                Page page = diaryService.getPage(pageId, year);
+                Page page = diaryService.getPage(pageId);
                 if (page == null) {
                     return Response.status(Response.Status.NOT_FOUND).build();
                 } else {
@@ -95,17 +93,14 @@ public class DiaryController {
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    @Path("{year}/{pageId}")
-    public Response updatePage(@Context HttpHeaders httpHeaders, @PathParam("year") int year,
-                               @PathParam("pageId") String pageId,
-                               Diary diary) {
+    public Response updatePage(@Context HttpHeaders httpHeaders, Page page) {
 
         try {
-            List<ErrorEntity> errorEntities = diaryValidationService.validate(diary);
+            List<ErrorEntity> errorEntities = diaryValidationService.validate(page);
             if (CollectionUtils.isEmpty(errorEntities)) {
-                Long modifiedCount = diaryService.updatePage(diary.getPages().get(0), year);
+                Long modifiedCount = diaryService.updatePage(page);
                 if (modifiedCount > 0) {
-                    return Response.status(Response.Status.OK).entity(diary).build();
+                    return Response.status(Response.Status.OK).entity(page).build();
                 } else {
                     return Response.status(Response.Status.BAD_REQUEST).build();
                 }
@@ -122,15 +117,15 @@ public class DiaryController {
     }
 
     @DELETE
-    @Path("{year}/{pageId}")
-    public Response deletePage(@Context HttpHeaders httpHeaders, @PathParam("year") int year,
+    @Path("{pageId}")
+    public Response deletePage(@Context HttpHeaders httpHeaders,
                                @PathParam("pageId") String pageId) {
 
         try {
             if (StringUtils.isEmpty(pageId)) {
                 return Response.status(Response.Status.BAD_REQUEST).build();
             } else {
-                diaryService.deletePage(pageId, year);
+                diaryService.deletePage(pageId);
                 return Response.status(Response.Status.OK).build();
             }
         } catch (Exception e) {
@@ -163,18 +158,11 @@ public class DiaryController {
             BatchSize batchSize = new BatchSize(limit, offset);
             List<ErrorEntity> errorEntities = batchSizeValidationService.validate(batchSize);
             if (CollectionUtils.isEmpty(errorEntities)) {
-                List<Diary> diaries = Lists.newArrayList();
-                Map<Integer, List<Page>> yearToPagesMap = diaryService.getPages(limit, offset);
-                for (Map.Entry<Integer, List<Page>> entry : yearToPagesMap.entrySet()) {
-                    Diary diary = new Diary();
-                    diary.setYear(entry.getKey());
-                    diary.setPages(entry.getValue());
-                    diaries.add(diary);
-                }
-                GenericEntity<List<Diary>> diaryListObj = new GenericEntity<List<Diary>>
-                        (diaries) {
+                List<Page> pages = Lists.newArrayList();
+                GenericEntity<List<Page>> pageListObj = new GenericEntity<List<Page>>
+                        (pages) {
                 };
-                return Response.status(Response.Status.OK).entity(diaryListObj).build();
+                return Response.status(Response.Status.OK).entity(pageListObj).build();
             } else {
                 GenericEntity<List<ErrorEntity>> errorObj = new GenericEntity<List<ErrorEntity>>
                         (errorEntities) {
