@@ -93,7 +93,10 @@ public class DiaryController {
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response updatePage(@Context HttpHeaders httpHeaders, Page page) {
+    @Path("{pageId}")
+    public Response updatePage(@Context HttpHeaders httpHeaders,
+                              @PathParam("pageId") String pageId,
+                              Page page) {
 
         try {
             List<ErrorEntity> errorEntities = diaryValidationService.validate(page);
@@ -158,7 +161,7 @@ public class DiaryController {
             BatchSize batchSize = new BatchSize(limit, offset);
             List<ErrorEntity> errorEntities = batchSizeValidationService.validate(batchSize);
             if (CollectionUtils.isEmpty(errorEntities)) {
-                List<Page> pages = Lists.newArrayList();
+                List<Page> pages = diaryService.getPages(limit, offset);
                 GenericEntity<List<Page>> pageListObj = new GenericEntity<List<Page>>
                         (pages) {
                 };
