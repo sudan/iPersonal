@@ -170,6 +170,12 @@
                         var entity = self.buildModel(entity);
                         entity.set({ entityType : entityType });
                         entity.set({ id : entityId });
+
+                        if (entity.attributes.tags && !(entity.attributes.tags instanceof Array)) {
+                            var tags = [];
+                            tags.push(entity.attributes.tags);
+                            entity.set({ 'tags': tags });
+                        }
                         self._displayEntity(entity);
                     }
                 });
