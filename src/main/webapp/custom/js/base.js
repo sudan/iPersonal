@@ -243,11 +243,7 @@
 
             var self = this;
             var entityId = $('img.delete').data('id');
-
-            if (this.entityType == 'DIARY')
-                var model = this.getDeletableModel(entityId, $('img.delete').data('year'));
-            else
-                var model = this.getDeletableModel(entityId);
+            var model = this.getDeletableModel(entityId);
             var result = model.destroy();
             if (result) {
                 result.complete(function(response) {

@@ -31,6 +31,9 @@ public class Page {
 
     private String summary;
 
+    @FieldName(name = FieldKeys.PAGE_YEAR)
+    private int year;
+
     @FieldName(name = FieldKeys.PAGE_MONTH)
     private int month;
 
@@ -70,6 +73,21 @@ public class Page {
         this.content = content;
     }
 
+    public String getSummary() {
+        return summary;
+    }
+
+    public void setSummary(String summary) {
+        this.summary = summary;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
 
     public int getMonth() {
         return month;
@@ -79,28 +97,12 @@ public class Page {
         this.month = month;
     }
 
-    public String getSummary() {
-        return summary;
-    }
-
-    public void setSummary(String summary) {
-        this.summary = summary;
-    }
-
     public int getDate() {
         return date;
     }
 
     public void setDate(int date) {
         this.date = date;
-    }
-
-    public List<String> getTags() {
-        return tags;
-    }
-
-    public void setTags(List<String> tags) {
-        this.tags = tags;
     }
 
     public Long getCreatedOn() {
@@ -119,6 +121,14 @@ public class Page {
         this.modifiedAt = modifiedAt;
     }
 
+    public List<String> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<String> tags) {
+        this.tags = tags;
+    }
+
     @Override
 
     public String toString() {
@@ -127,6 +137,9 @@ public class Page {
                 .append("title", title)
                 .append("summary", summary)
                 .append("content", content)
+                .append("year", year)
+                .append("month", month)
+
                 .append("date", date)
                 .append("tags", tags)
                 .append("createdOn", createdOn)

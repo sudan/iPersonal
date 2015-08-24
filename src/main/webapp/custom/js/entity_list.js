@@ -45,7 +45,7 @@
                     todoView.displayEntity(entityId, 'id', 'todo');
                     break;
                 case 'DIARY':
-                    pageView.displayEntity(entityId, 'id', 'diary');
+                    diaryView.displayEntity(entityId, 'id', 'diary');
                     break;
                 case 'EXPENSE':
                     expenseView.displayEntity(entityId, 'id', 'expense');

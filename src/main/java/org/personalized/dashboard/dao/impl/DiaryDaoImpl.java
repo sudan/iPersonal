@@ -1,7 +1,6 @@
 package org.personalized.dashboard.dao.impl;
 
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import com.google.inject.Inject;
 import com.mongodb.Block;
 import com.mongodb.client.FindIterable;
@@ -16,7 +15,6 @@ import org.personalized.dashboard.utils.FieldKeys;
 import org.personalized.dashboard.utils.generator.IdGenerator;
 
 import java.util.List;
-import java.util.Map;
 
 import static com.mongodb.client.model.Filters.*;
 
@@ -33,7 +31,7 @@ public class DiaryDaoImpl implements DiaryDao {
     }
 
     @Override
-    public String create(Page page, int year, String userId) {
+    public String create(Page page, String userId) {
         MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection(Constants.DIARIES);
 
         String pageId = idGenerator.generateId(Constants.PAGE_PREFIX, Constants.ID_LENGTH, true);
@@ -42,7 +40,7 @@ public class DiaryDaoImpl implements DiaryDao {
                 .append(FieldKeys.PAGE_TITLE, page.getTitle())
                 .append(FieldKeys.PAGE_SUMMARY, page.getSummary())
                 .append(FieldKeys.PAGE_DESCRIPTION, page.getContent())
-                .append(FieldKeys.DIARY_YEAR, year)
+                .append(FieldKeys.PAGE_YEAR, page.getYear())
                 .append(FieldKeys.PAGE_MONTH, page.getMonth())
                 .append(FieldKeys.PAGE_DATE, page.getDate())
                 .append(FieldKeys.USER_ID, userId)
@@ -54,12 +52,11 @@ public class DiaryDaoImpl implements DiaryDao {
     }
 
     @Override
-    public Page get(String pageId, int year, String userId) {
+    public Page get(String pageId, String userId) {
         MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection(Constants.DIARIES);
 
         Document document = collection.find(and(
                         eq(FieldKeys.PRIMARY_KEY, pageId),
-                        eq(FieldKeys.DIARY_YEAR, year),
                         eq(FieldKeys.USER_ID, userId),
                         ne(FieldKeys.IS_DELETED, true)
                 )
@@ -74,6 +71,7 @@ public class DiaryDaoImpl implements DiaryDao {
             page.setContent(document.getString(FieldKeys.PAGE_DESCRIPTION));
             page.setDate(document.getInteger(FieldKeys.PAGE_DATE));
             page.setMonth(document.getInteger(FieldKeys.PAGE_MONTH));
+            page.setYear(document.getInteger(FieldKeys.PAGE_YEAR));
             page.setCreatedOn(document.getLong(FieldKeys.CREATED_ON));
             page.setModifiedAt(document.getLong(FieldKeys.MODIFIED_AT));
 
@@ -87,13 +85,13 @@ public class DiaryDaoImpl implements DiaryDao {
     }
 
     @Override
-    public Long update(Page page, int year, String userId) {
+    public Long update(Page page, String userId) {
         MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection(Constants.DIARIES);
         Document document = new Document()
                 .append(FieldKeys.PAGE_TITLE, page.getTitle())
                 .append(FieldKeys.PAGE_SUMMARY, page.getSummary())
                 .append(FieldKeys.PAGE_DESCRIPTION, page.getContent())
-                .append(FieldKeys.DIARY_YEAR, year)
+                .append(FieldKeys.PAGE_YEAR, page.getYear())
                 .append(FieldKeys.PAGE_MONTH, page.getMonth())
                 .append(FieldKeys.PAGE_DATE, page.getDate())
                 .append(FieldKeys.MODIFIED_AT, System.currentTimeMillis());
@@ -110,7 +108,7 @@ public class DiaryDaoImpl implements DiaryDao {
     }
 
     @Override
-    public Long delete(String pageId, int year, String userId) {
+    public Long delete(String pageId, String userId) {
         MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection(Constants.DIARIES);
 
         Document document = new Document()
@@ -119,7 +117,6 @@ public class DiaryDaoImpl implements DiaryDao {
         UpdateResult updateResult = collection.updateOne(
                 and(
                         eq(FieldKeys.PRIMARY_KEY, pageId),
-                        eq(FieldKeys.DIARY_YEAR, year),
                         eq(FieldKeys.USER_ID, userId)
                 ),
                 new Document(Constants.SET_OPERATION, document)
@@ -139,7 +136,7 @@ public class DiaryDaoImpl implements DiaryDao {
     }
 
     @Override
-    public Map<Integer, List<Page>> getAll(int limit, int offset, String userId) {
+    public List<Page> getAll(int limit, int offset, String userId) {
         MongoCollection<Document> collection = MongoBootstrap.getMongoDatabase().getCollection(Constants.DIARIES);
 
         FindIterable<Document> iterator = collection.find(and
@@ -151,7 +148,7 @@ public class DiaryDaoImpl implements DiaryDao {
                 new Document(FieldKeys.MODIFIED_AT, -1)
         );
 
-        final Map<Integer, List<Page>> yearToPagesMap = Maps.newLinkedHashMap();
+        final List<Page> pages = Lists.newArrayList();
         iterator.forEach(new Block<Document>() {
             @Override
             public void apply(Document document) {
@@ -162,6 +159,7 @@ public class DiaryDaoImpl implements DiaryDao {
                 page.setSummary(document.getString(FieldKeys.PAGE_SUMMARY));
                 page.setContent(document.getString(FieldKeys.PAGE_DESCRIPTION));
                 page.setDate(document.getInteger(FieldKeys.PAGE_DATE));
+                page.setYear(document.getInteger(FieldKeys.PAGE_YEAR));
                 page.setMonth(document.getInteger(FieldKeys.PAGE_MONTH));
                 page.setCreatedOn(document.getLong(FieldKeys.CREATED_ON));
                 page.setModifiedAt(document.getLong(FieldKeys.MODIFIED_AT));
@@ -170,18 +168,10 @@ public class DiaryDaoImpl implements DiaryDao {
                     List<String> tags = (List<String>) document.get(FieldKeys.ENTITY_TAGS);
                     page.setTags(tags);
                 }
-
-                Integer year = document.getInteger(FieldKeys.DIARY_YEAR);
-                if (yearToPagesMap.containsKey(year)) {
-                    yearToPagesMap.get(year).add(page);
-                } else {
-                    List<Page> pages = Lists.newArrayList();
-                    pages.add(page);
-                    yearToPagesMap.put(year, pages);
-                }
+                pages.add(page);
             }
         });
 
-        return yearToPagesMap;
+        return pages;
     }
 }
