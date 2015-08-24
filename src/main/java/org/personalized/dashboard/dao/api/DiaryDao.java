@@ -28,7 +28,7 @@ public interface DiaryDao {
     Page get(String pageId, String userId);
 
     /**
-     * Update the page for thr eser
+     * Update the page for the user
      *
      * @param page
      * @param userId
