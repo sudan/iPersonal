@@ -47,7 +47,7 @@ public class FieldKeys {
     public static final String PAGE_TITLE = "title";
     public static final String PAGE_SUMMARY = "summary";
     public static final String PAGE_DESCRIPTION = "description";
-    public static final String DIARY_YEAR = "year";
+    public static final String PAGE_YEAR = "year";
     public static final String PAGE_MONTH = "month";
     public static final String PAGE_DATE = "date";
     public static final String DIARY_PAGES = "pages";

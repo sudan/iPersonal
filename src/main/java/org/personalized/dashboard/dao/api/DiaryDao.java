@@ -3,7 +3,6 @@ package org.personalized.dashboard.dao.api;
 import org.personalized.dashboard.model.Page;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by sudan on 3/4/15.
@@ -11,44 +10,40 @@ import java.util.Map;
 public interface DiaryDao {
 
     /**
-     * Create a new page for the year and user
+     * Create a new page for the user
      *
      * @param page
-     * @param year
      * @param userId
      * @return
      */
-    String create(Page page, int year, String userId);
+    String create(Page page, String userId);
 
     /**
-     * Get the page for the year and user
+     * Get the page for the user
      *
      * @param pageId
-     * @param year
      * @param userId
      * @return
      */
-    Page get(String pageId, int year, String userId);
+    Page get(String pageId, String userId);
 
     /**
-     * Update the page for the year and user
+     * Update the page for the user
      *
      * @param page
-     * @param year
      * @param userId
      * @return
      */
-    Long update(Page page, int year, String userId);
+    Long update(Page page, String userId);
 
     /**
-     * Delete the page for the year and userId
+     * Delete the page for the userId
      *
      * @param pageId
-     * @param year
      * @param userId
      * @return
      */
-    Long delete(String pageId, int year, String userId);
+    Long delete(String pageId, String userId);
 
     /**
      * Count the number of pages for the year
@@ -66,5 +61,5 @@ public interface DiaryDao {
      * @param userId
      * @return
      */
-    Map<Integer, List<Page>> getAll(int limit, int offset, String userId);
+    List<Page> getAll(int limit, int offset, String userId);
 }

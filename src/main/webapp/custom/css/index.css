@@ -102,3 +102,9 @@ img.google-plus {
 	width: 50%;
     margin: 0 auto;
 }
+
+.general-search-wrapper {
+	width: 300px;
+	margin-top: 3%;
+	margin-left: 10%;
+}

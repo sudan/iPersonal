@@ -14,7 +14,6 @@ import org.personalized.dashboard.utils.generator.IdGenerator;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by sudan on 12/7/15.
@@ -96,7 +95,7 @@ public class TagDaoTest {
             List<Pin> pins = pinDao.get(5, 0, "1");
             List<Todo> todos = todoDao.get(5, 0, "1");
             List<Expense> expenses = expenseDao.get(new ExpenseFilter(), 5, 0, "1");
-            Map<Integer, List<Page>> pages = diaryDao.getAll(10, 0, "1");
+            List<Page> pages = diaryDao.getAll(10, 0, "1");
 
             Assert.assertEquals("Bookmark1 tag 0", "bookmark1", bookmarks.get(1).getTags().get(0));
             Assert.assertEquals("Bookmark2 tag 0", "bookmark1", bookmarks.get(0).getTags().get(0));
@@ -118,9 +117,9 @@ public class TagDaoTest {
             Assert.assertEquals("Expense2 tag 0", "expense1", expenses.get(0).getTags().get(0));
             Assert.assertEquals("Expense2 tag 1", "expense2", expenses.get(0).getTags().get(1));
 
-            Assert.assertEquals("Page1 tag 0", "page1", pages.get(2016).get(0).getTags().get(0));
-            Assert.assertEquals("Page1 tag 1", "page2", pages.get(2016).get(0).getTags().get(1));
-            Assert.assertEquals("Page2 tag 0", "page1", pages.get(2016).get(1).getTags().get(0));
+            Assert.assertEquals("Page1 tag 0", "page1", pages.get(0).getTags().get(0));
+            Assert.assertEquals("Page1 tag 1", "page2", pages.get(0).getTags().get(1));
+            Assert.assertEquals("Page2 tag 0", "page1", pages.get(1).getTags().get(0));
 
         }
     }
@@ -206,14 +205,14 @@ public class TagDaoTest {
         page1.setContent("content");
         page1.setMonth(10);
         page1.setDate(21);
-        String pageId1 = diaryDao.create(page1, 2016, "1");
+        String pageId1 = diaryDao.create(page1, "1");
 
         page2 = new Page();
         page2.setTitle("title");
         page2.setContent("content");
         page2.setMonth(10);
         page2.setDate(21);
-        String pageId2 = diaryDao.create(page2, 2016, "1");
+        String pageId2 = diaryDao.create(page2, "1");
 
         Entity entity1 = new Entity(EntityType.BOOKMARK, bookmarkId1, "name1");
         Entity entity2 = new Entity(EntityType.BOOKMARK, bookmarkId2, "name2");
@@ -293,7 +292,7 @@ public class TagDaoTest {
         todo2 = todoDao.get(todoId2, "1");
         expense1 = expenseDao.get(expenseId1, "1");
         expense2 = expenseDao.get(expenseId2, "1");
-        page1 = diaryDao.get(pageId1, 2016, "1");
-        page2 = diaryDao.get(pageId2, 2016, "1");
+        page1 = diaryDao.get(pageId1, "1");
+        page2 = diaryDao.get(pageId2, "1");
     }
 }

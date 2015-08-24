@@ -61,6 +61,10 @@
 
           },
 
+          buildModel: function(entity) {
+              return new Expense(entity);
+          },
+
           prepareVariables: function() {
 
               this.saveForm = $('#expense-form');

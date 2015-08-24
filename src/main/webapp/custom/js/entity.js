@@ -124,8 +124,8 @@
                         Init.initPin();
                         break;
                     case 'DIARY':
-                        pageView.renderCreateTemplate();
-                        pageView.prepareVariables();
+                        diaryView.renderCreateTemplate();
+                        diaryView.prepareVariables();
                         Init.initDiary();
                         break;
                     case 'EXPENSE':
@@ -151,7 +151,7 @@
                     case 'TODO':
                         break;
                     case 'DIARY':
-                        pageView.fetchPages();
+                        diaryView.fetchPages();
                         break;
                     case 'EXPENSE':
                         expenseView.fetchExpenses();

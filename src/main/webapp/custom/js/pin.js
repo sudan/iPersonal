@@ -50,6 +50,11 @@
             });
         },
 
+
+        buildModel: function(entity) {
+            return new Pin(entity);
+        },
+
         prepareVariables: function() {
             this.tagImage = $('#pin-tag-img');
             this.searchTag = $('#pin-tag');

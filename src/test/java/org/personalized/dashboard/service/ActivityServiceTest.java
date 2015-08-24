@@ -150,12 +150,12 @@ public class ActivityServiceTest {
             page.setContent("content");
             page.setMonth(10);
             page.setDate(22);
-            String pageId = diaryService.createPage(page, 2016);
+            String pageId = diaryService.createPage(page);
 
             page.setPageId(pageId);
             page.setContent("con");
-            diaryService.updatePage(page, 2016);
-            diaryService.deletePage(pageId, 2016);
+            diaryService.updatePage(page);
+            diaryService.deletePage(pageId);
 
             List<Activity> activities = activityService.get();
 

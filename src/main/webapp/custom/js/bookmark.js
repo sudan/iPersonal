@@ -40,11 +40,6 @@
             'click #book-tag-img': 'displayTagSelection'
         },
 
-        initialize: function() {
-
-            var self = this;
-        },
-
         getModel: function() {
             return new Bookmark({
                 name: '',
@@ -52,6 +47,10 @@
                 url: '',
                 tags: []
             });
+        },
+
+        buildModel: function(entity) {
+            return new Bookmark(entity);
         },
 
         prepareVariables: function() {
