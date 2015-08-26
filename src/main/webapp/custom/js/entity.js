@@ -123,6 +123,11 @@
                         pinView.prepareVariables();
                         Init.initPin();
                         break;
+                    case 'TODO':
+                        todoView.renderCreateTemplate();
+                        todoView.prepareVariables();
+                        Init.initTodo();
+                        break;
                     case 'DIARY':
                         diaryView.renderCreateTemplate();
                         diaryView.prepareVariables();

@@ -279,6 +279,63 @@
             </div>
         </div>
     </script>
+    <script type="text/template" id="todo-upsert-template">
+        <div class="panel panel-default entity-form">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    <img src="custom/images/todo.png"/>
+                    <i>Todo</i>
+                </h3>
+            </div>
+            <div class="panel-body">
+                <form method="POST" id="todo-form" action="#">
+                    <% if (typeof id !== "undefined") { %>
+                        <span class="entityId invisible"><%= id %></span>
+                     <% } else { %>
+                        <span class="entityId invisible"></span>
+                    <% } %>
+                    <div class="form-group">
+                        <input class="form-control" name="title" placeholder="Title"/>
+                        <span class="title-error error-msg"></span>
+                        <button type="submit" class="btn btn-link btn-element add-task">Add a Task
+                        </button>
+                    </div>
+                    <div id="task-form" class="panel panel-default entity-form invisible">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                                <img src="custom/images/task.png"/>
+                                <i>Task</i>
+                            </h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <input class="form-control" name="name" placeholder="name"/>
+                                <span class="name-error error-msg"></span>
+                            </div>
+                            <div class="form-group">
+                                <textarea class="form-control" name="task" rows="3" placeholder="task goes here"></textarea>
+                                <span class="task-error error-msg"></span>
+                            </div>
+                            <div class="form-group">
+                                <label>Priority :</label>
+                                <label class="radio-inline">
+                                    <input id="high" type="radio" name="priority" value="high"/>High
+                                </label>
+                                <label class="radio-inline">
+                                    <input id="medium" type="radio" name="priority" value="medium"/>Medium
+                                </label>
+                                <label class="radio-inline">
+                                    <input id="low" type="radio" name="priority" value="low"/>low
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group tasks">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </script>
     <script type="text/template" id="diary-upsert-template">
         <div class="panel panel-default entity-form">
             <div class="panel-heading">
@@ -862,7 +919,7 @@
                     <div id="bookmark-wrapper" class="invisible"></div>
                     <div id="note-wrapper" class="invisible"></div>
                     <div id="pin-wrapper" class="invisible"></div>
-                    <div id="todo-wrapper"></div>
+                    <div id="todo-wrapper" class="invisible"></div>
                     <div id="diary-wrapper" class="invisible"></div>
                     <div id="expense-wrapper" class="invisible"></div>
                 </div>
@@ -892,6 +949,7 @@
 <script type="text/javascript" src="custom/js/bookmark.js"></script>
 <script type="text/javascript" src="custom/js/note.js"></script>
 <script type="text/javascript" src="custom/js/pin.js"></script>
+<script type="text/javascript" src="custom/js/todo.js"></script>
 <script type="text/javascript" src="custom/js/diary.js"></script>
 <script type="text/javascript" src="custom/js/expense.js"></script>
 <script type="text/javascript" src="custom/js/entity.js"></script>
