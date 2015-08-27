@@ -34,12 +34,16 @@
             'click #todo-tag-img': 'displayTagSelection',
             'click .add-task' : 'showTaskForm',
             'click #task-add-button': 'addTask',
-            'click #task-cancel-button': 'cancelTask'
+            'click #task-cancel-button': 'cancelTask',
+            'click .delete': 'deleteTask',
+            'click .edit': 'editTask'
         },
 
         showTaskForm: function(e) {
 
-            e.preventDefault();
+            if (e) {
+                e.preventDefault();
+            }
             this.$el.find('.add-task').addClass('invisible').fadeOut();
             this.$el.find('#task-form').removeClass('invisible').fadeIn();
         },
@@ -99,6 +103,10 @@
 
             var template = _.template(this.taskTemplate);
             this.tasks.append(template(this.model.toJSON()));
+
+            this.$el.find('[name=name]').val('');
+            this.$el.find('[name=task]').val('');
+            this.$el.find('#percent-completion').slider('setValue', 0);
         },
 
         cancelTask: function(e) {
@@ -106,9 +114,32 @@
 
             this.$el.find('[name=name]').val('');
             this.$el.find('[name=task]').val('');
+            this.$el.find('#percent-completion').slider('setValue', 0);
             this.$el.find('#task-form').addClass('invisible').fadeOut();
             this.$el.find('.add-task').removeClass('invisible').fadeIn();
         },
+
+        editTask: function(e) {
+
+            var taskDiv = $(e.target).closest('.task-entity');
+            var name = taskDiv.find('.name').html();
+            var task = taskDiv.find('.task').html().trim();
+            var priority = taskDiv.find('.priority').html();
+            var percentCompletion = taskDiv.find('.percentCompletion').html().split(' ');
+
+            this.$el.find('[name=name]').val(name);
+            this.$el.find('[name=task]').val(task);
+            this.$el.find('#percent-completion').slider('setValue', percentCompletion);
+            this.$el.find('[name=priority]').removeAttr('checked');
+            this.$el.find('#' + priority.toLowerCase()).click();
+
+            this.showTaskForm();
+        },
+
+        deleteTask: function(e) {
+
+            $(e.target).closest('div.task-entity').remove();
+        }
 
     });
 

@@ -130,6 +130,7 @@ img.google-plus {
 .add-task {
 	float: right;
 	cursor: pointer;
+	margin-bottom: 2px;
 }
 
 .percent-completion {
@@ -138,4 +139,8 @@ img.google-plus {
 
 .percent-completion-label {
 	padding-right: 10px;
+}
+
+.task-entity {
+	margin-bottom: 10px;	
 }
