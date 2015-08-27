@@ -13,6 +13,7 @@
     <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="vendor/chosen/dist/chosen.min.css" rel="stylesheet" type="text/css">
     <link href="vendor/datepicker/dist/datepicker.min.css" rel="stylesheet" type="text/css"/>
+    <link href="vendor/slider/dist/slider.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="vendor/rte/dist/font-awesome.css" type="text/css">
     <link rel="stylesheet" href="vendor/rte/dist/prettify.css" type="text/css">
     <link href="custom/css/index.css" rel="stylesheet" type="text/css"/>
@@ -297,8 +298,9 @@
                     <div class="form-group">
                         <input class="form-control" name="title" placeholder="Title"/>
                         <span class="title-error error-msg"></span>
-                        <button type="submit" class="btn btn-link btn-element add-task">Add a Task
-                        </button>
+                    </div>
+                    <div class="form-group">
+                        <img class="add-task" src="custom/images/plus.png" title="Add a Task">
                     </div>
                     <div id="task-form" class="panel panel-default entity-form invisible">
                         <div class="panel-heading">
@@ -319,20 +321,44 @@
                             <div class="form-group">
                                 <label>Priority :</label>
                                 <label class="radio-inline">
-                                    <input id="high" type="radio" name="priority" value="high"/>High
+                                    <input id="high" type="radio" name="priority" value="HIGH"/>High
                                 </label>
                                 <label class="radio-inline">
-                                    <input id="medium" type="radio" name="priority" value="medium"/>Medium
+                                    <input id="medium" type="radio" name="priority" value="MEDIUM" checked="checked"/>Medium
                                 </label>
                                 <label class="radio-inline">
-                                    <input id="low" type="radio" name="priority" value="low"/>low
+                                    <input id="low" type="radio" name="priority" value="LOW"/>Low
                                 </label>
+                            </div>
+                            <div class="form-group">
+                                <label class="percent-completion-label">Percent Completion: </label>
+                                <input type="text" id="percent-completion" class="percent-completion form-control"/>
+                            </div>
+                            <div class="button-group">
+                                <button id="task-add-button" type="submit" class="btn btn-success btn-element">
+                                    Add
+                                </button>
+                                <button id="task-cancel-button" type="submit" class="btn btn-link btn-element">Cancel
+                                </button>
                             </div>
                         </div>
                     </div>
-                    <div class="form-group tasks">
+                    <div id="tasks" class="form-group tasks">
                     </div>
                 </form>
+            </div>
+        </div>
+    </script>
+    <script type="text/template" id="task-display-template">
+        <div class="<%= priority %>">
+            <div class="panel-heading">
+            <b>
+                <%= name %>
+                <span>(<%= percentCompletion %> % Completed )</span>
+            </b>
+            </div>
+            <div class="panel-body">
+            <%= task %>
             </div>
         </div>
     </script>
@@ -941,6 +967,7 @@
 <script type="text/javascript" src="vendor/moment/dist/moment.min.js"></script>
 <script type="text/javascript" src="vendor/confirm/dist/bootstrap-tooltip.js"></script>
 <script type="text/javascript" src="vendor/confirm/dist/bootstrap-confirmation.js"></script>
+<script type="text/javascript" src="vendor/slider/dist/bootstrap-slider.js"></script>
 <script type="text/javascript" src="custom/js/tag.js"></script>
 <script type="text/javascript" src="custom/js/expense_category.js"></script>
 <script type="text/javascript" src="custom/js/init.js"></script>

@@ -37,6 +37,24 @@ img {
 	border: 1px solid #a94442;
 }
 
+.low {
+    color: #8a6d3b;
+    background-color: #fcf8e3;
+    border-color: #faebcc;
+}
+
+.high {
+	color: #a94442;
+	background-color: #f2dede;
+	border-color: #ebccd1;
+}
+
+.medium {
+    color: #3c763d;
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+}
+
 .error-msg {
 	color: #a94442;
 }
@@ -111,4 +129,13 @@ img.google-plus {
 
 .add-task {
 	float: right;
+	cursor: pointer;
+}
+
+.percent-completion {
+	width: 200px;
+}
+
+.percent-completion-label {
+	padding-right: 10px;
 }
