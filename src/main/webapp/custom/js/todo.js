@@ -64,6 +64,13 @@
             this.collection = new Tasks();
             this.saveForm = $('#todo-form');
             this.tasksDiv =  $('#tasks');
+
+            this.saveForm.find('[name=percent-completion]').on('change', this.showPercentTitle);
+        },
+
+        showPercentTitle: function(e) {
+            $(e.target).parent('.form-group').find('.percent-completion-label').html('Percent Completion: '
+                + $(e.target).val() + "%");
         },
 
         initializeUpdateForm: function() {
