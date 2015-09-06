@@ -121,14 +121,7 @@
                 return;
             }
 
-            this.$el.find('#task-form').addClass('invisible').fadeOut();
-            this.$el.find('.add-task').removeClass('invisible').fadeIn();
-
-            this.$el.find('[name=name]').val('');
-            this.$el.find('[name=task]').val('');
-            this.$el.find('[name=percent-completion]').val(0);
-            this.$el.find('.taskId').empty();
-
+            this.resetTask();
             this.collection.add(this.model);
             this.renderTasks();
         },
@@ -136,12 +129,19 @@
         cancelTask: function(e) {
             e.preventDefault();
 
-            this.$el.find('.taskId').empty();
-            this.$el.find('[name=name]').val('');
-            this.$el.find('[name=task]').val('');
-            this.$el.find('[name=percent-completion]').val(0);
+            this.resetTask();
+        },
+
+        resetTask: function() {
+
             this.$el.find('#task-form').addClass('invisible').fadeOut();
             this.$el.find('.add-task').removeClass('invisible').fadeIn();
+            this.$el.find('.taskId').empty();
+            this.$el.find('[name=name]').val('').removeClass('error-field');
+            this.$el.find('.name-error').html('');
+            this.$el.find('[name=task]').val('').removeClass('error-field');
+            this.$el.find('.task-error').html('');
+            this.$el.find('[name=percent-completion]').val(0);
         },
 
         editTask: function(e) {
