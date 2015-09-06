@@ -20,6 +20,10 @@
         }
     });
 
+    var Tasks = Backbone.Collection.extend({
+        model: Task
+    });
+
     var TodoView = BaseView.extend({
 
         entityType: 'TODO',
@@ -58,7 +62,7 @@
 
         prepareVariables: function() {
             this.saveForm = $('#todo-form');
-            this.tasks =  $('#tasks');
+            this.tasksDiv =  $('#tasks');
         },
 
         initializeUpdateForm: function() {
@@ -84,12 +88,11 @@
         addTask: function(e) {
             e.preventDefault();
 
-            var percentCompletion = this.$el.find('#percent-completion').val() ? this.$el.find('#percent-completion').val() : 0;
             this.model = new Task({
                 name : this.$el.find('[name=name]').val(),
                 task : this.$el.find('[name=task]').val(),
                 priority: this.$el.find('[name=priority]:checked').val().toLowerCase(),
-                percentCompletion: percentCompletion
+                percentCompletion: this.$el.find('[name=percent-completion]').val()
             });
 
             var errors = this.model.validate(this.model.attributes);
@@ -101,12 +104,12 @@
             this.$el.find('#task-form').addClass('invisible').fadeOut();
             this.$el.find('.add-task').removeClass('invisible').fadeIn();
 
-            var template = _.template(this.taskTemplate);
-            this.tasks.append(template(this.model.toJSON()));
+            //var template = _.template(this.taskTemplate);
+            //this.tasks.append(template(this.model.toJSON()));
 
             this.$el.find('[name=name]').val('');
             this.$el.find('[name=task]').val('');
-            this.$el.find('#percent-completion').slider('setValue', 0);
+            this.$el.find('[name=percent-completion]').val(0);
         },
 
         cancelTask: function(e) {
@@ -114,7 +117,7 @@
 
             this.$el.find('[name=name]').val('');
             this.$el.find('[name=task]').val('');
-            this.$el.find('#percent-completion').slider('setValue', 0);
+            this.$el.find('[name=percent-completion]').val(0);
             this.$el.find('#task-form').addClass('invisible').fadeOut();
             this.$el.find('.add-task').removeClass('invisible').fadeIn();
         },
@@ -129,7 +132,7 @@
 
             this.$el.find('[name=name]').val(name);
             this.$el.find('[name=task]').val(task);
-            this.$el.find('#percent-completion').slider('setValue', percentCompletion);
+            this.$el.find('[name=percent-completion]').val(percentCompletion);
             this.$el.find('[name=priority]').removeAttr('checked');
             this.$el.find('#' + priority.toLowerCase()).click();
 

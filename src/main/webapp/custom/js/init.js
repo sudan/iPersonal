@@ -43,13 +43,6 @@
                 no_results_text: 'Add a new tag and press enter(min 3 chars)'
             }).trigger('chosen:updated');
             this.initChosenDropdowns();
-
-            $('#percent-completion').slider({
-                min: 0,
-                max: 100,
-                step: 1,
-                value: 0,
-            });
         },
 
         initDiary: function() {
