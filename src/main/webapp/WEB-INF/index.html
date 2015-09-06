@@ -331,7 +331,7 @@
                             </div>
                             <div class="form-group">
                                 <label class="percent-completion-label">Percent Completion: </label>
-                                <input type="range" name="percent-completion" class="percent-completion" min="0" max="100"/>
+                                <input type="range" name="percent-completion" class="percent-completion" min="0" max="100" value="0"/>
                             </div>
                             <div class="button-group">
                                 <button id="task-add-button" type="submit" class="btn btn-success btn-element">
@@ -351,20 +351,23 @@
         </div>
     </script>
     <script type="text/template" id="task-display-template">
-        <div class="task-entity <%= priority %>">
-            <div class="panel-heading">
-            <b>
-                <span class="name"><%= name %></span>
-                ( <span class="percentCompletion"><%= percentCompletion %></span> % Completed )
-                <a href="#" class="delete actionable clickable">Delete</a>
-                <a href="#" class="edit actionable clickable">Edit</a>
-            </b>
+        <% _.each(tasks, function(task){ %>
+            <div class="task-entity <%= task.priority %>">
+                <span class="invisible id"><%= task.id %></span>
+                <div class="panel-heading">
+                <b>
+                    <span class="name"><%= task.name %></span>
+                    ( <span class="percentCompletion"><%= task.percentCompletion %></span> % Completed )
+                    <a href="#" class="delete actionable clickable">Delete</a>
+                    <a href="#" class="edit actionable clickable">Edit</a>
+                </b>
+                </div>
+                <span class="priority invisible"><%= task.priority %></span>
+                <div class="panel-body task">
+                <%= task.task %>
+                </div>
             </div>
-            <span class="priority invisible"><%= priority %></span>
-            <div class="panel-body task">
-            <%= task %>
-            </div>
-        </div>
+        <% }); %>
     </script>
     <script type="text/template" id="diary-upsert-template">
         <div class="panel panel-default entity-form">

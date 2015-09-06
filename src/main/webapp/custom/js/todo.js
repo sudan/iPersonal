@@ -61,6 +61,7 @@
         },
 
         prepareVariables: function() {
+            this.collection = new Tasks();
             this.saveForm = $('#todo-form');
             this.tasksDiv =  $('#tasks');
         },
@@ -104,12 +105,12 @@
             this.$el.find('#task-form').addClass('invisible').fadeOut();
             this.$el.find('.add-task').removeClass('invisible').fadeIn();
 
-            //var template = _.template(this.taskTemplate);
-            //this.tasks.append(template(this.model.toJSON()));
-
             this.$el.find('[name=name]').val('');
             this.$el.find('[name=task]').val('');
             this.$el.find('[name=percent-completion]').val(0);
+
+            this.collection.add(this.model);
+            this.renderTasks();
         },
 
         cancelTask: function(e) {
@@ -141,7 +142,40 @@
 
         deleteTask: function(e) {
 
-            $(e.target).closest('div.task-entity').remove();
+            var taskId = $(e.target).closest('div.task-entity').find('.id').html();
+            this.collection.remove(this.collection.get(taskId));
+            this.renderTasks();
+        },
+
+        buildTaskList: function() {
+
+            var entityList = [];
+
+            for (var i = 0; i < this.collection.length; i++) {
+
+                var entity = {
+                    'id': this.collection.models[i].cid,
+                    'priority': this.collection.models[i].attributes.priority,
+                    'percentCompletion': this.collection.models[i].attributes.percentCompletion,
+                    'name': this.collection.models[i].attributes.name,
+                    'task': this.collection.models[i].attributes.task
+                };
+                entityList.push(entity);
+            }
+            return entityList;
+        },
+
+        renderTasks: function() {
+
+            this.tasksDiv.empty();
+            var taskEntities = this.buildTaskList();
+            var template = _.template(this.taskTemplate);
+
+            this.tasksDiv.html(
+                template({
+                    'tasks': taskEntities
+                }
+            ));
         }
 
     });
