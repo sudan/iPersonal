@@ -368,6 +368,15 @@
                 </div>
             </div>
         <% }); %>
+        <% if (tasks.length > 0){ %>
+            <div class="button-group">
+                <button id="todo-submit" type="submit" class="btn btn-success btn-element">
+                    Submit
+                </button>
+                <button id="todo-cancel" type="submit" class="btn btn-link btn-element">Cancel
+                </button>
+            </div>
+        <% } %>
     </script>
     <script type="text/template" id="diary-upsert-template">
         <div class="panel panel-default entity-form">
