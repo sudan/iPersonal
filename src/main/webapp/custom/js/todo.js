@@ -89,12 +89,24 @@
         addTask: function(e) {
             e.preventDefault();
 
-            this.model = new Task({
-                name : this.$el.find('[name=name]').val(),
-                task : this.$el.find('[name=task]').val(),
-                priority: this.$el.find('[name=priority]:checked').val().toLowerCase(),
-                percentCompletion: this.$el.find('[name=percent-completion]').val()
-            });
+            var taskId = this.$el.find('.taskId').html();
+
+            if (!taskId){
+                this.model = new Task({
+                    name : this.$el.find('[name=name]').val(),
+                    task : this.$el.find('[name=task]').val(),
+                    priority: this.$el.find('[name=priority]:checked').val().toLowerCase(),
+                    percentCompletion: this.$el.find('[name=percent-completion]').val()
+                });
+            } else {
+                this.model = this.collection.get(taskId);
+                this.model.set({
+                    name : this.$el.find('[name=name]').val(),
+                    task : this.$el.find('[name=task]').val(),
+                    priority: this.$el.find('[name=priority]:checked').val().toLowerCase(),
+                    percentCompletion: this.$el.find('[name=percent-completion]').val()
+                });
+            }
 
             var errors = this.model.validate(this.model.attributes);
             if (errors) {
@@ -108,6 +120,7 @@
             this.$el.find('[name=name]').val('');
             this.$el.find('[name=task]').val('');
             this.$el.find('[name=percent-completion]').val(0);
+            this.$el.find('.taskId').empty();
 
             this.collection.add(this.model);
             this.renderTasks();
@@ -116,6 +129,7 @@
         cancelTask: function(e) {
             e.preventDefault();
 
+            this.$el.find('.taskId').empty();
             this.$el.find('[name=name]').val('');
             this.$el.find('[name=task]').val('');
             this.$el.find('[name=percent-completion]').val(0);
@@ -129,8 +143,10 @@
             var name = taskDiv.find('.name').html();
             var task = taskDiv.find('.task').html().trim();
             var priority = taskDiv.find('.priority').html();
+            var taskId = taskDiv.find('.id').html();
             var percentCompletion = taskDiv.find('.percentCompletion').html().split(' ');
 
+            this.$el.find('.taskId').html(taskId);
             this.$el.find('[name=name]').val(name);
             this.$el.find('[name=task]').val(task);
             this.$el.find('[name=percent-completion]').val(percentCompletion);

@@ -289,11 +289,6 @@
             </div>
             <div class="panel-body">
                 <form method="POST" id="todo-form" action="#">
-                    <% if (typeof id !== "undefined") { %>
-                        <span class="entityId invisible"><%= id %></span>
-                     <% } else { %>
-                        <span class="entityId invisible"></span>
-                    <% } %>
                     <div class="form-group">
                         <input class="form-control" name="title" placeholder="Title"/>
                         <span class="title-error error-msg"></span>
@@ -309,6 +304,11 @@
                             </h3>
                         </div>
                         <div class="panel-body">
+                            <% if (typeof taskId !== "undefined") { %>
+                                <span class="invisible taskId"><%= taskId %></span>
+                            <% } else { %>
+                                <span class="invisible taskId"></span>
+                            <% } %>
                             <div class="form-group">
                                 <input class="form-control" name="name" placeholder="name"/>
                                 <span class="name-error error-msg"></span>
