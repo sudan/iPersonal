@@ -289,9 +289,25 @@
             </div>
             <div class="panel-body">
                 <form method="POST" id="todo-form" action="#">
+                    <% if (typeof id !== "undefined") { %>
+                    <span class="entityId invisible"><%= id %></span>
+                    <% } else { %>
+                    <span class="entityId invisible"></span>
+                    <% } %>
                     <div class="form-group">
                         <input class="form-control" name="title" placeholder="Title"/>
                         <span class="title-error error-msg"></span>
+                    </div>
+                    <div class="form-group">
+                        <img id="todo-tag-img" class="clickable" title="Add Tags" src="custom/images/tag.png"/>
+                    </div>
+                    <div class="form-group invisible">
+                        <select id="todo-tag" multiple="multiple" class="form-control chosen-menu"
+                            data-placeholder="search tags">
+                            <% _.each(tags, function(tag){ %>
+                                <option value="<%= tag %>" selected="selected"><%= tag %></option>
+                            <% }); %>
+                        </select>
                     </div>
                     <div class="form-group">
                         <img class="add-task" src="custom/images/plus.png" title="Add a task"/>
@@ -352,7 +368,7 @@
     </script>
     <script type="text/template" id="task-display-template">
         <% _.each(tasks, function(task){ %>
-            <div class="task-entity <%= task.priority %>">
+            <div class="task-entity <%= task.priority.toLowerCase() %>">
                 <span class="invisible id"><%= task.id %></span>
                 <div class="panel-heading">
                 <b>

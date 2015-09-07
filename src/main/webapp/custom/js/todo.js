@@ -2,8 +2,24 @@
 
     "use strict"
 
-    var Todo = Base.extend({
+    var TODO_URL_ROOT = '/iPersonal/dashboard/todos';
 
+    var Todo = Base.extend({
+        urlRoot: TODO_URL_ROOT,
+
+        initialize: function() {
+            this.mandatory = {
+                'title': true
+            },
+            this.maxLength = {
+                'title': 50
+            },
+            this.formAttributes = ['title'];
+        }
+    });
+
+    var Todos = Backbone.Collection.extend({
+        model: Todo
     });
 
     var Task = Base.extend({
@@ -53,7 +69,11 @@
         },
 
         getModel: function() {
-            return new Todo();
+            return new Todo({
+                'title': '',
+                tasks: [],
+                tags: []
+            });
         },
 
         buildModel: function(entity) {
@@ -61,9 +81,11 @@
         },
 
         prepareVariables: function() {
-            this.collection = new Tasks();
+            this.taskCollection = new Tasks();
             this.saveForm = $('#todo-form');
             this.tasksDiv =  $('#tasks');
+            this.searchTag = $('#todo-tag');
+            this.tagImage = $('#todo-tag-img');
 
             this.saveForm.find('[name=percent-completion]').on('change', this.showPercentTitle);
         },
@@ -78,7 +100,65 @@
         },
 
         upsertTodo: function(e) {
+
+            var self = this;
             e.preventDefault();
+
+            var entityId = self.saveForm.find('.entityId').html();
+
+            if (entityId) {
+                self.model = new Todo({
+                    id : entityId,
+                    todoId : entityId
+                });
+            } else {
+                self.model = new Todo();
+            }
+
+            self.model.set({
+                title: self.saveForm.find('[name=title]').val(),
+                tasks: self.taskCollection
+            });
+
+            self.model.on('invalid', function(model, error) {
+                self.renderErrors(error);
+            });
+
+            var result = self.model.save({
+                success: function(response) {},
+                error: function(error) {}
+            });
+
+            if (result) {
+                result.complete(function(response){
+                    if (response.status != 201 && response.status != 200) {
+                        var errors = self.buildErrorObject(response, self);
+                        self.renderErrors(errors);
+                    } else {
+                        var tags = self.searchTag.val();
+                        if (!entityId) {
+                            self.postCreation(response.responseText, "TODO", self.model.get('title'), 1, tags);
+                            self.model.set({
+                                id: response.responseText,
+                                'createdOn': Math.floor(Date.now()),
+                                'modifiedAt': Math.floor(Date.now()),
+                                'tags': tags
+                            });
+                        } else {
+                            self.postCreation(entityId, "TODO", self.model.get('title'), 0, tags);
+                            self.model.set({
+                                'id': entityId,
+                                'modifiedAt': Math.floor(Date.now()),
+                                'tags': tags
+                            });
+                            self.collection.remove(self.collection.at(self.findIndex(entityId)));
+                        }
+                        self.collection.unshift(self.model);
+                        var entityList = self.buildEntityList();
+                        backboneGlobalObj.trigger('entity:displaylist', entityList);
+                    }
+                });
+            }
         },
 
         fetchTodos: function(e) {
@@ -87,6 +167,8 @@
 
         buildEntityList: function() {
 
+            var entityList = [];
+            return entityList;
         },
 
         getDeletableModel: function(id) {
@@ -102,15 +184,15 @@
                 this.model = new Task({
                     name : this.$el.find('[name=name]').val(),
                     task : this.$el.find('[name=task]').val(),
-                    priority: this.$el.find('[name=priority]:checked').val().toLowerCase(),
+                    priority: this.$el.find('[name=priority]:checked').val(),
                     percentCompletion: this.$el.find('[name=percent-completion]').val()
                 });
             } else {
-                this.model = this.collection.get(taskId);
+                this.model = this.taskCollection.get(taskId);
                 this.model.set({
                     name : this.$el.find('[name=name]').val(),
                     task : this.$el.find('[name=task]').val(),
-                    priority: this.$el.find('[name=priority]:checked').val().toLowerCase(),
+                    priority: this.$el.find('[name=priority]:checked').val(),
                     percentCompletion: this.$el.find('[name=percent-completion]').val()
                 });
             }
@@ -122,7 +204,7 @@
             }
 
             this.resetTask();
-            this.collection.add(this.model);
+            this.taskCollection.add(this.model);
             this.renderTasks();
         },
 
@@ -166,7 +248,7 @@
         deleteTask: function(e) {
 
             var taskId = $(e.target).closest('div.task-entity').find('.id').html();
-            this.collection.remove(this.collection.get(taskId));
+            this.taskCollection.remove(this.taskCollection.get(taskId));
             this.renderTasks();
         },
 
@@ -174,14 +256,14 @@
 
             var entityList = [];
 
-            for (var i = 0; i < this.collection.length; i++) {
+            for (var i = 0; i < this.taskCollection.length; i++) {
 
                 var entity = {
-                    'id': this.collection.models[i].cid,
-                    'priority': this.collection.models[i].attributes.priority,
-                    'percentCompletion': this.collection.models[i].attributes.percentCompletion,
-                    'name': this.collection.models[i].attributes.name,
-                    'task': this.collection.models[i].attributes.task
+                    'id': this.taskCollection.models[i].cid,
+                    'priority': this.taskCollection.models[i].attributes.priority,
+                    'percentCompletion': this.taskCollection.models[i].attributes.percentCompletion,
+                    'name': this.taskCollection.models[i].attributes.name,
+                    'task': this.taskCollection.models[i].attributes.task
                 };
                 entityList.push(entity);
             }
@@ -203,6 +285,8 @@
 
     });
 
-    window.todoView = new TodoView();
+    window.todoView = new TodoView({
+        collection: new Todos()
+    });
 
 })(jQuery, window, document);
