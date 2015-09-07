@@ -142,14 +142,14 @@
                                 id: response.responseText,
                                 'createdOn': Math.floor(Date.now()),
                                 'modifiedAt': Math.floor(Date.now()),
-                                'tags': tags
+                                'tags': tags,
                             });
                         } else {
                             self.postCreation(entityId, "TODO", self.model.get('title'), 0, tags);
                             self.model.set({
                                 'id': entityId,
                                 'modifiedAt': Math.floor(Date.now()),
-                                'tags': tags
+                                'tags': tags,
                             });
                             self.collection.remove(self.collection.at(self.findIndex(entityId)));
                         }
@@ -163,11 +163,79 @@
 
         fetchTodos: function(e) {
 
+            var self = this;
+
+            if (e) {
+                e.preventDefault();
+            }
+
+            if (this.collection.length == parseInt(entityCountModel.attributes.todos)) {
+                var entityList = this.buildEntityList();
+                backboneGlobalObj.trigger('entity:displaylist', entityList);
+                return;
+            }
+
+            this.model = new Todo();
+            this.model.fetch({
+                data: {
+                    offset: this.collection.length,
+                    limit: 20
+                }
+            }).complete(function(response) {
+                if (response.status == 200) {
+                    var todos = JSON.parse(response.responseText)['todo'];
+                    if (todos instanceof Array) {
+                        for (var index in todos) {
+                            var todo = new Todo(todos[index]);
+                            todo.set({
+                                id: todos[index]['todoId']
+                            });
+
+                            if (todo.attributes.tags && !(todo.attributes.tags instanceof Array)) {
+                                var tags = [];
+                                tags.push(todo.attributes.tags);
+                                todo.set({
+                                    'tags': tags,
+                                });
+                            }
+                            self.collection.push(todo);
+                        }
+                    } else if (todos) {
+                        var todo = new Todo(todos);
+                        todo.set({
+                            id: todos['todoId']
+                        });
+                        if (todo.attributes.tags && !(todo.attributes.tags instanceof Array)) {
+                            var tags = [];
+                            tags.push(todo.attributes.tags);
+                            todo.set({
+                                'tags': tags,
+                            });
+                        }
+                        self.collection.push(todo);
+                    }
+                    var entityList = self.buildEntityList();
+                    backboneGlobalObj.trigger('entity:displaylist', entityList);
+                }
+            });
         },
 
         buildEntityList: function() {
 
             var entityList = [];
+
+            for (var i = 0; i < this.collection.length; i++) {
+                var description = this.collection.models[i].attributes.description;
+            
+                var entity = {
+                    'entityId': this.collection.models[i].attributes.id,
+                    'entityTitle': this.collection.models[i].attributes.title,
+                    'entityType': 'todo',
+                    'entitySummary': description ? description.substring(0, 100) : description,
+                    'modifiedAt': this.collection.models[i].attributes.modifiedAt,
+                };
+                entityList.push(entity);
+            }
             return entityList;
         },
 

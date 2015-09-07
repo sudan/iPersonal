@@ -154,6 +154,7 @@
                         pinView.fetchPins();
                         break;
                     case 'TODO':
+                        todoView.fetchTodos();
                         break;
                     case 'DIARY':
                         diaryView.fetchPages();
