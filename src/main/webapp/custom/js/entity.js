@@ -75,7 +75,7 @@
                         'pins': newValue
                     });
                     break;
-                case 'TODOS':
+                case 'TODO':
                     var newValue = parseInt(entityCountModel.get('todos')) + parseInt(relativeValue);
                     entityCountModel.set({
                         'todos': newValue

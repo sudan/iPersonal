@@ -224,6 +224,7 @@
             this.$el.find('[name=task]').val('').removeClass('error-field');
             this.$el.find('.task-error').html('');
             this.$el.find('[name=percent-completion]').val(0);
+            this.$el.find('.percent-completion-label').html('Percent Completion: 0 %');
         },
 
         editTask: function(e) {
