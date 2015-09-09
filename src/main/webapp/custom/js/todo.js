@@ -64,6 +64,10 @@
             if (e) {
                 e.preventDefault();
             }
+            if (this.taskCollection.length >= 10) {
+                this.$el.find('.task-length-limit').removeClass('invisible').fadeIn();
+                return;
+            }
             this.$el.find('.add-task').addClass('invisible').fadeOut();
             this.$el.find('#task-form').removeClass('invisible').fadeIn();
         },

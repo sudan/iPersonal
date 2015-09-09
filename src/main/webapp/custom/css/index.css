@@ -148,3 +148,8 @@ img.google-plus {
 .normal {
 	font-style: normal;
 }
+
+.tasks {
+	max-height: 500px;
+	overflow: auto;
+}

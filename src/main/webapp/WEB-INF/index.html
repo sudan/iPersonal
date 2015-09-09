@@ -288,6 +288,10 @@
                 </h3>
             </div>
             <div class="panel-body">
+                <div class="alert alert-danger alert-dismissable invisible task-length-limit">
+                    <button class="close" type="button" data-dismiss="alert" aria-hidden="true">x</button>
+                    Task length cannot exceed 10
+                </div>
                 <form method="POST" id="todo-form" action="#">
                     <% if (typeof id !== "undefined") { %>
                     <span class="entityId invisible"><%= id %></span>
