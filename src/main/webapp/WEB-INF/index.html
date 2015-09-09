@@ -360,7 +360,7 @@
                     </div>
                     <div>
                         <div id="tasks" class="form-group tasks">
-                    </div>
+                        </div>
                     </div>
                 </form>
             </div>
@@ -763,6 +763,75 @@
                     <% } %>
                 </div>
             </div>
+    </script>
+    <script type="text/template" id="todo-display-template">
+        <div class="panel panel-default entity-form">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    <img src="custom/images/<%= entityType %>.png"/>
+                    <i><%= entityType.charAt(0).toUpperCase() + entityType.slice(1) %>
+                    <img class="actionable clickable edit" data-id="<%= id %>" src="custom/images/edit.png" title="Edit the todo"/>
+                    <img class="actionable clickable delete" data-id="<%= id %>" src="custom/images/delete.png" title="Confirm delete"/>
+                </h3>
+            </div>
+            <div class="panel-body">
+                <div class="timeline-heading">
+                    <h4 class="timeline-title">
+                        <%= title %>
+                    </h4>
+                    <small class="text-muted">
+                        <i class="fa fa-clock-o"></i> Modified <%= moment.unix(modifiedAt/1000).fromNow() %>
+                    </small>
+                </div>
+                <div class="timeline-body">
+                    <% if (typeof tags !== 'undefined' && tags.length > 0 ) { %>
+                    Tags:
+                    <% if (tags instanceof Array) { %>
+                    <% _.each(tags, function(tag) { %>
+                    <span class="tag"><%= tag %></span>
+                    <% }); %>
+                    <% } else { %>
+                    <span class="tag"><%= tags %></span>
+                    <% } %>
+                    <% } %>
+                </div>
+                <div class="timeline-body">
+                    <div class="form-group tasks">
+                        <% if (tasks instanceof Array) { %>
+                            <% _.each(tasks, function(task){ %>
+                                <div class="task-entity <%= task.priority.toLowerCase() %>">
+                                    <span class="invisible id"><%= task.id %></span>
+                                    <div class="panel-heading normal">
+                                        <b>
+                                            <span class="name"><%= task.name %></span>
+                                            ( <span class="percentCompletion"><%= task.percentCompletion %></span> % Completed )
+                                        </b>
+                                    </div>
+                                    <span class="priority invisible"><%= task.priority %></span>
+                                    <div class="panel-body task normal">
+                                        <%= task.task %>
+                                    </div>
+                                </div>
+                            <% }); %>
+                        <% } else { %>
+                            <div class="task-entity <%= tasks.priority.toLowerCase() %>">
+                                <span class="invisible id"><%= tasks.id %></span>
+                                <div class="panel-heading normal">
+                                    <b>
+                                        <span class="name"><%= tasks.name %></span>
+                                        ( <span class="percentCompletion"><%= tasks.percentCompletion %></span> % Completed )
+                                    </b>
+                                </div>
+                                <span class="priority invisible"><%= tasks.priority %></span>
+                                <div class="panel-body task normal">
+                                    <%= tasks.task %>
+                                </div>
+                            </div>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
     </script>
     <script type="text/template" id="diary-display-template">
         <div class="panel panel-default entity-form">

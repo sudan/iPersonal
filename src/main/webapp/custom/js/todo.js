@@ -77,7 +77,7 @@
         },
 
         buildModel: function(entity) {
-
+            return new Todo(entity);
         },
 
         prepareVariables: function() {
@@ -96,7 +96,8 @@
         },
 
         initializeUpdateForm: function() {
-
+            this.prepareVariables();
+            Init.initTodo();
         },
 
         upsertTodo: function(e) {
@@ -240,7 +241,9 @@
         },
 
         getDeletableModel: function(id) {
-
+            return new Todo({
+                id : id
+            });
         },
 
         addTask: function(e) {

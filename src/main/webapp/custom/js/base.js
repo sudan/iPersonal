@@ -176,17 +176,17 @@
                             tags.push(entity.attributes.tags);
                             entity.set({ 'tags': tags });
                         }
-                        self._displayEntity(entity);
+                        self._displayEntity(entity, entityType);
                     }
                 });
 
 
             } else {
-                this._displayEntity(entity);
+                this._displayEntity(entity, entityType);
             }
         },
 
-        _displayEntity: function(entity, entityType, entityId) {
+        _displayEntity: function(entity, entityType) {
 
             if (!entity.get('tags')) {
                 entity.set({
@@ -198,6 +198,18 @@
                 entity.set({
                     categories: []
                 })
+            }
+
+            if (entityType == 'todo') {
+                if (entity.attributes.tasks.models instanceof Array) {
+                    var tasks = [];
+                    for (var i = 0; i < entity.attributes.tasks.models.length; i++) {
+                        tasks.push(entity.attributes.tasks.models[i].attributes);
+                    }
+                    entity.set({
+                        'tasks': tasks
+                    });
+                }
             }
 
             var template = _.template(this.displayTemplate);
