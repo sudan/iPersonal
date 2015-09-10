@@ -56,7 +56,7 @@
             'click #task-add-button': 'addTask',
             'click #task-cancel-button': 'cancelTask',
             'click .delete': 'deleteTask',
-            'click .edit': 'editTask'
+            'click a.edit': 'editTask'
         },
 
         showTaskForm: function(e) {
