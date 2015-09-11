@@ -671,6 +671,9 @@
                         </div>
                     </li>
                     <% }); %>
+                    <% if (count > entities.length) { %>
+                        <div><a class="more" href="#" data-entity="<%= entities[0]['entityType'] %>">More...</a></div>
+                    <% } %>
                 </ul>
             </div>
         </div>
