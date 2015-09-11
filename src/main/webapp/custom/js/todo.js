@@ -263,10 +263,31 @@
             });
         },
 
+        populateTasks: function() {
+            var self = this;
+            var oldTasks = this.$el.find('#tasks').find('.task-entity');
+            self.taskCollection = new Tasks();
+            $.each(oldTasks, function(index, oldTask){
+                var task = new Task({
+                    'priority': $(oldTask).find('.priority').html(),
+                    'task': $(oldTask).find('.task').html().trim(),
+                    'name': $(oldTask).find('.name').html(),
+                    'percentCompletion': $(oldTask).find('.percentCompletion').html(),
+                    'id': $(oldTask).find('.id').html()
+                });
+                self.taskCollection.add(task);
+            });
+
+        },
+
         addTask: function(e) {
             e.preventDefault();
 
             var taskId = this.$el.find('.taskId').html();
+            var todoId = this.saveForm.find('.entityId').html();
+            if (todoId && this.taskCollection.length == 0) {
+                this.populateTasks();
+            }
 
             if (!taskId){
                 this.model = new Task({
