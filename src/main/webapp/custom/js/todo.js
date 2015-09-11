@@ -110,6 +110,7 @@
             e.preventDefault();
 
             var entityId = self.saveForm.find('.entityId').html();
+            var summary = self.taskCollection.models[0].attributes.task;
 
             if (entityId) {
                 self.model = new Todo({
@@ -148,6 +149,7 @@
                                 'createdOn': Math.floor(Date.now()),
                                 'modifiedAt': Math.floor(Date.now()),
                                 'tags': tags,
+                                'summary': summary
                             });
                         } else {
                             self.postCreation(entityId, "TODO", self.model.get('title'), 0, tags);
@@ -155,6 +157,7 @@
                                 'id': entityId,
                                 'modifiedAt': Math.floor(Date.now()),
                                 'tags': tags,
+                                'summary': summary
                             });
                             self.collection.remove(self.collection.at(self.findIndex(entityId)));
                         }
@@ -195,12 +198,16 @@
                             todo.set({
                                 id: todos[index]['todoId']
                             });
-
+                            if (todo.attributes.tasks instanceof Array)
+                                var summary = todo.attributes.tasks[0].task
+                            else
+                                var summary = todo.attributes.tasks.task
+                            todo.set({ 'summary': summary })
                             if (todo.attributes.tags && !(todo.attributes.tags instanceof Array)) {
                                 var tags = [];
                                 tags.push(todo.attributes.tags);
                                 todo.set({
-                                    'tags': tags,
+                                    'tags': tags
                                 });
                             }
                             self.collection.push(todo);
@@ -210,6 +217,11 @@
                         todo.set({
                             id: todos['todoId']
                         });
+                        if (todo.attributes.tasks instanceof Array)
+                            var summary = todo.attributes.tasks[0].task
+                        else
+                            var summary = todo.attributes.tasks.task
+                        todo.set({ 'summary': summary })
                         if (todo.attributes.tags && !(todo.attributes.tags instanceof Array)) {
                             var tags = [];
                             tags.push(todo.attributes.tags);
@@ -238,6 +250,7 @@
                     'entityType': 'todo',
                     'entitySummary': description ? description.substring(0, 100) : description,
                     'modifiedAt': this.collection.models[i].attributes.modifiedAt,
+                    'entitySummary': this.collection.models[i].attributes.summary
                 };
                 entityList.push(entity);
             }
