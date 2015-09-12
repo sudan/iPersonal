@@ -127,6 +127,12 @@ img.google-plus {
 	margin-left: 10%;
 }
 
+.expense-search-wrapper {
+	width: 300px;
+	margin-top: 3%;
+	margin-left: 10%;
+}
+
 .add-task {
 	float: right;
 	cursor: pointer;

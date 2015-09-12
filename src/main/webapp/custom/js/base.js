@@ -227,7 +227,15 @@
 
             var self = this;
             $('img.edit').on('click', function() {
+                
+                if (entityType == 'todo') {
+                    var tasks = self.buildTaskObj();
+                    entity.set({
+                        'tasks': tasks
+                    });
+                }
                 self.editEntity(entity);
+
             });
         },
 

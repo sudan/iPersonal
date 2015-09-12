@@ -7,6 +7,10 @@
         urlRoot: '/iPersonal/dashboard/search'
     });
 
+    var ExpenseFilterEntity = Base.extend({
+
+    });
+
     var SearchResult = Base.extend({
 
     });
@@ -22,7 +26,8 @@
         generalSearchForm: $('#general-search-form'),
 
         events: {
-            'click #search': 'searchEntities'
+            'click #search': 'searchEntities',
+            'click a': 'toggleSearch'
         },
 
         searchEntities: function(e) {
@@ -165,6 +170,12 @@
             this.generalSearchForm.find('#search-tag').val('').trigger('chosen:updated');
             this.generalSearchForm.find('#search-title').val('').trigger('chosen:updated');
             this.generalSearchForm.find('#search-keyword').val('').trigger('chosen:updated');
+        },
+
+        toggleSearch: function(e) {
+
+            var div = $(e.target).attr('href');
+            $(div).removeClass('invisible').siblings('.tab-pane').addClass('invisible');
         }
     });
 
