@@ -23,3 +23,13 @@ iPersonal is a personal dashboard for users to store their bookmarks, pins, todo
 7. Update config.properties (let the debugMode be false unless there is a need to run test cases. Test cases should be run with clean data for mongodb and elasticsearch)
 8.  Compile the code using (mvn clean install) and run using ( mvn jetty:run)
 9.  Visit http://localhost:8080/iPersonal/ to see the home page
+
+#Screenshots
+
+![Alt text](https://github.com/sudan/iPersonal/blob/master/screenshots/one.png "Signup Screen")
+![Alt text](https://github.com/sudan/iPersonal/blob/master/screenshots/two.png "Dashboard Screen")
+![Alt text](https://github.com/sudan/iPersonal/blob/master/screenshots/three.png "Todo Add Screen")
+![Alt text](https://github.com/sudan/iPersonal/blob/master/screenshots/four.png "Bookmark Add Screen")
+![Alt text](https://github.com/sudan/iPersonal/blob/master/screenshots/five.png "Advanced Search Screen")
+![Alt text](https://github.com/sudan/iPersonal/blob/master/screenshots/six.png "Advanced Search Screen")
+
