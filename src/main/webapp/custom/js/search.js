@@ -91,7 +91,7 @@
                                         });
                                     } else if (searchResult.get('entityType') == 'EXPENSE') {
                                         searchResult.set({
-                                            amount : searchResults[index]['summary'].split('###')[0],
+                                            amount: searchResults[index]['summary'].split('###')[0],
                                             entitySummary: searchResults[index]['summary'].split('###')[1]
                                         });
                                     } else {

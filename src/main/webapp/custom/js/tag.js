@@ -1,59 +1,59 @@
-(function($, window, document){
+(function($, window, document) {
 
-	"use strict"
+    "use strict"
 
-	var TAG_URL_ROOT = '/iPersonal/dashboard/tags';
- 
-	var Tag = Backbone.Model.extend({
-		urlRoot: TAG_URL_ROOT,
-		defaults : {
-			tags : [],
-			tagSet : {}
-		},
+    var TAG_URL_ROOT = '/iPersonal/dashboard/tags';
 
-		setTags: function(userTags) {
+    var Tag = Backbone.Model.extend({
+        urlRoot: TAG_URL_ROOT,
+        defaults: {
+            tags: [],
+            tagSet: {}
+        },
 
-			for (var i = 0; i < userTags.length; i++) {
+        setTags: function(userTags) {
 
-				if (!this.attributes.tagSet[userTags[i]]) {
-					this.attributes.tags.push(userTags[i])
-					this.attributes.tagSet[userTags[i]] = true;
-				}
-			}
-		},
+            for (var i = 0; i < userTags.length; i++) {
 
-		getTags: function() {
-			return this.attributes.tags;
-		},
+                if (!this.attributes.tagSet[userTags[i]]) {
+                    this.attributes.tags.push(userTags[i])
+                    this.attributes.tagSet[userTags[i]] = true;
+                }
+            }
+        },
 
-		addTags: function(entityId, entityType, entityTitle, entityTags) {
+        getTags: function() {
+            return this.attributes.tags;
+        },
 
-			var self = this;
-			var entity = {};
-			entity['title'] = entityTitle;
-			entity['entityType'] = entityType;
-			entity['entityId'] = entityId;
+        addTags: function(entityId, entityType, entityTitle, entityTags) {
 
-			var tag = new Tag({
-				'entity': entity,
-				'tags' : entityTags
-			});
+            var self = this;
+            var entity = {};
+            entity['title'] = entityTitle;
+            entity['entityType'] = entityType;
+            entity['entityId'] = entityId;
 
-			return tag.save().complete(function(response){
-				if (response.status == 201) {
-					for (var i = 0; i < entityTags.length; i++) {
-						if (!self.attributes.tagSet[entityTags[i]]) {
-							self.attributes.tags.push(entityTags[i]);
-							self.attributes.tagSet[entityTags[i]] = true;
-						}
-					}
-				}
-			});
+            var tag = new Tag({
+                'entity': entity,
+                'tags': entityTags
+            });
 
-		}
+            return tag.save().complete(function(response) {
+                if (response.status == 201) {
+                    for (var i = 0; i < entityTags.length; i++) {
+                        if (!self.attributes.tagSet[entityTags[i]]) {
+                            self.attributes.tags.push(entityTags[i]);
+                            self.attributes.tagSet[entityTags[i]] = true;
+                        }
+                    }
+                }
+            });
 
-	});
+        }
 
-	window.tagModel = new Tag();
+    });
+
+    window.tagModel = new Tag();
 
 })(jQuery, window, document);

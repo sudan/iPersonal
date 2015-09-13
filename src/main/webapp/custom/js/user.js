@@ -1,52 +1,52 @@
 (function($, window, document) {
 
-	"use strict"
+    "use strict"
 
-	var User = Backbone.Model.extend({
+    var User = Backbone.Model.extend({
 
-		urlRoot : '/iPersonal/dashboard/users'
-	});
+        urlRoot: '/iPersonal/dashboard/users'
+    });
 
-	var UserView = Backbone.View.extend({
+    var UserView = Backbone.View.extend({
 
-		el: $('span.username'),
-		template: $('#username-template').html(),
+        el: $('span.username'),
+        template: $('#username-template').html(),
 
-		initialize: function() {
-			this.getUserData();
-		},
+        initialize: function() {
+            this.getUserData();
+        },
 
-		getUserData: function() {
+        getUserData: function() {
 
-			var self = this;
-			userModel.fetch().complete(function(response) {
+            var self = this;
+            userModel.fetch().complete(function(response) {
 
-				if (response.status == 200) {
-					self.render();
+                if (response.status == 200) {
+                    self.render();
 
-					if (userModel.get('tags')) {
-						backboneGlobalObj.trigger('tag:set', {
-							'tags': userModel.get('tags')
-						});
-					}
+                    if (userModel.get('tags')) {
+                        backboneGlobalObj.trigger('tag:set', {
+                            'tags': userModel.get('tags')
+                        });
+                    }
 
-					if (userModel.get('expenseCategories')) {
-						backboneGlobalObj.trigger('expense_category:set', {
-							'expenseCategories': userModel.get('expenseCategories') 
-						});
-					}
-				}
-			});
-		},
+                    if (userModel.get('expenseCategories')) {
+                        backboneGlobalObj.trigger('expense_category:set', {
+                            'expenseCategories': userModel.get('expenseCategories')
+                        });
+                    }
+                }
+            });
+        },
 
-		render: function() {
-			var tmpl = _.template(this.template);
-			this.$el.html(tmpl(userModel.toJSON()));
-			return this;
-		}
-	});
+        render: function() {
+            var tmpl = _.template(this.template);
+            this.$el.html(tmpl(userModel.toJSON()));
+            return this;
+        }
+    });
 
-	window.userModel = new User();
-	window.userView = new UserView();
+    window.userModel = new User();
+    window.userView = new UserView();
 
 })(jQuery, window, document);
