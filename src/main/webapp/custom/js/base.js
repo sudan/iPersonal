@@ -228,8 +228,11 @@
             var self = this;
             $('img.edit').on('click', function() {
                 self.editEntity(entity);
-                self.buildTaskObj();
-                self.renderTasks();
+
+                if (entityType == 'todo') {
+                    self.buildTaskObj();
+                    self.renderTasks();
+                }
             });
         },
 
