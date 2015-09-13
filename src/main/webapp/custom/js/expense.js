@@ -270,6 +270,96 @@
                   entityList.push(entity);
               }
               return entityList;
+          },
+
+          buildFilterEntityList: function() {
+
+              var entityList = [];
+
+              for (var i = 0; i < this.expenseFilterCollection.length; i++) {
+                  var description = this.expenseFilterCollection.models[i].attributes.description;
+                  var entity = {
+                      'entityId': this.expenseFilterCollection.models[i].attributes.id,
+                      'entityTitle': this.expenseFilterCollection.models[i].attributes.title,
+                      'amount': this.expenseFilterCollection.models[i].attributes.amount,
+                      'entitySummary': description ? description.substring(0, 100) : description,
+                      'entityType': 'expense',
+                      'modifiedAt': this.expenseFilterCollection.models[i].attributes.modifiedAt,
+                  };
+                  entityList.push(entity);
+              }
+              return entityList;
+          },
+
+          searchExpenses: function(expenseFilter) {
+
+              var self = this;
+              var expenseFilter = new ExpenseSearch(expenseFilter);
+              expenseFilter.save({
+                  data: {
+                      offset: 0,
+                      limit: 20
+                  }
+              }).complete(function(response) {
+                  self.expenseFilterCollection = new Expenses();
+                  if (response.status == 200 && JSON.parse(response.responseText) != null) {
+                      var expenses = JSON.parse(response.responseText)['expense'];
+                      if (expenses instanceof Array) {
+                          for (var index in expenses) {
+                              var expense = new Expense(expenses[index]);
+                              expense.set({
+                                  id: expenses[index]['expenseId']
+                              });
+
+                              if (expense.attributes.tags && !(expense.attributes.tags instanceof Array)) {
+                                  var tags = [];
+                                  tags.push(expense.attributes.tags);
+                                  expense.set({
+                                      'tags': tags
+                                  });
+                              }
+
+                              if (expense.attributes.categories && !(expense.attributes.categories instanceof Array)) {
+                                  var categories = [];
+                                  categories.push(expense.attributes.categories);
+                                  expense.set({
+                                      'categories': categories
+                                  });
+                              }
+
+                              self.expenseFilterCollection.push(expense);
+                          }
+                      } else if (expenses) {
+                          var expense = new Expense(expenses);
+                          expense.set({
+                              id: expenses['expenseId']
+                          });
+
+                          if (expense.attributes.tags && !(expense.attributes.tags instanceof Array)) {
+                              var tags = [];
+                              tags.push(expense.attributes.tags);
+                              expense.set({
+                                  'tags': tags
+                              });
+                          }
+
+                          if (expense.attributes.categories && !(expense.attributes.categories instanceof Array)) {
+                              var categories = [];
+                              categories.push(expense.attributes.categories);
+                              expense.set({
+                                  'categories': categories
+                              });
+                          }
+                          self.expenseFilterCollection.push(expense);
+                      }
+                  }
+                  if (response.status == 200) {
+                      var entityList = self.buildFilterEntityList();
+                      backboneGlobalObj.trigger('entity:displaylist', entityList);
+                  }
+                  $('.modal-header').find('button.close').click();
+              });
+
           }
       });
 

@@ -24,10 +24,21 @@
         entityType: 'GENERAL',
         el: $('#search-wrapper'),
         generalSearchForm: $('#general-search-form'),
+        expenseSearchForm: $('#expense-search-form'),
 
         events: {
-            'click #search': 'searchEntities',
+            'click #search': 'search',
             'click a': 'toggleSearch'
+        },
+
+        search: function(e) {
+
+            var target = this.$el.find('.nav-tabs').find('li.active').data('type');
+            if (target == 'general') {
+                this.searchEntities(e);
+            } else {
+                this.searchExpenses(e);
+            }
         },
 
         searchEntities: function(e) {
@@ -136,6 +147,43 @@
                     }
                 });
             }
+        },
+
+        searchExpenses: function(e) {
+
+            var payload = {};
+            var categories = this.expenseSearchForm.find('#search-category').val();
+
+            if (categories) {
+                payload['categories'] = categories;
+            }
+
+            var startAmount = this.expenseSearchForm.find('[name=start-amount]').val();
+            if (startAmount && !isNaN(startAmount)) {
+                payload['lowerRange'] = startAmount;
+            }
+
+            var endAmount = this.expenseSearchForm.find('[name=end-amount]').val();
+            if (endAmount && !isNaN(endAmount)) {
+                payload['upperRange'] = endAmount;
+            }
+
+            var startDate = this.expenseSearchForm.find('[name=start-date]').val();
+            if (startDate) {
+                var startDateLong = (new Date(startDate).getTime() / 1000).toFixed(0);
+                if (!isNaN(startDateLong)) {
+                    payload['startDate'] = startDateLong;
+                }
+            }
+
+            var endDate = this.expenseSearchForm.find('[name=end-date]').val();
+            if (endDate) {
+                var endDateLong = (new Date(endDate).getTime() / 1000).toFixed(0);
+                if (!isNaN(endDateLong)) {
+                    payload['endDate'] = endDateLong;
+                }
+            }
+            expenseView.searchExpenses(payload);
         },
 
         buildEntityList: function() {
