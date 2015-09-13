@@ -8,18 +8,32 @@
         listTemplate: $('#entity-list-template').html(),
 
         events: {
-            'click li.clickable': 'displayEntity'
+            'click li.clickable': 'displayEntity',
+            'click a.more': 'fetchMore'
         },
 
         initialize: function() {
 
         },
 
+        fetchMore: function(e) {
+            e.preventDefault();
+            var entity = $(e.target).data('entity');
+            backboneGlobalObj.trigger('entity:fetchlist', entity.toUpperCase());
+        },
+
         renderList: function(entities) {
+
+            var count = 0;
+            if (entities.length > 0) {
+                var entityType = entities[0].entityType + 's';
+                count = entityCountModel.get(entityType)
+            }
             this.$el.empty();
             var template = _.template(this.listTemplate);
             this.$el.html(template({
-                'entities': entities
+                'entities': entities,
+                'count': count
             }));
             return this;
         },

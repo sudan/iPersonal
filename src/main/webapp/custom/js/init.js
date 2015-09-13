@@ -36,6 +36,15 @@
             this.initChosenDropdowns();
         },
 
+        initTodo: function() {
+
+            $('#todo-tag').chosen({
+                width: '100%',
+                no_results_text: 'Add a new tag and press enter(min 3 chars)'
+            }).trigger('chosen:updated');
+            this.initChosenDropdowns();
+        },
+
         initDiary: function() {
 
             $('#diary-tag').chosen({
@@ -175,7 +184,13 @@
                 no_results_text: 'Add a tag and press enter(min 3 chars)'
             }).trigger('chosen:updated');
 
+            $('#search-category').chosen({
+                width: '100%',
+                no_results_text: 'Add a category and press enter (min 3 chars)'
+            });
+
             this.initChosenDropdowns();
+            this.initDatePicker();
         }
     };
 

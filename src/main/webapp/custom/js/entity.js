@@ -75,7 +75,7 @@
                         'pins': newValue
                     });
                     break;
-                case 'TODOS':
+                case 'TODO':
                     var newValue = parseInt(entityCountModel.get('todos')) + parseInt(relativeValue);
                     entityCountModel.set({
                         'todos': newValue
@@ -123,6 +123,11 @@
                         pinView.prepareVariables();
                         Init.initPin();
                         break;
+                    case 'TODO':
+                        todoView.renderCreateTemplate();
+                        todoView.prepareVariables();
+                        Init.initTodo();
+                        break;
                     case 'DIARY':
                         diaryView.renderCreateTemplate();
                         diaryView.prepareVariables();
@@ -149,6 +154,7 @@
                         pinView.fetchPins();
                         break;
                     case 'TODO':
+                        todoView.fetchTodos();
                         break;
                     case 'DIARY':
                         diaryView.fetchPages();

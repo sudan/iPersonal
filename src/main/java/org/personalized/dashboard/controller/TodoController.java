@@ -89,7 +89,10 @@ public class TodoController {
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response updateTodo(@Context HttpHeaders httpHeaders, Todo todo) {
+    @Path("{todoId}")
+    public Response updateTodo(@Context HttpHeaders httpHeaders,
+                               @PathParam("todoId") String todoId, 
+                               Todo todo) {
 
         try {
             List<ErrorEntity> errorEntities = todoValidationService.validate(todo);

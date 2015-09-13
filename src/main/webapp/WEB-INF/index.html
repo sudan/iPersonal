@@ -279,6 +279,125 @@
             </div>
         </div>
     </script>
+    <script type="text/template" id="todo-upsert-template">
+        <div class="panel panel-default entity-form">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    <img src="custom/images/todo.png"/>
+                    <i>Todo</i>
+                </h3>
+            </div>
+            <div class="panel-body">
+                <div class="alert alert-danger alert-dismissable invisible task-length-limit">
+                    <button class="close" type="button" data-dismiss="alert" aria-hidden="true">x</button>
+                    Task length cannot exceed 10
+                </div>
+                <form method="POST" id="todo-form" action="#">
+                    <% if (typeof id !== "undefined") { %>
+                    <span class="entityId invisible"><%= id %></span>
+                    <% } else { %>
+                    <span class="entityId invisible"></span>
+                    <% } %>
+                    <div class="form-group">
+                        <input class="form-control" name="title" placeholder="Title" value="<%= title %>"/>
+                        <span class="title-error error-msg"></span>
+                    </div>
+                    <div class="form-group">
+                        <img id="todo-tag-img" class="clickable" title="Add Tags" src="custom/images/tag.png"/>
+                    </div>
+                    <div class="form-group invisible">
+                        <select id="todo-tag" multiple="multiple" class="form-control chosen-menu"
+                            data-placeholder="search tags">
+                            <% _.each(tags, function(tag){ %>
+                                <option value="<%= tag %>" selected="selected"><%= tag %></option>
+                            <% }); %>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <img class="add-task" src="custom/images/plus.png" title="Add a task"/>
+                    </div>
+                    <div id="task-form" class="panel panel-default entity-form invisible">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                                <img src="custom/images/task.png"/>
+                                <i>Task</i>
+                            </h3>
+                        </div>
+                        <div class="panel-body">
+                            <% if (typeof taskId !== "undefined") { %>
+                                <span class="invisible taskId"><%= taskId %></span>
+                            <% } else { %>
+                                <span class="invisible taskId"></span>
+                            <% } %>
+                            <div class="form-group">
+                                <input class="form-control" name="name" placeholder="name"/>
+                                <span class="name-error error-msg"></span>
+                            </div>
+                            <div class="form-group">
+                                <textarea class="form-control" name="task" rows="3" placeholder="task goes here"></textarea>
+                                <span class="task-error error-msg"></span>
+                            </div>
+                            <div class="form-group">
+                                <label>Priority :</label>
+                                <label class="radio-inline">
+                                    <input id="high" type="radio" name="priority" value="HIGH"/>High
+                                </label>
+                                <label class="radio-inline">
+                                    <input id="medium" type="radio" name="priority" value="MEDIUM" checked="checked"/>Medium
+                                </label>
+                                <label class="radio-inline">
+                                    <input id="low" type="radio" name="priority" value="LOW"/>Low
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label class="percent-completion-label">Percent Completion: 0%</label>
+                                <input type="range" name="percent-completion" class="percent-completion" min="0" max="100" value="0"/>
+                            </div>
+                            <div class="button-group">
+                                <button id="task-add-button" type="submit" class="btn btn-success btn-element">
+                                    Add
+                                </button>
+                                <button id="task-cancel-button" type="submit" class="btn btn-link btn-element">Cancel
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div id="tasks" class="form-group tasks">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </script>
+    <script type="text/template" id="task-display-template">
+        <% _.each(tasks, function(task){ %>
+            <div class="task-entity <%= task.priority.toLowerCase() %>">
+                <span class="invisible id"><%= task.id %></span>
+                <div class="panel-heading">
+                <b>
+                    <span class="name"><%= task.name %></span>
+                    ( <span class="percentCompletion"><%= task.percentCompletion %></span> % Completed )
+                    <a href="#" class="delete actionable clickable">Delete</a>
+                    <a href="#" class="edit actionable clickable">Edit</a>
+                </b>
+                </div>
+                <span class="priority invisible"><%= task.priority %></span>
+                <div class="panel-body task">
+                <%= task.task %>
+                </div>
+            </div>
+        <% }); %>
+        <% if (tasks.length > 0){ %>
+            <div class="button-group">
+                <button id="todo-submit" type="submit" class="btn btn-success btn-element">
+                    Submit
+                </button>
+                <button id="todo-cancel" type="submit" class="btn btn-link btn-element">Cancel
+                </button>
+            </div>
+        <% } %>
+    </script>
     <script type="text/template" id="diary-upsert-template">
         <div class="panel panel-default entity-form">
             <div class="panel-heading">
@@ -515,6 +634,9 @@
                         </div>
                     </li>
                     <% }); %>
+                    <% if (count > entities.length) { %>
+                        <div><a class="more" href="#" data-entity="<%= entities[0]['entityType'] %>">More...</a></div>
+                    <% } %>
                 </ul>
             </div>
         </div>
@@ -648,6 +770,75 @@
                     <% } %>
                 </div>
             </div>
+    </script>
+    <script type="text/template" id="todo-display-template">
+        <div class="panel panel-default entity-form">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    <img src="custom/images/<%= entityType %>.png"/>
+                    <i><%= entityType.charAt(0).toUpperCase() + entityType.slice(1) %>
+                    <img class="actionable clickable edit" data-id="<%= id %>" src="custom/images/edit.png" title="Edit the todo"/>
+                    <img class="actionable clickable delete" data-id="<%= id %>" src="custom/images/delete.png" title="Confirm delete"/>
+                </h3>
+            </div>
+            <div class="panel-body">
+                <div class="timeline-heading">
+                    <h4 class="timeline-title">
+                        <%= title %>
+                    </h4>
+                    <small class="text-muted">
+                        <i class="fa fa-clock-o"></i> Modified <%= moment.unix(modifiedAt/1000).fromNow() %>
+                    </small>
+                </div>
+                <div class="timeline-body">
+                    <% if (typeof tags !== 'undefined' && tags.length > 0 ) { %>
+                    Tags:
+                    <% if (tags instanceof Array) { %>
+                    <% _.each(tags, function(tag) { %>
+                    <span class="tag"><%= tag %></span>
+                    <% }); %>
+                    <% } else { %>
+                    <span class="tag"><%= tags %></span>
+                    <% } %>
+                    <% } %>
+                </div>
+                <div class="timeline-body">
+                    <div class="form-group tasks">
+                        <% if (tasks instanceof Array) { %>
+                            <% _.each(tasks, function(task){ %>
+                                <div class="task-entity <%= task.priority.toLowerCase() %>">
+                                    <span class="invisible id"><%= task.id %></span>
+                                    <div class="panel-heading normal">
+                                        <b>
+                                            <span class="name"><%= task.name %></span>
+                                            ( <span class="percentCompletion"><%= task.percentCompletion %></span> % Completed )
+                                        </b>
+                                    </div>
+                                    <span class="priority invisible"><%= task.priority %></span>
+                                    <div class="panel-body task normal">
+                                        <%= task.task %>
+                                    </div>
+                                </div>
+                            <% }); %>
+                        <% } else { %>
+                            <div class="task-entity <%= tasks.priority.toLowerCase() %>">
+                                <span class="invisible id"><%= tasks.id %></span>
+                                <div class="panel-heading normal">
+                                    <b>
+                                        <span class="name"><%= tasks.name %></span>
+                                        ( <span class="percentCompletion"><%= tasks.percentCompletion %></span> % Completed )
+                                    </b>
+                                </div>
+                                <span class="priority invisible"><%= tasks.priority %></span>
+                                <div class="panel-body task normal">
+                                    <%= tasks.task %>
+                                </div>
+                            </div>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
     </script>
     <script type="text/template" id="diary-display-template">
         <div class="panel panel-default entity-form">
@@ -841,8 +1032,29 @@
                                             </div>
                                         </form>
                                     </div>
-                                    <div class="tab-pane fade" id="expense">
-                                        <h4>Expense Filters</h4>
+                                    <div class="tab-pane fade invisible" id="expense">
+                                        <div class="expense-search-wrapper">
+                                            <form id="expense-search-form" method="POST" action = "#">
+                                                <div class="form-group">
+                                                    <label for="search-keyword">Categories: </label>
+                                                    <select id="search-category" multiple="multiple" class="form-control chosen-menu" data-placeholder="add categories">
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="start-date">Start Date:</label>
+                                                    <input class="form-control datepicker" name="start-date" placeholder="Start Date"/>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="end-date">End Date:</label>
+                                                    <input class="form-control datepicker" name="end-date" placeholder="End Date"/>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="amount">Amount Spent:</label>
+                                                    <input class="form-control" name="start-amount"/> To 
+                                                    <input class="form-control" name="end-amount"/>
+                                                </div>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -862,7 +1074,7 @@
                     <div id="bookmark-wrapper" class="invisible"></div>
                     <div id="note-wrapper" class="invisible"></div>
                     <div id="pin-wrapper" class="invisible"></div>
-                    <div id="todo-wrapper"></div>
+                    <div id="todo-wrapper" class="invisible"></div>
                     <div id="diary-wrapper" class="invisible"></div>
                     <div id="expense-wrapper" class="invisible"></div>
                 </div>
@@ -892,6 +1104,7 @@
 <script type="text/javascript" src="custom/js/bookmark.js"></script>
 <script type="text/javascript" src="custom/js/note.js"></script>
 <script type="text/javascript" src="custom/js/pin.js"></script>
+<script type="text/javascript" src="custom/js/todo.js"></script>
 <script type="text/javascript" src="custom/js/diary.js"></script>
 <script type="text/javascript" src="custom/js/expense.js"></script>
 <script type="text/javascript" src="custom/js/entity.js"></script>
