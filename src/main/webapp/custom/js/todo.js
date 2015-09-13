@@ -344,6 +344,8 @@
             this.$el.find('[name=name]').val(name);
             this.$el.find('[name=task]').val(task);
             this.$el.find('[name=percent-completion]').val(percentCompletion);
+            this.$el.find('.percent-completion-label').html('Percent Completion: '
+                + percentCompletion + "%");
             this.$el.find('[name=priority]').removeAttr('checked');
             this.$el.find('#' + priority.toLowerCase()).click();
 
