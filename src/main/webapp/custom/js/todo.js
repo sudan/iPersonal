@@ -1,4 +1,4 @@
-(function($, window, document){
+(function($, window, document) {
 
     "use strict"
 
@@ -9,12 +9,12 @@
 
         initialize: function() {
             this.mandatory = {
-                'title': true
-            },
-            this.maxLength = {
-                'title': 50
-            },
-            this.formAttributes = ['title'];
+                    'title': true
+                },
+                this.maxLength = {
+                    'title': 50
+                },
+                this.formAttributes = ['title'];
         }
     });
 
@@ -25,14 +25,14 @@
     var Task = Base.extend({
         initialize: function() {
             this.mandatory = {
-                'name': true,
-                'task': true
-            },
-            this.maxLength = {
-                'name': 50,
-                'task': 300
-            },
-            this.formAttributes = ['name', 'task'];
+                    'name': true,
+                    'task': true
+                },
+                this.maxLength = {
+                    'name': 50,
+                    'task': 300
+                },
+                this.formAttributes = ['name', 'task'];
         }
     });
 
@@ -52,7 +52,7 @@
             'click #todo-submit': 'upsertTodo',
             'click #todo-cancel': 'resetValues',
             'click #todo-tag-img': 'displayTagSelection',
-            'click .add-task' : 'showTaskForm',
+            'click .add-task': 'showTaskForm',
             'click #task-add-button': 'addTask',
             'click #task-cancel-button': 'cancelTask',
             'click .delete': 'deleteTask',
@@ -87,7 +87,7 @@
         prepareVariables: function() {
             this.taskCollection = new Tasks();
             this.saveForm = $('#todo-form');
-            this.tasksDiv =  $('#tasks');
+            this.tasksDiv = $('#tasks');
             this.searchTag = $('#todo-tag');
             this.tagImage = $('#todo-tag-img');
 
@@ -95,8 +95,7 @@
         },
 
         showPercentTitle: function(e) {
-            $(e.target).parent('.form-group').find('.percent-completion-label').html('Percent Completion: '
-                + $(e.target).val() + "%");
+            $(e.target).parent('.form-group').find('.percent-completion-label').html('Percent Completion: ' + $(e.target).val() + "%");
         },
 
         initializeUpdateForm: function() {
@@ -114,8 +113,8 @@
 
             if (entityId) {
                 self.model = new Todo({
-                    id : entityId,
-                    todoId : entityId
+                    id: entityId,
+                    todoId: entityId
                 });
             } else {
                 self.model = new Todo();
@@ -136,7 +135,7 @@
             });
 
             if (result) {
-                result.complete(function(response){
+                result.complete(function(response) {
                     if (response.status != 201 && response.status != 200) {
                         var errors = self.buildErrorObject(response, self);
                         self.renderErrors(errors);
@@ -202,7 +201,9 @@
                                 var summary = todo.attributes.tasks[0].task
                             else
                                 var summary = todo.attributes.tasks.task
-                            todo.set({ 'summary': summary })
+                            todo.set({
+                                'summary': summary
+                            })
                             if (todo.attributes.tags && !(todo.attributes.tags instanceof Array)) {
                                 var tags = [];
                                 tags.push(todo.attributes.tags);
@@ -221,7 +222,9 @@
                             var summary = todo.attributes.tasks[0].task
                         else
                             var summary = todo.attributes.tasks.task
-                        todo.set({ 'summary': summary })
+                        todo.set({
+                            'summary': summary
+                        })
                         if (todo.attributes.tags && !(todo.attributes.tags instanceof Array)) {
                             var tags = [];
                             tags.push(todo.attributes.tags);
@@ -243,7 +246,7 @@
 
             for (var i = 0; i < this.collection.length; i++) {
                 var description = this.collection.models[i].attributes.description;
-            
+
                 var entity = {
                     'entityId': this.collection.models[i].attributes.id,
                     'entityTitle': this.collection.models[i].attributes.title,
@@ -259,7 +262,7 @@
 
         getDeletableModel: function(id) {
             return new Todo({
-                id : id
+                id: id
             });
         },
 
@@ -269,8 +272,8 @@
 
             if (entity.attributes.tasks instanceof Array) {
                 for (var i = 0; i < entity.attributes.tasks.length; i++) {
-                        var task = new Task(entity.attributes.tasks[i]);
-                        this.taskCollection.add(task);
+                    var task = new Task(entity.attributes.tasks[i]);
+                    this.taskCollection.add(task);
                 }
             } else {
                 var task = new Task(entity.attributes.tasks);
@@ -283,18 +286,18 @@
 
             var taskId = this.$el.find('.taskId').html();
 
-            if (!taskId){
+            if (!taskId) {
                 this.model = new Task({
-                    name : this.$el.find('[name=name]').val(),
-                    task : this.$el.find('[name=task]').val(),
+                    name: this.$el.find('[name=name]').val(),
+                    task: this.$el.find('[name=task]').val(),
                     priority: this.$el.find('[name=priority]:checked').val(),
                     percentCompletion: this.$el.find('[name=percent-completion]').val()
                 });
             } else {
                 this.model = this.taskCollection.get(taskId);
                 this.model.set({
-                    name : this.$el.find('[name=name]').val(),
-                    task : this.$el.find('[name=task]').val(),
+                    name: this.$el.find('[name=name]').val(),
+                    task: this.$el.find('[name=task]').val(),
                     priority: this.$el.find('[name=priority]:checked').val(),
                     percentCompletion: this.$el.find('[name=percent-completion]').val()
                 });
@@ -343,8 +346,7 @@
             this.$el.find('[name=name]').val(name);
             this.$el.find('[name=task]').val(task);
             this.$el.find('[name=percent-completion]').val(percentCompletion);
-            this.$el.find('.percent-completion-label').html('Percent Completion: '
-                + percentCompletion + "%");
+            this.$el.find('.percent-completion-label').html('Percent Completion: ' + percentCompletion + "%");
             this.$el.find('[name=priority]').removeAttr('checked');
             this.$el.find('#' + priority.toLowerCase()).click();
 
@@ -385,8 +387,7 @@
             this.tasksDiv.html(
                 template({
                     'tasks': taskEntities
-                }
-            ));
+                }));
         }
 
     });

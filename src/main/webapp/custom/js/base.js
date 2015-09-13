@@ -157,24 +157,32 @@
 
                 var self = this;
                 var model = this.getModel();
-                model.set({ id : entityId });
+                model.set({
+                    id: entityId
+                });
                 var result = model.fetch({
-                    success: function(response){},
-                    error: function(error){}
+                    success: function(response) {},
+                    error: function(error) {}
                 });
 
-                result.complete(function(response){
+                result.complete(function(response) {
 
                     if (response.status == 200) {
                         var entity = JSON.parse(response.responseText);
                         var entity = self.buildModel(entity);
-                        entity.set({ entityType : entityType });
-                        entity.set({ id : entityId });
+                        entity.set({
+                            entityType: entityType
+                        });
+                        entity.set({
+                            id: entityId
+                        });
 
                         if (entity.attributes.tags && !(entity.attributes.tags instanceof Array)) {
                             var tags = [];
                             tags.push(entity.attributes.tags);
-                            entity.set({ 'tags': tags });
+                            entity.set({
+                                'tags': tags
+                            });
                         }
                         self._displayEntity(entity, entityType);
                     }

@@ -1,30 +1,30 @@
-(function($, window, document){
+(function($, window, document) {
 
-	"use strict"
- 
-	var ExpenseCategory = Backbone.Model.extend({
-		defaults : {
-			expenseCategories : [],
-			expenseCategoriesSet : {}
-		},
+    "use strict"
 
-		addExpenseCategories: function(userExpenseCategories) {
+    var ExpenseCategory = Backbone.Model.extend({
+        defaults: {
+            expenseCategories: [],
+            expenseCategoriesSet: {}
+        },
 
-			for (var i = 0; i < userExpenseCategories.length; i++) {
+        addExpenseCategories: function(userExpenseCategories) {
 
-				if (!this.attributes.expenseCategoriesSet[userExpenseCategories[i]]) {
-					this.attributes.expenseCategories.push(userExpenseCategories[i])
-					this.attributes.expenseCategoriesSet[userExpenseCategories[i]] = true;
-				}
-			}
-		},
+            for (var i = 0; i < userExpenseCategories.length; i++) {
 
-		getExpenseCategories: function() {
-			return this.attributes.expenseCategories;
-		}
+                if (!this.attributes.expenseCategoriesSet[userExpenseCategories[i]]) {
+                    this.attributes.expenseCategories.push(userExpenseCategories[i])
+                    this.attributes.expenseCategoriesSet[userExpenseCategories[i]] = true;
+                }
+            }
+        },
 
-	});
+        getExpenseCategories: function() {
+            return this.attributes.expenseCategories;
+        }
 
-	window.expenseCategoryModel = new ExpenseCategory();
+    });
+
+    window.expenseCategoryModel = new ExpenseCategory();
 
 })(jQuery, window, document);
