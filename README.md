@@ -28,7 +28,7 @@ iPersonal is a personal dashboard for users to store their bookmarks, pins, todo
 
 ![Alt text](https://github.com/sudan/iPersonal/blob/master/screenshots/one.png "Signup Screen")
 ![Alt text](https://github.com/sudan/iPersonal/blob/master/screenshots/two.png "Dashboard Screen")
-![Alt text](https://github.com/sudan/iPersonal/blob/master/screenshots/three.png "Todo Add Screen")
+![Alt text](https://github.com/sudan/iPersonal/blob/master/screenshots/seven.png "Display Screen")
 ![Alt text](https://github.com/sudan/iPersonal/blob/master/screenshots/four.png "Bookmark Add Screen")
 ![Alt text](https://github.com/sudan/iPersonal/blob/master/screenshots/five.png "Advanced Search Screen")
 ![Alt text](https://github.com/sudan/iPersonal/blob/master/screenshots/six.png "Advanced Search Screen")
