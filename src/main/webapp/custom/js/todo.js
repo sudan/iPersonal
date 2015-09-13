@@ -263,20 +263,19 @@
             });
         },
 
-        buildTaskObj: function() {
-            var self = this;
-            var oldTasks = this.$el.find('.tasks').find('.task-entity');
-            self.taskCollection = new Tasks();
-            $.each(oldTasks, function(index, oldTask){
-                var task = new Task({
-                    'priority': $(oldTask).find('.priority').html(),
-                    'task': $(oldTask).find('.task').html().trim(),
-                    'name': $(oldTask).find('.name').html(),
-                    'percentCompletion': $(oldTask).find('.percentCompletion').html(),
-                });
-                self.taskCollection.add(task);
-            });
-            return self.taskCollection;
+        buildTaskObj: function(entity) {
+
+            this.taskCollection = new Tasks();
+
+            if (entity.attributes.tasks instanceof Array) {
+                for (var i = 0; i < entity.attributes.tasks.length; i++) {
+                        var task = new Task(entity.attributes.tasks[i]);
+                        this.taskCollection.add(task);
+                }
+            } else {
+                var task = new Task(entity.attributes.tasks);
+                this.taskCollection.add(task);
+            }
         },
 
         addTask: function(e) {

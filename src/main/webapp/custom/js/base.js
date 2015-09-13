@@ -230,7 +230,7 @@
                 self.editEntity(entity);
 
                 if (entityType == 'todo') {
-                    self.buildTaskObj();
+                    self.buildTaskObj(entity);
                     self.renderTasks();
                 }
             });

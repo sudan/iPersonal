@@ -364,43 +364,6 @@
                     </div>
                     <div>
                         <div id="tasks" class="form-group tasks">
-                            <% if (typeof id !== "undefined") { %>
-                                <% if (tasks instanceof Array) { %>
-                                    <% _.each(tasks, function(task){ %>
-                                        <div class="task-entity <%= task.priority.toLowerCase() %>">
-                                            <span class="invisible id"><%= task.id %></span>
-                                            <div class="panel-heading normal">
-                                                <b>
-                                                <span class="name"><%= task.name %></span>
-                                                ( <span class="percentCompletion"><%= task.percentCompletion %></span> % Completed )
-                                                <a href="#" class="delete actionable clickable">Delete</a>
-                                                <a href="#" class="edit actionable clickable">Edit</a>
-                                                </b>
-                                            </div>
-                                            <span class="priority invisible"><%= task.priority %></span>
-                                            <div class="panel-body task normal">
-                                                <%= task.task %>
-                                            </div>
-                                        </div>
-                                    <% }); %>
-                                <% } else { %>
-                                    <div class="task-entity <%= tasks.priority.toLowerCase() %>">
-                                        <span class="invisible id"><%= tasks.id %></span>
-                                        <div class="panel-heading normal">
-                                            <b>
-                                            <span class="name"><%= tasks.name %></span>
-                                            ( <span class="percentCompletion"><%= tasks.percentCompletion %></span> % Completed )
-                                                <a href="#" class="delete actionable clickable">Delete</a>
-                                                <a href="#" class="edit actionable clickable">Edit</a>
-                                            </b>
-                                        </div>
-                                        <span class="priority invisible"><%= tasks.priority %></span>
-                                        <div class="panel-body task normal">
-                                            <%= tasks.task %>
-                                        </div>
-                                    </div>
-                                <% } %>  
-                            <% } %>
                         </div>
                     </div>
                 </form>
