@@ -64,7 +64,8 @@ module.exports = function(grunt) {
 						'src/main/webapp/vendor/dist/css/sb-admin-2.css',
 						'src/main/webapp/vendor/font-awesome/css/font-awesome.css',
 						'src/main/webapp/vendor/datepicker/dist/datepicker.css',
-						'src/main/webapp/vendor/rte/dist/prettify.css'
+						'src/main/webapp/vendor/rte/dist/prettify.css',
+						'src/main/webapp/vendor/rte/dist/font-awesome.css'
 					]
 				}
 			}
