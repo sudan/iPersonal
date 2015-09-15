@@ -2,10 +2,19 @@ module.exports = function(grunt) {
 
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
+
+		processhtml: {
+			build: {
+				files: {
+					'src/main/webapp/WEB-INF/index.html': ['src/main/webapp/WEB-INF/index.html']
+				}
+			}
+		},
+
 		uglify: {
 			my_target: {
 				files: {
-					'src/main/webapp/custom/dist/custom.min.js?<%= pkg.version %>': [
+					'src/main/webapp/custom/dist/custom.min.js?v=<%= pkg.version %>': [
 						'src/main/webapp/custom/js/tag.js',
 						'src/main/webapp/custom/js/expense_category.js',
 						'src/main/webapp/custom/js/init.js',
@@ -21,7 +30,7 @@ module.exports = function(grunt) {
 						'src/main/webapp/custom/js/entity_list.js',
 						'src/main/webapp/custom/js/search.js'
 					],
-					'src/main/webapp/vendor/dist/vendor.min.js?<%= pkg.version %>': [
+					'src/main/webapp/vendor/dist/vendor.min.js?v=<%= pkg.version %>': [
 						'src/main/webapp/vendor/jquery/dist/jquery.js',
 						'src/main/webapp/vendor/bootstrap/dist/js/bootstrap.js',
 						'src/main/webapp/vendor/metisMenu/dist/metisMenu.js',
@@ -48,8 +57,8 @@ module.exports = function(grunt) {
 			},
 			target: {
 				files: {
-					'src/main/webapp/custom/dist/custom.min.css?<%= pkg.version %>': ['src/main/webapp/custom/css/index.css'],
-					'src/main/webapp/vendor/dist/vendor.min.css?<%= pkg.version %>': [
+					'src/main/webapp/custom/dist/custom.min.css?v=<%= pkg.version %>': ['src/main/webapp/custom/css/index.css'],
+					'src/main/webapp/vendor/dist/vendor.min.css?v=<%= pkg.version %>': [
 						'src/main/webapp/vendor/bootstrap/dist/css/bootstrap.css',
 						'src/main/webapp/vendor/metisMenu/dist/metisMenu.css',
 						'src/main/webapp/vendor/dist/css/sb-admin-2.css',
@@ -64,5 +73,5 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-cssmin');
 	grunt.loadNpmTasks('grunt-processhtml');
-	grunt.registerTask('default', ['uglify', 'cssmin']);
+	grunt.registerTask('default', ['uglify', 'cssmin', 'processhtml']);
 };
