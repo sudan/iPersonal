@@ -1,10 +1,11 @@
 module.exports = function(grunt) {
 
 	grunt.initConfig({
+		pkg: grunt.file.readJSON('package.json'),
 		uglify: {
 			my_target: {
 				files: {
-					'src/main/webapp/custom/dist/custom.min.js': [
+					'src/main/webapp/custom/dist/custom.min.js?<%= pkg.version %>': [
 						'src/main/webapp/custom/js/tag.js',
 						'src/main/webapp/custom/js/expense_category.js',
 						'src/main/webapp/custom/js/init.js',
@@ -20,7 +21,7 @@ module.exports = function(grunt) {
 						'src/main/webapp/custom/js/entity_list.js',
 						'src/main/webapp/custom/js/search.js'
 					],
-					'src/main/webapp/vendor/dist/vendor.min.js': [
+					'src/main/webapp/vendor/dist/vendor.min.js<%= pkg.version %>': [
 						'src/main/webapp/vendor/jquery/dist/jquery.js',
 						'src/main/webapp/vendor/bootstrap/dist/js/bootstrap.js',
 						'src/main/webapp/vendor/metisMenu/dist/metisMenu.js',
@@ -38,8 +39,29 @@ module.exports = function(grunt) {
 					]
 				}
 			}
+		},
+
+		cssmin: {
+			options: {
+				shorthandCompacting: false,
+				roundingPrecision: -1
+			},
+			target: {
+				files: {
+					'src/main/webapp/custom/dist/custom.min.css<%= pkg.version %>': ['src/main/webapp/custom/css/index.css'],
+					'src/main/webapp/vendor/dist/vendor.min.css<%= pkg.version %>': [
+						'src/main/webapp/vendor/bootstrap/dist/css/bootstrap.css',
+						'src/main/webapp/vendor/metisMenu/dist/metisMenu.css',
+						'src/main/webapp/vendor/dist/css/sb-admin-2.css',
+						'src/main/webapp/vendor/font-awesome/css/font-awesome.css',
+						'src/main/webapp/vendor/datepicker/dist/datepicker.css',
+						'src/main/webapp/vendor/rte/dist/prettify.css'
+					]
+				}
+			}
 		}
 	});
 	grunt.loadNpmTasks('grunt-contrib-uglify');
-	grunt.registerTask('default', ['uglify']);
+	grunt.loadNpmTasks('grunt-contrib-cssmin');
+	grunt.registerTask('default', ['uglify', 'cssmin']);
 };
