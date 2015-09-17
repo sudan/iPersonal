@@ -261,7 +261,7 @@
 
         editEntity: function(entity) {
 
-            var entityId = $('img.edit').data('id');
+            var entityId = this.$el.find('img.edit').data('id');
             var template = _.template(this.upsertTemplate);
             this.$el.html(template(entity.toJSON()));
             this.$el.fadeIn().removeClass('invisible')
@@ -273,7 +273,7 @@
         deleteEntity: function() {
 
             var self = this;
-            var entityId = $('img.delete').data('id');
+            var entityId = self.$el.find('img.delete').data('id');
             var model = this.getDeletableModel(entityId);
             var result = model.destroy();
             if (result) {
