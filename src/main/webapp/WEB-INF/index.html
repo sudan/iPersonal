@@ -7,15 +7,22 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>iPersonal</title>
+
+    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <!-- build:css  vendor/dist/vendor.min.css<%= pkg.version %>-->
     <link href="vendor/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="vendor/metisMenu/dist/metisMenu.min.css" rel="stylesheet" type="text/css">
     <link href="vendor/dist/css/sb-admin-2.css" rel="stylesheet" type="text/css">
-    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="vendor/chosen/dist/chosen.min.css" rel="stylesheet" type="text/css">
     <link href="vendor/datepicker/dist/datepicker.min.css" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" href="vendor/rte/dist/font-awesome.css" type="text/css">
     <link rel="stylesheet" href="vendor/rte/dist/prettify.css" type="text/css">
+    <!-- /build -->
+
+    <!-- build:css custom/dist/custom.min.css<%= pkg.version %>-->
     <link href="custom/css/index.css" rel="stylesheet" type="text/css"/>
+    <!-- /build -->
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -1087,6 +1094,8 @@
         </div>
     </div>
 </div>
+
+<!-- build:js  vendor/dist/vendor.min.js<%= pkg.version %>-->
 <script src="vendor/jquery/dist/jquery.min.js"></script>
 <script src="vendor/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="vendor/metisMenu/dist/metisMenu.min.js"></script>
@@ -1101,6 +1110,9 @@
 <script type="text/javascript" src="vendor/moment/dist/moment.min.js"></script>
 <script type="text/javascript" src="vendor/confirm/dist/bootstrap-tooltip.js"></script>
 <script type="text/javascript" src="vendor/confirm/dist/bootstrap-confirmation.js"></script>
+<!-- /build -->
+
+<!-- build:js  custom/dist/custom.min.js<%= pkg.version %>-->
 <script type="text/javascript" src="custom/js/tag.js"></script>
 <script type="text/javascript" src="custom/js/expense_category.js"></script>
 <script type="text/javascript" src="custom/js/init.js"></script>
@@ -1115,5 +1127,6 @@
 <script type="text/javascript" src="custom/js/entity.js"></script>
 <script type="text/javascript" src="custom/js/entity_list.js"></script>
 <script type="text/javascript" src="custom/js/search.js"></script>
+<!-- /build -->
 </body>
 </html>

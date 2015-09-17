@@ -3,3 +3,5 @@ iPersonal.iml
 target/
 src/main/resources/config.properties
 *.class
+npm-debug.log
+node_modules/
