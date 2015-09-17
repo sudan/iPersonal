@@ -15,7 +15,7 @@ iPersonal is a personal dashboard for users to store their bookmarks, pins, todo
 #How to setup
 
 1. Install Java, Maven, MongoDB, Elasticsearch, activeMQ
-2. Set up a MongoDB username and password using http://stackoverflow.com/questions/4881208/how-to-put-username-password-in-mongodb
+2. Set up a MongoDB username and password using http://stackoverflow.com/questions/4881208/how-to-put-username-password-in-mongodb (Alternatively use MongoLabs which provides 500MB free )
 3. Add a cluster name and node name to elasticsearch in elasticsearch.yml
 4. Add destination Queue for activemq
 5. Copy config.properties.dist to config.properties
